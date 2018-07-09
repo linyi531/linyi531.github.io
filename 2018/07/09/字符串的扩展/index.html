@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>字符串的扩展 | 01不是包子脸</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="keywords" content="ES6前端" />
+  
+  
+  
+  
+  <meta name="description" content="字符的 Unicode 表示法JavaScript 允许采用\uxxxx形式表示一个字符，其中xxxx表示字符的 Unicode 码点。码点在\u0000~\uFFFF之间的字符。超出这个范围的字符，必须用两个双字节的形式表示。12345678&quot;\u0061&quot;// &quot;a&quot;&quot;\uD842\uDFB7&quot;// &quot;𠮷&quot;&quot;\u20BB7&quot;// &quot; 7&quot; 如果直接在\u后面跟上超过0xFFFF的数值（比如\">
+<meta name="keywords" content="ES6,前端">
+<meta property="og:type" content="article">
+<meta property="og:title" content="字符串的扩展">
+<meta property="og:url" content="http://yoursite.com/2018/07/09/字符串的扩展/index.html">
+<meta property="og:site_name" content="01不是包子脸">
+<meta property="og:description" content="字符的 Unicode 表示法JavaScript 允许采用\uxxxx形式表示一个字符，其中xxxx表示字符的 Unicode 码点。码点在\u0000~\uFFFF之间的字符。超出这个范围的字符，必须用两个双字节的形式表示。12345678&quot;\u0061&quot;// &quot;a&quot;&quot;\uD842\uDFB7&quot;// &quot;𠮷&quot;&quot;\u20BB7&quot;// &quot; 7&quot; 如果直接在\u后面跟上超过0xFFFF的数值（比如\">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-07-09T08:50:09.961Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="字符串的扩展">
+<meta name="twitter:description" content="字符的 Unicode 表示法JavaScript 允许采用\uxxxx形式表示一个字符，其中xxxx表示字符的 Unicode 码点。码点在\u0000~\uFFFF之间的字符。超出这个范围的字符，必须用两个双字节的形式表示。12345678&quot;\u0061&quot;// &quot;a&quot;&quot;\uD842\uDFB7&quot;// &quot;𠮷&quot;&quot;\u20BB7&quot;// &quot; 7&quot; 如果直接在\u后面跟上超过0xFFFF的数值（比如\">
+  
+    <link rel="alternate" href="/atom.xml" title="01不是包子脸" type="application/atom+xml">
+  
+  <link rel="icon" href="/css/images/dog.JPG">
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
+  <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <style type="text/css">
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/9749f0/00000000000000000001008f/27/l?subset_id=2&fvd=n5) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/90cf9f/000000000000000000010091/27/l?subset_id=2&fvd=n7) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/8a5494/000000000000000000013365/27/l?subset_id=2&fvd=n4) format("woff2");font-weight:lighter;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/d337d8/000000000000000000010095/27/l?subset_id=2&fvd=i4) format("woff2");font-weight:400;font-style:italic;}</style>
+    
+  <link rel="stylesheet" id="athemes-headings-fonts-css" href="//fonts.googleapis.com/css?family=Yanone+Kaffeesatz%3A200%2C300%2C400%2C700&amp;ver=4.6.1" type="text/css" media="all">
+
+  <link rel="stylesheet" id="athemes-headings-fonts-css" href="//fonts.googleapis.com/css?family=Oswald%3A300%2C400%2C700&amp;ver=4.6.1" type="text/css" media="all">
+  <link rel="stylesheet" href="/css/style.css">
+
+  <script src="/js/jquery-3.1.1.min.js"></script>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.css" >
+  <link rel="stylesheet" href="/css/fashion.css" >
+  <link rel="stylesheet" href="/css/glyphs.css" >
+
+</head>
+
+
+
+  <body data-spy="scroll" data-target="#toc" data-offset="50">
+
+
+  
+
+
+<header id="allheader" class="site-header" role="banner" 
+   >
+  <div class="clearfix container">
+      <div class="site-branding">
+
+          <h1 class="site-title">
+            
+              <a href="/" rel="home" >
+                <img style="margin-bottom: 10px;"  width="975px" height="200px" alt="Hike News" src=" /images/IMG_5299.JPG">
+              </a>
+            
+          </h1>
+          
+          
+            
+          <nav id="main-navigation" class="main-navigation" role="navigation">
+            <a class="nav-open">Menu</a>
+            <a class="nav-close">Close</a>
+
+            <div class="clearfix sf-menu">
+              <ul id="main-nav" class="menu sf-js-enabled sf-arrows"  style="touch-action: pan-y;">
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/">首页</a> </li>
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/archives">归档</a> </li>
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/categories">分类</a> </li>
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/tags">标签</a> </li>
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/about">关于</a> </li>
+                    
+              </ul>
+            </div>
+          </nav>
+
+      </div>
+  </div>
+</header>
+
+
+  <div id="container">
+    <div id="wrap">
+            
+      <div id="content" class="outer">
+        
+          <section id="main" style="float:none;"><article id="post-字符串的扩展" style="width: 66%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="clearfix post-1016 post type-post status-publish format-standard has-post-thumbnail hentry category-template-2 category-uncategorized tag-codex tag-edge-case tag-featured-image tag-image tag-template">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" class="article-title" itemprop="name">
+      字符串的扩展
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2018/07/09/字符串的扩展/" class="article-date">
+	  <time datetime="2018-07-09T03:20:29.000Z" itemprop="datePublished">七月 9, 2018</time>
+	</a>
+
+      
+	<span class="ico-folder"></span>
+    <a class="article-category-link" href="/categories/ES6/">ES6</a>
+ 
+      
+	<span id="busuanzi_container_page_pv">
+	  本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+	</span>
+
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="字符的-Unicode-表示法"><a href="#字符的-Unicode-表示法" class="headerlink" title="字符的 Unicode 表示法"></a>字符的 Unicode 表示法</h1><p>JavaScript 允许采用\uxxxx形式表示一个字符，其中xxxx表示字符的 Unicode 码点。码点在\u0000~\uFFFF之间的字符。超出这个范围的字符，必须用两个双字节的形式表示。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"\u0061"</span></span><br><span class="line"><span class="comment">// "a"</span></span><br><span class="line"></span><br><span class="line"><span class="string">"\uD842\uDFB7"</span></span><br><span class="line"><span class="comment">// "𠮷"</span></span><br><span class="line"></span><br><span class="line"><span class="string">"\u20BB7"</span></span><br><span class="line"><span class="comment">// " 7"</span></span><br></pre></td></tr></table></figure></p>
+<p>如果直接在\u后面跟上超过0xFFFF的数值（比如\u20BB7），JavaScript 会理解成\u20BB+7。由于\u20BB是一个不可打印字符，所以只会显示一个空格，后面跟着一个7。ES6 对这一点做出了改进，只要将码点放入大括号，就能正确解读该字符。</p>
+<h1 id="codePointAt"><a href="#codePointAt" class="headerlink" title="codePointAt()"></a>codePointAt()</h1><p>codePointAt方法会正确返回 32 位的 UTF-16 字符的码点。对于那些两个字节储存的常规字符，它的返回结果与charCodeAt方法相同。例如，汉字“𠮷”（注意，这个字不是“吉祥”的“吉”）的码点是0x20BB7，UTF-16 编码为0xD842 0xDFB7（十进制为55362 57271），需要4个字节储存。对于这种4个字节的字符，JavaScript 不能正确处理，字符串长度会误判为2，而且charAt方法无法读取整个字符，charCodeAt方法只能分别返回前两个字节和后两个字节的值。ES6 提供了codePointAt方法，能够正确处理 4 个字节储存的字符，返回一个字符的码点（codePointAt方法返回的是码点的十进制值）。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> s = <span class="string">"𠮷"</span>;</span><br><span class="line"></span><br><span class="line">s.length <span class="comment">// 2</span></span><br><span class="line">s.charAt(<span class="number">0</span>) <span class="comment">// ''</span></span><br><span class="line">s.charAt(<span class="number">1</span>) <span class="comment">// ''</span></span><br><span class="line">s.charCodeAt(<span class="number">0</span>) <span class="comment">// 55362</span></span><br><span class="line">s.charCodeAt(<span class="number">1</span>) <span class="comment">// 57271</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> a = <span class="string">'𠮷a'</span>;</span><br><span class="line"></span><br><span class="line">a.codePointAt(<span class="number">0</span>) <span class="comment">// 134071</span></span><br><span class="line">a.codePointAt(<span class="number">1</span>) <span class="comment">// 57271</span></span><br><span class="line"></span><br><span class="line">a.codePointAt(<span class="number">2</span>) <span class="comment">// 97</span></span><br></pre></td></tr></table></figure></p>
+<p>codePointAt方法的参数，是字符在字符串中的位置（从 0 开始）。上面代码中，JavaScript 将“𠮷a”视为三个字符，codePointAt 方法在第一个字符上，正确地识别了“𠮷”，返回了它的十进制码点 134071（即十六进制的20BB7）。在第二个字符（即“𠮷”的后两个字节）和第三个字符“a”上，codePointAt方法的结果与charCodeAt方法相同。</p>
+<h1 id="String-fromCodePoint"><a href="#String-fromCodePoint" class="headerlink" title="String.fromCodePoint()"></a>String.fromCodePoint()</h1><p>ES5 提供String.fromCharCode方法，用于从码点返回对应字符，但是这个方法不能识别 32 位的 UTF-16 字符（Unicode 编号大于0xFFFF）。ES6 提供了String.fromCodePoint方法，可以识别大于0xFFFF的字符，弥补了String.fromCharCode方法的不足。在作用上，正好与codePointAt方法相反。且如果String.fromCodePoint方法有多个参数，则它们会被合并成一个字符串返回。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">String</span>.fromCodePoint(<span class="number">0x20BB7</span>)</span><br><span class="line"><span class="comment">// "𠮷"</span></span><br><span class="line"><span class="built_in">String</span>.fromCodePoint(<span class="number">0x78</span>, <span class="number">0x1f680</span>, <span class="number">0x79</span>) === <span class="string">'x\uD83D\uDE80y'</span></span><br><span class="line"><span class="comment">// true</span></span><br></pre></td></tr></table></figure></p>
+<h1 id="字符串的遍历器接口"><a href="#字符串的遍历器接口" class="headerlink" title="字符串的遍历器接口"></a>字符串的遍历器接口</h1><p>ES6 为字符串添加了遍历器接口，使得字符串可以被for…of循环遍历,并且遍历器最大的优点是可以识别大于0xFFFF的码点。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> codePoint <span class="keyword">of</span> <span class="string">'foo'</span>) &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(codePoint)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// "f"</span></span><br><span class="line"><span class="comment">// "o"</span></span><br><span class="line"><span class="comment">// "o"</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> i <span class="keyword">of</span> text) &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(i);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// "𠮷"</span></span><br></pre></td></tr></table></figure></p>
+<h1 id="at"><a href="#at" class="headerlink" title="at()"></a>at()</h1><p>ES5 对字符串对象提供charAt方法，返回字符串给定位置的字符。该方法不能识别码点大于0xFFFF的字符。字符串实例的at方法，可以识别 Unicode 编号大于0xFFFF的字符，返回正确的字符。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">'abc'</span>.at(<span class="number">0</span>) <span class="comment">// "a"</span></span><br><span class="line"><span class="string">'𠮷'</span>.at(<span class="number">0</span>) <span class="comment">// "𠮷"</span></span><br></pre></td></tr></table></figure></p>
+<h1 id="normalize"><a href="#normalize" class="headerlink" title="normalize()"></a>normalize()</h1><p>在字符排序或比较时，会出现一种情况，就是“等效”。</p>
+<ol>
+<li>规范的等效是指，无论从哪个角度看，两个序列的码位都是没有区别的。</li>
+<li>兼容关系，两个互相兼容的码位序列看起来不同，但是在特定的情况下可以相互交换使用。<br>例如Ǒ（\u01D1）和O（\u004F） ˇ（\u030C）两个字符的组合（\u004F\u030C），在视觉和语义上其实是等效的。</li>
+</ol>
+<p>ES6 提供字符串实例的normalize()方法，用来将字符的不同表示方法统一为同样的形式，这称为 Unicode 正规化。normalize方法可以接受一个参数来指定normalize的方式，参数的四个可选值如下。</p>
+<ol>
+<li>NFC，默认参数，表示“标准等价合成”（Normalization Form Canonical Composition），返回多个简单字符的合成字符。所谓“标准等价”指的是视觉和语义上的等价。</li>
+<li>NFD，表示“标准等价分解”（Normalization Form Canonical Decomposition），即在标准等价的前提下，返回合成字符分解的多个简单字符。</li>
+<li>NFKC，表示“兼容等价合成”（Normalization Form Compatibility Composition），返回合成字符。所谓“兼容等价”指的是语义上存在等价，但视觉上不等价，比如“囍”和“喜喜”。（这只是用来举例，normalize方法不能识别中文。）</li>
+<li>NFKD，表示“兼容等价分解”（Normalization Form Compatibility Decomposition），即在兼容等价的前提下，返回合成字符分解的多个简单字符。<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">'\u01D1'</span>.normalize() === <span class="string">'\u004F\u030C'</span>.normalize()</span><br><span class="line"><span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>不过，normalize方法目前不能识别三个或三个以上字符的合成。这种情况下，还是只能使用正则表达式，通过 Unicode 编号区间判断。</p>
+<h1 id="includes-startsWith-endsWith"><a href="#includes-startsWith-endsWith" class="headerlink" title="includes(), startsWith(), endsWith()"></a>includes(), startsWith(), endsWith()</h1><p>includes()：返回布尔值，表示是否找到了参数字符串。<br>startsWith()：返回布尔值，表示参数字符串是否在原字符串的头部。<br>endsWith()：返回布尔值，表示参数字符串是否在原字符串的尾部。<br>这三个方法都支持第二个参数，表示开始搜索的位置。使用第二个参数n时，endsWith的行为与其他两个方法有所不同。它针对前n个字符，而其他两个方法针对从第n个位置直到字符串结束。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> s = <span class="string">'Hello world!'</span>;</span><br><span class="line"></span><br><span class="line">s.startsWith(<span class="string">'world'</span>, <span class="number">6</span>) <span class="comment">// true</span></span><br><span class="line">s.endsWith(<span class="string">'Hello'</span>, <span class="number">5</span>) <span class="comment">// true</span></span><br><span class="line">s.includes(<span class="string">'Hello'</span>, <span class="number">6</span>) <span class="comment">// false</span></span><br></pre></td></tr></table></figure></p>
+<h1 id="repeat"><a href="#repeat" class="headerlink" title="repeat()"></a>repeat()</h1><p>repeat方法返回一个新字符串，表示将原字符串重复n次。参数如果是小数，会被取整。如果repeat的参数是负数或者Infinity，会报错。参数NaN等同于 0。如果repeat的参数是字符串，则会先转换成数字。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">'x'</span>.repeat(<span class="number">3</span>) <span class="comment">// "xxx"</span></span><br><span class="line"><span class="string">'hello'</span>.repeat(<span class="number">2</span>) <span class="comment">// "hellohello"</span></span><br><span class="line"><span class="string">'na'</span>.repeat(<span class="number">0</span>) <span class="comment">// ""</span></span><br><span class="line"><span class="string">'na'</span>.repeat(<span class="number">2.9</span>) <span class="comment">// "nana"</span></span><br><span class="line"></span><br><span class="line"><span class="string">'na'</span>.repeat(<span class="literal">Infinity</span>)</span><br><span class="line"><span class="comment">// RangeError</span></span><br><span class="line"><span class="string">'na'</span>.repeat(<span class="number">-1</span>)</span><br><span class="line"><span class="comment">// RangeError</span></span><br><span class="line"></span><br><span class="line"><span class="string">'na'</span>.repeat(<span class="literal">NaN</span>) <span class="comment">// ""</span></span><br><span class="line"></span><br><span class="line"><span class="string">'na'</span>.repeat(<span class="string">'na'</span>) <span class="comment">// ""</span></span><br><span class="line"><span class="string">'na'</span>.repeat(<span class="string">'3'</span>) <span class="comment">// "nanana"</span></span><br></pre></td></tr></table></figure></p>
+<h1 id="padStart-，padEnd"><a href="#padStart-，padEnd" class="headerlink" title="padStart()，padEnd()"></a>padStart()，padEnd()</h1><p>如果某个字符串不够指定长度，会在头部或尾部补全。padStart()用于头部补全，padEnd()用于尾部补全。padStart和padEnd一共接受两个参数，第一个参数用来指定字符串的最小长度，第二个参数是用来补全的字符串。如果原字符串的长度，等于或大于指定的最小长度，则返回原字符串。如果用来补全的字符串与原字符串，两者的长度之和超过了指定的最小长度，则会截去超出位数的补全字符串。如果省略第二个参数，默认使用空格补全长度。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">'x'</span>.padStart(<span class="number">4</span>, <span class="string">'ab'</span>) <span class="comment">// 'abax'</span></span><br><span class="line"><span class="string">'x'</span>.padEnd(<span class="number">5</span>, <span class="string">'ab'</span>) <span class="comment">// 'xabab'</span></span><br><span class="line"></span><br><span class="line"><span class="string">'xxx'</span>.padStart(<span class="number">2</span>, <span class="string">'ab'</span>) <span class="comment">// 'xxx'</span></span><br><span class="line"><span class="string">'xxx'</span>.padEnd(<span class="number">2</span>, <span class="string">'ab'</span>) <span class="comment">// 'xxx'</span></span><br><span class="line"></span><br><span class="line"><span class="string">'abc'</span>.padStart(<span class="number">10</span>, <span class="string">'0123456789'</span>)</span><br><span class="line"><span class="comment">// '0123456abc'</span></span><br><span class="line"></span><br><span class="line"><span class="string">'x'</span>.padStart(<span class="number">4</span>) <span class="comment">// '   x'</span></span><br><span class="line"><span class="string">'x'</span>.padEnd(<span class="number">4</span>) <span class="comment">// 'x   '</span></span><br></pre></td></tr></table></figure></p>
+<h1 id="matchAll"><a href="#matchAll" class="headerlink" title="matchAll()"></a>matchAll()</h1><p>matchAll方法返回一个正则表达式在当前字符串的所有匹配</p>
+<h1 id="模板字符串"><a href="#模板字符串" class="headerlink" title="模板字符串"></a>模板字符串</h1><p>模板字符串（template string）是增强版的字符串，用反引号（`）标识。它可以当作普通字符串使用，也可以用来定义多行字符串，或者在字符串中嵌入变量。嵌入变量，需要将变量名写在${}之中。大括号内部可以放入任意的 JavaScript 表达式，可以进行运算，以及引用对象属性。如果大括号中的值不是字符串，将按照一般的规则转为字符串。比如，大括号中是一个对象，将默认调用对象的toString方法。如果模板字符串中的变量没有声明，将报错。<br>如果在模板字符串中需要使用反引号，则前面要用反斜杠转义。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 普通字符串</span></span><br><span class="line"><span class="string">`In JavaScript '\n' is a line-feed.`</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 多行字符串</span></span><br><span class="line"><span class="string">`In JavaScript this is</span></span><br><span class="line"><span class="string"> not legal.`</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">`string text line 1</span></span><br><span class="line"><span class="string">string text line 2`</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 字符串中嵌入变量</span></span><br><span class="line"><span class="keyword">let</span> name = <span class="string">"Bob"</span>, time = <span class="string">"today"</span>;</span><br><span class="line"><span class="string">`Hello <span class="subst">$&#123;name&#125;</span>, how are you <span class="subst">$&#123;time&#125;</span>?`</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> greeting = <span class="string">`\`Yo\` World!`</span>;</span><br></pre></td></tr></table></figure></p>
+<p>如果使用模板字符串表示多行字符串，所有的空格和缩进都会被保留在输出之中<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$('#list').html(`</span><br><span class="line"><span class="tag">&lt;<span class="name">ul</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">li</span>&gt;</span>first<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">li</span>&gt;</span>second<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line">`);</span><br></pre></td></tr></table></figure></p>
+<p>所有模板字符串的空格和换行，都是被保留的，比如”&lt; ul&gt;”标签前面会有一个换行。如果你不想要这个换行，可以使用trim方法消除它。<br>如果需要引用模板字符串本身，在需要时执行，可以像下面这样写。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 写法一</span></span><br><span class="line"><span class="keyword">let</span> str = <span class="string">'return '</span> + <span class="string">'`Hello $&#123;name&#125;!`'</span>;</span><br><span class="line"><span class="keyword">let</span> func = <span class="keyword">new</span> <span class="built_in">Function</span>(<span class="string">'name'</span>, str);</span><br><span class="line">func(<span class="string">'Jack'</span>) <span class="comment">// "Hello Jack!"</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 写法二</span></span><br><span class="line"><span class="keyword">let</span> str = <span class="string">'(name) =&gt; `Hello $&#123;name&#125;!`'</span>;</span><br><span class="line"><span class="keyword">let</span> func = <span class="built_in">eval</span>.call(<span class="literal">null</span>, str);</span><br><span class="line">func(<span class="string">'Jack'</span>) <span class="comment">// "Hello Jack!"</span></span><br></pre></td></tr></table></figure></p>
+<h1 id="标签模板"><a href="#标签模板" class="headerlink" title="标签模板"></a>标签模板</h1><p>模板字符串，紧跟在一个函数名后面，该函数将被调用来处理这个模板字符串。这被称为“标签模板”功能（tagged template）。<br>标签模板其实不是模板，而是函数调用的一种特殊形式。“标签”指的就是函数，紧跟在后面的模板字符串就是它的参数。<br>如果模板字符里面有变量，就不是简单的调用了，而是会将模板字符串先处理成多个参数，再调用函数。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> a = <span class="number">5</span>;</span><br><span class="line"><span class="keyword">let</span> b = <span class="number">10</span>;</span><br><span class="line"></span><br><span class="line">tag<span class="string">`Hello <span class="subst">$&#123; a + b &#125;</span> world <span class="subst">$&#123; a * b &#125;</span>`</span>;</span><br><span class="line"><span class="comment">// 等同于</span></span><br><span class="line">tag([<span class="string">'Hello '</span>, <span class="string">' world '</span>, <span class="string">''</span>], <span class="number">15</span>, <span class="number">50</span>);</span><br></pre></td></tr></table></figure></p>
+<p>上面代码中，模板字符串前面有一个标识名tag，它是一个函数。整个表达式的返回值，就是tag函数处理模板字符串后的返回值。<br>函数tag依次会接收到多个参数。<font color="#04B486">tag函数的第一个参数是一个数组，该数组的成员是模板字符串中那些没有变量替换的部分，也就是说，变量替换只发生在数组的第一个成员与第二个成员之间、第二个成员与第三个成员之间，以此类推。tag函数的其他参数，都是模板字符串各个变量被替换后的值。</font></p>
+<p>“标签模板”的一个重要应用，就是过滤 HTML 字符串，防止用户输入恶意内容。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> message =</span><br><span class="line">  SaferHTML<span class="string">`&lt;p&gt;<span class="subst">$&#123;sender&#125;</span> has sent you a message.&lt;/p&gt;`</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">SaferHTML</span>(<span class="params">templateData</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">let</span> s = templateData[<span class="number">0</span>];</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">1</span>; i &lt; <span class="built_in">arguments</span>.length; i++) &#123;</span><br><span class="line">    <span class="keyword">let</span> arg = <span class="built_in">String</span>(<span class="built_in">arguments</span>[i]);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Escape special characters in the substitution.</span></span><br><span class="line">    s += arg.replace(<span class="regexp">/&amp;/g</span>, <span class="string">"&amp;amp;"</span>)</span><br><span class="line">            .replace(<span class="regexp">/&lt;/g</span>, <span class="string">"&amp;lt;"</span>)</span><br><span class="line">            .replace(<span class="regexp">/&gt;/g</span>, <span class="string">"&amp;gt;"</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Don't escape special characters in the template.</span></span><br><span class="line">    s += templateData[i];</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> s;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>上面代码中，sender变量往往是用户提供的，经过SaferHTML函数处理，里面的特殊字符都会被转义。</p>
+<p>标签模板的另一个应用，就是多语言转换（国际化处理）。多语言转换（国际化处理）。可以使用标签模板，在 JavaScript 语言之中嵌入其他语言。</p>
+<p>模板处理函数的第一个参数（模板字符串数组），还有一个raw属性。保存的是转义后的原字符串。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">tag<span class="string">`First line\nSecond line`</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">tag</span>(<span class="params">strings</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(strings.raw[<span class="number">0</span>]);</span><br><span class="line">  <span class="comment">// strings.raw[0] 为 "First line\\nSecond line"</span></span><br><span class="line">  <span class="comment">// 打印输出 "First line\nSecond line"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h1 id="String-raw"><a href="#String-raw" class="headerlink" title="String.raw()"></a>String.raw()</h1><p>ES6 还为原生的 String 对象，提供了一个raw方法。<br>String.raw方法，往往用来充当模板字符串的处理函数，返回一个斜杠都被转义（即斜杠前面再加一个斜杠）的字符串，对应于替换变量后的模板字符串。如果原字符串的斜杠已经转义，那么String.raw会进行再次转义。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">String</span>.raw<span class="string">`Hi\n<span class="subst">$&#123;<span class="number">2</span>+<span class="number">3</span>&#125;</span>!`</span>;</span><br><span class="line"><span class="comment">// 返回 "Hi\\n5!"</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">String</span>.raw<span class="string">`Hi\u000A!`</span>;</span><br><span class="line"><span class="comment">// 返回 "Hi\\u000A!"</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">String</span>.raw<span class="string">`Hi\\n`</span></span><br><span class="line"><span class="comment">// 返回 "Hi\\\\n"</span></span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    <footer class="entry-meta entry-footer">
+      
+	<span class="ico-folder"></span>
+    <a class="article-category-link" href="/categories/ES6/">ES6</a>
+
+      
+  <span class="ico-tags"></span>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ES6/">ES6</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/前端/">前端</a></li></ul>
+
+      
+        
+	<div id="comment">
+		<!-- 来必力City版安装代码 -->
+		<div id="lv-container" data-id="city" data-uid="MTAyMC8yOTQ4MS82MDQ5">
+		<script type="text/javascript">
+		   (function(d, s) {
+		       var j, e = d.getElementsByTagName(s)[0];
+
+		       if (typeof LivereTower === 'function') { return; }
+
+		       j = d.createElement(s);
+		       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+		       j.async = true;
+
+		       e.parentNode.insertBefore(j, e);
+		   })(document, 'script');
+		</script>
+		<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+		</div>
+		<!-- City版安装代码已完成 -->
+	</div>
+
+
+
+      
+    </footer>
+    <hr class="entry-footer-hr">
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2018/07/06/变量的解构赋值/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">下一篇</strong>
+      <div class="article-nav-title">变量的解构赋值</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+<!-- Table of Contents -->
+
+  <aside id="sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    
+      <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#字符的-Unicode-表示法"><span class="nav-number">1.</span> <span class="nav-text">字符的 Unicode 表示法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#codePointAt"><span class="nav-number">2.</span> <span class="nav-text">codePointAt()</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#String-fromCodePoint"><span class="nav-number">3.</span> <span class="nav-text">String.fromCodePoint()</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#字符串的遍历器接口"><span class="nav-number">4.</span> <span class="nav-text">字符串的遍历器接口</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#at"><span class="nav-number">5.</span> <span class="nav-text">at()</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#normalize"><span class="nav-number">6.</span> <span class="nav-text">normalize()</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#includes-startsWith-endsWith"><span class="nav-number">7.</span> <span class="nav-text">includes(), startsWith(), endsWith()</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#repeat"><span class="nav-number">8.</span> <span class="nav-text">repeat()</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#padStart-，padEnd"><span class="nav-number">9.</span> <span class="nav-text">padStart()，padEnd()</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#matchAll"><span class="nav-number">10.</span> <span class="nav-text">matchAll()</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#模板字符串"><span class="nav-number">11.</span> <span class="nav-text">模板字符串</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#标签模板"><span class="nav-number">12.</span> <span class="nav-text">标签模板</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#String-raw"><span class="nav-number">13.</span> <span class="nav-text">String.raw()</span></a></li></ol>
+    
+    </div>
+  </aside>
+</section>
+        
+      </div>
+
+    </div>
+    <!-- <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/categories" class="mobile-nav-link">Categories</a>
+  
+    <a href="/tags" class="mobile-nav-link">Tags</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav> -->
+    <footer id="footer" class="site-footer">
+  
+
+  <div class="clearfix container">
+      <div class="site-info">
+	      &copy; 2018 01不是包子脸 All Rights Reserved.
+        
+            <span id="busuanzi_container_site_uv">
+              本站访客数<span id="busuanzi_value_site_uv"></span>人次  
+              本站总访问量<span id="busuanzi_value_site_pv"></span>次
+            </span>
+          
+      </div>
+      <div class="site-credit">
+        Theme by <a href="https://github.com/iTimeTraveler/hexo-theme-hipaper" target="_blank">hipaper</a>
+      </div>
+  </div>
+</footer>
+
+
+<!-- min height -->
+
+<script>
+    var wrapdiv = document.getElementById("wrap");
+    var contentdiv = document.getElementById("content");
+
+    wrapdiv.style.minHeight = document.body.offsetHeight - document.getElementById("allheader").offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("allheader").offsetHeight - document.getElementById("footer").offsetHeight + "px";
+
+
+    <!-- headerblur min height -->
+    
+    
+</script>
+    
+<div style="display: none;">
+  <script src="https://s11.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+</div>
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+<script src="/js/bootstrap.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+
+
+
+
+  <div style="display: none;">
+    <script src="https://s95.cnzz.com/z_stat.php?id=1273997385&web_id=1273997385" language="JavaScript"></script>
+  </div>
+
+
+
+	<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+
+
+
+
+
+
+  </div>
+
+  <a id="rocket" href="#top" class=""></a>
+  <script type="text/javascript" src="/js/totop.js" async=""></script>
+</body>
+</html>
