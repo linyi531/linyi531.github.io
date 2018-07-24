@@ -102,6 +102,71 @@
         
           <section id="main">
   
+    <article id="post-this和super关键字"  class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="clearfix post-1016 post type-post status-publish format-standard has-post-thumbnail hentry category-template-2 category-uncategorized tag-codex tag-edge-case tag-featured-image tag-image tag-template">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2018/07/24/this和super关键字/">this和super关键字</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2018/07/24/this和super关键字/" class="article-date">
+	  <time datetime="2018-07-24T10:41:35.000Z" itemprop="datePublished">七月 24, 2018</time>
+	</a>
+
+      
+	<span class="ico-folder"></span>
+    <a class="article-category-link" href="/categories/ES6/">ES6</a>
+ 
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="this关键字"><a href="#this关键字" class="headerlink" title="this关键字"></a>this关键字</h1><p>this的指向：</p>
+<h2 id="作为普通对象的方法调用"><a href="#作为普通对象的方法调用" class="headerlink" title="作为普通对象的方法调用"></a>作为普通对象的方法调用</h2><p>作为普通对象的方法调用时，this指向这个对象本身<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> obj = &#123;</span><br><span class="line">  a: <span class="number">1</span>,</span><br><span class="line">  getA: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span> === obj)</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>.a)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//this指向obj对象</span></span><br><span class="line">obj.getA()</span><br></pre></td></tr></table></figure></p>
+<h2 id="作为普通函数调用"><a href="#作为普通函数调用" class="headerlink" title="作为普通函数调用"></a>作为普通函数调用</h2><p>作为普通函数调用时，this指向全局对象，在浏览器中全局对象是 window，在 NodeJs 中全局对象是 global。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> obj = &#123;</span><br><span class="line">  a: <span class="number">1</span>,</span><br><span class="line">  getA: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span> === obj)</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>.a)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//this指向window对象</span></span><br><span class="line"><span class="keyword">var</span> getA = obj.getA</span><br><span class="line">getA()</span><br></pre></td></tr></table></figure></p>
+<p>这里需要注意的一点是，直接调用并不是指在全局作用域下进行调用，在任何作用域下，直接通过 函数名(…) 来对函数进行调用的方式，都称为直接调用。</p>
+<h2 id="构造器调用"><a href="#构造器调用" class="headerlink" title="构造器调用"></a>构造器调用</h2><p>构造器调用时，this指向返回的对象。用 new 调用一个构造函数，会创建一个新对象，而其中的 this 就指向这个新对象。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="number">10</span>;</span><br><span class="line"><span class="keyword">var</span> b = <span class="number">20</span>;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Point</span> (<span class="params">x, y</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.x = x</span><br><span class="line">  <span class="keyword">this</span>.y = y</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> a = <span class="keyword">new</span> Point(<span class="number">1</span>, <span class="number">2</span>);</span><br><span class="line"><span class="built_in">console</span>.log(a.x);    <span class="comment">// 1</span></span><br><span class="line"><span class="built_in">console</span>.log(x);      <span class="comment">// 10</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> b = <span class="keyword">new</span> Point(<span class="number">1</span>, <span class="number">2</span>);</span><br><span class="line"><span class="built_in">console</span>.log(a === b);   <span class="comment">// false</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="call-apply-bind"><a href="#call-apply-bind" class="headerlink" title="call apply bind"></a>call apply bind</h2><h3 id="call-apply-的用途"><a href="#call-apply-的用途" class="headerlink" title="call, apply 的用途"></a>call, apply 的用途</h3><ol>
+<li>改变this的指向</li>
+<li>Function.prototype.bind<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Function</span>.prototype.bind = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> self = <span class="keyword">this</span></span><br><span class="line">  <span class="keyword">var</span> context = [].shift.call(<span class="built_in">arguments</span>)</span><br><span class="line">  <span class="keyword">var</span> args = [].slice.call(<span class="built_in">arguments</span>)</span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> self.apply(context, args.concat([].slice.call(<span class="built_in">arguments</span>)))</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h3 id="三者区别"><a href="#三者区别" class="headerlink" title="三者区别"></a>三者区别</h3><p>call只能一个一个传入参数<br>apply可直接传入参数数组<br>bind会返回一个新的函数</p>
+<h1 id="super关键字"><a href="#super关键字" class="headerlink" title="super关键字"></a>super关键字</h1><p>关键字super，指向当前对象的原型对象。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> proto = &#123;</span><br><span class="line">  foo: <span class="string">'hello'</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> obj = &#123;</span><br><span class="line">  foo: <span class="string">'world'</span>,</span><br><span class="line">  find() &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">super</span>.foo;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="built_in">Object</span>.setPrototypeOf(obj, proto);</span><br><span class="line">obj.find() <span class="comment">// "hello"</span></span><br></pre></td></tr></table></figure></p>
+<p>上面代码中，对象obj的find方法之中，通过super.foo引用了原型对象proto的foo属性。<br>注意，super关键字表示原型对象时，只能用在对象的方法之中，用在其他地方都会报错。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 报错</span></span><br><span class="line"><span class="keyword">const</span> obj = &#123;</span><br><span class="line">  foo: <span class="keyword">super</span>.foo</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 报错</span></span><br><span class="line"><span class="keyword">const</span> obj = &#123;</span><br><span class="line">  foo: <span class="function"><span class="params">()</span> =&gt;</span> <span class="keyword">super</span>.foo</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 报错</span></span><br><span class="line"><span class="keyword">const</span> obj = &#123;</span><br><span class="line">  foo: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">super</span>.foo</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>上面三种super的用法都会报错，因为对于 JavaScript 引擎来说，这里的super都没有用在对象的方法之中。第一种写法是super用在属性里面，第二种和第三种写法是super用在一个函数里面，然后赋值给foo属性。目前，只有对象方法的简写法可以让 JavaScript 引擎确认，定义的是对象的方法。<br>JavaScript 引擎内部，super.foo等同于Object.getPrototypeOf(this).foo（属性）或Object.getPrototypeOf(this).foo.call(this)（方法）。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> proto = &#123;</span><br><span class="line">  x: <span class="string">'hello'</span>,</span><br><span class="line">  foo() &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>.x);</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> obj = &#123;</span><br><span class="line">  x: <span class="string">'world'</span>,</span><br><span class="line">  foo() &#123;</span><br><span class="line">    <span class="keyword">super</span>.foo();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">Object</span>.setPrototypeOf(obj, proto);</span><br><span class="line"></span><br><span class="line">obj.foo() <span class="comment">// "world"</span></span><br></pre></td></tr></table></figure></p>
+<p>上面代码中，super.foo指向原型对象proto的foo方法，但是绑定的this却还是当前对象obj，因此输出的就是world。</p>
+
+      
+    </div>
+    <footer class="entry-meta entry-footer">
+      
+	<span class="ico-folder"></span>
+    <a class="article-category-link" href="/categories/ES6/">ES6</a>
+
+      
+  <span class="ico-tags"></span>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ES6/">ES6</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/前端/">前端</a></li></ul>
+
+      
+    </footer>
+    <hr class="entry-footer-hr">
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+  
     <article id="post-箭头函数"  class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="clearfix post-1016 post type-post status-publish format-standard has-post-thumbnail hentry category-template-2 category-uncategorized tag-codex tag-edge-case tag-featured-image tag-image tag-template">
     
@@ -245,7 +310,7 @@
 </li>
 <li><p>git push -u origin develop<br>上传develop分支到远程仓库上（远程无项目可直接push，有项目先merge 再push）</p>
 </li>
-<li><p>git pull origin feature<br>拉去远程feature分支（pull=fetch+merge）</p>
+<li><p>git pull origin feature<br>拉取远程feature分支（pull=fetch+merge）</p>
 </li>
 <li><p>git brach -d feature<br>删除feature分支</p>
 </li>
@@ -342,7 +407,7 @@
 </ol>
 <p>这被称为dotAll模式，即点（dot）代表一切字符。所以，正则表达式还引入了一个dotAll属性，返回一个布尔值，表示该正则表达式是否处在dotAll模式。<br>/s修饰符和多行修饰符/m不冲突，两者一起使用的情况下，.匹配所有字符，而^和$匹配每一行的行首和行尾。</p>
 <h1 id="后行断言"><a href="#后行断言" class="headerlink" title="后行断言"></a>后行断言</h1><p>”先行断言“指的是，x只有在y前面才匹配，必须写成/x(?=y)/。比如，只匹配百分号之前的数字，要写成/\d+(?=%)/。<br>”先行否定断言“指的是，x只有不在y前面才匹配，必须写成/x(?!y)/。比如，只匹配不在百分号之前的数字，要写成/\d+(?!%)/。<br>“后行断言”正好与“先行断言”相反，x只有在y后面才匹配，必须写成/(?&lt;=y)x/。比如，只匹配美元符号之后的数字，要写成/(?&lt;=\$)\d+/。<br>”后行否定断言“则与”先行否定断言“相反，x只有不在y后面才匹配，必须写成/(?&lt;!y)x/。比如，只匹配不在美元符号后面的数字，要写成/(?&lt;!\$)\d+/。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> RE_DOLLAR_PREFIX = <span class="regexp">/(?&lt;=\$)foo/g</span>;</span><br><span class="line"><span class="string">'$foo %foo foo'</span>.replace(RE_DOLLAR_PREFIX, <span class="string">'bar'</span>);</span><br><span class="line"><span class="comment">// '$bar %foo foo'</span></span><br></pre></td></tr></table></figure></p>
-<p>“后行断言”的实现，需要先匹配/(?&lt;=y)x/的x，然后再回到左边，匹配y的部分。这种“先右后左”的执行顺序，与所有其他正则操作相反，导致了一些不符合预期的行为。<br>首先，后行断言的组匹配，与正常情况下结果是不一样的。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">/(?<span class="xml"><span class="tag">&lt;<span class="name">=(\d+)(\d+))$</span>/<span class="attr">.exec</span>('<span class="attr">1053</span>') // ["", "<span class="attr">1</span>", "<span class="attr">053</span>"]</span></span></span><br><span class="line"><span class="xml">/^(\d+)(\d+)$/.exec('1053') // ["1053", "105", "3"]</span></span><br></pre></td></tr></table></figure></p>
+<p>“后行断言”的实现，需要先匹配/(?&lt;=y)x/的x，然后再回到左边，匹配y的部分。这种“先右后左”的执行顺序，与所有其他正则操作相反，导致了一些不符合预期的行为。<br>首先，后行断言的组匹配，与正常情况下结果是不一样的。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">/(?&lt;=(\d+)(\d+))$/.exec('1053') // ["", "1", "053"]</span><br><span class="line">/^(\d+)(\d+)$/.exec('1053') // ["1053", "105", "3"]</span><br></pre></td></tr></table></figure></p>
 <p>上面代码中，需要捕捉两个组匹配。没有“后行断言”时，第一个括号是贪婪模式，第二个括号只能捕获一个字符，所以结果是105和3。而“后行断言”时，由于执行顺序是从右到左，第二个括号是贪婪模式，第一个括号只能捕获一个字符，所以结果是1和053。<br>其次，“后行断言”的反斜杠引用，也与通常的顺序相反，必须放在对应的那个括号之前。</p>
 <h1 id="Unicode-属性类"><a href="#Unicode-属性类" class="headerlink" title="Unicode 属性类"></a>Unicode 属性类</h1><p>ES2018 引入了一种新的类的写法\p{…}和\P{…}，允许正则表达式匹配符合 Unicode 某种属性的所有字符。Unicode 属性类要指定属性名和属性值。对于某些属性，可以只写属性名，或者只写属性值。\P{…}是\p{…}的反向匹配，即匹配不满足条件的字符。这两种类只对 Unicode 有效，所以使用的时候一定要加上u修饰符。如果不加u修饰符，正则表达式使用\p和\P会报错，ECMAScript 预留了这两个类。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 匹配所有空格</span></span><br><span class="line">\p&#123;White_Space&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 匹配各种文字的所有字母，等同于 Unicode 版的 \w</span></span><br><span class="line">[\p&#123;Alphabetic&#125;\p&#123;Mark&#125;\p&#123;Decimal_Number&#125;\p&#123;Connector_Punctuation&#125;\p&#123;Join_Control&#125;]</span><br><span class="line"></span><br><span class="line"><span class="comment">// 匹配各种文字的所有非字母的字符，等同于 Unicode 版的 \W</span></span><br><span class="line">[^\p&#123;Alphabetic&#125;\p&#123;Mark&#125;\p&#123;Decimal_Number&#125;\p&#123;Connector_Punctuation&#125;\p&#123;Join_Control&#125;]</span><br><span class="line"></span><br><span class="line"><span class="comment">// 匹配 Emoji</span></span><br><span class="line">/\p&#123;Emoji_Modifier_Base&#125;\p&#123;Emoji_Modifier&#125;?|\p&#123;Emoji_Presentation&#125;|\p&#123;Emoji&#125;\uFE0F/gu</span><br><span class="line"></span><br><span class="line"><span class="comment">// 匹配所有的箭头字符</span></span><br><span class="line"><span class="keyword">const</span> regexArrows = <span class="regexp">/^\p&#123;Block=Arrows&#125;+$/u</span>;</span><br><span class="line">regexArrows.test(<span class="string">'←↑→↓↔↕↖↗↘↙⇏⇐⇑⇒⇓⇔⇕⇖⇗⇘⇙⇧⇩'</span>) <span class="comment">// true</span></span><br></pre></td></tr></table></figure></p>
 <h1 id="具名组匹配"><a href="#具名组匹配" class="headerlink" title="具名组匹配"></a>具名组匹配</h1><p>正则表达式使用圆括号进行组匹配。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> RE_DATE = <span class="regexp">/(\d&#123;4&#125;)-(\d&#123;2&#125;)-(\d&#123;2&#125;)/</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> matchObj = RE_DATE.exec(<span class="string">'1999-12-31'</span>);</span><br><span class="line"><span class="keyword">const</span> year = matchObj[<span class="number">1</span>]; <span class="comment">// 1999</span></span><br><span class="line"><span class="keyword">const</span> month = matchObj[<span class="number">2</span>]; <span class="comment">// 12</span></span><br><span class="line"><span class="keyword">const</span> day = matchObj[<span class="number">3</span>]; <span class="comment">// 31</span></span><br></pre></td></tr></table></figure></p>
@@ -674,6 +739,18 @@
               <div class="widget-entry-summary" style="margin: 0;">
             
 
+              <h6 style="margin: 0;"><a href="/2018/07/24/this和super关键字/">this和super关键字</a></h6>
+              <span>七月 24, 2018</span>
+            </div>
+
+          </li>
+        
+          <li class="clearfix">
+
+            
+              <div class="widget-entry-summary" style="margin: 0;">
+            
+
               <h6 style="margin: 0;"><a href="/2018/07/16/箭头函数/">箭头函数</a></h6>
               <span>七月 16, 2018</span>
             </div>
@@ -728,18 +805,6 @@
 
           </li>
         
-          <li class="clearfix">
-
-            
-              <div class="widget-entry-summary" style="margin: 0;">
-            
-
-              <h6 style="margin: 0;"><a href="/2018/07/04/var，let和const声明及区别/">var，let和const声明及区别</a></h6>
-              <span>七月 4, 2018</span>
-            </div>
-
-          </li>
-        
       </ul>
     </div>
   </div>
@@ -749,7 +814,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">分类</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/ES6/">ES6</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/git/">git</a><span class="category-list-count">1</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/ES6/">ES6</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/git/">git</a><span class="category-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -759,7 +824,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">标签</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/ES6/">ES6</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/前端/">前端</a><span class="tag-list-count">5</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/ES6/">ES6</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/前端/">前端</a><span class="tag-list-count">6</span></li></ul>
     </div>
   </div>
 
@@ -822,7 +887,7 @@
     <h3 class="widget-title">归档</h3>
 
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a><span class="archive-list-count">6</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a><span class="archive-list-count">7</span></li></ul>
     </div>
   </div>
 
