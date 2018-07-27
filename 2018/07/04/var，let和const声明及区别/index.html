@@ -11,18 +11,18 @@
   
   
   
-  <meta name="description" content="var声明在函数作用域或全局作用域中通过var声明的变量，都会被当成在当前作用域顶部声明的变量。这就是提升（Hoisting）机制。例如：123456789101112fuction getValue(condition)&amp;#123;    if(condition)&amp;#123;        var value=&quot;blue&quot;;        //其他代码        return value;">
+  <meta name="description" content="var声明在函数作用域或全局作用域中通过var声明的变量，都会被当成在当前作用域顶部声明的变量。这就是提升（Hoisting）机制。">
 <meta name="keywords" content="ES6,前端">
 <meta property="og:type" content="article">
 <meta property="og:title" content="var，let和const声明及区别">
 <meta property="og:url" content="http://yoursite.com/2018/07/04/var，let和const声明及区别/index.html">
 <meta property="og:site_name" content="01不是包子脸">
-<meta property="og:description" content="var声明在函数作用域或全局作用域中通过var声明的变量，都会被当成在当前作用域顶部声明的变量。这就是提升（Hoisting）机制。例如：123456789101112fuction getValue(condition)&amp;#123;    if(condition)&amp;#123;        var value=&quot;blue&quot;;        //其他代码        return value;">
+<meta property="og:description" content="var声明在函数作用域或全局作用域中通过var声明的变量，都会被当成在当前作用域顶部声明的变量。这就是提升（Hoisting）机制。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-07-06T03:55:45.764Z">
+<meta property="og:updated_time" content="2018-07-27T03:57:38.924Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="var，let和const声明及区别">
-<meta name="twitter:description" content="var声明在函数作用域或全局作用域中通过var声明的变量，都会被当成在当前作用域顶部声明的变量。这就是提升（Hoisting）机制。例如：123456789101112fuction getValue(condition)&amp;#123;    if(condition)&amp;#123;        var value=&quot;blue&quot;;        //其他代码        return value;">
+<meta name="twitter:description" content="var声明在函数作用域或全局作用域中通过var声明的变量，都会被当成在当前作用域顶部声明的变量。这就是提升（Hoisting）机制。">
   
     <link rel="alternate" href="/atom.xml" title="01不是包子脸" type="application/atom+xml">
   
@@ -139,7 +139,7 @@
     </div>
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="var声明"><a href="#var声明" class="headerlink" title="var声明"></a>var声明</h1><p>在函数作用域或全局作用域中通过var声明的变量，都会被当成在当前作用域顶部声明的变量。这就是提升（Hoisting）机制。<br>例如：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">fuction getValue(condition)&#123;</span><br><span class="line">    <span class="keyword">if</span>(condition)&#123;</span><br><span class="line">        <span class="keyword">var</span> value=<span class="string">"blue"</span>;</span><br><span class="line">        <span class="comment">//其他代码</span></span><br><span class="line">        <span class="keyword">return</span> value;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="comment">//此处可以访问变量value，其值为undefined</span></span><br><span class="line">        <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//此处可以访问变量value，其值为undefined</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+        <h1 id="var声明"><a href="#var声明" class="headerlink" title="var声明"></a>var声明</h1><p>在函数作用域或全局作用域中通过var声明的变量，都会被当成在当前作用域顶部声明的变量。这就是提升（Hoisting）机制。<br><a id="more"></a><br>例如：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">fuction getValue(condition)&#123;</span><br><span class="line">    <span class="keyword">if</span>(condition)&#123;</span><br><span class="line">        <span class="keyword">var</span> value=<span class="string">"blue"</span>;</span><br><span class="line">        <span class="comment">//其他代码</span></span><br><span class="line">        <span class="keyword">return</span> value;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="comment">//此处可以访问变量value，其值为undefined</span></span><br><span class="line">        <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//此处可以访问变量value，其值为undefined</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>事实上，在预编译阶段，JavaScript引擎会将上面的函数修改为下面这样：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">fuction getValue(condition)&#123;</span><br><span class="line">    <span class="keyword">var</span> value;</span><br><span class="line">    <span class="keyword">if</span>(condition)&#123;</span><br><span class="line">        value=<span class="string">"blue"</span>;</span><br><span class="line">        <span class="comment">//其他代码</span></span><br><span class="line">        <span class="keyword">return</span> value;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="comment">//此处可以访问变量value，其值为undefined</span></span><br><span class="line">        <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//此处可以访问变量value，其值为undefined</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>变量value的声明会被提升至函数顶部，而初始化操作依然留在原处执行。这样，就意味着，在函数的其他部分，else子句中或者if-else外，也能访问到value变量，而由于此时value变量并未被初始化赋值，所以访问到值为undefined。</p>
 <h1 id="块级声明"><a href="#块级声明" class="headerlink" title="块级声明"></a>块级声明</h1><p>ES6中引入块级作用域来强化对变量生命周期的控制。<br>块级声明用于声明在指定块的作用域之外无法访问的变量。块级作用域（词法作用域）存在于：</p>
@@ -358,5 +358,7 @@
 
   <a id="rocket" href="#top" class=""></a>
   <script type="text/javascript" src="/js/totop.js" async=""></script>
+  <!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/love.js"></script>
 </body>
 </html>

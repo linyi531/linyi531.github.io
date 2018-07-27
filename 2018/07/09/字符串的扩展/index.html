@@ -11,18 +11,18 @@
   
   
   
-  <meta name="description" content="字符的 Unicode 表示法JavaScript 允许采用\uxxxx形式表示一个字符，其中xxxx表示字符的 Unicode 码点。码点在\u0000~\uFFFF之间的字符。超出这个范围的字符，必须用两个双字节的形式表示。12345678&quot;\u0061&quot;// &quot;a&quot;&quot;\uD842\uDFB7&quot;// &quot;𠮷&quot;&quot;\u20BB7&quot;// &quot; 7&quot; 如果直接在\u后面跟上超过0xFFFF的数值（比如\">
+  <meta name="description" content="字符的 Unicode 表示法JavaScript 允许采用\uxxxx形式表示一个字符，其中xxxx表示字符的 Unicode 码点。码点在\u0000~\uFFFF之间的字符。超出这个范围的字符，必须用两个双字节的形式表示。">
 <meta name="keywords" content="ES6,前端">
 <meta property="og:type" content="article">
 <meta property="og:title" content="字符串的扩展">
 <meta property="og:url" content="http://yoursite.com/2018/07/09/字符串的扩展/index.html">
 <meta property="og:site_name" content="01不是包子脸">
-<meta property="og:description" content="字符的 Unicode 表示法JavaScript 允许采用\uxxxx形式表示一个字符，其中xxxx表示字符的 Unicode 码点。码点在\u0000~\uFFFF之间的字符。超出这个范围的字符，必须用两个双字节的形式表示。12345678&quot;\u0061&quot;// &quot;a&quot;&quot;\uD842\uDFB7&quot;// &quot;𠮷&quot;&quot;\u20BB7&quot;// &quot; 7&quot; 如果直接在\u后面跟上超过0xFFFF的数值（比如\">
+<meta property="og:description" content="字符的 Unicode 表示法JavaScript 允许采用\uxxxx形式表示一个字符，其中xxxx表示字符的 Unicode 码点。码点在\u0000~\uFFFF之间的字符。超出这个范围的字符，必须用两个双字节的形式表示。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-07-09T08:50:09.961Z">
+<meta property="og:updated_time" content="2018-07-27T03:57:56.440Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="字符串的扩展">
-<meta name="twitter:description" content="字符的 Unicode 表示法JavaScript 允许采用\uxxxx形式表示一个字符，其中xxxx表示字符的 Unicode 码点。码点在\u0000~\uFFFF之间的字符。超出这个范围的字符，必须用两个双字节的形式表示。12345678&quot;\u0061&quot;// &quot;a&quot;&quot;\uD842\uDFB7&quot;// &quot;𠮷&quot;&quot;\u20BB7&quot;// &quot; 7&quot; 如果直接在\u后面跟上超过0xFFFF的数值（比如\">
+<meta name="twitter:description" content="字符的 Unicode 表示法JavaScript 允许采用\uxxxx形式表示一个字符，其中xxxx表示字符的 Unicode 码点。码点在\u0000~\uFFFF之间的字符。超出这个范围的字符，必须用两个双字节的形式表示。">
   
     <link rel="alternate" href="/atom.xml" title="01不是包子脸" type="application/atom+xml">
   
@@ -139,7 +139,7 @@
     </div>
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="字符的-Unicode-表示法"><a href="#字符的-Unicode-表示法" class="headerlink" title="字符的 Unicode 表示法"></a>字符的 Unicode 表示法</h1><p>JavaScript 允许采用\uxxxx形式表示一个字符，其中xxxx表示字符的 Unicode 码点。码点在\u0000~\uFFFF之间的字符。超出这个范围的字符，必须用两个双字节的形式表示。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"\u0061"</span></span><br><span class="line"><span class="comment">// "a"</span></span><br><span class="line"></span><br><span class="line"><span class="string">"\uD842\uDFB7"</span></span><br><span class="line"><span class="comment">// "𠮷"</span></span><br><span class="line"></span><br><span class="line"><span class="string">"\u20BB7"</span></span><br><span class="line"><span class="comment">// " 7"</span></span><br></pre></td></tr></table></figure></p>
+        <h1 id="字符的-Unicode-表示法"><a href="#字符的-Unicode-表示法" class="headerlink" title="字符的 Unicode 表示法"></a>字符的 Unicode 表示法</h1><p>JavaScript 允许采用\uxxxx形式表示一个字符，其中xxxx表示字符的 Unicode 码点。码点在\u0000~\uFFFF之间的字符。超出这个范围的字符，必须用两个双字节的形式表示。<br><a id="more"></a><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"\u0061"</span></span><br><span class="line"><span class="comment">// "a"</span></span><br><span class="line"></span><br><span class="line"><span class="string">"\uD842\uDFB7"</span></span><br><span class="line"><span class="comment">// "𠮷"</span></span><br><span class="line"></span><br><span class="line"><span class="string">"\u20BB7"</span></span><br><span class="line"><span class="comment">// " 7"</span></span><br></pre></td></tr></table></figure></p>
 <p>如果直接在\u后面跟上超过0xFFFF的数值（比如\u20BB7），JavaScript 会理解成\u20BB+7。由于\u20BB是一个不可打印字符，所以只会显示一个空格，后面跟着一个7。ES6 对这一点做出了改进，只要将码点放入大括号，就能正确解读该字符。</p>
 <h1 id="codePointAt"><a href="#codePointAt" class="headerlink" title="codePointAt()"></a>codePointAt()</h1><p>codePointAt方法会正确返回 32 位的 UTF-16 字符的码点。对于那些两个字节储存的常规字符，它的返回结果与charCodeAt方法相同。例如，汉字“𠮷”（注意，这个字不是“吉祥”的“吉”）的码点是0x20BB7，UTF-16 编码为0xD842 0xDFB7（十进制为55362 57271），需要4个字节储存。对于这种4个字节的字符，JavaScript 不能正确处理，字符串长度会误判为2，而且charAt方法无法读取整个字符，charCodeAt方法只能分别返回前两个字节和后两个字节的值。ES6 提供了codePointAt方法，能够正确处理 4 个字节储存的字符，返回一个字符的码点（codePointAt方法返回的是码点的十进制值）。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> s = <span class="string">"𠮷"</span>;</span><br><span class="line"></span><br><span class="line">s.length <span class="comment">// 2</span></span><br><span class="line">s.charAt(<span class="number">0</span>) <span class="comment">// ''</span></span><br><span class="line">s.charAt(<span class="number">1</span>) <span class="comment">// ''</span></span><br><span class="line">s.charCodeAt(<span class="number">0</span>) <span class="comment">// 55362</span></span><br><span class="line">s.charCodeAt(<span class="number">1</span>) <span class="comment">// 57271</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> a = <span class="string">'𠮷a'</span>;</span><br><span class="line"></span><br><span class="line">a.codePointAt(<span class="number">0</span>) <span class="comment">// 134071</span></span><br><span class="line">a.codePointAt(<span class="number">1</span>) <span class="comment">// 57271</span></span><br><span class="line"></span><br><span class="line">a.codePointAt(<span class="number">2</span>) <span class="comment">// 97</span></span><br></pre></td></tr></table></figure></p>
 <p>codePointAt方法的参数，是字符在字符串中的位置（从 0 开始）。上面代码中，JavaScript 将“𠮷a”视为三个字符，codePointAt 方法在第一个字符上，正确地识别了“𠮷”，返回了它的十进制码点 134071（即十六进制的20BB7）。在第二个字符（即“𠮷”的后两个字节）和第三个字符“a”上，codePointAt方法的结果与charCodeAt方法相同。</p>
@@ -370,5 +370,7 @@
 
   <a id="rocket" href="#top" class=""></a>
   <script type="text/javascript" src="/js/totop.js" async=""></script>
+  <!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/love.js"></script>
 </body>
 </html>

@@ -11,18 +11,18 @@
   
   
   
-  <meta name="description" content="this关键字this的指向： 作为普通对象的方法调用作为普通对象的方法调用时，this指向这个对象本身12345678910var obj = &amp;#123;  a: 1,  getA: function () &amp;#123;    console.log(this === obj)    console.log(this.a)  &amp;#125;&amp;#125;//this指向obj对象obj.getA(">
+  <meta name="description" content="this关键字this的指向： 作为普通对象的方法调用作为普通对象的方法调用时，this指向这个对象本身">
 <meta name="keywords" content="ES6,前端">
 <meta property="og:type" content="article">
 <meta property="og:title" content="this和super关键字">
 <meta property="og:url" content="http://yoursite.com/2018/07/24/this和super关键字/index.html">
 <meta property="og:site_name" content="01不是包子脸">
-<meta property="og:description" content="this关键字this的指向： 作为普通对象的方法调用作为普通对象的方法调用时，this指向这个对象本身12345678910var obj = &amp;#123;  a: 1,  getA: function () &amp;#123;    console.log(this === obj)    console.log(this.a)  &amp;#125;&amp;#125;//this指向obj对象obj.getA(">
+<meta property="og:description" content="this关键字this的指向： 作为普通对象的方法调用作为普通对象的方法调用时，this指向这个对象本身">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-07-24T11:05:49.630Z">
+<meta property="og:updated_time" content="2018-07-27T03:56:48.029Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="this和super关键字">
-<meta name="twitter:description" content="this关键字this的指向： 作为普通对象的方法调用作为普通对象的方法调用时，this指向这个对象本身12345678910var obj = &amp;#123;  a: 1,  getA: function () &amp;#123;    console.log(this === obj)    console.log(this.a)  &amp;#125;&amp;#125;//this指向obj对象obj.getA(">
+<meta name="twitter:description" content="this关键字this的指向： 作为普通对象的方法调用作为普通对象的方法调用时，this指向这个对象本身">
   
     <link rel="alternate" href="/atom.xml" title="01不是包子脸" type="application/atom+xml">
   
@@ -140,7 +140,7 @@
     <div class="article-entry" itemprop="articleBody">
       
         <h1 id="this关键字"><a href="#this关键字" class="headerlink" title="this关键字"></a>this关键字</h1><p>this的指向：</p>
-<h2 id="作为普通对象的方法调用"><a href="#作为普通对象的方法调用" class="headerlink" title="作为普通对象的方法调用"></a>作为普通对象的方法调用</h2><p>作为普通对象的方法调用时，this指向这个对象本身<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> obj = &#123;</span><br><span class="line">  a: <span class="number">1</span>,</span><br><span class="line">  getA: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span> === obj)</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>.a)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//this指向obj对象</span></span><br><span class="line">obj.getA()</span><br></pre></td></tr></table></figure></p>
+<h2 id="作为普通对象的方法调用"><a href="#作为普通对象的方法调用" class="headerlink" title="作为普通对象的方法调用"></a>作为普通对象的方法调用</h2><p>作为普通对象的方法调用时，this指向这个对象本身<br><a id="more"></a><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> obj = &#123;</span><br><span class="line">  a: <span class="number">1</span>,</span><br><span class="line">  getA: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span> === obj)</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>.a)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//this指向obj对象</span></span><br><span class="line">obj.getA()</span><br></pre></td></tr></table></figure></p>
 <h2 id="作为普通函数调用"><a href="#作为普通函数调用" class="headerlink" title="作为普通函数调用"></a>作为普通函数调用</h2><p>作为普通函数调用时，this指向全局对象，在浏览器中全局对象是 window，在 NodeJs 中全局对象是 global。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> obj = &#123;</span><br><span class="line">  a: <span class="number">1</span>,</span><br><span class="line">  getA: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span> === obj)</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>.a)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//this指向window对象</span></span><br><span class="line"><span class="keyword">var</span> getA = obj.getA</span><br><span class="line">getA()</span><br></pre></td></tr></table></figure></p>
 <p>这里需要注意的一点是，直接调用并不是指在全局作用域下进行调用，在任何作用域下，直接通过 函数名(…) 来对函数进行调用的方式，都称为直接调用。</p>
 <h2 id="构造器调用"><a href="#构造器调用" class="headerlink" title="构造器调用"></a>构造器调用</h2><p>构造器调用时，this指向返回的对象。用 new 调用一个构造函数，会创建一个新对象，而其中的 this 就指向这个新对象。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="number">10</span>;</span><br><span class="line"><span class="keyword">var</span> b = <span class="number">20</span>;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Point</span> (<span class="params">x, y</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.x = x</span><br><span class="line">  <span class="keyword">this</span>.y = y</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> a = <span class="keyword">new</span> Point(<span class="number">1</span>, <span class="number">2</span>);</span><br><span class="line"><span class="built_in">console</span>.log(a.x);    <span class="comment">// 1</span></span><br><span class="line"><span class="built_in">console</span>.log(x);      <span class="comment">// 10</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> b = <span class="keyword">new</span> Point(<span class="number">1</span>, <span class="number">2</span>);</span><br><span class="line"><span class="built_in">console</span>.log(a === b);   <span class="comment">// false</span></span><br></pre></td></tr></table></figure></p>
@@ -198,6 +198,15 @@
   
     
 <nav id="article-nav">
+  
+    <a href="/2018/07/27/Proxy/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">上一篇</strong>
+      <div class="article-nav-title">
+        
+          Proxy
+        
+      </div>
+    </a>
   
   
     <a href="/2018/07/16/箭头函数/" id="article-nav-older" class="article-nav-link-wrap">
@@ -341,5 +350,7 @@
 
   <a id="rocket" href="#top" class=""></a>
   <script type="text/javascript" src="/js/totop.js" async=""></script>
+  <!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/love.js"></script>
 </body>
 </html>
