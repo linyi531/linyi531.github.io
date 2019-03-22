@@ -3,28 +3,26 @@
 <head>
   <meta charset="utf-8">
   
-  <title>常用git命令 | 01不是包子脸</title>
+  <title>leetcode算法刷题笔记（三）——排序 | 01不是包子脸</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-  <meta name="keywords" content="git" />
+  <meta name="keywords" content="算法leetcode数组javascript" />
   
   
   
   
-  <meta name="description" content="红色代表工作区，绿色代表暂存区 文件操作 git init在当前目录下新建一个 git 仓库（master 分支）git init [project-name]新建一个目录，将其初始化为 git 仓库">
-<meta name="keywords" content="git">
+  <meta name="description" content="该笔记只为个人所写算法，不一定是最优解法，仅供参考 [56] Merge IntervalsGiven a collection of intervals, merge all overlapping intervals.难度：Medium (34.95%)考点：哈希表思路：  首先按 start 升序或按 end 升序排列 如果前一项的 end 大于后一项的 start，说明要 merge 因为">
+<meta name="keywords" content="算法,leetcode,数组,javascript">
 <meta property="og:type" content="article">
-<meta property="og:title" content="常用git命令">
-<meta property="og:url" content="http://yoursite.com/2018/09/16/常用git命令/index.html">
+<meta property="og:title" content="leetcode算法刷题笔记（三）——排序">
+<meta property="og:url" content="http://yoursite.com/2019/02/22/leetcode算法刷题笔记（三）——排序/index.html">
 <meta property="og:site_name" content="01不是包子脸">
-<meta property="og:description" content="红色代表工作区，绿色代表暂存区 文件操作 git init在当前目录下新建一个 git 仓库（master 分支）git init [project-name]新建一个目录，将其初始化为 git 仓库">
+<meta property="og:description" content="该笔记只为个人所写算法，不一定是最优解法，仅供参考 [56] Merge IntervalsGiven a collection of intervals, merge all overlapping intervals.难度：Medium (34.95%)考点：哈希表思路：  首先按 start 升序或按 end 升序排列 如果前一项的 end 大于后一项的 start，说明要 merge 因为">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://yoursite.com/image/git.png">
-<meta property="og:updated_time" content="2019-03-19T13:43:41.209Z">
+<meta property="og:updated_time" content="2019-03-22T09:18:55.482Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="常用git命令">
-<meta name="twitter:description" content="红色代表工作区，绿色代表暂存区 文件操作 git init在当前目录下新建一个 git 仓库（master 分支）git init [project-name]新建一个目录，将其初始化为 git 仓库">
-<meta name="twitter:image" content="http://yoursite.com/image/git.png">
+<meta name="twitter:title" content="leetcode算法刷题笔记（三）——排序">
+<meta name="twitter:description" content="该笔记只为个人所写算法，不一定是最优解法，仅供参考 [56] Merge IntervalsGiven a collection of intervals, merge all overlapping intervals.难度：Medium (34.95%)考点：哈希表思路：  首先按 start 升序或按 end 升序排列 如果前一项的 end 大于后一项的 start，说明要 merge 因为">
   
     <link rel="alternate" href="/atom.xml" title="01不是包子脸" type="application/atom+xml">
   
@@ -109,7 +107,7 @@
             
       <div id="content" class="outer">
         
-          <section id="main" style="float:none;"><article id="post-常用git命令" style="width: 66%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
+          <section id="main" style="float:none;"><article id="post-leetcode算法刷题笔记（三）——排序" style="width: 66%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="clearfix post-1016 post type-post status-publish format-standard has-post-thumbnail hentry category-template-2 category-uncategorized tag-codex tag-edge-case tag-featured-image tag-image tag-template">
     
     
@@ -117,7 +115,7 @@
         
   
     <h1 class="thumb" class="article-title" itemprop="name">
-      常用git命令
+      leetcode算法刷题笔记（三）——排序
     </h1>
   
 
@@ -125,13 +123,13 @@
     
     <div class="article-meta">
       
-	<a href="/2018/09/16/常用git命令/" class="article-date">
-	  <time datetime="2018-09-16T03:50:00.000Z" itemprop="datePublished">九月 16, 2018</time>
+	<a href="/2019/02/22/leetcode算法刷题笔记（三）——排序/" class="article-date">
+	  <time datetime="2019-02-22T06:54:39.000Z" itemprop="datePublished">二月 22, 2019</time>
 	</a>
 
       
 	<span class="ico-folder"></span>
-    <a class="article-category-link" href="/categories/git/">git</a>
+    <a class="article-category-link" href="/categories/算法/">算法</a>
  
       
 	<span id="busuanzi_container_page_pv">
@@ -141,93 +139,26 @@
     </div>
     <div class="article-entry" itemprop="articleBody">
       
-        <p><img src="/image/git.png" alt=""><br>红色代表工作区，绿色代表暂存区</p>
-<h1 id="文件操作"><a href="#文件操作" class="headerlink" title="文件操作"></a>文件操作</h1><ol>
-<li><p>git init<br>在当前目录下新建一个 git 仓库（master 分支）<br>git init [project-name]<br>新建一个目录，将其初始化为 git 仓库</p>
+        <p><em>该笔记只为个人所写算法，不一定是最优解法，仅供参考</em></p>
+<h1 id="56-Merge-Intervals"><a href="#56-Merge-Intervals" class="headerlink" title="[56] Merge Intervals"></a>[56] Merge Intervals</h1><p>Given a collection of intervals, merge all overlapping intervals.<br>难度：Medium (34.95%)<br>考点：哈希表<br>思路：</p>
+<ol>
+<li>首先按 start 升序或按 end 升序排列</li>
+<li>如果前一项的 end 大于后一项的 start，说明要 merge</li>
+<li>因为已经做了升序排列，所以要 push 进结果的那一项的 start 一定为前一项的 start，而 end 为两项中 end 较大的那个值。</li>
+</ol>
 <a id="more"></a>
-</li>
-<li><p>git status 查看状态<br>“.” 代表文件夹中所有文件</p>
-</li>
-<li><p>git add [file1][file2]<br>添加指定文件到暂存区</p>
-</li>
-<li><p>git commit<br>在第一行写入这次修改记录。将缓存区文件放入提交区。<br>git commit -m [‘message’]<br>git commit -amend<br>修改上次记录信息</p>
-</li>
-<li><p>git log<br>查看提交记录<br>vim ~/.zshrc 配置文件中可自定义操作<br>source ~/.zshrc 修改配置文件后 source 保存生效</p>
-</li>
-<li><p>git config<br>查看当前 git 配置<br>git config -h<br>查看帮助信息<br>vim ~/.gitconfig 自定义 git 命令，修改个人名字邮箱等信息<br>cat .git/config 本地配置</p>
-</li>
-<li><p>touch .gitignore 忽略一些文件</p>
-</li>
-</ol>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">.vscode</span><br><span class="line">node_modules</span><br></pre></td></tr></table></figure>
-<p>写入 gitignore 后即可忽略 node_modules 文件<br>更多信息查看<a href="https://github.com/github/gitignore" target="_blank" rel="noopener">gitignore</a></p>
-<ol start="8">
-<li><p>git diff<br>现实暂存区和工作区的差异</p>
-</li>
-<li><p>git checkout –a<br>放弃 a 的变更<br>依照提交区恢复工作区的文件，丢弃工作区的变更</p>
-</li>
-<li><p>git reset HEAD –a<br>从暂存区恢复到工作区</p>
-</li>
-<li><p>git stash<br>把工作区和暂存区的文件都存入 stash 中<br>git stash list<br>查看 stash 中的文件<br>git stash pop<br>恢复 stash 中的文件到工作区（pop=apply+drop）</p>
-</li>
-<li><p>git reset HEAD^<br>后退一步（几个^代表后退几步）<br>git reset HEAD~[number]<br>抛弃了 number 个 commit</p>
-</li>
-<li><p>git reflog<br>查看近期的 log 记录<br>git reset [版本号]<br>回退到版本号为……的 commit</p>
-</li>
-</ol>
-<h1 id="分支操作"><a href="#分支操作" class="headerlink" title="分支操作"></a>分支操作</h1><ol>
-<li><p>git branch develop<br>创建 develop 分支,但依然停留在当前分支<br>git branch -v<br>查看分支</p>
-</li>
-<li><p>git checkout develop<br>切换进入 develop 分支<br>git checkout -b feature<br>创建并切换进入 feature 分支</p>
-</li>
-<li><p>合并分支<br>a. 先进入要合并的分支（checkout develop）<br>在执行 git merge feature 即可把 feature 合并到 develop 分支上<br>b. git merge feature develop<br>可达到同样的效果</p>
-</li>
-<li><p>改变基线<br>git rebase -i [提交记录号]<br>将 HEAD 指向记录号所在位置</p>
-</li>
-</ol>
-<h1 id="远程仓库"><a href="#远程仓库" class="headerlink" title="远程仓库"></a>远程仓库</h1><ol>
-<li><p>git remote add origin [SSH 地址]<br>创建远程仓库连接</p>
-</li>
-<li><p>git push -u origin develop<br>上传 develop 分支到远程仓库上（远程无项目可直接 push，有项目先 merge 再 push）</p>
-</li>
-<li><p>git pull origin feature<br>拉取远程 feature 分支（pull=fetch+merge）</p>
-</li>
-<li><p>git brach -d feature<br>删除 feature 分支</p>
-</li>
-<li><p>git push origin :feature<br>删除远程 feature 分支</p>
-</li>
-<li><p>git tag [标签号]<br>git push origin [标签号]<br>打标签</p>
-</li>
-<li><p>git remote remove origin<br>取消本地目录下关联的远程仓库</p>
-</li>
-<li><p>git clone [url]<br>下载一个项目和它的整个代码历史</p>
-</li>
-</ol>
-<h1 id="打-tag"><a href="#打-tag" class="headerlink" title="打 tag"></a>打 tag</h1><ol>
-<li><p>vim package.json<br>(vim package-lock.json)<br>可以查看 version 号</p>
-</li>
-<li><p>npm version -h<br>查看这一个 tag 即将提升的版本号（大版本或者小版本）</p>
-</li>
-<li><p>npm version patch<br>提升 patch 这个小版本（v0.2.2）</p>
-</li>
-<li><p>git tag –list<br>查看 tag 的列表</p>
-</li>
-<li><p>git push origin master<br>push 代码</p>
-</li>
-<li><p>git push origin v0.2.3<br>push tag</p>
-</li>
-</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> merge = <span class="function"><span class="keyword">function</span>(<span class="params">intervals</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> res = [];</span><br><span class="line">  <span class="keyword">if</span> (intervals.length == <span class="number">0</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> res;</span><br><span class="line">  &#125;</span><br><span class="line">  intervals.sort(<span class="function"><span class="keyword">function</span>(<span class="params">a, b</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> a.start !== b.start ? a.start - b.start : a.end - b.end;</span><br><span class="line">  &#125;);</span><br><span class="line">  <span class="keyword">var</span> pre = intervals[<span class="number">0</span>];</span><br><span class="line">  res.push(pre);</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">var</span> cur <span class="keyword">of</span> intervals) &#123;</span><br><span class="line">    <span class="keyword">if</span> (pre.end &gt;= cur.start) &#123;</span><br><span class="line">      <span class="keyword">if</span> (cur.end &gt; pre.end) &#123;</span><br><span class="line">        pre.end = cur.end;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      res.push(cur);</span><br><span class="line">      pre = cur;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> res;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
       
     </div>
     <footer class="entry-meta entry-footer">
       
 	<span class="ico-folder"></span>
-    <a class="article-category-link" href="/categories/git/">git</a>
+    <a class="article-category-link" href="/categories/算法/">算法</a>
 
       
   <span class="ico-tags"></span>
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/git/">git</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/leetcode/">leetcode</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数组/">数组</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/算法/">算法</a></li></ul>
 
       
         
@@ -262,19 +193,10 @@
     
 <nav id="article-nav">
   
-    <a href="/2018/09/24/this和super关键字/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">上一篇</strong>
-      <div class="article-nav-title">
-        
-          this和super关键字
-        
-      </div>
-    </a>
   
-  
-    <a href="/2018/08/29/正则的扩展/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2019/01/15/leetcode算法刷题笔记（二）——回溯问题/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">下一篇</strong>
-      <div class="article-nav-title">正则的扩展</div>
+      <div class="article-nav-title">leetcode算法刷题笔记（二）——回溯问题</div>
     </a>
   
 </nav>
@@ -288,7 +210,7 @@
     <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
     
-      <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#文件操作"><span class="nav-number">1.</span> <span class="nav-text">文件操作</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#分支操作"><span class="nav-number">2.</span> <span class="nav-text">分支操作</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#远程仓库"><span class="nav-number">3.</span> <span class="nav-text">远程仓库</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#打-tag"><span class="nav-number">4.</span> <span class="nav-text">打 tag</span></a></li></ol>
+      <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#56-Merge-Intervals"><span class="nav-number">1.</span> <span class="nav-text">[56] Merge Intervals</span></a></li></ol>
     
     </div>
   </aside>
