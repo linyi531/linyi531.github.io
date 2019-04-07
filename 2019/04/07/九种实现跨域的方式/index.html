@@ -20,7 +20,7 @@
 <meta property="og:description" content="基本概念同源策略是约定，它是浏览器最核心也最基本的安全功能。同源：”协议+域名+端口” 同源策略限制内容有：  Cookie、LocalStorage、IndexedDB 等存储性内容 DOM 节点 AJAX 请求发送后，结果被浏览器拦截了">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://yoursite.com/image/js_1.png">
-<meta property="og:updated_time" content="2019-04-07T08:23:18.647Z">
+<meta property="og:updated_time" content="2019-04-07T08:25:00.321Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="九种实现跨域的方式">
 <meta name="twitter:description" content="基本概念同源策略是约定，它是浏览器最核心也最基本的安全功能。同源：”协议+域名+端口” 同源策略限制内容有：  Cookie、LocalStorage、IndexedDB 等存储性内容 DOM 节点 AJAX 请求发送后，结果被浏览器拦截了">
@@ -150,7 +150,7 @@
 </ol>
 <a id="more"></a>
 <p>有三个标签是允许跨域加载资源：</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1. <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">XXX</span>&gt;</span></span><br><span class="line">2. <span class="tag">&lt;<span class="name">link</span> <span class="attr">href</span>=<span class="string">XXX</span>&gt;</span></span><br><span class="line">3. <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">XXX</span>&gt;</span><span class="undefined"></span></span><br></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">XXX</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">link</span> <span class="attr">href</span>=<span class="string">XXX</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">XXX</span>&gt;</span><span class="undefined"></span></span><br></pre></td></tr></table></figure>
 <h1 id="跨域解决方案："><a href="#跨域解决方案：" class="headerlink" title="跨域解决方案："></a>跨域解决方案：</h1><h2 id="JSONP"><a href="#JSONP" class="headerlink" title="JSONP"></a>JSONP</h2><h3 id="JSONP-原理"><a href="#JSONP-原理" class="headerlink" title="JSONP 原理"></a>JSONP 原理</h3><p>利用 script 标签没有跨域限制的漏洞，网页可以得到从其他来源动态产生的 JSON 数据。JSONP 请求一定需要对方的服务器做支持才可以。</p>
 <h3 id="JSONP-优缺点"><a href="#JSONP-优缺点" class="headerlink" title="JSONP 优缺点"></a>JSONP 优缺点</h3><p>JSONP 优点是简单兼容性好，可用于解决主流浏览器的跨域数据访问的问题。缺点是仅支持 get 方法具有局限性,不安全可能会遭受 XSS 攻击。</p>
 <h3 id="JSONP-的实现流程"><a href="#JSONP-的实现流程" class="headerlink" title="JSONP 的实现流程"></a>JSONP 的实现流程</h3><ol>
