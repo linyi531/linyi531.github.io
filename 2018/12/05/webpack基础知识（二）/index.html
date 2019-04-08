@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>webpack基础知识 | 01不是包子脸</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="keywords" content="webpack" />
+  
+  
+  
+  
+  <meta name="description" content="代码分离代码分离是 webpack 中最引人注目的特性之一。此特性能够把代码分离到不同的 bundle 中，然后可以按需加载或并行加载这些文件。代码分离可以用于获取更小的 bundle，以及控制资源加载优先级，如果使用合理，会极大影响加载时间。 有三种常用的代码分离方法：  入口起点：使用 entry 配置手动地分离代码。 防止重复：使用 CommonsChunkPlugin 去重和分离 chun">
+<meta name="keywords" content="webpack">
+<meta property="og:type" content="article">
+<meta property="og:title" content="webpack基础知识">
+<meta property="og:url" content="http://yoursite.com/2018/12/05/webpack基础知识（二）/index.html">
+<meta property="og:site_name" content="01不是包子脸">
+<meta property="og:description" content="代码分离代码分离是 webpack 中最引人注目的特性之一。此特性能够把代码分离到不同的 bundle 中，然后可以按需加载或并行加载这些文件。代码分离可以用于获取更小的 bundle，以及控制资源加载优先级，如果使用合理，会极大影响加载时间。 有三种常用的代码分离方法：  入口起点：使用 entry 配置手动地分离代码。 防止重复：使用 CommonsChunkPlugin 去重和分离 chun">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-04-08T04:38:30.585Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="webpack基础知识">
+<meta name="twitter:description" content="代码分离代码分离是 webpack 中最引人注目的特性之一。此特性能够把代码分离到不同的 bundle 中，然后可以按需加载或并行加载这些文件。代码分离可以用于获取更小的 bundle，以及控制资源加载优先级，如果使用合理，会极大影响加载时间。 有三种常用的代码分离方法：  入口起点：使用 entry 配置手动地分离代码。 防止重复：使用 CommonsChunkPlugin 去重和分离 chun">
+  
+    <link rel="alternate" href="/atom.xml" title="01不是包子脸" type="application/atom+xml">
+  
+  <link rel="icon" href="/css/images/dog.JPG">
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
+  <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <style type="text/css">
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/9749f0/00000000000000000001008f/27/l?subset_id=2&fvd=n5) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/90cf9f/000000000000000000010091/27/l?subset_id=2&fvd=n7) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/8a5494/000000000000000000013365/27/l?subset_id=2&fvd=n4) format("woff2");font-weight:lighter;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/d337d8/000000000000000000010095/27/l?subset_id=2&fvd=i4) format("woff2");font-weight:400;font-style:italic;}</style>
+    
+  <link rel="stylesheet" id="athemes-headings-fonts-css" href="//fonts.googleapis.com/css?family=Yanone+Kaffeesatz%3A200%2C300%2C400%2C700&amp;ver=4.6.1" type="text/css" media="all">
+
+  <link rel="stylesheet" id="athemes-headings-fonts-css" href="//fonts.googleapis.com/css?family=Oswald%3A300%2C400%2C700&amp;ver=4.6.1" type="text/css" media="all">
+  <link rel="stylesheet" href="/css/style.css">
+
+  <script src="/js/jquery-3.1.1.min.js"></script>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.css" >
+  <link rel="stylesheet" href="/css/fashion.css" >
+  <link rel="stylesheet" href="/css/glyphs.css" >
+
+</head>
+
+
+
+  <body data-spy="scroll" data-target="#toc" data-offset="50">
+
+
+  
+
+
+<header id="allheader" class="site-header" role="banner" 
+   >
+  <div class="clearfix container">
+      <div class="site-branding">
+
+          <h1 class="site-title">
+            
+              <a href="/" rel="home" >
+                <img style="margin-bottom: 10px;"  width="975px" height="200px" alt="Hike News" src=" /images/IMG_5299.JPG">
+              </a>
+            
+          </h1>
+          
+          
+            
+          <nav id="main-navigation" class="main-navigation" role="navigation">
+            <a class="nav-open">Menu</a>
+            <a class="nav-close">Close</a>
+
+            <div class="clearfix sf-menu">
+              <ul id="main-nav" class="menu sf-js-enabled sf-arrows"  style="touch-action: pan-y;">
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/">首页</a> </li>
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/archives">归档</a> </li>
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/categories">分类</a> </li>
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/tags">标签</a> </li>
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/about">关于</a> </li>
+                    
+              </ul>
+            </div>
+          </nav>
+
+      </div>
+  </div>
+</header>
+
+
+  <div id="container">
+    <div id="wrap">
+            
+      <div id="content" class="outer">
+        
+          <section id="main" style="float:none;"><article id="post-webpack基础知识（二）" style="width: 66%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="clearfix post-1016 post type-post status-publish format-standard has-post-thumbnail hentry category-template-2 category-uncategorized tag-codex tag-edge-case tag-featured-image tag-image tag-template">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" class="article-title" itemprop="name">
+      webpack基础知识
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2018/12/05/webpack基础知识（二）/" class="article-date">
+	  <time datetime="2018-12-05T07:12:28.000Z" itemprop="datePublished">十二月 5, 2018</time>
+	</a>
+
+      
+	<span class="ico-folder"></span>
+    <a class="article-category-link" href="/categories/前端工具/">前端工具</a>
+ 
+      
+	<span id="busuanzi_container_page_pv">
+	  本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+	</span>
+
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="代码分离"><a href="#代码分离" class="headerlink" title="代码分离"></a>代码分离</h2><p>代码分离是 webpack 中最引人注目的特性之一。此特性能够把代码分离到不同的 bundle 中，然后可以按需加载或并行加载这些文件。代码分离可以用于获取更小的 bundle，以及控制资源加载优先级，如果使用合理，会极大影响加载时间。</p>
+<p>有三种常用的代码分离方法：</p>
+<ol>
+<li>入口起点：使用 entry 配置手动地分离代码。</li>
+<li>防止重复：使用 CommonsChunkPlugin 去重和分离 chunk。</li>
+<li>动态导入：通过模块的内联函数调用来分离代码。</li>
+</ol>
+<a id="more"></a>
+<h3 id="入口起点-entry-points"><a href="#入口起点-entry-points" class="headerlink" title="入口起点(entry points)"></a>入口起点(entry points)</h3><p>问题：</p>
+<ol>
+<li>如果入口 chunks 之间包含重复的模块，那些重复模块都会被引入到各个 bundle 中。</li>
+<li>这种方法不够灵活，并且不能将核心应用程序逻辑进行动态拆分代码。</li>
+</ol>
+<h3 id="防止重复-prevent-duplication"><a href="#防止重复-prevent-duplication" class="headerlink" title="防止重复(prevent duplication)"></a>防止重复(prevent duplication)</h3><p>CommonsChunkPlugin 插件可以将公共的依赖模块提取到已有的入口 chunk 中，或者提取到一个新生成的 chunk。<br>使用这个插件，可将重复的 lodash 模块去除。<br>需要注意的是，CommonsChunkPlugin 插件将 lodash 分离到单独的 chunk，并且将其从 main bundle 中移除，减轻了大小。</p>
+<p>以下是由社区提供的，一些对于代码分离很有帮助的插件和 loaders：</p>
+<ol>
+<li>ExtractTextPlugin: 用于将 CSS 从主应用程序中分离。</li>
+<li>bundle-loader: 用于分离代码和延迟加载生成的 bundle。</li>
+<li>promise-loader: 类似于 bundle-loader ，但是使用的是 promises。</li>
+</ol>
+<p>CommonsChunkPlugin 插件还可以通过使用显式的 vendor chunks 功能，从应用程序代码中分离 vendor 模块。</p>
+<h3 id="动态导入-dynamic-imports"><a href="#动态导入-dynamic-imports" class="headerlink" title="动态导入(dynamic imports)"></a>动态导入(dynamic imports)</h3><p>当涉及到动态代码拆分时，webpack 提供了两个类似的技术。对于动态导入，第一种，也是优先选择的方式是，使用符合 ECMAScript 提案 的 import() 语法。第二种，则是使用 webpack 特定的 require.ensure。</p>
+<h2 id="懒加载"><a href="#懒加载" class="headerlink" title="懒加载"></a>懒加载</h2><p>懒加载或者按需加载，是一种很好的优化网页或应用的方式。这种方式实际上是先把你的代码在一些逻辑断点处分离开，然后在一些代码块中完成某些操作后，立即引用或即将引用另外一些新的代码块。这样加快了应用的初始加载速度，减轻了它的总体体积，因为某些代码块可能永远不会被加载。</p>
+<h2 id="缓存"><a href="#缓存" class="headerlink" title="缓存"></a>缓存</h2><p>我们使用 webpack 来打包我们的模块化后的应用程序，webpack 会生成一个可部署的 /dist 目录，然后把打包后的内容放置在此目录中。只要 /dist 目录中的内容部署到服务器上，客户端（通常是浏览器）就能够访问网站此服务器的网站及其资源。而最后一步获取资源是比较耗费时间的。因此我们使用缓存技术。<br>以通过命中缓存，以降低网络流量，使网站加载速度更快，然而，如果我们在部署新版本时不更改资源的文件名，浏览器可能会认为它没有被更新，就会使用它的缓存版本。由于缓存的存在，当你需要获取新的代码时，就会显得很棘手。<br>所以需要通过必要的配置，以确保 webpack 编译生成的文件能够被客户端缓存，而在文件内容变化后，能够请求到新的文件。</p>
+<h3 id="输出文件的文件名-Output-Filenames"><a href="#输出文件的文件名-Output-Filenames" class="headerlink" title="输出文件的文件名(Output Filenames)"></a>输出文件的文件名(Output Filenames)</h3><p>通过使用 output.filename 进行文件名替换，可以确保浏览器获取到修改后的文件。[hash] 替换可以用于在文件名中包含一个构建相关(build-specific)的 hash，但是更好的方式是使用 [chunkhash] 替换，在文件名中包含一个 chunk 相关(chunk-specific)的哈希。</p>
+<h3 id="提取模板-Extracting-Boilerplate"><a href="#提取模板-Extracting-Boilerplate" class="headerlink" title="提取模板(Extracting Boilerplate)"></a>提取模板(Extracting Boilerplate)</h3><p>CommonsChunkPlugin 可以用于将模块分离到单独的文件中，还能够在每次修改后的构建结果中，将 webpack 的样板(boilerplate)和 manifest 提取出来。通过指定 entry 配置中未用到的名称，此插件会自动将我们需要的内容提取到单独的包中：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</span><br><span class="line">+ <span class="keyword">const</span> webpack = <span class="built_in">require</span>(<span class="string">'webpack'</span>);</span><br><span class="line">  <span class="keyword">const</span> CleanWebpackPlugin = <span class="built_in">require</span>(<span class="string">'clean-webpack-plugin'</span>);</span><br><span class="line">  <span class="keyword">const</span> HtmlWebpackPlugin = <span class="built_in">require</span>(<span class="string">'html-webpack-plugin'</span>);</span><br><span class="line"></span><br><span class="line">  <span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    entry: <span class="string">'./src/index.js'</span>,</span><br><span class="line">    plugins: [</span><br><span class="line">      <span class="keyword">new</span> CleanWebpackPlugin([<span class="string">'dist'</span>]),</span><br><span class="line">      <span class="keyword">new</span> HtmlWebpackPlugin(&#123;</span><br><span class="line">        title: <span class="string">'Caching'</span></span><br><span class="line">-     &#125;)</span><br><span class="line">+     &#125;),</span><br><span class="line">+     <span class="keyword">new</span> webpack.optimize.CommonsChunkPlugin(&#123;</span><br><span class="line">+       name: <span class="string">'manifest'</span></span><br><span class="line">+     &#125;)</span><br><span class="line">    ],</span><br><span class="line">    output: &#123;</span><br><span class="line">      filename: <span class="string">'[name].[chunkhash].js'</span>,</span><br><span class="line">      path: path.resolve(__dirname, <span class="string">'dist'</span>)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;;</span><br></pre></td></tr></table></figure>
+<p>将第三方库(library)（例如 lodash 或 react）提取到单独的 vendor chunk 文件中，是比较推荐的做法，这是因为，它们很少像本地的源代码那样频繁修改。因此通过实现以上步骤，利用客户端的长效缓存机制，可以通过命中缓存来消除请求，并减少向服务器获取资源，同时还能保证客户端代码和服务器端代码版本一致。</p>
+<h3 id="模块标识符-Module-Identifiers"><a href="#模块标识符-Module-Identifiers" class="headerlink" title="模块标识符(Module Identifiers)"></a>模块标识符(Module Identifiers)</h3><p>每个 module.id 会基于默认的解析顺序(resolve order)进行增量。也就是说，当解析顺序发生变化，ID 也会随之改变。</p>
+<p>可以使用两个插件来解决这个问题。第一个插件是 NamedModulesPlugin，将使用模块的路径，而不是数字标识符。虽然此插件有助于在开发过程中输出结果的可读性，然而执行时间会长一些。第二个选择是使用 HashedModuleIdsPlugin，推荐用于生产环境构建。</p>
+<h2 id="library"><a href="#library" class="headerlink" title="library"></a>library</h2><p>可以通过以下方式暴露 library：</p>
+<ol>
+<li>变量：作为一个全局变量，通过 script 标签来访问（libraryTarget:’var’）。</li>
+<li>this：通过 this 对象访问（libraryTarget:’this’）。</li>
+<li>window：通过 window 对象访问，在浏览器中（libraryTarget:’window’）。</li>
+<li>UMD：在 AMD 或 CommonJS 的 require 之后可访问（libraryTarget:’umd’）。<br>如果设置了 library 但没设置 libraryTarget，则 libraryTarget 默认为 var</li>
+</ol>
+<h2 id="shimming"><a href="#shimming" class="headerlink" title="shimming"></a>shimming</h2><p>一些第三方的库(library)可能会引用一些全局依赖（例如 jQuery 中的 \$）。这些库也可能创建一些需要被导出的全局变量。这些“不符合规范的模块”就是 shimming 发挥作用的地方。</p>
+<h3 id="shimming-全局变量"><a href="#shimming-全局变量" class="headerlink" title="shimming 全局变量"></a>shimming 全局变量</h3><p>使用 ProvidePlugin 后，能够在通过 webpack 编译的每个模块中，通过访问一个变量来获取到 package 包。如果 webpack 知道这个变量在某个模块中被使用了，那么 webpack 将在最终 bundle 中引入我们给定的 package。<br>我们还可以使用 ProvidePlugin 暴露某个模块中单个导出值，只需通过一个“数组路径”进行配置（例如 [module, child, …children?]）</p>
+<p>src/index.js</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">component</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> element = <span class="built_in">document</span>.createElement(<span class="string">'div'</span>);</span><br><span class="line"></span><br><span class="line">-   element.innerHTML = _.join([<span class="string">'Hello'</span>, <span class="string">'webpack'</span>], <span class="string">' '</span>);</span><br><span class="line">+   element.innerHTML = join([<span class="string">'Hello'</span>, <span class="string">'webpack'</span>], <span class="string">' '</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> element;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="built_in">document</span>.body.appendChild(component());</span><br></pre></td></tr></table></figure>
+<p>webpack.config.js</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">  <span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</span><br><span class="line">  <span class="keyword">const</span> webpack = <span class="built_in">require</span>(<span class="string">'webpack'</span>);</span><br><span class="line"></span><br><span class="line">  <span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    entry: <span class="string">'./src/index.js'</span>,</span><br><span class="line">    output: &#123;</span><br><span class="line">      filename: <span class="string">'bundle.js'</span>,</span><br><span class="line">      path: path.resolve(__dirname, <span class="string">'dist'</span>)</span><br><span class="line">    &#125;,</span><br><span class="line">    plugins: [</span><br><span class="line">      <span class="keyword">new</span> webpack.ProvidePlugin(&#123;</span><br><span class="line">-       _: <span class="string">'lodash'</span></span><br><span class="line">+       join: [<span class="string">'lodash'</span>, <span class="string">'join'</span>]</span><br><span class="line">      &#125;)</span><br><span class="line">    ]</span><br><span class="line">  &#125;;</span><br></pre></td></tr></table></figure>
+<p>这样，无论 join 方法在何处调用，我们都只会得到的是 lodash 中提供的 join 方法。与 tree shaking 配合，能够很好的将 lodash 库中的其他没用到的部分去除。</p>
+<h3 id="细粒度-shimming"><a href="#细粒度-shimming" class="headerlink" title="细粒度 shimming"></a>细粒度 shimming</h3><p>一些传统的模块依赖的 this 指向的是 window 对象。当模块运行在 CommonJS 环境下这将会变成一个问题，也就是说此时的 this 指向的是 module.exports。<br>此时，可以通过使用 imports-loader 覆写 this：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">  <span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</span><br><span class="line">  <span class="keyword">const</span> webpack = <span class="built_in">require</span>(<span class="string">'webpack'</span>);</span><br><span class="line"></span><br><span class="line">  <span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    entry: <span class="string">'./src/index.js'</span>,</span><br><span class="line">    output: &#123;</span><br><span class="line">      filename: <span class="string">'bundle.js'</span>,</span><br><span class="line">      path: path.resolve(__dirname, <span class="string">'dist'</span>)</span><br><span class="line">    &#125;,</span><br><span class="line">+   <span class="built_in">module</span>: &#123;</span><br><span class="line">+     rules: [</span><br><span class="line">+       &#123;</span><br><span class="line">+         test: <span class="built_in">require</span>.resolve(<span class="string">'index.js'</span>),</span><br><span class="line">+         use: <span class="string">'imports-loader?this=&gt;window'</span></span><br><span class="line">+       &#125;</span><br><span class="line">+     ]</span><br><span class="line">+   &#125;,</span><br><span class="line">    plugins: [</span><br><span class="line">      <span class="keyword">new</span> webpack.ProvidePlugin(&#123;</span><br><span class="line">        join: [<span class="string">'lodash'</span>, <span class="string">'join'</span>]</span><br><span class="line">      &#125;)</span><br><span class="line">    ]</span><br><span class="line">  &#125;;</span><br></pre></td></tr></table></figure>
+<h3 id="全局-exports"><a href="#全局-exports" class="headerlink" title="全局 exports"></a>全局 exports</h3><p>使用 exports-loader，将一个全局变量作为一个普通的模块来导出。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">  <span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</span><br><span class="line">  <span class="keyword">const</span> webpack = <span class="built_in">require</span>(<span class="string">'webpack'</span>);</span><br><span class="line"></span><br><span class="line">  <span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    entry: <span class="string">'./src/index.js'</span>,</span><br><span class="line">    output: &#123;</span><br><span class="line">      filename: <span class="string">'bundle.js'</span>,</span><br><span class="line">      path: path.resolve(__dirname, <span class="string">'dist'</span>)</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="built_in">module</span>: &#123;</span><br><span class="line">      rules: [</span><br><span class="line">        &#123;</span><br><span class="line">          test: <span class="built_in">require</span>.resolve(<span class="string">'index.js'</span>),</span><br><span class="line">          use: <span class="string">'imports-loader?this=&gt;window'</span></span><br><span class="line">-       &#125;</span><br><span class="line">+       &#125;,</span><br><span class="line">+       &#123;</span><br><span class="line">+         test: <span class="built_in">require</span>.resolve(<span class="string">'globals.js'</span>),</span><br><span class="line">+         use: <span class="string">'exports-loader?file,parse=helpers.parse'</span></span><br><span class="line">+       &#125;</span><br><span class="line">      ]</span><br><span class="line">    &#125;,</span><br><span class="line">    plugins: [</span><br><span class="line">      <span class="keyword">new</span> webpack.ProvidePlugin(&#123;</span><br><span class="line">        join: [<span class="string">'lodash'</span>, <span class="string">'join'</span>]</span><br><span class="line">      &#125;)</span><br><span class="line">    ]</span><br><span class="line">  &#125;;</span><br></pre></td></tr></table></figure>
+<h2 id="渐进式网络应用程序"><a href="#渐进式网络应用程序" class="headerlink" title="渐进式网络应用程序"></a>渐进式网络应用程序</h2><p>渐进式网络应用程序(Progressive Web Application - PWA)，是一种可以提供类似于原生应用程序(native app)体验的网络应用程序(web app)。PWA 可以用来做很多事。其中最重要的是，在离线(offline)时应用程序能够继续运行功能。这是通过使用名为 Service Workers 的网络技术来实现的。</p>
+<ol>
+<li>添加 Workbox</li>
+<li>注册 Service Worker</li>
+</ol>
+<p>停止服务器并刷新页面。如果浏览器能够支持 Service Worker，你应该可以看到你的应用程序还在正常运行。然而，服务器已经停止了服务，此刻是 Service Worker 在提供服务。</p>
+<h2 id="构建性能"><a href="#构建性能" class="headerlink" title="构建性能"></a>构建性能</h2><h3 id="chunks"><a href="#chunks" class="headerlink" title="chunks"></a>chunks</h3><p>减少编译的整体大小，以提高构建性能。尽量保持 chunks 小巧。</p>
+<ol>
+<li>使用 更少/更小 的库。</li>
+<li>在多页面应用程序中使用 CommonsChunksPlugin。</li>
+<li>在多页面应用程序中以 async 模式使用 CommonsChunksPlugin 。</li>
+<li>移除不使用的代码。</li>
+<li>只编译你当前正在开发部分的代码。</li>
+</ol>
+<p>最小化入口 chunk<br>webpack 只会在文件系统中生成已经更新的 chunk 。对于某些配置选项(HMR, [name]/[chunkhash] in output.chunkFilename, [hash])来说，除了更新的 chunks 无效之外，入口 chunk 也不会生效。<br>应当在生成入口 chunk 时，尽量减少入口 chunk 的体积，以提高性能。下述代码块将只提取包含 runtime 的 chunk ，其他 chunk 都作为子模块:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> CommonsChunkPlugin(&#123;</span><br><span class="line">  name: <span class="string">"manifest"</span>,</span><br><span class="line">  minChunks: <span class="literal">Infinity</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h3 id="Worker-Pool"><a href="#Worker-Pool" class="headerlink" title="Worker Pool"></a>Worker Pool</h3><p>thread-loader 可以将非常消耗资源的 loaders 转存到 worker pool 中</p>
+<h3 id="持久化缓存"><a href="#持久化缓存" class="headerlink" title="持久化缓存"></a>持久化缓存</h3><p>使用 cache-loader 启用持久化缓存。使用 package.json 中的 “postinstall” 清除缓存目录。</p>
+<h3 id="Dlls"><a href="#Dlls" class="headerlink" title="Dlls"></a>Dlls</h3><p>使用 DllPlugin 将更改不频繁的代码进行单独编译。这将改善引用程序的编译速度，即使它增加了构建过程的复杂性。</p>
+<h2 id="公共路径-public-path"><a href="#公共路径-public-path" class="headerlink" title="公共路径(public path)"></a>公共路径(public path)</h2><p>webpack 提供一个非常有用的配置，该配置能帮助你为项目中的所有资源指定一个基础路径。它被称为公共路径(publicPath)。<br>webpack 提供一个全局变量供你设置，它名叫 <strong>webpack_public_path</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">__webpack_public_path__ = process.env.ASSET_PATH;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="entry-meta entry-footer">
+      
+	<span class="ico-folder"></span>
+    <a class="article-category-link" href="/categories/前端工具/">前端工具</a>
+
+      
+  <span class="ico-tags"></span>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/webpack/">webpack</a></li></ul>
+
+      
+        
+	<div id="comment">
+		<!-- 来必力City版安装代码 -->
+		<div id="lv-container" data-id="city" data-uid="MTAyMC8yOTQ4MS82MDQ5">
+		<script type="text/javascript">
+		   (function(d, s) {
+		       var j, e = d.getElementsByTagName(s)[0];
+
+		       if (typeof LivereTower === 'function') { return; }
+
+		       j = d.createElement(s);
+		       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+		       j.async = true;
+
+		       e.parentNode.insertBefore(j, e);
+		   })(document, 'script');
+		</script>
+		<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+		</div>
+		<!-- City版安装代码已完成 -->
+	</div>
+
+
+
+      
+    </footer>
+    <hr class="entry-footer-hr">
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/12/19/leetcode算法刷题笔记（一）——数组/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">上一篇</strong>
+      <div class="article-nav-title">
+        
+          leetcode算法刷题笔记（一）——数组
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/11/25/webpack基础知识（一）/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">下一篇</strong>
+      <div class="article-nav-title">webpack基础知识</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+<!-- Table of Contents -->
+
+  <aside id="sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    
+      <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#代码分离"><span class="nav-number">1.</span> <span class="nav-text">代码分离</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#入口起点-entry-points"><span class="nav-number">1.1.</span> <span class="nav-text">入口起点(entry points)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#防止重复-prevent-duplication"><span class="nav-number">1.2.</span> <span class="nav-text">防止重复(prevent duplication)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#动态导入-dynamic-imports"><span class="nav-number">1.3.</span> <span class="nav-text">动态导入(dynamic imports)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#懒加载"><span class="nav-number">2.</span> <span class="nav-text">懒加载</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#缓存"><span class="nav-number">3.</span> <span class="nav-text">缓存</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#输出文件的文件名-Output-Filenames"><span class="nav-number">3.1.</span> <span class="nav-text">输出文件的文件名(Output Filenames)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#提取模板-Extracting-Boilerplate"><span class="nav-number">3.2.</span> <span class="nav-text">提取模板(Extracting Boilerplate)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#模块标识符-Module-Identifiers"><span class="nav-number">3.3.</span> <span class="nav-text">模块标识符(Module Identifiers)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#library"><span class="nav-number">4.</span> <span class="nav-text">library</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#shimming"><span class="nav-number">5.</span> <span class="nav-text">shimming</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#shimming-全局变量"><span class="nav-number">5.1.</span> <span class="nav-text">shimming 全局变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#细粒度-shimming"><span class="nav-number">5.2.</span> <span class="nav-text">细粒度 shimming</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#全局-exports"><span class="nav-number">5.3.</span> <span class="nav-text">全局 exports</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#渐进式网络应用程序"><span class="nav-number">6.</span> <span class="nav-text">渐进式网络应用程序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#构建性能"><span class="nav-number">7.</span> <span class="nav-text">构建性能</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#chunks"><span class="nav-number">7.1.</span> <span class="nav-text">chunks</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Worker-Pool"><span class="nav-number">7.2.</span> <span class="nav-text">Worker Pool</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#持久化缓存"><span class="nav-number">7.3.</span> <span class="nav-text">持久化缓存</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Dlls"><span class="nav-number">7.4.</span> <span class="nav-text">Dlls</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#公共路径-public-path"><span class="nav-number">8.</span> <span class="nav-text">公共路径(public path)</span></a></li></ol>
+    
+    </div>
+  </aside>
+</section>
+        
+      </div>
+
+    </div>
+    <!-- <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/categories" class="mobile-nav-link">Categories</a>
+  
+    <a href="/tags" class="mobile-nav-link">Tags</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav> -->
+    <footer id="footer" class="site-footer">
+  
+
+  <div class="clearfix container">
+      <div class="site-info">
+	      &copy; 2019 01不是包子脸 All Rights Reserved.
+        
+            <span id="busuanzi_container_site_uv">
+              本站访客数<span id="busuanzi_value_site_uv"></span>人次  
+              本站总访问量<span id="busuanzi_value_site_pv"></span>次
+            </span>
+          
+      </div>
+      <div class="site-credit">
+        Theme by <a href="https://github.com/iTimeTraveler/hexo-theme-hipaper" target="_blank">hipaper</a>
+      </div>
+  </div>
+</footer>
+
+
+<!-- min height -->
+
+<script>
+    var wrapdiv = document.getElementById("wrap");
+    var contentdiv = document.getElementById("content");
+
+    wrapdiv.style.minHeight = document.body.offsetHeight - document.getElementById("allheader").offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("allheader").offsetHeight - document.getElementById("footer").offsetHeight + "px";
+
+
+    <!-- headerblur min height -->
+    
+    
+</script>
+    
+<div style="display: none;">
+  <script src="https://s11.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+</div>
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+<script src="/js/bootstrap.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+
+
+
+
+  <div style="display: none;">
+    <script src="https://s95.cnzz.com/z_stat.php?id=1273997385&web_id=1273997385" language="JavaScript"></script>
+  </div>
+
+
+
+	<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+
+
+
+
+
+
+  </div>
+
+  <a id="rocket" href="#top" class=""></a>
+  <script type="text/javascript" src="/js/totop.js" async=""></script>
+  <!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/love.js"></script>
+</body>
+</html>
