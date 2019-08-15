@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>CSS3新特性 | 01不是包子脸</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="keywords" content="CSS" />
+  
+  
+  
+  
+  <meta name="description" content="CSS3 新特性1. 选择器CSS3 中新添加了很多选择器，解决了很多之前需要用 javascript 才能解决的布局问题。  element1~element2: 选择前面有 element1 元素的每个 element2 元素。 [attribute^=value] ：选择某元素 attribute 属性是以 value 开头的。 [attribute$=value]：选择某元素 attrib">
+<meta name="keywords" content="CSS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CSS3新特性">
+<meta property="og:url" content="http://yoursite.com/2019/04/28/CSS3新特性/index.html">
+<meta property="og:site_name" content="01不是包子脸">
+<meta property="og:description" content="CSS3 新特性1. 选择器CSS3 中新添加了很多选择器，解决了很多之前需要用 javascript 才能解决的布局问题。  element1~element2: 选择前面有 element1 元素的每个 element2 元素。 [attribute^=value] ：选择某元素 attribute 属性是以 value 开头的。 [attribute$=value]：选择某元素 attrib">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-08-15T16:29:09.967Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="CSS3新特性">
+<meta name="twitter:description" content="CSS3 新特性1. 选择器CSS3 中新添加了很多选择器，解决了很多之前需要用 javascript 才能解决的布局问题。  element1~element2: 选择前面有 element1 元素的每个 element2 元素。 [attribute^=value] ：选择某元素 attribute 属性是以 value 开头的。 [attribute$=value]：选择某元素 attrib">
+  
+    <link rel="alternate" href="/atom.xml" title="01不是包子脸" type="application/atom+xml">
+  
+  <link rel="icon" href="/css/images/dog.JPG">
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
+  <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <style type="text/css">
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/9749f0/00000000000000000001008f/27/l?subset_id=2&fvd=n5) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/90cf9f/000000000000000000010091/27/l?subset_id=2&fvd=n7) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/8a5494/000000000000000000013365/27/l?subset_id=2&fvd=n4) format("woff2");font-weight:lighter;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/d337d8/000000000000000000010095/27/l?subset_id=2&fvd=i4) format("woff2");font-weight:400;font-style:italic;}</style>
+    
+  <link rel="stylesheet" id="athemes-headings-fonts-css" href="//fonts.googleapis.com/css?family=Yanone+Kaffeesatz%3A200%2C300%2C400%2C700&amp;ver=4.6.1" type="text/css" media="all">
+
+  <link rel="stylesheet" id="athemes-headings-fonts-css" href="//fonts.googleapis.com/css?family=Oswald%3A300%2C400%2C700&amp;ver=4.6.1" type="text/css" media="all">
+  <link rel="stylesheet" href="/css/style.css">
+
+  <script src="/js/jquery-3.1.1.min.js"></script>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.css" >
+  <link rel="stylesheet" href="/css/fashion.css" >
+  <link rel="stylesheet" href="/css/glyphs.css" >
+
+</head>
+
+
+
+  <body data-spy="scroll" data-target="#toc" data-offset="50">
+
+
+  
+
+
+<header id="allheader" class="site-header" role="banner" 
+   >
+  <div class="clearfix container">
+      <div class="site-branding">
+
+          <h1 class="site-title">
+            
+              <a href="/" rel="home" >
+                <img style="margin-bottom: 10px;"  width="975px" height="200px" alt="Hike News" src=" /images/IMG_5299.JPG">
+              </a>
+            
+          </h1>
+          
+          
+            
+          <nav id="main-navigation" class="main-navigation" role="navigation">
+            <a class="nav-open">Menu</a>
+            <a class="nav-close">Close</a>
+
+            <div class="clearfix sf-menu">
+              <ul id="main-nav" class="menu sf-js-enabled sf-arrows"  style="touch-action: pan-y;">
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/">首页</a> </li>
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/archives">归档</a> </li>
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/categories">分类</a> </li>
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/tags">标签</a> </li>
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/about">关于</a> </li>
+                    
+              </ul>
+            </div>
+          </nav>
+
+      </div>
+  </div>
+</header>
+
+
+  <div id="container">
+    <div id="wrap">
+            
+      <div id="content" class="outer">
+        
+          <section id="main" style="float:none;"><article id="post-CSS3新特性" style="width: 66%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="clearfix post-1016 post type-post status-publish format-standard has-post-thumbnail hentry category-template-2 category-uncategorized tag-codex tag-edge-case tag-featured-image tag-image tag-template">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" class="article-title" itemprop="name">
+      CSS3新特性
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2019/04/28/CSS3新特性/" class="article-date">
+	  <time datetime="2019-04-28T04:37:08.000Z" itemprop="datePublished">四月 28, 2019</time>
+	</a>
+
+      
+	<span class="ico-folder"></span>
+    <a class="article-category-link" href="/categories/CSS/">CSS</a>
+ 
+      
+	<span id="busuanzi_container_page_pv">
+	  本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+	</span>
+
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="CSS3-新特性"><a href="#CSS3-新特性" class="headerlink" title="CSS3 新特性"></a>CSS3 新特性</h1><h2 id="1-选择器"><a href="#1-选择器" class="headerlink" title="1. 选择器"></a>1. 选择器</h2><p>CSS3 中新添加了很多选择器，解决了很多之前需要用 javascript 才能解决的布局问题。</p>
+<ul>
+<li>element1~element2: 选择前面有 element1 元素的每个 element2 元素。</li>
+<li>[attribute^=value] ：选择某元素 attribute 属性是以 value 开头的。</li>
+<li>[attribute$=value]：选择某元素 attribute 属性是以 value 结尾的。</li>
+<li>[attribute*=value]：选择某元素 attribute 属性包含 value 字符串的。</li>
+<li>E:first-of-type: 选择属于其父元素的首个 E 元素的每个 E 元素。</li>
+<li>E:last-of-type: 选择属于其父元素的最后 E 元素的每个 E 元素。</li>
+<li>E:only-of-type: 选择属于其父元素唯一的 E 元素的每个 E 元素。</li>
+<li>E:only-child: 选择属于其父元素的唯一子元素的每个 E 元素。</li>
+<li>E:nth-child(n): 选择属于其父元素的第 n 个子元素的每个 E 元素。</li>
+<li>E:nth-last-child(n): 选择属于其父元素的倒数第 n 个子元素的每个 E 元素。</li>
+<li>E:nth-of-type(n): 选择属于其父元素第 n 个 E 元素的每个 E 元素。</li>
+<li>E:nth-last-of-type(n): 选择属于其父元素倒数第 n 个 E 元素的每个 E 元素。</li>
+<li>E:last-child: 选择属于其父元素最后一个子元素每个 E 元素。</li>
+<li>:root: 选择文档的根元素。</li>
+<li>E:empty: 选择没有子元素的每个 E 元素（包括文本节点)。</li>
+<li>E:target: 选择当前活动的 E 元素。</li>
+<li>E:enabled: 选择每个启用的 E 元素。</li>
+<li>E:disabled: 选择每个禁用的 E 元素。</li>
+<li>E:checked: 选择每个被选中的 E 元素。</li>
+<li>E:not(selector): 选择非 selector 元素的每个元素。</li>
+<li>E::selection: 选择被用户选取的元素部分。<a id="more"></a>
+</li>
+</ul>
+<h2 id="2-Transition-Transform-和-Animation"><a href="#2-Transition-Transform-和-Animation" class="headerlink" title="2. Transition,Transform 和 Animation"></a>2. Transition,Transform 和 Animation</h2><p>这三个特性是 CSS3 新增的和动画相关的特性。</p>
+<ul>
+<li><p>Transition</p>
+<p>Transition 可以在当元素从一种样式变换为另一种样式时为元素添加效果，而不用使用 Flash 动画或 JavaScript。<br>Transition 有如下属性：</p>
+<ul>
+<li>transition-property: 规定应用过渡的 CSS 属性的名称。</li>
+<li>transition-duration: 规定完成过渡效果需要多长时间。</li>
+<li>transition-delay: 规定过渡效果何时开始，默认是 0。</li>
+<li>transition-timing-function: 规定过渡效果的时间曲线，默认是”ease”，还有 linear、ease-in、ease-out、ease-in-out 和 cubic-bezier 等过渡类型。</li>
+<li>transition: 简写属性，用于在一个属性中设置四个过渡属性。</li>
+</ul>
+</li>
+<li><p>Transform</p>
+<p>Transform 用来向元素应用各种 2D 和 3D 转换，该属性允许我们对元素进行旋转、缩放、移动或倾斜等操作。</p>
+<p>变换类型：</p>
+<ul>
+<li>none: 定义不进行转换。</li>
+<li>matrix(n,n,n,n,n,n): 定义 2D 转换，使用六个值的矩阵。</li>
+<li>matrix3d(n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n): 定义 3D 转换，使用 16 个值的 4x4 矩阵。</li>
+<li>translate(x,y): 定义 2D 位移转换。</li>
+<li>translate3d(x,y,z): 定义 3D 位移转换。</li>
+<li>translateX(x): 定义位移转换，只是用 X 轴的值。</li>
+<li>translateY(y): 定义位移转换，只是用 Y 轴的值。</li>
+<li>translateZ(z): 定义 3D 位移转换，只是用 Z 轴的值。</li>
+<li>scale(x,y): 定义 2D 缩放转换。</li>
+<li>scale3d(x,y,z): 定义 3D 缩放转换。</li>
+<li>scaleX(x): 通过设置 X 轴的值来定义缩放转换。</li>
+<li>scaleY(y): 通过设置 Y 轴的值来定义缩放转换。</li>
+<li>scaleZ(z): 通过设置 Z 轴的值来定义 3D 缩放转换。</li>
+<li>rotate(angle): 定义 2D 旋转，在参数中规定角度。</li>
+<li>rotate3d(x,y,z,angle): 定义 3D 旋转。</li>
+<li>rotateX(angle): 定义沿着 X 轴的 3D 旋转。</li>
+<li>rotateY(angle): 定义沿着 Y 轴的 3D 旋转。</li>
+<li>rotateZ(angle): 定义沿着 Z 轴的 3D 旋转。</li>
+<li>skew(x-angle,y-angle): 定义沿着 X 和 Y 轴的 2D 倾斜转换。</li>
+<li>skewX(angle): 定义沿着 X 轴的 2D 倾斜转换。</li>
+<li>skewY(angle): 定义沿着 Y 轴的 2D 倾斜转换。</li>
+<li>perspective(n): 为 3D 转换元素定义透视视图。</li>
+</ul>
+</li>
+<li><p>Animation</p>
+<p>Animation 让 CSS 拥有了可以制作动画的功能。使用 CSS3 的 Animation 制作动画我们可以省去复杂的 js 代码。</p>
+</li>
+</ul>
+<h2 id="3-边框"><a href="#3-边框" class="headerlink" title="3. 边框"></a>3. 边框</h2><p>CSS3 新增了三个边框属性，分别是 border-radius、box-shadow 和 border-image。</p>
+<ul>
+<li>border-radius 可以创建圆角边框</li>
+<li>box-shadow 可以为元素添加阴影</li>
+<li>border-image 可以使用图片来绘制边框。</li>
+</ul>
+<h2 id="4-背景"><a href="#4-背景" class="headerlink" title="4. 背景"></a>4. 背景</h2><p>CSS3 新增了几个关于背景的属性，分别是 background-clip、background-origin、background-size 和 background-break。</p>
+<ul>
+<li><p>background-clip</p>
+<p>background-clip 属性用于确定背景画区，有以下几种可能的属性：</p>
+<ul>
+<li>background-clip: border-box; 背景从 border 开始显示</li>
+<li>background-clip: padding-box; 背景从 padding 开始显示</li>
+<li>background-clip: content-box; 背景显 content 区域开始显示</li>
+<li>background-clip: no-clip; 默认属性，等同于 border-box</li>
+</ul>
+<p>通常情况，背景都是覆盖整个元素的，利用这个属性可以设定背景颜色或图片的覆盖范围。</p>
+</li>
+<li><p>background-origin</p>
+<p>background-clip 属性用于确定背景的位置，它通常与 background-position 联合使用，可以从 border、padding、content 来计算 background-position（就像 background-clip）。</p>
+<ul>
+<li>background-origin: border-box; 从 border 开始计算 background-position</li>
+<li>background-origin: padding-box; 从 padding 开始计算 background-position</li>
+<li>background-origin: content-box; 从 content 开始计算 background-position</li>
+</ul>
+</li>
+<li><p>background-size</p>
+<p>background-size 属性常用来调整背景图片的大小，主要用于设定图片本身。有以下可能的属性：</p>
+<ul>
+<li>background-size: contain; 缩小图片以适合元素（维持像素长宽比）</li>
+<li>background-size: cover; 扩展元素以填补元素（维持像素长宽比）</li>
+<li>background-size: 100px 100px; 缩小图片至指定的大小</li>
+<li>background-size: 50% 100%; 缩小图片至指定的大小，百分比是相对包 含元素的尺寸</li>
+</ul>
+</li>
+<li><p>background-break</p>
+<p>CSS3 中，元素可以被分成几个独立的盒子（如使内联元素 span 跨越多行），background-break 属性用来控制背景怎样在这些不同的盒子中显示。</p>
+<ul>
+<li>background-break: continuous; 默认值。忽略盒之间的距离（也就是像元素没有分成多个盒子，依然是一个整体一样）</li>
+<li>background-break: bounding-box; 把盒之间的距离计算在内；</li>
+<li>background-break: each-box; 为每个盒子单独重绘背景。</li>
+</ul>
+</li>
+</ul>
+<h2 id="5-文字效果"><a href="#5-文字效果" class="headerlink" title="5. 文字效果"></a>5. 文字效果</h2><ul>
+<li><p>word-wrap</p>
+<p>CSS3 中，word-wrap 属性允许您允许文本强制文本进行换行，即这意味着会对单词进行拆分。所有主流浏览器都支持 word-wrap 属性。</p>
+</li>
+<li><p>text-overflow</p>
+<p>它与 word-wrap 是协同工作的，word-wrap 设置或检索当当前行超过指定容器的边界时是否断开转行，而 text-overflow 则设置或检索当当前行超过指定容器的边界时如何显示。对于“text-overflow”属性，有“clip”和“ellipsis”两种可供选择。</p>
+</li>
+<li><p>text-shadow</p>
+<p>CSS3 中，text-shadow 可向文本应用阴影。能够规定水平阴影、垂直阴影、模糊距离，以及阴影的颜色。</p>
+</li>
+<li><p>text-decoration</p>
+<p>CSS3 里面开始支持对文字的更深层次的渲染，具体有三个属性可供设置：</p>
+<ul>
+<li>text-fill-color: 设置文字内部填充颜色</li>
+<li>text-stroke-color: 设置文字边界填充颜色</li>
+<li>text-stroke-width: 设置文字边界宽度</li>
+</ul>
+</li>
+</ul>
+<h2 id="6-渐变"><a href="#6-渐变" class="headerlink" title="6. 渐变"></a>6. 渐变</h2><p>CSS3 新增了渐变效果，包括 linear-gradient(线性渐变)和 radial-gradient(径向渐变)。</p>
+<h2 id="7-font-face-特性"><a href="#7-font-face-特性" class="headerlink" title="7. @font-face 特性"></a>7. @font-face 特性</h2><p>通过 CSS3，web 设计师可以使用他们喜欢的任意字体。当您您找到或购买到希望使用的字体时，可将该字体文件存放到 web 服务器上，它会在需要时被自动下载到用户的计算机上。字体是在 CSS3 @font-face 规则中定义的。Firefox、Chrome、Safari 以及 Opera 支持 .ttf(True Type Fonts)和 .otf(OpenType Fonts)类型的字体。IE9+ 支持新的@font-face 规则，但是仅支持 .eot 类型的字体(Embedded OpenType)。</p>
+<p>在新的@font-face 规则中，必须首先定义字体的名称（比如 myFont），然后指向该字体文件。<br>如需为 HTML 元素使用字体，请通过 font-family 属性来引用字体的名称 (myFont)</p>
+<h2 id="8-多列布局"><a href="#8-多列布局" class="headerlink" title="8. 多列布局"></a>8. 多列布局</h2><p>通过 CSS3，能够创建多个列来对文本进行布局，IE10 和 Opera 支持多列属性。Firefox 需要前缀-moz-，Chrome 和 Safari 需要前缀-webkit-。主要有如下三个属性：</p>
+<ul>
+<li>column-count: 规定元素应该被分隔的列数。</li>
+<li>column-gap: 规定列之间的间隔。</li>
+<li>column-rule: 设置列之间的宽度、样式和颜色规则</li>
+</ul>
+<h2 id="9-用户界面"><a href="#9-用户界面" class="headerlink" title="9. 用户界面"></a>9. 用户界面</h2><p>CSS3 中，新的用户界面特性包括重设元素尺寸、盒尺寸以及轮廓等。Firefox、Chrome 以及 Safari 支持 resize 属性。IE、Chrome、Safari 以及 Opera 支持 box-sizing 属性。Firefox 需要前缀-moz-。<br>所有主流浏览器都支持 outline-offset 属性，除了 IE。</p>
+<ul>
+<li><p>resize</p>
+<p>resize 属性规定是否可由用户调整元素尺寸。如果希望此属性生效，需要设置元素的 overflow 属性，值可以是 auto、hidden 或 scroll。</p>
+</li>
+<li><p>box-sizing</p>
+<p>box-sizing 属性可设置的值有 content-box、border-box 和 inherit。</p>
+<ul>
+<li>content-box: padding 和 border 不被包含在定义的 width 和 height 之内。对象的实际宽度等于设置的 width 值和 border、padding 之和，即 (Element width = width + border + padding)，此属性表现为标准模式下的盒模型。</li>
+<li>border-box: padding 和 border 被包含在定义的 width 和 height 之内。对象的实际宽度就等于设置的 width 值，即使定义有 border 和 padding 也不会改变对象的实际宽度，即 (Element width = width)，此属性表现为怪异模式下的盒模型。</li>
+</ul>
+</li>
+<li><p>outline-offset</p>
+<p>outline-offset 属性对轮廓进行偏移，并在超出边框边缘的位置绘制轮廓。</p>
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="entry-meta entry-footer">
+      
+	<span class="ico-folder"></span>
+    <a class="article-category-link" href="/categories/CSS/">CSS</a>
+
+      
+  <span class="ico-tags"></span>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CSS/">CSS</a></li></ul>
+
+      
+        
+	<div id="comment">
+		<!-- 来必力City版安装代码 -->
+		<div id="lv-container" data-id="city" data-uid="MTAyMC8yOTQ4MS82MDQ5">
+		<script type="text/javascript">
+		   (function(d, s) {
+		       var j, e = d.getElementsByTagName(s)[0];
+
+		       if (typeof LivereTower === 'function') { return; }
+
+		       j = d.createElement(s);
+		       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+		       j.async = true;
+
+		       e.parentNode.insertBefore(j, e);
+		   })(document, 'script');
+		</script>
+		<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+		</div>
+		<!-- City版安装代码已完成 -->
+	</div>
+
+
+
+      
+    </footer>
+    <hr class="entry-footer-hr">
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2019/05/02/CSS常用布局方式/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">上一篇</strong>
+      <div class="article-nav-title">
+        
+          CSS常用布局方式
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/04/10/BFC/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">下一篇</strong>
+      <div class="article-nav-title">BFC</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+<!-- Table of Contents -->
+
+  <aside id="sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    
+      <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#CSS3-新特性"><span class="nav-number">1.</span> <span class="nav-text">CSS3 新特性</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-选择器"><span class="nav-number">1.1.</span> <span class="nav-text">1. 选择器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-Transition-Transform-和-Animation"><span class="nav-number">1.2.</span> <span class="nav-text">2. Transition,Transform 和 Animation</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-边框"><span class="nav-number">1.3.</span> <span class="nav-text">3. 边框</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-背景"><span class="nav-number">1.4.</span> <span class="nav-text">4. 背景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-文字效果"><span class="nav-number">1.5.</span> <span class="nav-text">5. 文字效果</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-渐变"><span class="nav-number">1.6.</span> <span class="nav-text">6. 渐变</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-font-face-特性"><span class="nav-number">1.7.</span> <span class="nav-text">7. @font-face 特性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-多列布局"><span class="nav-number">1.8.</span> <span class="nav-text">8. 多列布局</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-用户界面"><span class="nav-number">1.9.</span> <span class="nav-text">9. 用户界面</span></a></li></ol></li></ol>
+    
+    </div>
+  </aside>
+</section>
+        
+      </div>
+
+    </div>
+    <!-- <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/categories" class="mobile-nav-link">Categories</a>
+  
+    <a href="/tags" class="mobile-nav-link">Tags</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav> -->
+    <footer id="footer" class="site-footer">
+  
+
+  <div class="clearfix container">
+      <div class="site-info">
+	      &copy; 2019 01不是包子脸 All Rights Reserved.
+        
+            <span id="busuanzi_container_site_uv">
+              本站访客数<span id="busuanzi_value_site_uv"></span>人次  
+              本站总访问量<span id="busuanzi_value_site_pv"></span>次
+            </span>
+          
+      </div>
+      <div class="site-credit">
+        Theme by <a href="https://github.com/iTimeTraveler/hexo-theme-hipaper" target="_blank">hipaper</a>
+      </div>
+  </div>
+</footer>
+
+
+<!-- min height -->
+
+<script>
+    var wrapdiv = document.getElementById("wrap");
+    var contentdiv = document.getElementById("content");
+
+    wrapdiv.style.minHeight = document.body.offsetHeight - document.getElementById("allheader").offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("allheader").offsetHeight - document.getElementById("footer").offsetHeight + "px";
+
+
+    <!-- headerblur min height -->
+    
+    
+</script>
+    
+<div style="display: none;">
+  <script src="https://s11.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+</div>
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+<script src="/js/bootstrap.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+
+
+
+
+  <div style="display: none;">
+    <script src="https://s95.cnzz.com/z_stat.php?id=1273997385&web_id=1273997385" language="JavaScript"></script>
+  </div>
+
+
+
+	<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+
+
+
+
+
+
+  </div>
+
+  <a id="rocket" href="#top" class=""></a>
+  <script type="text/javascript" src="/js/totop.js" async=""></script>
+  <!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/love.js"></script>
+</body>
+</html>

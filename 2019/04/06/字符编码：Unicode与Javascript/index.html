@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>字符编码：Unicode与Javascript | 01不是包子脸</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="keywords" content="javascript" />
+  
+  
+  
+  
+  <meta name="description" content="字符编码：Unicode 与 Javascript1.ASCII 码我们知道，计算机内部，所有信息最终都是一个二进制值。每一个二进制位（bit）有0和1两种状态，因此八个二进制位就可以组合出 256 种状态，这被称为一个字节（byte）。也就是说，一个字节一共可以用来表示 256 种不同的状态，每一个状态对应一个符号，就是 256 个符号，从00000000到11111111。 上个世纪 60 年">
+<meta name="keywords" content="javascript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="字符编码：Unicode与Javascript">
+<meta property="og:url" content="http://yoursite.com/2019/04/06/字符编码：Unicode与Javascript/index.html">
+<meta property="og:site_name" content="01不是包子脸">
+<meta property="og:description" content="字符编码：Unicode 与 Javascript1.ASCII 码我们知道，计算机内部，所有信息最终都是一个二进制值。每一个二进制位（bit）有0和1两种状态，因此八个二进制位就可以组合出 256 种状态，这被称为一个字节（byte）。也就是说，一个字节一共可以用来表示 256 种不同的状态，每一个状态对应一个符号，就是 256 个符号，从00000000到11111111。 上个世纪 60 年">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://yoursite.com/image/unicode_1.png">
+<meta property="og:image" content="http://yoursite.com/image/unicode_2.png">
+<meta property="og:image" content="http://yoursite.com/image/unicode_3.png">
+<meta property="og:image" content="http://yoursite.com/image/unicode_4.png">
+<meta property="og:image" content="http://yoursite.com/image/unicode_5.png">
+<meta property="og:image" content="http://yoursite.com/image/unicode_0.png">
+<meta property="og:image" content="http://yoursite.com/image/unicode_0.png">
+<meta property="og:image" content="http://yoursite.com/image/unicode_6.png">
+<meta property="og:image" content="http://yoursite.com/image/unicode_0.png">
+<meta property="og:image" content="http://yoursite.com/image/unicode_7.png">
+<meta property="og:image" content="http://yoursite.com/image/unicode_8.png">
+<meta property="og:updated_time" content="2019-08-15T16:23:35.837Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="字符编码：Unicode与Javascript">
+<meta name="twitter:description" content="字符编码：Unicode 与 Javascript1.ASCII 码我们知道，计算机内部，所有信息最终都是一个二进制值。每一个二进制位（bit）有0和1两种状态，因此八个二进制位就可以组合出 256 种状态，这被称为一个字节（byte）。也就是说，一个字节一共可以用来表示 256 种不同的状态，每一个状态对应一个符号，就是 256 个符号，从00000000到11111111。 上个世纪 60 年">
+<meta name="twitter:image" content="http://yoursite.com/image/unicode_1.png">
+  
+    <link rel="alternate" href="/atom.xml" title="01不是包子脸" type="application/atom+xml">
+  
+  <link rel="icon" href="/css/images/dog.JPG">
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
+  <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <style type="text/css">
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/9749f0/00000000000000000001008f/27/l?subset_id=2&fvd=n5) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/90cf9f/000000000000000000010091/27/l?subset_id=2&fvd=n7) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/8a5494/000000000000000000013365/27/l?subset_id=2&fvd=n4) format("woff2");font-weight:lighter;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/d337d8/000000000000000000010095/27/l?subset_id=2&fvd=i4) format("woff2");font-weight:400;font-style:italic;}</style>
+    
+  <link rel="stylesheet" id="athemes-headings-fonts-css" href="//fonts.googleapis.com/css?family=Yanone+Kaffeesatz%3A200%2C300%2C400%2C700&amp;ver=4.6.1" type="text/css" media="all">
+
+  <link rel="stylesheet" id="athemes-headings-fonts-css" href="//fonts.googleapis.com/css?family=Oswald%3A300%2C400%2C700&amp;ver=4.6.1" type="text/css" media="all">
+  <link rel="stylesheet" href="/css/style.css">
+
+  <script src="/js/jquery-3.1.1.min.js"></script>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.css" >
+  <link rel="stylesheet" href="/css/fashion.css" >
+  <link rel="stylesheet" href="/css/glyphs.css" >
+
+</head>
+
+
+
+  <body data-spy="scroll" data-target="#toc" data-offset="50">
+
+
+  
+
+
+<header id="allheader" class="site-header" role="banner" 
+   >
+  <div class="clearfix container">
+      <div class="site-branding">
+
+          <h1 class="site-title">
+            
+              <a href="/" rel="home" >
+                <img style="margin-bottom: 10px;"  width="975px" height="200px" alt="Hike News" src=" /images/IMG_5299.JPG">
+              </a>
+            
+          </h1>
+          
+          
+            
+          <nav id="main-navigation" class="main-navigation" role="navigation">
+            <a class="nav-open">Menu</a>
+            <a class="nav-close">Close</a>
+
+            <div class="clearfix sf-menu">
+              <ul id="main-nav" class="menu sf-js-enabled sf-arrows"  style="touch-action: pan-y;">
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/">首页</a> </li>
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/archives">归档</a> </li>
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/categories">分类</a> </li>
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/tags">标签</a> </li>
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/about">关于</a> </li>
+                    
+              </ul>
+            </div>
+          </nav>
+
+      </div>
+  </div>
+</header>
+
+
+  <div id="container">
+    <div id="wrap">
+            
+      <div id="content" class="outer">
+        
+          <section id="main" style="float:none;"><article id="post-字符编码：Unicode与Javascript" style="width: 66%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="clearfix post-1016 post type-post status-publish format-standard has-post-thumbnail hentry category-template-2 category-uncategorized tag-codex tag-edge-case tag-featured-image tag-image tag-template">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" class="article-title" itemprop="name">
+      字符编码：Unicode与Javascript
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2019/04/06/字符编码：Unicode与Javascript/" class="article-date">
+	  <time datetime="2019-04-06T11:08:55.000Z" itemprop="datePublished">四月 6, 2019</time>
+	</a>
+
+      
+	<span class="ico-folder"></span>
+    <a class="article-category-link" href="/categories/javascript/">javascript</a>
+ 
+      
+	<span id="busuanzi_container_page_pv">
+	  本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+	</span>
+
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="字符编码：Unicode-与-Javascript"><a href="#字符编码：Unicode-与-Javascript" class="headerlink" title="字符编码：Unicode 与 Javascript"></a>字符编码：Unicode 与 Javascript</h1><h2 id="1-ASCII-码"><a href="#1-ASCII-码" class="headerlink" title="1.ASCII 码"></a>1.<strong>ASCII 码</strong></h2><p>我们知道，计算机内部，所有信息最终都是一个二进制值。每一个二进制位（bit）有<code>0</code>和<code>1</code>两种状态，因此八个二进制位就可以组合出 256 种状态，这被称为一个字节（byte）。也就是说，一个字节一共可以用来表示 256 种不同的状态，每一个状态对应一个符号，就是 256 个符号，从<code>00000000</code>到<code>11111111</code>。</p>
+<p>上个世纪 60 年代，美国制定了一套字符编码，对英语字符与二进制位之间的关系，做了统一规定。这被称为 ASCII 码，一直沿用至今。</p>
+<p>ASCII 码一共规定了 128 个字符的编码，比如空格<code>SPACE</code>是 32（二进制<code>00100000</code>），大写的字母<code>A</code>是 65（二进制<code>01000001</code>）。这 128 个符号（包括 32 个不能打印出来的控制符号），只占用了一个字节的后面 7 位，最前面的一位统一规定为<code>0</code>。</p>
+ <a id="more"></a>
+<h2 id="2-非-ASCII-编码"><a href="#2-非-ASCII-编码" class="headerlink" title="2.非 ASCII 编码"></a>2.非 ASCII 编码</h2><p>英语用 128 个符号编码就够了，但是用来表示其他语言，128 个符号是不够的。比如，在法语中，字母上方有注音符号，它就无法用 ASCII 码表示。于是，一些欧洲国家就决定，利用字节中闲置的最高位编入新的符号。比如，法语中的<code>é</code>的编码为 130（二进制<code>10000010</code>）。这样一来，这些欧洲国家使用的编码体系，可以表示最多 256 个符号。</p>
+<p>这里就又出现了新的问题。不同的国家有不同的字母，因此，哪怕它们都使用 256 个符号的编码方式，代表的字母却不一样。比如，130 在法语编码中代表了<code>é</code>，在希伯来语编码中却代表了字母<code>Gimel</code> (<code>ג</code>)，在俄语编码中又会代表另一个符号。但是不管怎样，所有这些编码方式中，0–127 表示的符号是一样的，不一样的只是 128–255 的这一段。</p>
+<p>至于亚洲国家的文字，使用的符号就更多了，汉字就多达 10 万左右。一个字节只能表示 256 种符号，肯定是不够的，就必须使用多个字节表达一个符号。比如，简体中文常见的编码方式是 GB2312，使用两个字节表示一个汉字，所以理论上最多可以表示 256 x 256 = 65536 个符号。</p>
+<p>中文编码的问题需要专文讨论，此处不涉及。这里只指出，虽然都是用多个字节表示一个符号，但是 GB 类的汉字编码与后文的 Unicode 和 UTF-8 是毫无关系的。</p>
+<h2 id="3-Unicode"><a href="#3-Unicode" class="headerlink" title="3.Unicode"></a>3.Unicode</h2><p>Unicode 源于一个很简单的想法：将全世界所有的字符包含在一个集合里，计算机只要支持这一个字符集，就能显示所有的字符，再也不会有乱码了。</p>
+<p>Unicode 当然是一个很大的集合，现在的规模可以容纳 100 多万个符号。每个符号的编码都不一样，比如，<code>U+0639</code>表示阿拉伯字母<code>Ain</code>，<code>U+0041</code>表示英语的大写字母<code>A</code>，<code>U+4E25</code>表示汉字<code>严</code>。具体的符号对应表，可以查询<a href="http://www.unicode.org/" target="_blank" rel="noopener">unicode.org</a>，或者专门的<a href="http://www.chi2ko.com/tool/CJK.htm" target="_blank" rel="noopener">汉字对应表</a>。</p>
+<h3 id="码点"><a href="#码点" class="headerlink" title="码点"></a>码点</h3><p><strong>它从 0 开始，为每个符号指定一个编号，这叫做”码点”（code point）。</strong>比如，码点 0 的符号就是 null（表示所有二进制位都是 0）。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">U+<span class="number">0000</span> = <span class="literal">null</span></span><br></pre></td></tr></table></figure>
+<p>上式中，U+表示紧跟在后面的十六进制数是 Unicode 的码点。</p>
+<p>目前，Unicode 的最新版本是 7.0 版，一共收入了 109449 个符号，其中的中日韩文字为 74500 个。可以近似认为，全世界现有的符号当中，三分之二以上来自东亚文字。比如，中文”好”的码点是十六进制的 597D。</p>
+<h3 id="分区（基本平面-amp-amp-辅助平面）"><a href="#分区（基本平面-amp-amp-辅助平面）" class="headerlink" title="分区（基本平面&amp;&amp;辅助平面）"></a>分区（基本平面&amp;&amp;辅助平面）</h3><p>这么多符号，Unicode 不是一次性定义的，而是分区定义。每个区可以存放 65536 个（216）字符，称为一个平面（plane）。目前，一共有 17 个（25）平面，也就是说，整个 Unicode 字符集的大小现在是 221。</p>
+<p>最前面的 65536 个字符位，称为基本平面（缩写 BMP），它的码点范围是从 0 一直到 216-1，写成 16 进制就是从 U+0000 到 U+FFFF。所有最常见的字符都放在这个平面，这是 Unicode 最先定义和公布的一个平面。</p>
+<p>剩下的字符都放在辅助平面（缩写 SMP），码点范围从 U+010000 一直到 U+10FFFF。</p>
+<p><img src="/image/unicode_1.png" alt=""></p>
+<h3 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h3><p>需要注意的是，Unicode 只是一个符号集，它只规定了符号的二进制代码，却没有规定这个二进制代码应该如何存储。</p>
+<p>比如，汉字<code>严</code>的 Unicode 是十六进制数<code>4E25</code>，转换成二进制数足足有 15 位（<code>100111000100101</code>），也就是说，这个符号的表示至少需要 2 个字节。表示其他更大的符号，可能需要 3 个字节或者 4 个字节，甚至更多。</p>
+<ul>
+<li>如何才能区别 Unicode 和 ASCII ？计算机怎么知道三个字节表示一个符号，而不是分别表示三个符号呢？</li>
+<li>我们已经知道，英文字母只用一个字节表示就够了，如果 Unicode 统一规定，每个符号用三个或四个字节表示，那么每个英文字母前都必然有二到三个字节是<code>0</code>，这对于存储来说是极大的浪费，文本文件的大小会因此大出二三倍，这是无法接受的。</li>
+</ul>
+<h2 id="4-UTF-32-与-UTF-8"><a href="#4-UTF-32-与-UTF-8" class="headerlink" title="4.UTF-32 与 UTF-8"></a>4.UTF-32 与 UTF-8</h2><h3 id="UTF-32"><a href="#UTF-32" class="headerlink" title="UTF-32"></a>UTF-32</h3><p><strong>最直观的编码方法是，每个码点使用四个字节表示，字节内容一一对应码点。这种编码方法就叫做 UTF-32。</strong>比如，码点 0 就用四个字节的 0 表示，码点 597D 就在前面加两个字节的 0。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">U+<span class="number">0000</span> = <span class="number">0x0000</span> <span class="number">0000</span></span><br><span class="line"></span><br><span class="line">U+<span class="number">597</span>D = <span class="number">0x0000</span> <span class="number">597</span>D</span><br></pre></td></tr></table></figure>
+<p><img src="/image/unicode_2.png" alt=""></p>
+<ul>
+<li><h4 id="UTF-32-的优点"><a href="#UTF-32-的优点" class="headerlink" title="UTF-32 的优点"></a>UTF-32 的优点</h4><p>转换规则简单直观，查找效率高。</p>
+</li>
+<li><h4 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h4><p>浪费空间，同样内容的英语文本，它会比 ASCII 编码大四倍。这个缺点很致命，导致实际上没有人使用这种编码方法，HTML 5 标准就明文规定，网页不得编码成 UTF-32。</p>
+</li>
+</ul>
+<h3 id="UTF-8"><a href="#UTF-8" class="headerlink" title="UTF-8"></a>UTF-8</h3><p><strong>UTF-8 是一种变长的编码方法，字符长度从 1 个字节到 4 个字节不等。</strong>越是常用的字符，字节越短，最前面的 128 个字符，只使用 1 个字节表示，与 ASCII 码完全相同。</p>
+<p>由于 UTF-8 这种节省空间的特性，导致它成为互联网上最常见的网页编码。</p>
+<ul>
+<li><h4 id="UTF-8-的编码规则很简单，只有二条："><a href="#UTF-8-的编码规则很简单，只有二条：" class="headerlink" title="UTF-8 的编码规则很简单，只有二条："></a>UTF-8 的编码规则很简单，只有二条：</h4></li>
+</ul>
+<p>1）对于单字节的符号，字节的第一位设为<code>0</code>，后面 7 位为这个符号的 Unicode 码。因此对于英语字母，UTF-8 编码和 ASCII 码是相同的。</p>
+<p>2）对于<code>n</code>字节的符号（<code>n &gt; 1</code>），第一个字节的前<code>n</code>位都设为<code>1</code>，第<code>n + 1</code>位设为<code>0</code>，后面字节的前两位一律设为<code>10</code>。剩下的没有提及的二进制位，全部为这个符号的 Unicode 码。</p>
+<ul>
+<li><h4 id="编码规则："><a href="#编码规则：" class="headerlink" title="编码规则："></a>编码规则：</h4></li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Unicode符号范围      |        UTF<span class="number">-8</span>编码方式</span><br><span class="line">(十六进制)        	 |              （二进制）</span><br><span class="line">----------------------+---------------------------------------------</span><br><span class="line"><span class="number">0000</span> <span class="number">0000</span><span class="number">-0000</span> <span class="number">007</span>F | <span class="number">0</span>xxxxxxx</span><br><span class="line"><span class="number">0000</span> <span class="number">0080</span><span class="number">-0000</span> <span class="number">07</span>FF | <span class="number">110</span>xxxxx <span class="number">10</span>xxxxxx</span><br><span class="line"><span class="number">0000</span> <span class="number">0800</span><span class="number">-0000</span> FFFF | <span class="number">1110</span>xxxx <span class="number">10</span>xxxxxx <span class="number">10</span>xxxxxx</span><br><span class="line"><span class="number">0001</span> <span class="number">0000</span><span class="number">-0010</span> FFFF | <span class="number">11110</span>xxx <span class="number">10</span>xxxxxx <span class="number">10</span>xxxxxx <span class="number">10</span>xxxxxx</span><br></pre></td></tr></table></figure>
+<p>跟据上表，解读 UTF-8 编码非常简单。如果一个字节的第一位是<code>0</code>，则这个字节单独就是一个字符；如果第一位是<code>1</code>，则连续有多少个<code>1</code>，就表示当前字符占用多少个字节。</p>
+<p>下面，还是以汉字<code>严</code>为例，演示如何实现 UTF-8 编码。</p>
+<p><code>严</code>的 Unicode 是<code>4E25</code>（<code>100111000100101</code>），根据上表，可以发现<code>4E25</code>处在第三行的范围内（<code>0000 0800 - 0000 FFFF</code>），因此<code>严</code>的 UTF-8 编码需要三个字节，即格式是<code>1110xxxx 10xxxxxx 10xxxxxx</code>。然后，从<code>严</code>的最后一个二进制位开始，依次从后向前填入格式中的<code>x</code>，多出的位补<code>0</code>。这样就得到了，<code>严</code>的 UTF-8 编码是<code>11100100 10111000 10100101</code>，转换成十六进制就是<code>E4B8A5</code>。</p>
+<h2 id="5-UTF-16"><a href="#5-UTF-16" class="headerlink" title="5.UTF-16"></a>5.UTF-16</h2><p>UTF-16 编码介于 UTF-32 与 UTF-8 之间，同时结合了定长和变长两种编码方法的特点。</p>
+<p>它的编码规则很简单：基本平面的字符占用 2 个字节，辅助平面的字符占用 4 个字节。<strong>也就是说，UTF-16 的编码长度要么是 2 个字节（U+0000 到 U+FFFF），要么是 4 个字节（U+010000 到 U+10FFFF）。</strong></p>
+<p><img src="/image/unicode_3.png" alt=""></p>
+<p>于是就有一个问题，当我们遇到两个字节，怎么看出它本身是一个字符，还是需要跟其他两个字节放在一起解读？</p>
+<p>在基本平面内，从 U+D800 到 U+DFFF 是一个空段，即这些码点不对应任何字符。因此，这个空段可以用来映射辅助平面的字符。</p>
+<p>具体来说，辅助平面的字符位共有 220 个，也就是说，对应这些字符至少需要 20 个二进制位。UTF-16 将这 20 位拆成两半，前 10 位映射在 U+D800 到 U+DBFF（空间大小 210），称为高位（H），后 10 位映射在 U+DC00 到 U+DFFF（空间大小 210），称为低位（L）。这意味着，一个辅助平面的字符，被拆成两个基本平面的字符表示。</p>
+<ul>
+<li><h4 id="编码规则"><a href="#编码规则" class="headerlink" title="编码规则"></a>编码规则</h4></li>
+</ul>
+<p><img src="/image/unicode_4.png" alt=""></p>
+<p><strong>所以，当我们遇到两个字节，发现它的码点在 U+D800 到 U+DBFF 之间，就可以断定，紧跟在后面的两个字节的码点，应该在 U+DC00 到 U+DFFF 之间，这四个字节必须放在一起解读。</strong></p>
+<ul>
+<li><h4 id="Unicode-码点与-UTF-16-转码"><a href="#Unicode-码点与-UTF-16-转码" class="headerlink" title="Unicode 码点与 UTF-16 转码"></a>Unicode 码点与 UTF-16 转码</h4></li>
+</ul>
+<p>首先区分这是基本平面字符，还是辅助平面字符。如果是前者，直接将码点转为对应的十六进制形式，长度为两字节。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">U+<span class="number">597</span>D = <span class="number">0x597D</span></span><br></pre></td></tr></table></figure>
+<p>如果是辅助平面字符，Unicode 3.0 版给出了转码公式。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">H = <span class="built_in">Math</span>.floor((c - <span class="number">0x10000</span>) / <span class="number">0x400</span>) + <span class="number">0xd800</span>;</span><br><span class="line"></span><br><span class="line">L = ((c - <span class="number">0x10000</span>) % <span class="number">0x400</span>) + <span class="number">0xdc00</span>;</span><br></pre></td></tr></table></figure>
+<h2 id="6-JavaScript-用的是-UCS-2"><a href="#6-JavaScript-用的是-UCS-2" class="headerlink" title="6.JavaScript 用的是 UCS-2"></a>6.JavaScript 用的是 UCS-2</h2><p>JavaScript 语言采用 Unicode 字符集，但是只支持一种编码方法。<strong>UCS-2！</strong></p>
+<p><em>互联网还没出现的年代，曾经有两个团队，不约而同想搞统一字符集。一个是 1988 年成立的 Unicode 团队，另一个是 1989 年成立的 UCS 团队。等到他们发现了对方的存在，很快就达成一致：世界上不需要两套统一字符集 1991 年 10 月，两个团队决定合并字符集。也就是说，从今以后只发布一套字符集，就是 Unicode，并且修订此前发布的字符集，UCS 的码点将与 Unicode 完全一致。</em></p>
+<p><strong>两者的关系简单说，就是 UTF-16 取代了 UCS-2，或者说 UCS-2 整合进了 UTF-16。</strong></p>
+<p><strong>在 JavaScript 语言出现的时候，还没有 UTF-16 编码。</strong></p>
+<p><strong>由于 JavaScript 只能处理 UCS-2 编码，造成所有字符在这门语言中都是 2 个字节，如果是 4 个字节的字符，会当作两个双字节的字符处理。</strong>JavaScript 的字符函数都受到这一点的影响，无法返回正确结果。</p>
+<p><img src="/image/unicode_5.png" alt=""></p>
+<p>以字符<img src="/image/unicode_0.png" alt="">为例，它的 UTF-16 编码是 4 个字节的 0xD834 DF06。问题就来了，4 个字节的编码不属于 UCS-2，JavaScript 不认识，只会把它看作单独的两个字符 U+D834 和 U+DF06。前面说过，这两个码点是空的，所以 JavaScript 会认为<img src="/image/unicode_0.png" alt="">是两个空字符组成的字符串！</p>
+<p><img src="/image/unicode_6.png" alt=""></p>
+<p>上面代码表示，JavaScript 认为字符<img src="/image/unicode_0.png" alt="">的长度是 2，取到的第一个字符是空字符，取到的第一个字符的码点是 0xDB34。这些结果都不正确！</p>
+<p>解决这个问题，必须对码点做一个判断，然后手动调整。下面是正确的遍历字符串的写法。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span> (++index &lt; length) &#123;</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">  <span class="keyword">if</span> (charCode &gt;= <span class="number">0xd800</span> &amp;&amp; charCode &lt;= <span class="number">0xdbff</span>) &#123;</span><br><span class="line">    output.push(character + string.charAt(++index));</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    output.push(character);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面代码表示，遍历字符串的时候，必须对码点做一个判断，只要落在 0xD800 到 0xDBFF 的区间，就要连同后面 2 个字节一起读取。</p>
+<p>类似的问题存在于所有的 JavaScript 字符操作函数。</p>
+<ul>
+<li>String.prototype.replace()</li>
+<li>String.prototype.substring()</li>
+<li>String.prototype.slice()</li>
+<li>…</li>
+</ul>
+<p>上面的函数都只对 2 字节的码点有效。要正确处理 4 字节的码点，就必须逐一部署自己的版本，判断一下当前字符的码点范围。</p>
+<h2 id="7-ES6"><a href="#7-ES6" class="headerlink" title="7.ES6"></a>7.ES6</h2><p>ECMAScript 6（简称 ES6），大幅增强了 Unicode 支持，基本上解决了这个问题。</p>
+<p><strong>（1）正确识别字符</strong></p>
+<p>ES6 可以自动识别 4 字节的码点。因此，遍历字符串就简单多了。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> s <span class="keyword">of</span> string) &#123;</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>但是，为了保持兼容，length 属性还是原来的行为方式。为了得到字符串的正确长度，可以用下面的方式。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Array</span>.from(string).length;</span><br></pre></td></tr></table></figure>
+<p><strong>（2）码点表示法</strong></p>
+<p>JavaScript 允许直接用码点表示 Unicode 字符，写法是”反斜杠+u+码点”。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"好"</span> === <span class="string">"\u597D"</span>; <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+<p>但是，这种表示法对 4 字节的码点无效。ES6 修正了这个问题，只要将码点放在大括号内，就能正确识别。</p>
+<p><img src="/image/unicode_7.png" alt=""></p>
+<p><strong>（3）字符串处理函数</strong></p>
+<p>ES6 新增了几个专门处理 4 字节码点的函数。</p>
+<ul>
+<li><strong>String.fromCodePoint()</strong>：从 Unicode 码点返回对应字符</li>
+<li><strong>String.prototype.codePointAt()</strong>：从字符返回对应的码点</li>
+<li><strong>String.prototype.at()</strong>：返回字符串给定位置的字符</li>
+</ul>
+<p><strong>（4）正则表达式</strong></p>
+<p>ES6 提供了 u 修饰符，对正则表达式添加 4 字节码点的支持。</p>
+<p><img src="/image/unicode_8.png" alt=""></p>
+<p><strong>（5）Unicode 正规化</strong></p>
+<p>有些字符除了字母以外，还有<a href="http://zh.wikipedia.org/wiki/附加符号" target="_blank" rel="noopener">附加符号</a>。比如，汉语拼音的 Ǒ，字母上面的声调就是附加符号。对于许多欧洲语言来说，声调符号是非常重要的。</p>
+<p>Unicode 提供了两种表示方法。一种是带附加符号的单个字符，即一个码点表示一个字符，比如 Ǒ 的码点是 U+01D1；另一种是将附加符号单独作为一个码点，与主体字符复合显示，即两个码点表示一个字符，比如 Ǒ 可以写成 O（U+004F） + ˇ（U+030C）。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 方法一</span></span><br><span class="line"><span class="string">"\u01D1"</span>;</span><br><span class="line"><span class="comment">// 'Ǒ'</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 方法二</span></span><br><span class="line"><span class="string">"\u004F\u030C"</span>;</span><br><span class="line"><span class="comment">// 'Ǒ'</span></span><br></pre></td></tr></table></figure>
+<p>这两种表示方法，视觉和语义都完全一样，理应作为等同情况处理。但是，JavaScript 无法辨别。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"\u01D1"</span> === <span class="string">"\u004F\u030C"</span>;</span><br><span class="line"><span class="comment">//false</span></span><br></pre></td></tr></table></figure>
+<p>ES6 提供了 normalize 方法，允许<a href="http://zh.wikipedia.org/wiki/Unicode正規化" target="_blank" rel="noopener">“Unicode 正规化”</a>，即将两种方法转为同样的序列。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"\u01D1"</span>.normalize() === <span class="string">"\u004F\u030C"</span>.normalize();</span><br><span class="line"><span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+<h2 id="8-总结截取含有四字节字符的字符串不会出现乱码的方法"><a href="#8-总结截取含有四字节字符的字符串不会出现乱码的方法" class="headerlink" title="8.总结截取含有四字节字符的字符串不会出现乱码的方法"></a>8.总结截取含有四字节字符的字符串不会出现乱码的方法</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> nickname = <span class="string">"非拉🍒非拉"</span>;</span><br><span class="line">nickname.length; <span class="comment">// 6</span></span><br></pre></td></tr></table></figure>
+<h3 id="Array-from-方法"><a href="#Array-from-方法" class="headerlink" title="Array.from 方法"></a>Array.from 方法</h3><p><code>Array.from</code>这个方法能够将类数组转换为真实的数组，比如<code>NodeList</code>, <code>argument</code>等，同样，也包括字符串。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Array</span>.from(nickname); <span class="comment">// ["非", "拉", "🍒", "非", "拉"]</span></span><br><span class="line">nickname.split(<span class="string">""</span>); <span class="comment">// ["非", "拉", "�", "�", "非", "拉"]</span></span><br></pre></td></tr></table></figure>
+<p>使用 Array.from 把 nickname 转换后，可以看到转换成一个真实的数组了，樱桃字符占了数组中的一个位置，然后按照数组中的方法截取再进行拼接即可，而使用 split 方法拆分，则还是乱码：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">truncated</span>(<span class="params">str, num</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">Array</span>.from(str)</span><br><span class="line">    .slice(<span class="number">0</span>, num)</span><br><span class="line">    .join(<span class="string">""</span>);</span><br><span class="line">&#125;</span><br><span class="line">truncated(nickname, <span class="number">3</span>); <span class="comment">// 非拉🍒</span></span><br></pre></td></tr></table></figure>
+<h3 id="codePointAt-方法"><a href="#codePointAt-方法" class="headerlink" title="codePointAt()方法"></a>codePointAt()方法</h3><p>在 ES6 之前， JS 的字符串以 16 位字符编码(UTF-16)为基础。每个 16 位序列(相当于 2 个字节)是一个编码单元(code unit)，可简称为码元，用于表示一个字符。字符串所有的属性与方法(如 length 属性与 charAt() 方法等)都是基于 16 位序列。</p>
+<p>比如 length 方法、nickname[2]、split 方法等操作，都会产生异常。为此在 ES6 中，加强了对 Unicode 的支持，并且扩展了字符串对象。</p>
+<p>对于 Unicode 码点大于 0xFFFF 的字符，是使用 4 个字节进行存储。ES6 提供了<code>codePointAt</code>方法，能够正确处理 4 个字节储存的字符，返回一个字符的码点。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 获取樱桃的码点</span></span><br><span class="line"><span class="string">"🍒"</span>.codePointAt(<span class="number">0</span>).toString(<span class="number">16</span>); <span class="comment">// 1f352</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 输出码点对应的字符</span></span><br><span class="line">(<span class="string">"\u&#123;1f352&#125;"</span>); <span class="comment">// 🍒</span></span><br></pre></td></tr></table></figure>
+<p>请注意： 在之前 Unicode 编码，均在<code>[\u000-\uFFFF]</code>之间，因此可以使用类似<code>\u0047</code>这样的编码；但是现在码点超过<code>\uFFFF</code>的界限，若再这样使用，则获取不到对应的字符。因此在 ES6 中，码点的字符放在中括号内，类似上面的格式（所有的码点均可以使用这种格式）：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"\u&#123;1f352&#125;"</span>; <span class="comment">// 🍒</span></span><br><span class="line"><span class="string">"\u&#123;47&#125;"</span>; <span class="comment">// G</span></span><br><span class="line"><span class="string">"\u&#123;0047&#125;"</span>; <span class="comment">// G</span></span><br></pre></td></tr></table></figure>
+<p>那么就容易了：判断需要截取的位置是否正好是 4 字节的字符，如果是则延长一位截取，否则正常截取：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">truncated</span>(<span class="params">str, num</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">let</span> index = <span class="built_in">Array</span>.from(str)[num - <span class="number">1</span>].codePointAt(<span class="number">0</span>) &gt; <span class="number">0xffff</span> ? num + <span class="number">1</span> : num;</span><br><span class="line">  <span class="keyword">return</span> str.slice(<span class="number">0</span>, index);</span><br><span class="line">&#125;</span><br><span class="line">truncated(nickname, <span class="number">3</span>); <span class="comment">// 非拉🍒</span></span><br></pre></td></tr></table></figure>
+<h3 id="for-of"><a href="#for-of" class="headerlink" title="for-of"></a>for-of</h3><p><code>for-in</code>方法是遍历 key 值，<code>for-of</code>是遍历 value 值：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> arr = [<span class="string">"a"</span>, <span class="string">"b"</span>, <span class="string">"c"</span>];</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> k <span class="keyword">in</span> arr) &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(k); <span class="comment">// 0 1 2</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> v <span class="keyword">of</span> arr) &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(v); <span class="comment">// a b c</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> v <span class="keyword">of</span> nickname) &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(v); <span class="comment">// 非 拉 🍒 非 拉</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>因此利用这个功能，我们也能进行截取：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">truncated</span>(<span class="params">str, num</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">let</span> s = <span class="string">""</span>;</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">let</span> v <span class="keyword">of</span> nickname) &#123;</span><br><span class="line">    s += v;</span><br><span class="line">    num--;</span><br><span class="line">    <span class="keyword">if</span> (num &lt;= <span class="number">0</span>) &#123;</span><br><span class="line">      <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> s;</span><br><span class="line">&#125;</span><br><span class="line">truncated(nickname, <span class="number">3</span>);</span><br></pre></td></tr></table></figure>
+<h3 id="正确输出字符串的字符个数："><a href="#正确输出字符串的字符个数：" class="headerlink" title="正确输出字符串的字符个数："></a>正确输出字符串的字符个数：</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getLen</span>(<span class="params">str</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> len = str.length;</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; len; i++) &#123;</span><br><span class="line">    <span class="keyword">var</span> charCode = str.charCodeAt(i);</span><br><span class="line">    <span class="keyword">if</span> (charCode &gt;= <span class="number">0xd800</span> &amp;&amp; charCode &lt;= <span class="number">0xdbff</span>) &#123;</span><br><span class="line">      len--;</span><br><span class="line">      i++;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> len;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Array</span>.from(str).length;</span><br></pre></td></tr></table></figure>
+<h2 id="9-string-length"><a href="#9-string-length" class="headerlink" title="9.string.length"></a>9.string.length</h2><h3 id="string-length-返回的是什么-字符的个数还是字节数？为什么会与实际长度不一样？编码的部分详细说"><a href="#string-length-返回的是什么-字符的个数还是字节数？为什么会与实际长度不一样？编码的部分详细说" class="headerlink" title="string.length 返回的是什么 字符的个数还是字节数？为什么会与实际长度不一样？编码的部分详细说"></a>string.length 返回的是什么 字符的个数还是字节数？为什么会与实际长度不一样？编码的部分详细说</h3><p>string.length():<br>返回字符串的长度（以字节为单位）。是符合字符串内容的实际字节数，不一定等于其容量。</p>
+<p>string.size()和 string.length()是同义词，并返回完全相同的值。</p>
+<p>string.max_size()：<br>返回字符串的最大大小，返回字符串可以达到的最大长度。</p>
+<p>string.resize():<br>string.resize(n)：把字符串的长度设置为 n 个字符<br>如果 n 小于当前字符串长度 ，则只截取前 n 个字符，删除超出第 n 个字符的字符。<br>如果大于，则在末端插入尽可能多的字符来扩展当前内容，以达到大小 n。 如果指定 c，则新元素将初始化为 c 的副本，否则为值初始化字符（空字符）。</p>
+<p>string.capacity()：<br>返回已分配存储的大小。当前为字符串分配的存储空间的大小，以字节表示。</p>
+<p>此容量不一定等于字符串长度。 它可以相等或更大，额外的空间允许对象在将新字符添加到字符串时优化其操作。</p>
+
+      
+    </div>
+    <footer class="entry-meta entry-footer">
+      
+	<span class="ico-folder"></span>
+    <a class="article-category-link" href="/categories/javascript/">javascript</a>
+
+      
+  <span class="ico-tags"></span>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
+
+      
+        
+	<div id="comment">
+		<!-- 来必力City版安装代码 -->
+		<div id="lv-container" data-id="city" data-uid="MTAyMC8yOTQ4MS82MDQ5">
+		<script type="text/javascript">
+		   (function(d, s) {
+		       var j, e = d.getElementsByTagName(s)[0];
+
+		       if (typeof LivereTower === 'function') { return; }
+
+		       j = d.createElement(s);
+		       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+		       j.async = true;
+
+		       e.parentNode.insertBefore(j, e);
+		   })(document, 'script');
+		</script>
+		<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+		</div>
+		<!-- City版安装代码已完成 -->
+	</div>
+
+
+
+      
+    </footer>
+    <hr class="entry-footer-hr">
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2019/04/10/BFC/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">上一篇</strong>
+      <div class="article-nav-title">
+        
+          BFC
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/03/29/常用的正则/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">下一篇</strong>
+      <div class="article-nav-title">常用的正则</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+<!-- Table of Contents -->
+
+  <aside id="sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    
+      <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#字符编码：Unicode-与-Javascript"><span class="nav-number">1.</span> <span class="nav-text">字符编码：Unicode 与 Javascript</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-ASCII-码"><span class="nav-number">1.1.</span> <span class="nav-text">1.ASCII 码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-非-ASCII-编码"><span class="nav-number">1.2.</span> <span class="nav-text">2.非 ASCII 编码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-Unicode"><span class="nav-number">1.3.</span> <span class="nav-text">3.Unicode</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#码点"><span class="nav-number">1.3.1.</span> <span class="nav-text">码点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#分区（基本平面-amp-amp-辅助平面）"><span class="nav-number">1.3.2.</span> <span class="nav-text">分区（基本平面&amp;&amp;辅助平面）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#问题"><span class="nav-number">1.3.3.</span> <span class="nav-text">问题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-UTF-32-与-UTF-8"><span class="nav-number">1.4.</span> <span class="nav-text">4.UTF-32 与 UTF-8</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#UTF-32"><span class="nav-number">1.4.1.</span> <span class="nav-text">UTF-32</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#UTF-32-的优点"><span class="nav-number">1.4.1.1.</span> <span class="nav-text">UTF-32 的优点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#缺点"><span class="nav-number">1.4.1.2.</span> <span class="nav-text">缺点</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#UTF-8"><span class="nav-number">1.4.2.</span> <span class="nav-text">UTF-8</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#UTF-8-的编码规则很简单，只有二条："><span class="nav-number">1.4.2.1.</span> <span class="nav-text">UTF-8 的编码规则很简单，只有二条：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#编码规则："><span class="nav-number">1.4.2.2.</span> <span class="nav-text">编码规则：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-UTF-16"><span class="nav-number">1.5.</span> <span class="nav-text">5.UTF-16</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#编码规则"><span class="nav-number">1.5.0.1.</span> <span class="nav-text">编码规则</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Unicode-码点与-UTF-16-转码"><span class="nav-number">1.5.0.2.</span> <span class="nav-text">Unicode 码点与 UTF-16 转码</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-JavaScript-用的是-UCS-2"><span class="nav-number">1.6.</span> <span class="nav-text">6.JavaScript 用的是 UCS-2</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-ES6"><span class="nav-number">1.7.</span> <span class="nav-text">7.ES6</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-总结截取含有四字节字符的字符串不会出现乱码的方法"><span class="nav-number">1.8.</span> <span class="nav-text">8.总结截取含有四字节字符的字符串不会出现乱码的方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Array-from-方法"><span class="nav-number">1.8.1.</span> <span class="nav-text">Array.from 方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#codePointAt-方法"><span class="nav-number">1.8.2.</span> <span class="nav-text">codePointAt()方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#for-of"><span class="nav-number">1.8.3.</span> <span class="nav-text">for-of</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#正确输出字符串的字符个数："><span class="nav-number">1.8.4.</span> <span class="nav-text">正确输出字符串的字符个数：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-string-length"><span class="nav-number">1.9.</span> <span class="nav-text">9.string.length</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#string-length-返回的是什么-字符的个数还是字节数？为什么会与实际长度不一样？编码的部分详细说"><span class="nav-number">1.9.1.</span> <span class="nav-text">string.length 返回的是什么 字符的个数还是字节数？为什么会与实际长度不一样？编码的部分详细说</span></a></li></ol></li></ol></li></ol>
+    
+    </div>
+  </aside>
+</section>
+        
+      </div>
+
+    </div>
+    <!-- <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/categories" class="mobile-nav-link">Categories</a>
+  
+    <a href="/tags" class="mobile-nav-link">Tags</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav> -->
+    <footer id="footer" class="site-footer">
+  
+
+  <div class="clearfix container">
+      <div class="site-info">
+	      &copy; 2019 01不是包子脸 All Rights Reserved.
+        
+            <span id="busuanzi_container_site_uv">
+              本站访客数<span id="busuanzi_value_site_uv"></span>人次  
+              本站总访问量<span id="busuanzi_value_site_pv"></span>次
+            </span>
+          
+      </div>
+      <div class="site-credit">
+        Theme by <a href="https://github.com/iTimeTraveler/hexo-theme-hipaper" target="_blank">hipaper</a>
+      </div>
+  </div>
+</footer>
+
+
+<!-- min height -->
+
+<script>
+    var wrapdiv = document.getElementById("wrap");
+    var contentdiv = document.getElementById("content");
+
+    wrapdiv.style.minHeight = document.body.offsetHeight - document.getElementById("allheader").offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("allheader").offsetHeight - document.getElementById("footer").offsetHeight + "px";
+
+
+    <!-- headerblur min height -->
+    
+    
+</script>
+    
+<div style="display: none;">
+  <script src="https://s11.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+</div>
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+<script src="/js/bootstrap.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+
+
+
+
+  <div style="display: none;">
+    <script src="https://s95.cnzz.com/z_stat.php?id=1273997385&web_id=1273997385" language="JavaScript"></script>
+  </div>
+
+
+
+	<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+
+
+
+
+
+
+  </div>
+
+  <a id="rocket" href="#top" class=""></a>
+  <script type="text/javascript" src="/js/totop.js" async=""></script>
+  <!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/love.js"></script>
+</body>
+</html>
