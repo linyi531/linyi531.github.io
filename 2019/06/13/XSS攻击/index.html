@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>XSS攻击 | 01不是包子脸</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="keywords" content="javascript" />
+  
+  
+  
+  
+  <meta name="description" content="XSS 攻击1.什么是 XSSCross-Site Scripting（跨站脚本攻击）简称 XSS，是一种代码注入攻击。攻击者通过在目标网站上注入恶意脚本，使之在用户的浏览器上运行。利用这些恶意脚本，攻击者可获取用户的敏感信息如 Cookie、SessionID 等，进而危害数据安全。 为了和 CSS 区分，这里把攻击的第一个字母改成了 X，于是叫做 XSS。 XSS 的本质是：恶意代码未经过滤，">
+<meta name="keywords" content="javascript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="XSS攻击">
+<meta property="og:url" content="http://yoursite.com/2019/06/13/XSS攻击/index.html">
+<meta property="og:site_name" content="01不是包子脸">
+<meta property="og:description" content="XSS 攻击1.什么是 XSSCross-Site Scripting（跨站脚本攻击）简称 XSS，是一种代码注入攻击。攻击者通过在目标网站上注入恶意脚本，使之在用户的浏览器上运行。利用这些恶意脚本，攻击者可获取用户的敏感信息如 Cookie、SessionID 等，进而危害数据安全。 为了和 CSS 区分，这里把攻击的第一个字母改成了 X，于是叫做 XSS。 XSS 的本质是：恶意代码未经过滤，">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://yoursite.com/image/xss_1.png">
+<meta property="og:image" content="http://yoursite.com/image/xss_2.png">
+<meta property="og:image" content="http://yoursite.com/image/xss_5.png">
+<meta property="og:image" content="http://yoursite.com/image/xss_3.png">
+<meta property="og:image" content="http://yoursite.com/image/xss_4.png">
+<meta property="og:updated_time" content="2019-08-15T17:50:38.774Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="XSS攻击">
+<meta name="twitter:description" content="XSS 攻击1.什么是 XSSCross-Site Scripting（跨站脚本攻击）简称 XSS，是一种代码注入攻击。攻击者通过在目标网站上注入恶意脚本，使之在用户的浏览器上运行。利用这些恶意脚本，攻击者可获取用户的敏感信息如 Cookie、SessionID 等，进而危害数据安全。 为了和 CSS 区分，这里把攻击的第一个字母改成了 X，于是叫做 XSS。 XSS 的本质是：恶意代码未经过滤，">
+<meta name="twitter:image" content="http://yoursite.com/image/xss_1.png">
+  
+    <link rel="alternate" href="/atom.xml" title="01不是包子脸" type="application/atom+xml">
+  
+  <link rel="icon" href="/css/images/dog.JPG">
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
+  <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <style type="text/css">
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/9749f0/00000000000000000001008f/27/l?subset_id=2&fvd=n5) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/90cf9f/000000000000000000010091/27/l?subset_id=2&fvd=n7) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/8a5494/000000000000000000013365/27/l?subset_id=2&fvd=n4) format("woff2");font-weight:lighter;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/d337d8/000000000000000000010095/27/l?subset_id=2&fvd=i4) format("woff2");font-weight:400;font-style:italic;}</style>
+    
+  <link rel="stylesheet" id="athemes-headings-fonts-css" href="//fonts.googleapis.com/css?family=Yanone+Kaffeesatz%3A200%2C300%2C400%2C700&amp;ver=4.6.1" type="text/css" media="all">
+
+  <link rel="stylesheet" id="athemes-headings-fonts-css" href="//fonts.googleapis.com/css?family=Oswald%3A300%2C400%2C700&amp;ver=4.6.1" type="text/css" media="all">
+  <link rel="stylesheet" href="/css/style.css">
+
+  <script src="/js/jquery-3.1.1.min.js"></script>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.css" >
+  <link rel="stylesheet" href="/css/fashion.css" >
+  <link rel="stylesheet" href="/css/glyphs.css" >
+
+</head>
+
+
+
+  <body data-spy="scroll" data-target="#toc" data-offset="50">
+
+
+  
+
+
+<header id="allheader" class="site-header" role="banner" 
+   >
+  <div class="clearfix container">
+      <div class="site-branding">
+
+          <h1 class="site-title">
+            
+              <a href="/" rel="home" >
+                <img style="margin-bottom: 10px;"  width="975px" height="200px" alt="Hike News" src=" /images/IMG_5299.JPG">
+              </a>
+            
+          </h1>
+          
+          
+            
+          <nav id="main-navigation" class="main-navigation" role="navigation">
+            <a class="nav-open">Menu</a>
+            <a class="nav-close">Close</a>
+
+            <div class="clearfix sf-menu">
+              <ul id="main-nav" class="menu sf-js-enabled sf-arrows"  style="touch-action: pan-y;">
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/">首页</a> </li>
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/archives">归档</a> </li>
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/categories">分类</a> </li>
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/tags">标签</a> </li>
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/about">关于</a> </li>
+                    
+              </ul>
+            </div>
+          </nav>
+
+      </div>
+  </div>
+</header>
+
+
+  <div id="container">
+    <div id="wrap">
+            
+      <div id="content" class="outer">
+        
+          <section id="main" style="float:none;"><article id="post-XSS攻击" style="width: 66%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="clearfix post-1016 post type-post status-publish format-standard has-post-thumbnail hentry category-template-2 category-uncategorized tag-codex tag-edge-case tag-featured-image tag-image tag-template">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" class="article-title" itemprop="name">
+      XSS攻击
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2019/06/13/XSS攻击/" class="article-date">
+	  <time datetime="2019-06-13T10:29:55.000Z" itemprop="datePublished">六月 13, 2019</time>
+	</a>
+
+      
+	<span class="ico-folder"></span>
+    <a class="article-category-link" href="/categories/javascript/">javascript</a>
+ 
+      
+	<span id="busuanzi_container_page_pv">
+	  本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+	</span>
+
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="XSS-攻击"><a href="#XSS-攻击" class="headerlink" title="XSS 攻击"></a>XSS 攻击</h1><h2 id="1-什么是-XSS"><a href="#1-什么是-XSS" class="headerlink" title="1.什么是 XSS"></a>1.什么是 XSS</h2><p>Cross-Site Scripting（跨站脚本攻击）简称 XSS，是一种代码注入攻击。攻击者通过在目标网站上注入恶意脚本，使之在用户的浏览器上运行。利用这些恶意脚本，攻击者可获取用户的敏感信息如 Cookie、SessionID 等，进而危害数据安全。</p>
+<p>为了和 CSS 区分，这里把攻击的第一个字母改成了 X，于是叫做 XSS。</p>
+<p>XSS 的本质是：恶意代码未经过滤，与网站正常的代码混在一起；浏览器无法分辨哪些脚本是可信的，导致恶意脚本被执行。</p>
+  <a id="more"></a>
+<p>而由于直接在用户的终端执行，恶意代码能够直接获取用户的信息，或者利用这些信息冒充用户向网站发起攻击者定义的请求。</p>
+<p>在处理输入时，以下内容都不可信：</p>
+<ul>
+<li>来自用户的 UGC 信息</li>
+<li>来自第三方的链接</li>
+<li>URL 参数</li>
+<li>POST 参数</li>
+<li>Referer （可能来自不可信的来源）</li>
+<li>Cookie （可能来自其他子域注入）</li>
+</ul>
+<h2 id="2-XSS-分类"><a href="#2-XSS-分类" class="headerlink" title="2.XSS 分类"></a>2.XSS 分类</h2><p>根据攻击的来源，XSS 攻击可分为存储型、反射型和 DOM 型三种。</p>
+<p><img src="/image/xss_1.png" alt=""></p>
+<h4 id="存储型-XSS"><a href="#存储型-XSS" class="headerlink" title="存储型 XSS"></a>存储型 XSS</h4><p>存储型 XSS 的攻击步骤：</p>
+<ol>
+<li>攻击者将恶意代码提交到目标网站的数据库中。</li>
+<li>用户打开目标网站时，网站服务端将恶意代码从数据库取出，拼接在 HTML 中返回给浏览器。</li>
+<li>用户浏览器接收到响应后解析执行，混在其中的恶意代码也被执行。</li>
+<li>恶意代码窃取用户数据并发送到攻击者的网站，或者冒充用户的行为，调用目标网站接口执行攻击者指定的操作。</li>
+</ol>
+<p>这种攻击常见于带有用户保存数据的网站功能，如论坛发帖、商品评论、用户私信等。</p>
+<h4 id="反射型-XSS"><a href="#反射型-XSS" class="headerlink" title="反射型 XSS"></a>反射型 XSS</h4><p>反射型 XSS 的攻击步骤：</p>
+<ol>
+<li>攻击者构造出特殊的 URL，其中包含恶意代码。</li>
+<li>用户打开带有恶意代码的 URL 时，网站服务端将恶意代码从 URL 中取出，拼接在 HTML 中返回给浏览器。</li>
+<li>用户浏览器接收到响应后解析执行，混在其中的恶意代码也被执行。</li>
+<li>恶意代码窃取用户数据并发送到攻击者的网站，或者冒充用户的行为，调用目标网站接口执行攻击者指定的操作。</li>
+</ol>
+<p>反射型 XSS 跟存储型 XSS 的区别是：存储型 XSS 的恶意代码存在数据库里，反射型 XSS 的恶意代码存在 URL 里。</p>
+<p>反射型 XSS 漏洞常见于通过 URL 传递参数的功能，如网站搜索、跳转等。</p>
+<p>由于需要用户主动打开恶意的 URL 才能生效，攻击者往往会结合多种手段诱导用户点击。</p>
+<p>POST 的内容也可以触发反射型 XSS，只不过其触发条件比较苛刻（需要构造表单提交页面，并引导用户点击），所以非常少见。</p>
+<h4 id="DOM-型-XSS"><a href="#DOM-型-XSS" class="headerlink" title="DOM 型 XSS"></a>DOM 型 XSS</h4><p>DOM 型 XSS 的攻击步骤：</p>
+<ol>
+<li>攻击者构造出特殊的 URL，其中包含恶意代码。</li>
+<li>用户打开带有恶意代码的 URL。</li>
+<li>用户浏览器接收到响应后解析执行，前端 JavaScript 取出 URL 中的恶意代码并执行。</li>
+<li>恶意代码窃取用户数据并发送到攻击者的网站，或者冒充用户的行为，调用目标网站接口执行攻击者指定的操作。</li>
+</ol>
+<p>DOM 型 XSS 跟前两种 XSS 的区别：DOM 型 XSS 攻击中，取出和执行恶意代码由浏览器端完成，属于前端 JavaScript 自身的安全漏洞，而其他两种 XSS 都属于服务端的安全漏洞。</p>
+<h2 id="3-XSS-的预防"><a href="#3-XSS-的预防" class="headerlink" title="3.XSS 的预防"></a>3.XSS 的预防</h2><p>XSS 攻击有两大要素：</p>
+<ol>
+<li>攻击者提交恶意代码。</li>
+<li>浏览器执行恶意代码。</li>
+</ol>
+<ul>
+<li><h3 id="输入过滤"><a href="#输入过滤" class="headerlink" title="输入过滤"></a>输入过滤</h3><p>输入侧过滤能够在某些情况下解决特定的 XSS 问题，但会引入很大的不确定性和乱码问题。</p>
+<p>对于明确的输入类型，例如数字、URL、电话号码、邮件地址等等内容，进行输入过滤还是必要的。</p>
+<p>输入过滤并非完全可靠，我们就要通过“防止浏览器执行恶意代码”来防范 XSS。这部分分为两类：</p>
+<ul>
+<li>防止 HTML 中出现注入。</li>
+<li>防止 JavaScript 执行时，执行恶意代码。</li>
+</ul>
+</li>
+<li><h3 id="预防存储型和反射型-XSS-攻击"><a href="#预防存储型和反射型-XSS-攻击" class="headerlink" title="预防存储型和反射型 XSS 攻击"></a>预防存储型和反射型 XSS 攻击</h3><p>预防这两种漏洞，有两种常见做法：</p>
+<ul>
+<li><p>改成纯前端渲染，把代码和数据分隔开。</p>
+<p>纯前端渲染的过程：</p>
+<ol>
+<li>浏览器先加载一个静态 HTML，此 HTML 中不包含任何跟业务相关的数据。</li>
+<li>然后浏览器执行 HTML 中的 JavaScript。</li>
+<li>JavaScript 通过 Ajax 加载业务数据，调用 DOM API 更新到页面上。</li>
+</ol>
+<p>在纯前端渲染中，我们会明确的告诉浏览器：下面要设置的内容是文本（<code>.innerText</code>），还是属性（<code>.setAttribute</code>），还是样式（<code>.style</code>）等等。浏览器不会被轻易的被欺骗，执行预期外的代码了。</p>
+<p>但纯前端渲染还需注意避免 DOM 型 XSS 漏洞</p>
+</li>
+<li><p>对 HTML 做充分转义。</p>
+<p><strong>转义应该在输出 HTML 时进行，而不是在提交用户输入时。</strong></p>
+<p>常用的模板引擎，如 doT.js、ejs、FreeMarker 等，对于 HTML 转义通常只有一个规则，就是把 <code>&amp; &lt; &gt; &quot; &#39; /</code> 这几个字符转义掉，确实能起到一定的 XSS 防护作用，但并不完善：</p>
+<p><img src="/image/xss_2.png" alt=""></p>
+</li>
+</ul>
+</li>
+<li><h3 id="预防-DOM-型-XSS-攻击"><a href="#预防-DOM-型-XSS-攻击" class="headerlink" title="预防 DOM 型 XSS 攻击"></a>预防 DOM 型 XSS 攻击</h3><ol>
+<li>在使用 <code>.innerHTML</code>、<code>.outerHTML</code>、<code>document.write()</code> 时要特别小心，不要把不可信的数据作为 HTML 插到页面上，而应尽量使用 <code>.textContent</code>、<code>.setAttribute()</code> 等。</li>
+<li>如果用 Vue/React 技术栈，并且不使用 <code>v-html</code>/<code>dangerouslySetInnerHTML</code> 功能，就在前端 render 阶段避免 <code>innerHTML</code>、<code>outerHTML</code> 的 XSS 隐患。</li>
+<li>DOM 中的内联事件监听器，如 <code>location</code>、<code>onclick</code>、<code>onerror</code>、<code>onload</code>、<code>onmouseover</code> 等，<code>&lt;a&gt;</code> 标签的 <code>href</code> 属性，JavaScript 的 <code>eval()</code>、<code>setTimeout()</code>、<code>setInterval()</code> 等，都能把字符串作为代码运行。如果不可信的数据拼接到字符串中传递给这些 API，很容易产生安全隐患，请务必避免。</li>
+</ol>
+</li>
+</ul>
+<h2 id="4-其他-XSS-防范措施"><a href="#4-其他-XSS-防范措施" class="headerlink" title="4.其他 XSS 防范措施"></a>4.其他 XSS 防范措施</h2><h3 id="Content-Security-Policy"><a href="#Content-Security-Policy" class="headerlink" title="Content Security Policy"></a>Content Security Policy</h3><p>严格的 CSP 在 XSS 的防范中可以起到以下的作用：</p>
+<ul>
+<li>禁止加载外域代码，防止复杂的攻击逻辑。</li>
+<li>禁止外域提交，网站被攻击后，用户的数据不会泄露到外域。</li>
+<li>禁止内联脚本执行（规则较严格，目前发现 GitHub 使用）。</li>
+<li>禁止未授权的脚本执行（新特性，Google Map 移动版在使用）。</li>
+<li>合理使用上报可以及时发现 XSS，利于尽快修复问题。</li>
+</ul>
+<h3 id="输入内容长度控制"><a href="#输入内容长度控制" class="headerlink" title="输入内容长度控制"></a>输入内容长度控制</h3><p>对于不受信任的输入，都应该限定一个合理的长度。虽然无法完全防止 XSS 发生，但可以增加 XSS 攻击的难度。</p>
+<h3 id="其他安全措施"><a href="#其他安全措施" class="headerlink" title="其他安全措施"></a>其他安全措施</h3><ul>
+<li>HTTP-only Cookie: 禁止 JavaScript 读取某些敏感 Cookie，攻击者完成 XSS 注入后也无法窃取此 Cookie。</li>
+<li>验证码：防止脚本冒充用户提交危险操作。</li>
+</ul>
+<h2 id="5-XSS-漏洞总结"><a href="#5-XSS-漏洞总结" class="headerlink" title="5.XSS 漏洞总结"></a>5.XSS 漏洞总结</h2><h3 id="漏洞总结"><a href="#漏洞总结" class="headerlink" title="漏洞总结"></a>漏洞总结</h3><ul>
+<li>在 HTML 中内嵌的文本中，恶意内容以 script 标签形成注入。</li>
+<li>在内联的 JavaScript 中，拼接的数据突破了原本的限制（字符串，变量，方法名等）。</li>
+<li>在标签属性中，恶意内容包含引号，从而突破属性值的限制，注入其他属性或者标签。</li>
+<li>在标签的 href、src 等属性中，包含 <code>javascript:</code> 等可执行代码。</li>
+<li>在 onload、onerror、onclick 等事件中，注入不受控制代码。</li>
+<li>在 style 属性和标签中，包含类似 <code>background-image:url(&quot;javascript:...&quot;);</code> 的代码（新版本浏览器已经可以防范）。</li>
+<li>在 style 属性和标签中，包含类似 <code>expression(...)</code> 的 CSS 表达式代码（新版本浏览器已经可以防范）。</li>
+</ul>
+<p>总之，如果开发者没有将用户输入的文本进行合适的过滤，就贸然插入到 HTML 中，这很容易造成注入漏洞。攻击者可以利用漏洞，构造出恶意的代码指令，进而利用恶意代码危害数据安全。</p>
+<ul>
+<li>内联 JSON 也是不安全的：<ul>
+<li>当 JSON 中包含 <code>U+2028</code> 或 <code>U+2029</code> 这两个字符时，不能作为 JavaScript 的字面量使用，否则会抛出语法错误。</li>
+<li>当 JSON 中包含字符串 <code>&lt;/script&gt;</code> 时，当前的 script 标签将会被闭合，后面的字符串内容浏览器会按照 HTML 进行解析；通过增加下一个 <code>&lt;script&gt;</code> 标签等方法就可以完成注入。</li>
+</ul>
+</li>
+</ul>
+<h2 id="6-减少漏洞产生的原则"><a href="#6-减少漏洞产生的原则" class="headerlink" title="6.减少漏洞产生的原则"></a>6.减少漏洞产生的原则</h2><ul>
+<li><strong>利用模板引擎</strong><br>开启模板引擎自带的 HTML 转义功能。例如：<br>在 ejs 中，尽量使用 <code>&lt;%= data %&gt;</code> 而不是 <code>&lt;%- data %&gt;</code>；<br><img src="/image/xss_5.png" alt=""><br>在 FreeMarker 中，确保引擎版本高于 2.3.24，并且选择正确的 <code>freemarker.core.OutputFormat</code>。</li>
+<li><strong>避免内联事件</strong><br>尽量不要使用 <code>onLoad=&quot;onload(&#39;&#39;)&quot;</code>、<code>onClick=&quot;go(&#39;&#39;)&quot;</code> 这种拼接内联事件的写法。在 JavaScript 中通过 <code>.addEventlistener()</code> 事件绑定会更安全。</li>
+<li><strong>避免拼接 HTML</strong><br>前端采用拼接 HTML 的方法比较危险，如果框架允许，使用 <code>createElement</code>、<code>setAttribute</code> 之类的方法实现。或者采用比较成熟的渲染框架，如 Vue/React 等。</li>
+<li><strong>时刻保持警惕</strong><br>在插入位置为 DOM 属性、链接等位置时，要打起精神，严加防范。</li>
+<li><strong>增加攻击难度，降低攻击后果</strong><br>通过 CSP、输入长度配置、接口安全措施等方法，增加攻击的难度，降低攻击的后果。</li>
+<li><strong>主动检测和发现</strong><br>可使用 XSS 攻击字符串和自动扫描工具寻找潜在的 XSS 漏洞。</li>
+</ul>
+<h2 id="7-vue-react-框架对-xss-的防护有做什么？"><a href="#7-vue-react-框架对-xss-的防护有做什么？" class="headerlink" title="7.vue react 框架对 xss 的防护有做什么？"></a>7.vue react 框架对 xss 的防护有做什么？</h2><ul>
+<li><p>VUE</p>
+<ul>
+<li>尽量使用插值表达式(双花括号)，它会把要显示的内容转为字符串。</li>
+<li><ul>
+<li>如果使用<code>v-html</code>，要保证来自服务端的渲染数据都是安全的。</li>
+</ul>
+</li>
+<li>在使用第三方 UI 组件库的的时候，要检查一下它们渲染页面的方式，是否使用了<code>v-html</code></li>
+</ul>
+</li>
+<li><p>REACT</p>
+<p>XSS 防御措施就是对任何用户输入的信息进行处理，只允许合法值，其它值一概过滤掉</p>
+<ol>
+<li>所有的用户输入都需要经过 HTML 实体编码，React 已经做了，它会在运行时动态创建 DOM 节点然后填入文本内容 (也可以强制设置 HTML 内容，不过这样比较危险)</li>
+<li>序列化某些状态并且传给客户端的时候，也进行 HTML 实体编码，可以使用 Yahoo 的 Serialize JavaScript 中的 serialize 方法替换 JSON.stringify 方法，Serialize JavaScript 中的方法会自动将 HTML 和 JavaScript 代码进行转码，GitHub 访问地址 : <a href="https://github.com/yahoo/serialize-javascript" target="_blank" rel="noopener">https://github.com/yahoo/serialize-javascript</a></li>
+</ol>
+<p>默认情况下，React DOM 在重新渲染页面时将所有进行转码，官方宣称在 React 应用中确保不会注入任何没显式编写的数据，所有的数据在页面渲染之前都会被转换成字符串，这防止 XSS 进攻</p>
+</li>
+</ul>
+<h2 id="8-xss-攻击后果？"><a href="#8-xss-攻击后果？" class="headerlink" title="8.xss 攻击后果？"></a>8.xss 攻击后果？</h2><p>恶意代码未经过滤，与网站正常的代码混在一起；浏览器无法分辨哪些脚本是可信的，导致恶意脚本被执行。</p>
+<p>而由于直接在用户的终端执行，恶意代码能够直接获取用户的信息，或者利用这些信息冒充用户向网站发起攻击者定义的请求。</p>
+<h2 id="9-需要转义的字符？"><a href="#9-需要转义的字符？" class="headerlink" title="9.需要转义的字符？"></a>9.需要转义的字符？</h2><ul>
+<li><code>escapeHTML()</code> 按照如下规则进行转义：</li>
+</ul>
+<p><img src="/image/xss_3.png" alt=""></p>
+<ul>
+<li><p>连 <code>javascript:</code> 这样的字符串如果出现在特定的位置也会引发 XSS 攻击。</p>
+<p><code>%20javascript:alert(&#39;XSS&#39;)</code> 经过 URL 解析后变成 <code>javascript:alert(&#39;XSS&#39;)</code>，这个字符串以空格开头。这样攻击者可以绕过后端的关键词规则，又成功的完成了注入。</p>
+</li>
+<li><p>插入 JSON 的地方不能使用 <code>escapeHTML()</code>，因为转义 <code>&quot;</code> 后，JSON 格式会被破坏。</p>
+<p>要实现一个 <code>escapeEmbedJSON()</code> 函数，对内联 JSON 进行转义。</p>
+</li>
+</ul>
+<p><img src="/image/xss_4.png" alt=""></p>
+
+      
+    </div>
+    <footer class="entry-meta entry-footer">
+      
+	<span class="ico-folder"></span>
+    <a class="article-category-link" href="/categories/javascript/">javascript</a>
+
+      
+  <span class="ico-tags"></span>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
+
+      
+        
+	<div id="comment">
+		<!-- 来必力City版安装代码 -->
+		<div id="lv-container" data-id="city" data-uid="MTAyMC8yOTQ4MS82MDQ5">
+		<script type="text/javascript">
+		   (function(d, s) {
+		       var j, e = d.getElementsByTagName(s)[0];
+
+		       if (typeof LivereTower === 'function') { return; }
+
+		       j = d.createElement(s);
+		       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+		       j.async = true;
+
+		       e.parentNode.insertBefore(j, e);
+		   })(document, 'script');
+		</script>
+		<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+		</div>
+		<!-- City版安装代码已完成 -->
+	</div>
+
+
+
+      
+    </footer>
+    <hr class="entry-footer-hr">
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2019/06/18/CSRF攻击/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">上一篇</strong>
+      <div class="article-nav-title">
+        
+          CSRF攻击
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/06/01/ES6 的新特性总结/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">下一篇</strong>
+      <div class="article-nav-title">ES6 的新特性总结</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+<!-- Table of Contents -->
+
+  <aside id="sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    
+      <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#XSS-攻击"><span class="nav-number">1.</span> <span class="nav-text">XSS 攻击</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-什么是-XSS"><span class="nav-number">1.1.</span> <span class="nav-text">1.什么是 XSS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-XSS-分类"><span class="nav-number">1.2.</span> <span class="nav-text">2.XSS 分类</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#存储型-XSS"><span class="nav-number">1.2.0.1.</span> <span class="nav-text">存储型 XSS</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#反射型-XSS"><span class="nav-number">1.2.0.2.</span> <span class="nav-text">反射型 XSS</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#DOM-型-XSS"><span class="nav-number">1.2.0.3.</span> <span class="nav-text">DOM 型 XSS</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-XSS-的预防"><span class="nav-number">1.3.</span> <span class="nav-text">3.XSS 的预防</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#输入过滤"><span class="nav-number">1.3.1.</span> <span class="nav-text">输入过滤</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#预防存储型和反射型-XSS-攻击"><span class="nav-number">1.3.2.</span> <span class="nav-text">预防存储型和反射型 XSS 攻击</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#预防-DOM-型-XSS-攻击"><span class="nav-number">1.3.3.</span> <span class="nav-text">预防 DOM 型 XSS 攻击</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-其他-XSS-防范措施"><span class="nav-number">1.4.</span> <span class="nav-text">4.其他 XSS 防范措施</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Content-Security-Policy"><span class="nav-number">1.4.1.</span> <span class="nav-text">Content Security Policy</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#输入内容长度控制"><span class="nav-number">1.4.2.</span> <span class="nav-text">输入内容长度控制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#其他安全措施"><span class="nav-number">1.4.3.</span> <span class="nav-text">其他安全措施</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-XSS-漏洞总结"><span class="nav-number">1.5.</span> <span class="nav-text">5.XSS 漏洞总结</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#漏洞总结"><span class="nav-number">1.5.1.</span> <span class="nav-text">漏洞总结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-减少漏洞产生的原则"><span class="nav-number">1.6.</span> <span class="nav-text">6.减少漏洞产生的原则</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-vue-react-框架对-xss-的防护有做什么？"><span class="nav-number">1.7.</span> <span class="nav-text">7.vue react 框架对 xss 的防护有做什么？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-xss-攻击后果？"><span class="nav-number">1.8.</span> <span class="nav-text">8.xss 攻击后果？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-需要转义的字符？"><span class="nav-number">1.9.</span> <span class="nav-text">9.需要转义的字符？</span></a></li></ol></li></ol>
+    
+    </div>
+  </aside>
+</section>
+        
+      </div>
+
+    </div>
+    <!-- <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/categories" class="mobile-nav-link">Categories</a>
+  
+    <a href="/tags" class="mobile-nav-link">Tags</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav> -->
+    <footer id="footer" class="site-footer">
+  
+
+  <div class="clearfix container">
+      <div class="site-info">
+	      &copy; 2019 01不是包子脸 All Rights Reserved.
+        
+            <span id="busuanzi_container_site_uv">
+              本站访客数<span id="busuanzi_value_site_uv"></span>人次  
+              本站总访问量<span id="busuanzi_value_site_pv"></span>次
+            </span>
+          
+      </div>
+      <div class="site-credit">
+        Theme by <a href="https://github.com/iTimeTraveler/hexo-theme-hipaper" target="_blank">hipaper</a>
+      </div>
+  </div>
+</footer>
+
+
+<!-- min height -->
+
+<script>
+    var wrapdiv = document.getElementById("wrap");
+    var contentdiv = document.getElementById("content");
+
+    wrapdiv.style.minHeight = document.body.offsetHeight - document.getElementById("allheader").offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("allheader").offsetHeight - document.getElementById("footer").offsetHeight + "px";
+
+
+    <!-- headerblur min height -->
+    
+    
+</script>
+    
+<div style="display: none;">
+  <script src="https://s11.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+</div>
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+<script src="/js/bootstrap.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+
+
+
+
+  <div style="display: none;">
+    <script src="https://s95.cnzz.com/z_stat.php?id=1273997385&web_id=1273997385" language="JavaScript"></script>
+  </div>
+
+
+
+	<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+
+
+
+
+
+
+  </div>
+
+  <a id="rocket" href="#top" class=""></a>
+  <script type="text/javascript" src="/js/totop.js" async=""></script>
+  <!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/love.js"></script>
+</body>
+</html>
