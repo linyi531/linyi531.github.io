@@ -11,19 +11,19 @@
   
   
   
-  <meta name="description" content="#柯里化 闭包实现multi(2)(3)(4)=24 1234567function multi(a) &amp;#123;  return function(b) &amp;#123;    return function(c) &amp;#123;      return a * b * c;    &amp;#125;;  &amp;#125;;&amp;#125;">
+  <meta name="description" content="柯里化闭包实现multi(2)(3)(4)=24 1234567function multi(a) &amp;#123;  return function(b) &amp;#123;    return function(c) &amp;#123;      return a * b * c;    &amp;#125;;  &amp;#125;;&amp;#125;">
 <meta name="keywords" content="前端,javascript">
 <meta property="og:type" content="article">
 <meta property="og:title" content="柯里化&amp;&amp;闭包">
 <meta property="og:url" content="http://yoursite.com/2018/08/16/柯里化&&闭包/index.html">
 <meta property="og:site_name" content="01不是包子脸">
-<meta property="og:description" content="#柯里化 闭包实现multi(2)(3)(4)=24 1234567function multi(a) &amp;#123;  return function(b) &amp;#123;    return function(c) &amp;#123;      return a * b * c;    &amp;#125;;  &amp;#125;;&amp;#125;">
+<meta property="og:description" content="柯里化闭包实现multi(2)(3)(4)=24 1234567function multi(a) &amp;#123;  return function(b) &amp;#123;    return function(c) &amp;#123;      return a * b * c;    &amp;#125;;  &amp;#125;;&amp;#125;">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://yoursite.com/image/curry.png">
-<meta property="og:updated_time" content="2019-08-15T09:44:44.211Z">
+<meta property="og:updated_time" content="2019-08-15T09:49:22.697Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="柯里化&amp;&amp;闭包">
-<meta name="twitter:description" content="#柯里化 闭包实现multi(2)(3)(4)=24 1234567function multi(a) &amp;#123;  return function(b) &amp;#123;    return function(c) &amp;#123;      return a * b * c;    &amp;#125;;  &amp;#125;;&amp;#125;">
+<meta name="twitter:description" content="柯里化闭包实现multi(2)(3)(4)=24 1234567function multi(a) &amp;#123;  return function(b) &amp;#123;    return function(c) &amp;#123;      return a * b * c;    &amp;#125;;  &amp;#125;;&amp;#125;">
 <meta name="twitter:image" content="http://yoursite.com/image/curry.png">
   
     <link rel="alternate" href="/atom.xml" title="01不是包子脸" type="application/atom+xml">
@@ -141,8 +141,7 @@
     </div>
     <div class="article-entry" itemprop="articleBody">
       
-        <p>#柯里化</p>
-<h2 id="闭包实现"><a href="#闭包实现" class="headerlink" title="闭包实现"></a>闭包实现</h2><p>multi(2)(3)(4)=24</p>
+        <h1 id="柯里化"><a href="#柯里化" class="headerlink" title="柯里化"></a>柯里化</h1><h2 id="闭包实现"><a href="#闭包实现" class="headerlink" title="闭包实现"></a>闭包实现</h2><p>multi(2)(3)(4)=24</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">multi</span>(<span class="params">a</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params">b</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params">c</span>) </span>&#123;</span><br><span class="line">      <span class="keyword">return</span> a * b * c;</span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <a id="more"></a>
 <h2 id="函数柯里化"><a href="#函数柯里化" class="headerlink" title="函数柯里化"></a>函数柯里化</h2><p>函数柯里化指的是将能够接收多个参数的函数转化为接收单一参数的函数，并且返回接收余下参数且返回结果的新函数的技术。</p>
@@ -226,7 +225,7 @@
     <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
     
-      <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#闭包实现"><span class="nav-number">1.</span> <span class="nav-text">闭包实现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#函数柯里化"><span class="nav-number">2.</span> <span class="nav-text">函数柯里化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#普通版"><span class="nav-number">2.1.</span> <span class="nav-text">普通版</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#优化版"><span class="nav-number">2.2.</span> <span class="nav-text">优化版</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#闭包"><span class="nav-number"></span> <span class="nav-text">闭包</span></a>
+      <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#柯里化"><span class="nav-number">1.</span> <span class="nav-text">柯里化</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#闭包实现"><span class="nav-number">1.1.</span> <span class="nav-text">闭包实现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#函数柯里化"><span class="nav-number">1.2.</span> <span class="nav-text">函数柯里化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#普通版"><span class="nav-number">1.2.1.</span> <span class="nav-text">普通版</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#优化版"><span class="nav-number">1.2.2.</span> <span class="nav-text">优化版</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#闭包"><span class="nav-number">2.</span> <span class="nav-text">闭包</span></a></li></ol>
     
     </div>
   </aside>
