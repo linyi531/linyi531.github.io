@@ -3,28 +3,26 @@
 <head>
   <meta charset="utf-8">
   
-  <title>常用git命令 | 01不是包子脸</title>
+  <title>递归与尾递归 | 01不是包子脸</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-  <meta name="keywords" content="git" />
+  <meta name="keywords" content="前端算法javascript" />
   
   
   
   
-  <meta name="description" content="红色代表工作区，绿色代表暂存区 文件操作 git init在当前目录下新建一个 git 仓库（master 分支）git init [project-name]新建一个目录，将其初始化为 git 仓库">
-<meta name="keywords" content="git">
+  <meta name="description" content="递归的问题函数的递归调用是通过栈来实现的，每一次函数调用都会把当前函数的状态，如变量，返回地址保存在栈中一直到函数返回才能出栈。因为程序运行时，栈的大小一般很有限（在 chrome 中运行下面的代码可以计算出 chrome 给每个线程的栈大小），因此如果递归调用的层次如果过多，将会使栈区溢出。">
+<meta name="keywords" content="前端,算法,javascript">
 <meta property="og:type" content="article">
-<meta property="og:title" content="常用git命令">
-<meta property="og:url" content="http://yoursite.com/2018/09/16/常用git命令/index.html">
+<meta property="og:title" content="递归与尾递归">
+<meta property="og:url" content="http://yoursite.com/2018/07/23/递归与尾递归/index.html">
 <meta property="og:site_name" content="01不是包子脸">
-<meta property="og:description" content="红色代表工作区，绿色代表暂存区 文件操作 git init在当前目录下新建一个 git 仓库（master 分支）git init [project-name]新建一个目录，将其初始化为 git 仓库">
+<meta property="og:description" content="递归的问题函数的递归调用是通过栈来实现的，每一次函数调用都会把当前函数的状态，如变量，返回地址保存在栈中一直到函数返回才能出栈。因为程序运行时，栈的大小一般很有限（在 chrome 中运行下面的代码可以计算出 chrome 给每个线程的栈大小），因此如果递归调用的层次如果过多，将会使栈区溢出。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://yoursite.com/image/git.png">
-<meta property="og:updated_time" content="2019-03-19T13:43:41.209Z">
+<meta property="og:updated_time" content="2019-08-15T09:40:05.856Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="常用git命令">
-<meta name="twitter:description" content="红色代表工作区，绿色代表暂存区 文件操作 git init在当前目录下新建一个 git 仓库（master 分支）git init [project-name]新建一个目录，将其初始化为 git 仓库">
-<meta name="twitter:image" content="http://yoursite.com/image/git.png">
+<meta name="twitter:title" content="递归与尾递归">
+<meta name="twitter:description" content="递归的问题函数的递归调用是通过栈来实现的，每一次函数调用都会把当前函数的状态，如变量，返回地址保存在栈中一直到函数返回才能出栈。因为程序运行时，栈的大小一般很有限（在 chrome 中运行下面的代码可以计算出 chrome 给每个线程的栈大小），因此如果递归调用的层次如果过多，将会使栈区溢出。">
   
     <link rel="alternate" href="/atom.xml" title="01不是包子脸" type="application/atom+xml">
   
@@ -109,7 +107,7 @@
             
       <div id="content" class="outer">
         
-          <section id="main" style="float:none;"><article id="post-常用git命令" style="width: 66%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
+          <section id="main" style="float:none;"><article id="post-递归与尾递归" style="width: 66%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="clearfix post-1016 post type-post status-publish format-standard has-post-thumbnail hentry category-template-2 category-uncategorized tag-codex tag-edge-case tag-featured-image tag-image tag-template">
     
     
@@ -117,7 +115,7 @@
         
   
     <h1 class="thumb" class="article-title" itemprop="name">
-      常用git命令
+      递归与尾递归
     </h1>
   
 
@@ -125,13 +123,13 @@
     
     <div class="article-meta">
       
-	<a href="/2018/09/16/常用git命令/" class="article-date">
-	  <time datetime="2018-09-16T03:50:00.000Z" itemprop="datePublished">九月 16, 2018</time>
+	<a href="/2018/07/23/递归与尾递归/" class="article-date">
+	  <time datetime="2018-07-23T04:05:20.000Z" itemprop="datePublished">七月 23, 2018</time>
 	</a>
 
       
 	<span class="ico-folder"></span>
-    <a class="article-category-link" href="/categories/git/">git</a>
+    <a class="article-category-link" href="/categories/算法/">算法</a>
  
       
 	<span id="busuanzi_container_page_pv">
@@ -141,93 +139,38 @@
     </div>
     <div class="article-entry" itemprop="articleBody">
       
-        <p><img src="/image/git.png" alt=""><br>红色代表工作区，绿色代表暂存区</p>
-<h1 id="文件操作"><a href="#文件操作" class="headerlink" title="文件操作"></a>文件操作</h1><ol>
-<li><p>git init<br>在当前目录下新建一个 git 仓库（master 分支）<br>git init [project-name]<br>新建一个目录，将其初始化为 git 仓库</p>
+        <h1 id="递归的问题"><a href="#递归的问题" class="headerlink" title="递归的问题"></a>递归的问题</h1><p>函数的递归调用是通过栈来实现的，每一次函数调用都会把当前函数的状态，如变量，返回地址保存在栈中一直到函数返回才能出栈。因为程序运行时，栈的大小一般很有限（在 chrome 中运行下面的代码可以计算出 chrome 给每个线程的栈大小），因此如果递归调用的层次如果过多，将会使栈区溢出。</p>
 <a id="more"></a>
-</li>
-<li><p>git status 查看状态<br>“.” 代表文件夹中所有文件</p>
-</li>
-<li><p>git add [file1][file2]<br>添加指定文件到暂存区</p>
-</li>
-<li><p>git commit<br>在第一行写入这次修改记录。将缓存区文件放入提交区。<br>git commit -m [‘message’]<br>git commit -amend<br>修改上次记录信息</p>
-</li>
-<li><p>git log<br>查看提交记录<br>vim ~/.zshrc 配置文件中可自定义操作<br>source ~/.zshrc 修改配置文件后 source 保存生效</p>
-</li>
-<li><p>git config<br>查看当前 git 配置<br>git config -h<br>查看帮助信息<br>vim ~/.gitconfig 自定义 git 命令，修改个人名字邮箱等信息<br>cat .git/config 本地配置</p>
-</li>
-<li><p>touch .gitignore 忽略一些文件</p>
-</li>
-</ol>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">.vscode</span><br><span class="line">node_modules</span><br></pre></td></tr></table></figure>
-<p>写入 gitignore 后即可忽略 node_modules 文件<br>更多信息查看<a href="https://github.com/github/gitignore" target="_blank" rel="noopener">gitignore</a></p>
-<ol start="8">
-<li><p>git diff<br>现实暂存区和工作区的差异</p>
-</li>
-<li><p>git checkout –a<br>放弃 a 的变更<br>依照提交区恢复工作区的文件，丢弃工作区的变更</p>
-</li>
-<li><p>git reset HEAD –a<br>从暂存区恢复到工作区</p>
-</li>
-<li><p>git stash<br>把工作区和暂存区的文件都存入 stash 中<br>git stash list<br>查看 stash 中的文件<br>git stash pop<br>恢复 stash 中的文件到工作区（pop=apply+drop）</p>
-</li>
-<li><p>git reset HEAD^<br>后退一步（几个^代表后退几步）<br>git reset HEAD~[number]<br>抛弃了 number 个 commit</p>
-</li>
-<li><p>git reflog<br>查看近期的 log 记录<br>git reset [版本号]<br>回退到版本号为……的 commit</p>
-</li>
-</ol>
-<h1 id="分支操作"><a href="#分支操作" class="headerlink" title="分支操作"></a>分支操作</h1><ol>
-<li><p>git branch develop<br>创建 develop 分支,但依然停留在当前分支<br>git branch -v<br>查看分支</p>
-</li>
-<li><p>git checkout develop<br>切换进入 develop 分支<br>git checkout -b feature<br>创建并切换进入 feature 分支</p>
-</li>
-<li><p>合并分支<br>a. 先进入要合并的分支（checkout develop）<br>在执行 git merge feature 即可把 feature 合并到 develop 分支上<br>b. git merge feature develop<br>可达到同样的效果</p>
-</li>
-<li><p>改变基线<br>git rebase -i [提交记录号]<br>将 HEAD 指向记录号所在位置</p>
-</li>
-</ol>
-<h1 id="远程仓库"><a href="#远程仓库" class="headerlink" title="远程仓库"></a>远程仓库</h1><ol>
-<li><p>git remote add origin [SSH 地址]<br>创建远程仓库连接</p>
-</li>
-<li><p>git push -u origin develop<br>上传 develop 分支到远程仓库上（远程无项目可直接 push，有项目先 merge 再 push）</p>
-</li>
-<li><p>git pull origin feature<br>拉取远程 feature 分支（pull=fetch+merge）</p>
-</li>
-<li><p>git brach -d feature<br>删除 feature 分支</p>
-</li>
-<li><p>git push origin :feature<br>删除远程 feature 分支</p>
-</li>
-<li><p>git tag [标签号]<br>git push origin [标签号]<br>打标签</p>
-</li>
-<li><p>git remote remove origin<br>取消本地目录下关联的远程仓库</p>
-</li>
-<li><p>git clone [url]<br>下载一个项目和它的整个代码历史</p>
-</li>
-</ol>
-<h1 id="打-tag"><a href="#打-tag" class="headerlink" title="打 tag"></a>打 tag</h1><ol>
-<li><p>vim package.json<br>(vim package-lock.json)<br>可以查看 version 号</p>
-</li>
-<li><p>npm version -h<br>查看这一个 tag 即将提升的版本号（大版本或者小版本）</p>
-</li>
-<li><p>npm version patch<br>提升 patch 这个小版本（v0.2.2）</p>
-</li>
-<li><p>git tag –list<br>查看 tag 的列表</p>
-</li>
-<li><p>git push origin master<br>push 代码</p>
-</li>
-<li><p>git push origin v0.2.3<br>push tag</p>
-</li>
-</ol>
+<h1 id="尾递归"><a href="#尾递归" class="headerlink" title="尾递归"></a>尾递归</h1><p>尾递归就是函数最后的语句是调用函数自身，但调用自己的时候，已经不再需要上一个函数的环境了。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">factorial</span>(<span class="params">n,a</span>)</span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(n&lt;=<span class="number">0</span>)</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">if</span>(n == <span class="number">1</span>)</span><br><span class="line">		<span class="keyword">return</span> a;</span><br><span class="line">	<span class="keyword">return</span> factorial(n<span class="number">-1</span>,a*n);</span><br></pre></td></tr></table></figure>
+<p>相比较之前一般形式的递归代码，有两个不同的地方：</p>
+<ul>
+<li>递归调用时，把 n 当做参数传给了递归函数，无需等待递归调用返回后参与计算。</li>
+<li>最终的计算结果在最后一次递归调用后产生，无需回溯。</li>
+</ul>
+<p>我们通过这种形式，解决了需要函数回跳才能计算的问题，但最后产生的计算结果仍然需要层层的回调，但这种代码的形式对于普通的递归来说，编译器更容易对其进行优化。这种特殊的递归叫做尾递归，从递归代码形式上看，它自身的调用是函数的最后一个操作。尾递归的目的是为了优化，而优化的目标是减少栈的空间。</p>
+<p><strong>尾递归是递归的一种优化</strong></p>
+<p>按照尾递归的定义，尾递归就至少必须解决一般递归的两个问题：</p>
+<ul>
+<li>不能重复计算</li>
+<li>重复利用栈空间</li>
+</ul>
+<p>然而尾递归是为编译器优化的目的，所以还要依赖于编译器的实现，如果一种语言不支持尾递归，那么尾递归也就仅仅是个形式上递归了，JavaScript 就是这样的语言，因为它无法优化栈空间的利用。</p>
+<p>实际上尾递归一直被看作一种编译技巧，特别是对于函数式编程语言来说，尾递归的编译器实现做当做的一种必须的标准</p>
+<h1 id="es6-中的尾调用优化"><a href="#es6-中的尾调用优化" class="headerlink" title="es6 中的尾调用优化"></a>es6 中的尾调用优化</h1><p>尾调用被识别出来，重复利用了已存在的栈结构来进行递归，移除了之前函数调用的本地变量和状态。</p>
+<p>如果使用了<strong>BABEL</strong>，它会直接、自递归地处理尾调用。</p>
+<h1 id="爆栈问题解决"><a href="#爆栈问题解决" class="headerlink" title="爆栈问题解决"></a>爆栈问题解决</h1><p>递归改循环</p>
 
       
     </div>
     <footer class="entry-meta entry-footer">
       
 	<span class="ico-folder"></span>
-    <a class="article-category-link" href="/categories/git/">git</a>
+    <a class="article-category-link" href="/categories/算法/">算法</a>
 
       
   <span class="ico-tags"></span>
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/git/">git</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/前端/">前端</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/算法/">算法</a></li></ul>
 
       
         
@@ -262,19 +205,19 @@
     
 <nav id="article-nav">
   
-    <a href="/2018/09/24/this和super关键字/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2018/08/09/字符串的扩展/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption">上一篇</strong>
       <div class="article-nav-title">
         
-          this和super关键字
+          字符串的扩展
         
       </div>
     </a>
   
   
-    <a href="/2018/09/03/跨域请求：JSONP&&CORS/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2018/07/16/变量的解构赋值/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">下一篇</strong>
-      <div class="article-nav-title">跨域请求：JSONP&amp;&amp;CORS</div>
+      <div class="article-nav-title">变量的解构赋值</div>
     </a>
   
 </nav>
@@ -288,7 +231,7 @@
     <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
     
-      <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#文件操作"><span class="nav-number">1.</span> <span class="nav-text">文件操作</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#分支操作"><span class="nav-number">2.</span> <span class="nav-text">分支操作</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#远程仓库"><span class="nav-number">3.</span> <span class="nav-text">远程仓库</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#打-tag"><span class="nav-number">4.</span> <span class="nav-text">打 tag</span></a></li></ol>
+      <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#递归的问题"><span class="nav-number">1.</span> <span class="nav-text">递归的问题</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#尾递归"><span class="nav-number">2.</span> <span class="nav-text">尾递归</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#es6-中的尾调用优化"><span class="nav-number">3.</span> <span class="nav-text">es6 中的尾调用优化</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#爆栈问题解决"><span class="nav-number">4.</span> <span class="nav-text">爆栈问题解决</span></a></li></ol>
     
     </div>
   </aside>
