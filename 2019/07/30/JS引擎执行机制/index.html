@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>JS引擎执行机制 | 01不是包子脸</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="keywords" content="javascript" />
+  
+  
+  
+  
+  <meta name="description" content="JS 引擎执行机制(1) JS 是单线程语言 (2) JS 的 Event Loop 是 JS 的执行机制。深入了解 JS 的执行,就等于深入了解 JS 里的 event loop">
+<meta name="keywords" content="javascript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JS引擎执行机制">
+<meta property="og:url" content="http://yoursite.com/2019/07/30/JS引擎执行机制/index.html">
+<meta property="og:site_name" content="01不是包子脸">
+<meta property="og:description" content="JS 引擎执行机制(1) JS 是单线程语言 (2) JS 的 Event Loop 是 JS 的执行机制。深入了解 JS 的执行,就等于深入了解 JS 里的 event loop">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://image.fundebug.com/2018-12-10-01.png">
+<meta property="og:image" content="https://image.fundebug.com/2018-12-10-02.png">
+<meta property="og:image" content="https://image.fundebug.com/2018-12-10-03.png">
+<meta property="og:image" content="https://image.fundebug.com/2018-12-10-04.png">
+<meta property="og:image" content="https://image.fundebug.com/2018-12-10-05.png">
+<meta property="og:image" content="https://image.fundebug.com/2018-12-10-06.png">
+<meta property="og:image" content="https://image.fundebug.com/2018-12-10-07.png">
+<meta property="og:image" content="https://image.fundebug.com/2018-12-10-08.png">
+<meta property="og:image" content="https://image.fundebug.com/2018-12-10-09.png">
+<meta property="og:updated_time" content="2019-08-15T17:30:25.130Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JS引擎执行机制">
+<meta name="twitter:description" content="JS 引擎执行机制(1) JS 是单线程语言 (2) JS 的 Event Loop 是 JS 的执行机制。深入了解 JS 的执行,就等于深入了解 JS 里的 event loop">
+<meta name="twitter:image" content="https://image.fundebug.com/2018-12-10-01.png">
+  
+    <link rel="alternate" href="/atom.xml" title="01不是包子脸" type="application/atom+xml">
+  
+  <link rel="icon" href="/css/images/dog.JPG">
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
+  <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <style type="text/css">
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/9749f0/00000000000000000001008f/27/l?subset_id=2&fvd=n5) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/90cf9f/000000000000000000010091/27/l?subset_id=2&fvd=n7) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/8a5494/000000000000000000013365/27/l?subset_id=2&fvd=n4) format("woff2");font-weight:lighter;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/d337d8/000000000000000000010095/27/l?subset_id=2&fvd=i4) format("woff2");font-weight:400;font-style:italic;}</style>
+    
+  <link rel="stylesheet" id="athemes-headings-fonts-css" href="//fonts.googleapis.com/css?family=Yanone+Kaffeesatz%3A200%2C300%2C400%2C700&amp;ver=4.6.1" type="text/css" media="all">
+
+  <link rel="stylesheet" id="athemes-headings-fonts-css" href="//fonts.googleapis.com/css?family=Oswald%3A300%2C400%2C700&amp;ver=4.6.1" type="text/css" media="all">
+  <link rel="stylesheet" href="/css/style.css">
+
+  <script src="/js/jquery-3.1.1.min.js"></script>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.css" >
+  <link rel="stylesheet" href="/css/fashion.css" >
+  <link rel="stylesheet" href="/css/glyphs.css" >
+
+</head>
+
+
+
+  <body data-spy="scroll" data-target="#toc" data-offset="50">
+
+
+  
+
+
+<header id="allheader" class="site-header" role="banner" 
+   >
+  <div class="clearfix container">
+      <div class="site-branding">
+
+          <h1 class="site-title">
+            
+              <a href="/" rel="home" >
+                <img style="margin-bottom: 10px;"  width="975px" height="200px" alt="Hike News" src=" /images/IMG_5299.JPG">
+              </a>
+            
+          </h1>
+          
+          
+            
+          <nav id="main-navigation" class="main-navigation" role="navigation">
+            <a class="nav-open">Menu</a>
+            <a class="nav-close">Close</a>
+
+            <div class="clearfix sf-menu">
+              <ul id="main-nav" class="menu sf-js-enabled sf-arrows"  style="touch-action: pan-y;">
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/">首页</a> </li>
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/archives">归档</a> </li>
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/categories">分类</a> </li>
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/tags">标签</a> </li>
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/about">关于</a> </li>
+                    
+              </ul>
+            </div>
+          </nav>
+
+      </div>
+  </div>
+</header>
+
+
+  <div id="container">
+    <div id="wrap">
+            
+      <div id="content" class="outer">
+        
+          <section id="main" style="float:none;"><article id="post-JS引擎执行机制" style="width: 66%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="clearfix post-1016 post type-post status-publish format-standard has-post-thumbnail hentry category-template-2 category-uncategorized tag-codex tag-edge-case tag-featured-image tag-image tag-template">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" class="article-title" itemprop="name">
+      JS引擎执行机制
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2019/07/30/JS引擎执行机制/" class="article-date">
+	  <time datetime="2019-07-30T05:13:29.000Z" itemprop="datePublished">七月 30, 2019</time>
+	</a>
+
+      
+	<span class="ico-folder"></span>
+    <a class="article-category-link" href="/categories/javascript/">javascript</a>
+ 
+      
+	<span id="busuanzi_container_page_pv">
+	  本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+	</span>
+
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="JS-引擎执行机制"><a href="#JS-引擎执行机制" class="headerlink" title="JS 引擎执行机制"></a>JS 引擎执行机制</h1><p><strong>(1) JS 是单线程语言</strong></p>
+<p><strong>(2) JS 的 Event Loop 是 JS 的执行机制。深入了解 JS 的执行,就等于深入了解 JS 里的 event loop</strong></p>
+<a id="more"></a>
+<h2 id="JS-为什么是单线程的-为什么需要异步-单线程又是如何实现异步的呢"><a href="#JS-为什么是单线程的-为什么需要异步-单线程又是如何实现异步的呢" class="headerlink" title="JS 为什么是单线程的? 为什么需要异步? 单线程又是如何实现异步的呢?"></a>JS 为什么是单线程的? 为什么需要异步? 单线程又是如何实现异步的呢?</h2><ul>
+<li><p>JS 最初被设计用在浏览器中,那么想象一下,如果浏览器中的 JS 是多线程的。</p>
+<p>场景描述:</p>
+<p>那么现在有 2 个线程,process1 process2,由于是多线程的 JS,所以他们对同一个 dom,同时进行操作。process1 删除了该 dom,而 process2 编辑了该 dom,同时下达 2 个矛盾的命令,浏览器究竟该如何执行呢?</p>
+</li>
+<li><p>JS 为什么需要异步?</p>
+<p>如果 JS 中不存在异步,只能自上而下执行,如果上一行解析时间很长,那么下面的代码就会被阻塞。<br>对于用户而言,阻塞就意味着”卡死”,这样就导致了很差的用户体验</p>
+</li>
+<li><p>JS 单线程又是如何实现异步的呢?</p>
+<p><strong>是通过的事件循环(event loop),理解了 event loop 机制,就理解了 JS 的执行机制</strong></p>
+</li>
+</ul>
+<h2 id="JS-中的-event-loop"><a href="#JS-中的-event-loop" class="headerlink" title="JS 中的 event loop"></a>JS 中的 event loop</h2><h3 id="event-loop（1）"><a href="#event-loop（1）" class="headerlink" title="event loop（1）"></a>event loop（1）</h3><p>JS 里的一种分类方式,就是将任务分为: 同步任务和异步任务</p>
+<p>JS 的执行机制是：</p>
+<ul>
+<li>首先判断 JS 是同步还是异步,同步就进入主线程,异步就进入 event table</li>
+<li>异步任务在 event table 中注册函数,当满足触发条件后,被推入 event queue</li>
+<li>同步任务进入主线程后一直执行,直到主线程空闲时,才会去 event queue 中查看是否有可执行的异步任务,如果有就推入主线程中</li>
+</ul>
+<h3 id="event-loop（2）"><a href="#event-loop（2）" class="headerlink" title="event loop（2）"></a>event loop（2）</h3><p>准确的划分方式是:</p>
+<ul>
+<li>macro-task(宏任务)：包括整体代码 script，setTimeout，setInterval</li>
+<li>micro-task(微任务)：Promise.then，process.nextTick</li>
+</ul>
+<p>JS 的执行机制是：</p>
+<ul>
+<li>执行一个宏任务,过程中如果遇到微任务,就将其放到微任务的【事件队列】里</li>
+<li>当前宏任务执行完成后,会查看微任务的【事件队列】,并将里面全部的微任务依次执行完</li>
+</ul>
+<p><strong>重复以上 2 步骤,结合 event loop(1) event loop(2) ,就是更为准确的 JS 执行机制了。</strong></p>
+<h2 id="理解-JavaScript-的-async-await"><a href="#理解-JavaScript-的-async-await" class="headerlink" title="理解 JavaScript 的 async/await"></a>理解 JavaScript 的 async/await</h2><h3 id="async-和-await-在干什么"><a href="#async-和-await-在干什么" class="headerlink" title="async 和 await 在干什么"></a>async 和 await 在干什么</h3><p>先从字面意思来理解。async 是“异步”的简写，而 await 可以认为是 async wait 的简写。所以应该很好理解 async 用于申明一个 function 是异步的，而 await 用于等待一个异步方法执行完成。</p>
+<ul>
+<li>async 函数返回的是一个 <strong>Promise</strong> 对象。<ul>
+<li>如果在函数中 <code>return</code> 一个直接量，async 会把这个直接量通过 <code>Promise.resolve()</code> 封装成 Promise 对象。</li>
+<li>如果 async 函数没有返回值，又该如何？很容易想到，它会返回 <code>Promise.resolve(undefined)</code>。</li>
+<li>Promise 的特点——无等待，所以在没有 <code>await</code> 的情况下执行 async 函数，它会立即执行，返回一个 Promise 对象，并且，绝不会阻塞后面的语句。这和普通返回 Promise 对象的函数并无二致。</li>
+</ul>
+</li>
+<li>await 等待的是一个表达式。<ul>
+<li>这个表达式的计算结果是 Promise 对象或者其它值（换句话说，就是没有特殊限定）。</li>
+<li>await 不仅仅用于等 Promise 对象，它可以等任意表达式的结果，所以，await 后面实际是可以接普通函数调用或者直接量的。</li>
+</ul>
+</li>
+<li>await 等到了要等的，然后呢？<ul>
+<li><code>await</code> 是个运算符，用于组成表达式，await 表达式的运算结果取决于它等的东西。</li>
+<li>如果它等到的不是一个 Promise 对象，那 await 表达式的运算结果就是它等到的东西。</li>
+<li>如果它等到的是一个 Promise 对象，await 就忙起来了，它会阻塞后面的代码，等着 Promise 对象 resolve，然后得到 resolve 的值，作为 await 表达式的运算结果。</li>
+</ul>
+</li>
+</ul>
+<p>这就是 await 必须用在 async 函数中的原因。async 函数调用不会造成阻塞，它内部所有的阻塞都被封装在一个 Promise 对象中异步执行。</p>
+<h3 id="await-等待的表达式详解"><a href="#await-等待的表达式详解" class="headerlink" title="await 等待的表达式详解"></a>await 等待的表达式详解</h3><p><strong>await 等的是右侧「表达式」的结果</strong></p>
+<p>await 是从<strong>右向左执行的</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">async1</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">"async1 start"</span>);</span><br><span class="line">  <span class="keyword">await</span> async2();</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">"async1 end"</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">async2</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">"async2"</span>);</span><br><span class="line">&#125;</span><br><span class="line">async1();</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"script start"</span>);</span><br></pre></td></tr></table></figure>
+<p>先执行 async2 后，发现有 await 关键字，于是让出线程，阻塞代码</p>
+<p>右侧表达式的结果:</p>
+<ul>
+<li>如果不是 promise , await 会阻塞后面的代码，先执行 async 外面的同步代码，同步代码执行完，再回到 async 内部，把这个非 promise 的东西，作为 await 表达式的结果</li>
+<li>如果它等到的是一个 promise 对象，await 也会暂停 async 后面的代码，先执行 async 外面的同步代码，等着 Promise 对象 fulfilled，然后把 resolve 的参数作为 await 表达式的运算结果。</li>
+</ul>
+<h3 id="async-await-的优势在于处理-then-链"><a href="#async-await-的优势在于处理-then-链" class="headerlink" title="async/await 的优势在于处理 then 链"></a>async/await 的优势在于处理 then 链</h3><p>单一的 Promise 链并不能发现 async/await 的优势，但是，如果需要处理由多个 Promise 组成的 then 链的时候，优势就能体现出来了。</p>
+<ul>
+<li>Async/await 代码清晰很多，几乎跟同步代码一样。</li>
+<li>Promise 方案的死穴—— 链式调用参数传递太麻烦</li>
+</ul>
+<h2 id="async-await-和-promise-的执行顺序"><a href="#async-await-和-promise-的执行顺序" class="headerlink" title="async/await 和 promise 的执行顺序"></a>async/await 和 promise 的执行顺序</h2><h3 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">async1</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">"async1 start"</span>);</span><br><span class="line">  <span class="keyword">await</span> async2();</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">"async1 end"</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">async2</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">"async2"</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"script start"</span>);</span><br><span class="line">setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">"setTimeout"</span>);</span><br><span class="line">&#125;, <span class="number">0</span>);</span><br><span class="line">async1();</span><br><span class="line"><span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="keyword">function</span>(<span class="params">resolve</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">"promise1"</span>);</span><br><span class="line">  resolve();</span><br><span class="line">&#125;).then(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">"promise2"</span>);</span><br><span class="line">&#125;);</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"script end"</span>);</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">script start</span><br><span class="line">async1 start</span><br><span class="line">async2</span><br><span class="line">promise1</span><br><span class="line">script end</span><br><span class="line">promise2</span><br><span class="line">async1 end</span><br><span class="line">setTimeout</span><br></pre></td></tr></table></figure>
+<p>宏任务和微任务的慨念，在我脑海中宏任务和为微任务如图所示</p>
+<p><a href="https://image.fundebug.com/2018-12-10-01.png" target="_blank" rel="noopener"><img src="https://image.fundebug.com/2018-12-10-01.png" alt="img"></a></p>
+<p>也就是「宏任务」、「微任务」都是队列。</p>
+<p>一段代码执行时，会先执行宏任务中的同步代码，</p>
+<ul>
+<li>如果执行中遇到 setTimeout 之类宏任务，那么就把这个 setTimeout 内部的函数推入「宏任务的队列」中，下一轮宏任务执行时调用。</li>
+<li>如果执行中遇到 promise.then()之类的微任务，就会推入到「当前宏任务的微任务队列」中，在本轮宏任务的同步代码执行都完成后，依次执行所有的微任务 1、2、3</li>
+</ul>
+<h3 id="例子分析执行顺序"><a href="#例子分析执行顺序" class="headerlink" title="例子分析执行顺序"></a>例子分析执行顺序</h3><h4 id="直接打印同步代码-console-log-‘script-start’"><a href="#直接打印同步代码-console-log-‘script-start’" class="headerlink" title="直接打印同步代码 console.log(‘script start’)"></a>直接打印同步代码 console.log(‘script start’)</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 首先是2个函数声明，虽然有async关键字，但不是调用我们就不看。然后首先是打印同步代码</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"script start"</span>);</span><br></pre></td></tr></table></figure>
+<p><a href="https://image.fundebug.com/2018-12-10-02.png" target="_blank" rel="noopener"><img src="https://image.fundebug.com/2018-12-10-02.png" alt="img"></a></p>
+<h4 id="将-setTimeout-放入宏任务队列"><a href="#将-setTimeout-放入宏任务队列" class="headerlink" title="将 setTimeout 放入宏任务队列"></a>将 setTimeout 放入宏任务队列</h4><p>默认所包裹的代码，其实可以理解为是第一个宏任务，所以这里是宏任务 2</p>
+<p><a href="https://image.fundebug.com/2018-12-10-03.png" target="_blank" rel="noopener"><img src="https://image.fundebug.com/2018-12-10-03.png" alt="img"></a></p>
+<h4 id="调用-async1，打印-同步代码-console-log-‘async1-start’"><a href="#调用-async1，打印-同步代码-console-log-‘async1-start’" class="headerlink" title="调用 async1，打印 同步代码 console.log( ‘async1 start’ )"></a>调用 async1，打印 同步代码 console.log( ‘async1 start’ )</h4><p>我们说过看到带有 async 关键字的函数，不用害怕，它的仅仅是把 return 值包装成了 promise，其他并没有什么不同的地方。所以就很普通的打印 console.log( ‘async1 start’ )</p>
+<p><a href="https://image.fundebug.com/2018-12-10-04.png" target="_blank" rel="noopener"><img src="https://image.fundebug.com/2018-12-10-04.png" alt="img"></a></p>
+<h4 id="分析一下-await-async2"><a href="#分析一下-await-async2" class="headerlink" title="分析一下 await async2()"></a>分析一下 await async2()</h4><p>前文提过 await，1.它先计算出右侧的结果，2.然后看到 await 后，中断 async 函数</p>
+<ul>
+<li>先得到 await 右侧表达式的结果。执行 async2()，打印同步代码 console.log(‘async2’), 并且 return Promise.resolve(undefined)</li>
+<li>await 后，中断 async 函数，先执行 async 外的同步代码</li>
+</ul>
+<p>目前就直接打印 console.log(‘async2’)</p>
+<p><a href="https://image.fundebug.com/2018-12-10-05.png" target="_blank" rel="noopener"><img src="https://image.fundebug.com/2018-12-10-05.png" alt="img"></a></p>
+<h4 id="被阻塞后，要执行-async-之外的代码"><a href="#被阻塞后，要执行-async-之外的代码" class="headerlink" title="被阻塞后，要执行 async 之外的代码"></a>被阻塞后，要执行 async 之外的代码</h4><p>执行 new Promise()，Promise 构造函数是直接调用的同步代码，所以 console.log( ‘promise1’ )</p>
+<p><a href="https://image.fundebug.com/2018-12-10-06.png" target="_blank" rel="noopener"><img src="https://image.fundebug.com/2018-12-10-06.png" alt="img"></a></p>
+<h4 id="代码运行到-promise-then"><a href="#代码运行到-promise-then" class="headerlink" title="代码运行到 promise.then()"></a>代码运行到 promise.then()</h4><p>代码运行到 promise.then()，发现这个是微任务，所以暂时不打印，只是推入当前宏任务的微任务队列中。</p>
+<p><strong>注意：这里只是把 promise2 推入微任务队列，并没有执行。微任务会在当前宏任务的同步代码执行完毕，才会依次执行</strong></p>
+<p><a href="https://image.fundebug.com/2018-12-10-07.png" target="_blank" rel="noopener"><img src="https://image.fundebug.com/2018-12-10-07.png" alt="img"></a></p>
+<h4 id="打印同步代码-console-log-‘script-end’"><a href="#打印同步代码-console-log-‘script-end’" class="headerlink" title="打印同步代码 console.log(‘script end’)"></a>打印同步代码 console.log(‘script end’)</h4><p>执行完这个同步代码后，「async 外的代码」终于走了一遍</p>
+<p>下面该回到 await 表达式那里，执行 await Promise.resolve(undefined)了</p>
+<p><a href="https://image.fundebug.com/2018-12-10-08.png" target="_blank" rel="noopener"><img src="https://image.fundebug.com/2018-12-10-08.png" alt="img"></a></p>
+<h4 id="回到-async-内部，执行-await-Promise-resolve-undefined"><a href="#回到-async-内部，执行-await-Promise-resolve-undefined" class="headerlink" title="回到 async 内部，执行 await Promise.resolve(undefined)"></a>回到 async 内部，执行 await Promise.resolve(undefined)</h4><p>这部分可能不太好理解，我尽量表达我的想法。</p>
+<p>对于 await Promise.resolve(undefined) 如何理解呢？</p>
+<p>根据 <a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/await" target="_blank" rel="noopener">MDN</a> 原话我们知道</p>
+<p><strong>如果一个 Promise 被传递给一个 await 操作符，await 将等待 Promise 正常处理完成并返回其处理结果。</strong></p>
+<p>在我们这个例子中，就是 Promise.resolve(undefined)正常处理完成，并返回其处理结果。那么 await async2()就算是执行结束了。</p>
+<p>目前这个 promise 的状态是 fulfilled，等其处理结果返回就可以执行 await 下面的代码了。</p>
+<p>那何时能拿到处理结果呢？</p>
+<p>回忆平时我们用 promise，调用 resolve 后，何时能拿到处理结果？是不是需要在 then 的第一个参数里，才能拿到结果。</p>
+<p>（调用 resolve 时，会把 then 的参数推入微任务队列，等主线程空闲时，再调用它）</p>
+<p>所以这里的 await Promise.resolve() 就类似于</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Promise</span>.resolve(<span class="literal">undefined</span>).then(<span class="function"><span class="params">undefined</span> =&gt;</span> &#123;&#125;);</span><br></pre></td></tr></table></figure>
+<p>把 then 的第一个回调参数 (undefined) =&gt; {} 推入微任务队列。</p>
+<p>then 执行完，才是 await async2()执行结束。</p>
+<p>await async2()执行结束，才能继续执行后面的代码</p>
+<p>如图</p>
+<p><a href="https://image.fundebug.com/2018-12-10-09.png" target="_blank" rel="noopener"><img src="https://image.fundebug.com/2018-12-10-09.png" alt="img"></a></p>
+<h4 id="此时当前宏任务-1-都执行完了，要处理微任务队列里的代码。"><a href="#此时当前宏任务-1-都执行完了，要处理微任务队列里的代码。" class="headerlink" title="此时当前宏任务 1 都执行完了，要处理微任务队列里的代码。"></a>此时当前宏任务 1 都执行完了，要处理微任务队列里的代码。</h4><p>微任务队列，先进选出的原则，</p>
+<ol>
+<li>执行微任务 1，打印 promise2</li>
+<li>执行微任务 2，没什么内容..</li>
+</ol>
+<p>但是微任务 2 执行后，await async2()语句结束，后面的代码不再被阻塞，所以打印</p>
+<p>console.log(‘async1 end’)</p>
+<h4 id="宏任务-1-执行完成后-执行宏任务-2"><a href="#宏任务-1-执行完成后-执行宏任务-2" class="headerlink" title="宏任务 1 执行完成后,执行宏任务 2"></a>宏任务 1 执行完成后,执行宏任务 2</h4><p>宏任务 2 的执行比较简单，就是打印</p>
+<p>console.log(‘setTimeout’)</p>
+
+      
+    </div>
+    <footer class="entry-meta entry-footer">
+      
+	<span class="ico-folder"></span>
+    <a class="article-category-link" href="/categories/javascript/">javascript</a>
+
+      
+  <span class="ico-tags"></span>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
+
+      
+        
+	<div id="comment">
+		<!-- 来必力City版安装代码 -->
+		<div id="lv-container" data-id="city" data-uid="MTAyMC8yOTQ4MS82MDQ5">
+		<script type="text/javascript">
+		   (function(d, s) {
+		       var j, e = d.getElementsByTagName(s)[0];
+
+		       if (typeof LivereTower === 'function') { return; }
+
+		       j = d.createElement(s);
+		       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+		       j.async = true;
+
+		       e.parentNode.insertBefore(j, e);
+		   })(document, 'script');
+		</script>
+		<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+		</div>
+		<!-- City版安装代码已完成 -->
+	</div>
+
+
+
+      
+    </footer>
+    <hr class="entry-footer-hr">
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2019/07/24/JS事件机制/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">下一篇</strong>
+      <div class="article-nav-title">JS事件机制</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+<!-- Table of Contents -->
+
+  <aside id="sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    
+      <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#JS-引擎执行机制"><span class="nav-number">1.</span> <span class="nav-text">JS 引擎执行机制</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#JS-为什么是单线程的-为什么需要异步-单线程又是如何实现异步的呢"><span class="nav-number">1.1.</span> <span class="nav-text">JS 为什么是单线程的? 为什么需要异步? 单线程又是如何实现异步的呢?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JS-中的-event-loop"><span class="nav-number">1.2.</span> <span class="nav-text">JS 中的 event loop</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#event-loop（1）"><span class="nav-number">1.2.1.</span> <span class="nav-text">event loop（1）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#event-loop（2）"><span class="nav-number">1.2.2.</span> <span class="nav-text">event loop（2）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#理解-JavaScript-的-async-await"><span class="nav-number">1.3.</span> <span class="nav-text">理解 JavaScript 的 async/await</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#async-和-await-在干什么"><span class="nav-number">1.3.1.</span> <span class="nav-text">async 和 await 在干什么</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#await-等待的表达式详解"><span class="nav-number">1.3.2.</span> <span class="nav-text">await 等待的表达式详解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#async-await-的优势在于处理-then-链"><span class="nav-number">1.3.3.</span> <span class="nav-text">async/await 的优势在于处理 then 链</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#async-await-和-promise-的执行顺序"><span class="nav-number">1.4.</span> <span class="nav-text">async/await 和 promise 的执行顺序</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#例子"><span class="nav-number">1.4.1.</span> <span class="nav-text">例子</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#例子分析执行顺序"><span class="nav-number">1.4.2.</span> <span class="nav-text">例子分析执行顺序</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#直接打印同步代码-console-log-‘script-start’"><span class="nav-number">1.4.2.1.</span> <span class="nav-text">直接打印同步代码 console.log(‘script start’)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#将-setTimeout-放入宏任务队列"><span class="nav-number">1.4.2.2.</span> <span class="nav-text">将 setTimeout 放入宏任务队列</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#调用-async1，打印-同步代码-console-log-‘async1-start’"><span class="nav-number">1.4.2.3.</span> <span class="nav-text">调用 async1，打印 同步代码 console.log( ‘async1 start’ )</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#分析一下-await-async2"><span class="nav-number">1.4.2.4.</span> <span class="nav-text">分析一下 await async2()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#被阻塞后，要执行-async-之外的代码"><span class="nav-number">1.4.2.5.</span> <span class="nav-text">被阻塞后，要执行 async 之外的代码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#代码运行到-promise-then"><span class="nav-number">1.4.2.6.</span> <span class="nav-text">代码运行到 promise.then()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#打印同步代码-console-log-‘script-end’"><span class="nav-number">1.4.2.7.</span> <span class="nav-text">打印同步代码 console.log(‘script end’)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#回到-async-内部，执行-await-Promise-resolve-undefined"><span class="nav-number">1.4.2.8.</span> <span class="nav-text">回到 async 内部，执行 await Promise.resolve(undefined)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#此时当前宏任务-1-都执行完了，要处理微任务队列里的代码。"><span class="nav-number">1.4.2.9.</span> <span class="nav-text">此时当前宏任务 1 都执行完了，要处理微任务队列里的代码。</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#宏任务-1-执行完成后-执行宏任务-2"><span class="nav-number">1.4.2.10.</span> <span class="nav-text">宏任务 1 执行完成后,执行宏任务 2</span></a></li></ol></li></ol></li></ol></li></ol>
+    
+    </div>
+  </aside>
+</section>
+        
+      </div>
+
+    </div>
+    <!-- <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/categories" class="mobile-nav-link">Categories</a>
+  
+    <a href="/tags" class="mobile-nav-link">Tags</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav> -->
+    <footer id="footer" class="site-footer">
+  
+
+  <div class="clearfix container">
+      <div class="site-info">
+	      &copy; 2019 01不是包子脸 All Rights Reserved.
+        
+            <span id="busuanzi_container_site_uv">
+              本站访客数<span id="busuanzi_value_site_uv"></span>人次  
+              本站总访问量<span id="busuanzi_value_site_pv"></span>次
+            </span>
+          
+      </div>
+      <div class="site-credit">
+        Theme by <a href="https://github.com/iTimeTraveler/hexo-theme-hipaper" target="_blank">hipaper</a>
+      </div>
+  </div>
+</footer>
+
+
+<!-- min height -->
+
+<script>
+    var wrapdiv = document.getElementById("wrap");
+    var contentdiv = document.getElementById("content");
+
+    wrapdiv.style.minHeight = document.body.offsetHeight - document.getElementById("allheader").offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("allheader").offsetHeight - document.getElementById("footer").offsetHeight + "px";
+
+
+    <!-- headerblur min height -->
+    
+    
+</script>
+    
+<div style="display: none;">
+  <script src="https://s11.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+</div>
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+<script src="/js/bootstrap.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+
+
+
+
+  <div style="display: none;">
+    <script src="https://s95.cnzz.com/z_stat.php?id=1273997385&web_id=1273997385" language="JavaScript"></script>
+  </div>
+
+
+
+	<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+
+
+
+
+
+
+  </div>
+
+  <a id="rocket" href="#top" class=""></a>
+  <script type="text/javascript" src="/js/totop.js" async=""></script>
+  <!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/love.js"></script>
+</body>
+</html>

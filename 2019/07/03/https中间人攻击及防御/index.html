@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>https中间人攻击及防御 | 01不是包子脸</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="keywords" content="HTTP" />
+  
+  
+  
+  
+  <meta name="description" content="https 中间人攻击及防御HTTPS 也不是绝对安全的，在 HTTPS 握手的过程中，如果实施不当，还是会存在漏洞，很容被中间人攻击； 什么是中间人攻击中间人攻击（Man-in-the-middle attack，缩写：MITM）是指攻击者与通讯的两端分别建立独立的联系，并交换其所收到的数据，使通讯的两端认为他们正在通过一个私密的连接与对方直接对话，但事实上整个会话都被攻击者完全控制。在中间人攻">
+<meta name="keywords" content="HTTP">
+<meta property="og:type" content="article">
+<meta property="og:title" content="https中间人攻击及防御">
+<meta property="og:url" content="http://yoursite.com/2019/07/03/https中间人攻击及防御/index.html">
+<meta property="og:site_name" content="01不是包子脸">
+<meta property="og:description" content="https 中间人攻击及防御HTTPS 也不是绝对安全的，在 HTTPS 握手的过程中，如果实施不当，还是会存在漏洞，很容被中间人攻击； 什么是中间人攻击中间人攻击（Man-in-the-middle attack，缩写：MITM）是指攻击者与通讯的两端分别建立独立的联系，并交换其所收到的数据，使通讯的两端认为他们正在通过一个私密的连接与对方直接对话，但事实上整个会话都被攻击者完全控制。在中间人攻">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-08-15T17:31:09.842Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="https中间人攻击及防御">
+<meta name="twitter:description" content="https 中间人攻击及防御HTTPS 也不是绝对安全的，在 HTTPS 握手的过程中，如果实施不当，还是会存在漏洞，很容被中间人攻击； 什么是中间人攻击中间人攻击（Man-in-the-middle attack，缩写：MITM）是指攻击者与通讯的两端分别建立独立的联系，并交换其所收到的数据，使通讯的两端认为他们正在通过一个私密的连接与对方直接对话，但事实上整个会话都被攻击者完全控制。在中间人攻">
+  
+    <link rel="alternate" href="/atom.xml" title="01不是包子脸" type="application/atom+xml">
+  
+  <link rel="icon" href="/css/images/dog.JPG">
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
+  <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <style type="text/css">
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/9749f0/00000000000000000001008f/27/l?subset_id=2&fvd=n5) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/90cf9f/000000000000000000010091/27/l?subset_id=2&fvd=n7) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/8a5494/000000000000000000013365/27/l?subset_id=2&fvd=n4) format("woff2");font-weight:lighter;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/d337d8/000000000000000000010095/27/l?subset_id=2&fvd=i4) format("woff2");font-weight:400;font-style:italic;}</style>
+    
+  <link rel="stylesheet" id="athemes-headings-fonts-css" href="//fonts.googleapis.com/css?family=Yanone+Kaffeesatz%3A200%2C300%2C400%2C700&amp;ver=4.6.1" type="text/css" media="all">
+
+  <link rel="stylesheet" id="athemes-headings-fonts-css" href="//fonts.googleapis.com/css?family=Oswald%3A300%2C400%2C700&amp;ver=4.6.1" type="text/css" media="all">
+  <link rel="stylesheet" href="/css/style.css">
+
+  <script src="/js/jquery-3.1.1.min.js"></script>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.css" >
+  <link rel="stylesheet" href="/css/fashion.css" >
+  <link rel="stylesheet" href="/css/glyphs.css" >
+
+</head>
+
+
+
+  <body data-spy="scroll" data-target="#toc" data-offset="50">
+
+
+  
+
+
+<header id="allheader" class="site-header" role="banner" 
+   >
+  <div class="clearfix container">
+      <div class="site-branding">
+
+          <h1 class="site-title">
+            
+              <a href="/" rel="home" >
+                <img style="margin-bottom: 10px;"  width="975px" height="200px" alt="Hike News" src=" /images/IMG_5299.JPG">
+              </a>
+            
+          </h1>
+          
+          
+            
+          <nav id="main-navigation" class="main-navigation" role="navigation">
+            <a class="nav-open">Menu</a>
+            <a class="nav-close">Close</a>
+
+            <div class="clearfix sf-menu">
+              <ul id="main-nav" class="menu sf-js-enabled sf-arrows"  style="touch-action: pan-y;">
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/">首页</a> </li>
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/archives">归档</a> </li>
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/categories">分类</a> </li>
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/tags">标签</a> </li>
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/about">关于</a> </li>
+                    
+              </ul>
+            </div>
+          </nav>
+
+      </div>
+  </div>
+</header>
+
+
+  <div id="container">
+    <div id="wrap">
+            
+      <div id="content" class="outer">
+        
+          <section id="main" style="float:none;"><article id="post-https中间人攻击及防御" style="width: 66%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="clearfix post-1016 post type-post status-publish format-standard has-post-thumbnail hentry category-template-2 category-uncategorized tag-codex tag-edge-case tag-featured-image tag-image tag-template">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" class="article-title" itemprop="name">
+      https中间人攻击及防御
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2019/07/03/https中间人攻击及防御/" class="article-date">
+	  <time datetime="2019-07-03T06:51:26.000Z" itemprop="datePublished">七月 3, 2019</time>
+	</a>
+
+      
+	<span class="ico-folder"></span>
+    <a class="article-category-link" href="/categories/HTTP/">HTTP</a>
+ 
+      
+	<span id="busuanzi_container_page_pv">
+	  本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+	</span>
+
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="https-中间人攻击及防御"><a href="#https-中间人攻击及防御" class="headerlink" title="https 中间人攻击及防御"></a>https 中间人攻击及防御</h1><p>HTTPS 也不是绝对安全的，在 HTTPS 握手的过程中，如果实施不当，还是会存在漏洞，很容被中间人攻击；</p>
+<h2 id="什么是中间人攻击"><a href="#什么是中间人攻击" class="headerlink" title="什么是中间人攻击"></a>什么是中间人攻击</h2><p><strong>中间人攻击</strong>（Man-in-the-middle attack，<a href="https://zh.wikipedia.org/wiki/缩写" target="_blank" rel="noopener">缩写</a>：MITM）是指攻击者与通讯的两端分别建立独立的联系，并交换其所收到的数据，使通讯的两端认为他们正在通过一个私密的连接与对方直接对话，但事实上整个会话都被攻击者完全控制。在中间人攻击中，攻击者可以拦截通讯双方的通话并插入新的内容。</p>
+<a id="more"></a>
+<h2 id="如何进行中间人攻击的呢？"><a href="#如何进行中间人攻击的呢？" class="headerlink" title="如何进行中间人攻击的呢？"></a>如何进行中间人攻击的呢？</h2><h3 id="攻击一：SSLSniff"><a href="#攻击一：SSLSniff" class="headerlink" title="攻击一：SSLSniff"></a>攻击一：SSLSniff</h3><p>攻击者在网关截获 SSL 会话，替换服务器公钥证书，将公钥<code>PKey</code>换成自己的公钥<code>PKey</code>，欺骗客户端。客户端使用<code>PKey</code>加密信息并发送会话，中间人用私钥<code>Skey</code>解密客户端返回会话，从而劫持会话。同时，中间人用<code>PKey</code>加密明文会话并返回服务器</p>
+<p><strong>过程如下：</strong></p>
+<ol>
+<li><code>Attacker</code>截获了客户端的<code>say hello</code>，可以把<code>publicKey_attacker</code>返回给客户端，取得客户端的信任，至此<code>Attacker</code>与客户端建立了安全连接。</li>
+<li><code>Attacker</code>冒充客户端向服务器发送<code>say hello</code>，至此<code>Attacker</code>与服务器建立了安全连接。</li>
+</ol>
+<p>这种攻击会存在一个问题会被感知到，就是<code>Attacker</code>的证书是伪造的不受信任的证书，所以客户端可以确认是否需要真的连接该服务器，不过如果有内鬼的话，伪造的受信任的证书的话，就当我啥也没说；</p>
+<h3 id="攻击二：SSLStrip"><a href="#攻击二：SSLStrip" class="headerlink" title="攻击二：SSLStrip"></a>攻击二：SSLStrip</h3><p>这种攻击相对于攻击一复杂一点，但是也更加厉害，几乎可以在客户端无感知的情况下实施攻击，并且不需要伪造证书；简单来说就是这样：<code>Attacker</code>在客户端与服务器建立连接时，在<code>Attacker</code>与服务器之间形成 HTTPS 连接，而在客户端与<code>Attacker</code>之间形成<code>HTTP</code>连接，即将 SSL 层从原 HTTPS 连接中“剥离”。这样，既避免了在客户端验证证书时难以避免的弹框问题，又能够劫持 HTTP 明文数据，并同时保证客户端<code>HTTP</code>数据的传输，达到欺骗服务器与客户端的效果。</p>
+<p><strong>过程如下：</strong></p>
+<p>用户在浏览器地址栏中输入网址时，多数会采用直接输入网址的方式，而忽略了传输所采用的协议。例如，在登录 gmail 过程中，大多数用户会直接在地址栏中输入<code>www.gmail.com</code>，向<code>Google</code>服务器发送一个 HTTP 连接请求，而不是输入<code>https：//www.gmail.com</code>， 向服务器发送一个<code>HTTPS</code>连接请求。因此，用户通常接触到 HTTPS 的方式有两种：一种是 Web 上的连接，比如当用户在 gmail 上输入用户名和密码后，点击的登录键，将用户的用户名和密码以<code>HTTPS</code>的形式<code>POST</code>到服务器。另一种是通过 HTTP 的 302 状态。 当客户端向 gmail 提出 HTTP 连接请求时，gmail 服务器会返回一个<code>REDIRECT</code>网址，<code>https：//www.google.com/accounts/ServiceLogin?service=mail...</code>，用户端在接收到这个 URL 后，将页面重定位到该网页，并请求 HTTPS 连接。 从另外一个角度讲，用户通常是通过<code>HTTP</code>向服务器发起<code>HTTPS</code>连接的。而<code>HTTP</code>本身是以明文的形式对外传送，并不能保证数据的安全。因此，可以考虑通过对 HTTP 进行劫持，来实现对 HTTPS 劫持的目的。</p>
+<ol>
+<li>客户端向服务器发起<code>HTTP</code>连接请求；</li>
+<li>中间人 MITM 监听客户端与服务器的<code>HTTP</code>数据；</li>
+<li>服务器返回给客户端的 HTTP 数据包被在客户端与服务器之间的中间人截获。中间人解析原 HTTP 数据包，将其中<code>&lt;a href=”https：//...”&gt;</code>替换成<code>&lt;a href=”http//...”&gt;</code>，将 <code>Location： https：//...</code> 替换成<code>Location：http://..</code>，同时记录下所修改的 URL，并保存；</li>
+<li>中间人将修改后的<code>HTTP</code>数据发送给客户端；</li>
+<li>客户端向服务器发起<code>HTTP</code>连接请求；</li>
+<li>中间人计算机解析客户端的<code>HTTP</code>连接请求，并与保存文件相比较。当发现存在有已修改过的<code>HTTP URL</code>时，将其替换成原<code>HTTPS URL</code>，并发送给服务器；</li>
+<li>与服务器保持<code>HTTPS</code>连接，回到步骤 3；</li>
+<li>与客户端保持<code>HTTP</code>连接，回到步骤 4。</li>
+</ol>
+<p><strong>效果就是：</strong> 服务器认为 HTTPS 是安全的。对于客户端而言，由于中间人 MITM 与客户端 Client 之间是 HTTP 连接，因此并不会对证书进行认证；</p>
+<p><strong>HSTS</strong>:为了解决这个问题，IETF（互联网工程任务小组）引入了一个策略，叫做 <strong>HSTS</strong> (HTTP Strict Transport Security, HTTP 严格传输安全)。HSTS 的作用是强制客户端与服务端建立安全的 HTTPS 连接，而非不安全的 HTTP 连接。如果一个站点启用了 HSTS 策略，那么客户端在第一次与该站点建立连接之后，在未来的一段时间内（由一个 HTTP 头部控制，这个头部为：Strict-Transport-Security），客户端与该站点的所有连接都会直接使用 HTTPS，<em>即使客户端访问的是 HTTP，也会直接在客户端重定向到 HTTPS 连接。</em></p>
+<p>假设 <code>https://example.com</code> 的响应头部含有 <code>Strict-Transport-Security: max-age=31536000; includeSubDomains</code>，这意味着：</p>
+<ol>
+<li>在未来的 1 年时间里（即 31536000 秒中），只要浏览器向 <code>example.com</code> 或者其子域名发送请求，必须采用 HTTPS 来发起连接。即使用户在地址栏里写的是 <code>http://example.com</code>，那也直接重写为 <code>https://example.com</code> 并直接发起 HTTPS 连接。</li>
+<li>在接下去的一年中，如果服务器提供的 HTTPS 证书无效（不论是域名对不上还是自签名还是不在有效期内），用户都无法访问该站点。</li>
+</ol>
+<p>如果站点没有启用 HSTS，用户可以忽略证书无效的警告，继续建立连接，而如果站点启用了 HSTS，那么用户即使想冒风险，浏览器也不会继续访问。</p>
+<p>HSTS 可以很大程度上防止 SSLTrip 攻击，不过这样还是有个问题，那就是要启用 HSTS，浏览器至少要和服务器建立一次 HTTPS 连接，如果中间人一直阻止浏览器与服务器建立 HTTPS 连接，那么 HSTS 就失效了。解决这个问题有个办法，那就是将 HSTS 站点列表内置到浏览器中，这样只要浏览器<strong>离线</strong>判断该站点启用了 HSTS，就会跳过原先的 HTTP 重定向，直接发起 HTTPS 请求。</p>
+<h2 id="如何防御中间人攻击？"><a href="#如何防御中间人攻击？" class="headerlink" title="如何防御中间人攻击？"></a>如何防御中间人攻击？</h2><p>中间人攻击是一个（缺乏）相互认证的攻击；由于客户端与服务器之间在 SSL 握手的过程中缺乏相互认证而造成的漏洞</p>
+<p>防御中间人攻击的方案通常基于以下几种技术</p>
+<ul>
+<li>公钥基础建设 PKI，更强力的相互认证</li>
+</ul>
+<p>使用 PKI 相互认证机制，客户端验证服务器，服务器验证客户端；上述两个例子中都是只验证服务器，这样就造成了 SSL 握手环节的漏洞，而如果使用相互认证的的话，基本可以保证</p>
+<ul>
+<li>延迟测试</li>
+</ul>
+<p>使用复杂加密哈希函数进行计算以造成数十秒的延迟；如果双方通常情况下都要花费 20 秒来计算，并且整个通讯花费了 60 秒计算才到达对方，这就能表明存在第三方中间人。</p>
+<h2 id="https-通信安全性的保证"><a href="#https-通信安全性的保证" class="headerlink" title="https 通信安全性的保证"></a>https 通信安全性的保证</h2><p>通信过程的安全性<strong>自下而上</strong>就是这样保证的：</p>
+<ol>
+<li>双方通信内容的安全性是靠公钥加密、私钥解密来保证的，这一安全性由非对称加密的特性，即由公钥加密的信息只能使用对应的私钥才能解开来保证。由于私钥不会传递，只有拥有者知道，所以<em>安全性就由<strong>公钥</strong>的正确性来保证。</em></li>
+<li>公钥由对方在通信初始所提供，但是这时很容易被中间人替换掉，为了保证公钥的正确性，所以在发送公钥的时候也会提供对应的数字证书，用于验证这个公钥是对方的而不是中间人的。那么<em>安全性就是由<strong>数字证书</strong>的正确性来保证了。</em></li>
+<li>数字证书是由上级 CA 签发给个人 / 组织的，上级 CA 用自己的私钥给个人证书进行签名，保证证书中的公钥不被篡改，而接受者需要用上级 CA 证书中的公钥来解密个人数字证书中的<strong>数字签名</strong>来验证证书中的公钥是否是正确的。那么<em>安全性就是由<strong>上级 CA 证书</strong>的正确性保证的了。</em>（<strong>数字签名保证了数字证书没有被篡改</strong>）</li>
+<li>但是，上级 CA 证书也是由其上级 CA 签发的，这种信任关系一直到根证书。根证书没有上级 CA 为其签名，而是自签名的，也就是说，它自身为自身签名，保证正确性。所以根证书就是这个信任链最重要的部分。如果根证书泄露的话，其签名的所有证书及使用其签名的证书所签名的证书的安全性将不复存在。现在，<em>安全性就是靠系统<strong>根证书</strong>的私钥不被泄露或者其公钥不被篡改来保证的了。</em></li>
+<li>根证书不应该通过网络分发，因为通过网络分发的话，可能会被中间人攻击。一般根证书都通过操作系统或者浏览器分发，在操作系统中会内置很多根证书，但是最初的操作系统也不能通过网络分发，因为中间人可以修改操作系统中的根证书。所以要保证安全只能靠最原始的方法，当面交流。硬件厂商会和证书签发机构合作，在电脑、手机等设备出厂的时候在其操作系统中<strong>内置</strong>签发机构的根证书，再将这些设备分发出去，这样，这些设备的用户就可以安全地进行信息交换了。所以，<em>安全性就依赖于这些设备在分发到消费者手中之前不会被恶意修改来保证了。</em></li>
+</ol>
+<p>至此，整个信任链就建立起来了，只需要有一台设备上安装了可以信任的根证书，就可以用来分发更多安全的操作系统了。之后的所有信任链都是安全的了。</p>
+
+      
+    </div>
+    <footer class="entry-meta entry-footer">
+      
+	<span class="ico-folder"></span>
+    <a class="article-category-link" href="/categories/HTTP/">HTTP</a>
+
+      
+  <span class="ico-tags"></span>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/HTTP/">HTTP</a></li></ul>
+
+      
+        
+	<div id="comment">
+		<!-- 来必力City版安装代码 -->
+		<div id="lv-container" data-id="city" data-uid="MTAyMC8yOTQ4MS82MDQ5">
+		<script type="text/javascript">
+		   (function(d, s) {
+		       var j, e = d.getElementsByTagName(s)[0];
+
+		       if (typeof LivereTower === 'function') { return; }
+
+		       j = d.createElement(s);
+		       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+		       j.async = true;
+
+		       e.parentNode.insertBefore(j, e);
+		   })(document, 'script');
+		</script>
+		<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+		</div>
+		<!-- City版安装代码已完成 -->
+	</div>
+
+
+
+      
+    </footer>
+    <hr class="entry-footer-hr">
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2019/07/11/JS静态作用域/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">上一篇</strong>
+      <div class="article-nav-title">
+        
+          JS静态作用域
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/06/18/CSRF攻击/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">下一篇</strong>
+      <div class="article-nav-title">CSRF攻击</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+<!-- Table of Contents -->
+
+  <aside id="sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    
+      <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#https-中间人攻击及防御"><span class="nav-number">1.</span> <span class="nav-text">https 中间人攻击及防御</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是中间人攻击"><span class="nav-number">1.1.</span> <span class="nav-text">什么是中间人攻击</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何进行中间人攻击的呢？"><span class="nav-number">1.2.</span> <span class="nav-text">如何进行中间人攻击的呢？</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#攻击一：SSLSniff"><span class="nav-number">1.2.1.</span> <span class="nav-text">攻击一：SSLSniff</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#攻击二：SSLStrip"><span class="nav-number">1.2.2.</span> <span class="nav-text">攻击二：SSLStrip</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何防御中间人攻击？"><span class="nav-number">1.3.</span> <span class="nav-text">如何防御中间人攻击？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#https-通信安全性的保证"><span class="nav-number">1.4.</span> <span class="nav-text">https 通信安全性的保证</span></a></li></ol></li></ol>
+    
+    </div>
+  </aside>
+</section>
+        
+      </div>
+
+    </div>
+    <!-- <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/categories" class="mobile-nav-link">Categories</a>
+  
+    <a href="/tags" class="mobile-nav-link">Tags</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav> -->
+    <footer id="footer" class="site-footer">
+  
+
+  <div class="clearfix container">
+      <div class="site-info">
+	      &copy; 2019 01不是包子脸 All Rights Reserved.
+        
+            <span id="busuanzi_container_site_uv">
+              本站访客数<span id="busuanzi_value_site_uv"></span>人次  
+              本站总访问量<span id="busuanzi_value_site_pv"></span>次
+            </span>
+          
+      </div>
+      <div class="site-credit">
+        Theme by <a href="https://github.com/iTimeTraveler/hexo-theme-hipaper" target="_blank">hipaper</a>
+      </div>
+  </div>
+</footer>
+
+
+<!-- min height -->
+
+<script>
+    var wrapdiv = document.getElementById("wrap");
+    var contentdiv = document.getElementById("content");
+
+    wrapdiv.style.minHeight = document.body.offsetHeight - document.getElementById("allheader").offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("allheader").offsetHeight - document.getElementById("footer").offsetHeight + "px";
+
+
+    <!-- headerblur min height -->
+    
+    
+</script>
+    
+<div style="display: none;">
+  <script src="https://s11.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+</div>
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+<script src="/js/bootstrap.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+
+
+
+
+  <div style="display: none;">
+    <script src="https://s95.cnzz.com/z_stat.php?id=1273997385&web_id=1273997385" language="JavaScript"></script>
+  </div>
+
+
+
+	<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+
+
+
+
+
+
+  </div>
+
+  <a id="rocket" href="#top" class=""></a>
+  <script type="text/javascript" src="/js/totop.js" async=""></script>
+  <!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/love.js"></script>
+</body>
+</html>
