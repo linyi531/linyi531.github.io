@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>树的diff算法（vue 2.0） | 01不是包子脸</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="keywords" content="vue" />
+  
+  
+  
+  
+  <meta name="description" content="树的 diff 算法（vue 2.0）模板转换成视图的过程 Vue.js 通过编译将 template 模板转换成渲染函数(render ) ，执行渲染函数就可以得到一个虚拟节点树 在对 Model 进行操作的时候，会触发对应 Dep 中的 Watcher 对象。Watcher 对象会调用对应的 update 来修改视图。这个过程主要是将新旧虚拟节点进行差异对比，然后根据对比结果进行 DOM 操作">
+<meta name="keywords" content="vue">
+<meta property="og:type" content="article">
+<meta property="og:title" content="树的diff算法（vue 2.0）">
+<meta property="og:url" content="http://yoursite.com/2019/02/26/树的diff算法（vue 2.0）/index.html">
+<meta property="og:site_name" content="01不是包子脸">
+<meta property="og:description" content="树的 diff 算法（vue 2.0）模板转换成视图的过程 Vue.js 通过编译将 template 模板转换成渲染函数(render ) ，执行渲染函数就可以得到一个虚拟节点树 在对 Model 进行操作的时候，会触发对应 Dep 中的 Watcher 对象。Watcher 对象会调用对应的 update 来修改视图。这个过程主要是将新旧虚拟节点进行差异对比，然后根据对比结果进行 DOM 操作">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://camo.githubusercontent.com/ecb8e60110bd61ee799c1ab28caa8d0cdce57b5c/68747470733a2f2f75706c6f61642d696d616765732e6a69616e7368752e696f2f75706c6f61645f696d616765732f333137343730312d303964383937356166343365643663642e706e673f696d6167654d6f6772322f6175746f2d6f7269656e742f7374726970253743696d61676556696577322f322f772f31323430">
+<meta property="og:image" content="https://camo.githubusercontent.com/221b74e0795b9bfcd09d2ae7d46db2f4f114436f/68747470733a2f2f75706c6f61642d696d616765732e6a69616e7368752e696f2f75706c6f61645f696d616765732f333137343730312d363763646536623766653264633233622e706e673f696d6167654d6f6772322f6175746f2d6f7269656e742f7374726970253743696d61676556696577322f322f772f31323430">
+<meta property="og:image" content="http://yoursite.com/image/diff_1.png">
+<meta property="og:image" content="http://yoursite.com/image/diff_2.png">
+<meta property="og:image" content="http://yoursite.com/image/diff_3.png">
+<meta property="og:image" content="http://yoursite.com/image/diff_4.png">
+<meta property="og:image" content="http://yoursite.com/image/diff_5.png">
+<meta property="og:image" content="http://yoursite.com/image/diff_6.png">
+<meta property="og:image" content="http://yoursite.com/image/diff_7.png">
+<meta property="og:updated_time" content="2019-08-15T17:55:59.934Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="树的diff算法（vue 2.0）">
+<meta name="twitter:description" content="树的 diff 算法（vue 2.0）模板转换成视图的过程 Vue.js 通过编译将 template 模板转换成渲染函数(render ) ，执行渲染函数就可以得到一个虚拟节点树 在对 Model 进行操作的时候，会触发对应 Dep 中的 Watcher 对象。Watcher 对象会调用对应的 update 来修改视图。这个过程主要是将新旧虚拟节点进行差异对比，然后根据对比结果进行 DOM 操作">
+<meta name="twitter:image" content="https://camo.githubusercontent.com/ecb8e60110bd61ee799c1ab28caa8d0cdce57b5c/68747470733a2f2f75706c6f61642d696d616765732e6a69616e7368752e696f2f75706c6f61645f696d616765732f333137343730312d303964383937356166343365643663642e706e673f696d6167654d6f6772322f6175746f2d6f7269656e742f7374726970253743696d61676556696577322f322f772f31323430">
+  
+    <link rel="alternate" href="/atom.xml" title="01不是包子脸" type="application/atom+xml">
+  
+  <link rel="icon" href="/css/images/dog.JPG">
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
+  <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <style type="text/css">
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/9749f0/00000000000000000001008f/27/l?subset_id=2&fvd=n5) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/90cf9f/000000000000000000010091/27/l?subset_id=2&fvd=n7) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/8a5494/000000000000000000013365/27/l?subset_id=2&fvd=n4) format("woff2");font-weight:lighter;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/d337d8/000000000000000000010095/27/l?subset_id=2&fvd=i4) format("woff2");font-weight:400;font-style:italic;}</style>
+    
+  <link rel="stylesheet" id="athemes-headings-fonts-css" href="//fonts.googleapis.com/css?family=Yanone+Kaffeesatz%3A200%2C300%2C400%2C700&amp;ver=4.6.1" type="text/css" media="all">
+
+  <link rel="stylesheet" id="athemes-headings-fonts-css" href="//fonts.googleapis.com/css?family=Oswald%3A300%2C400%2C700&amp;ver=4.6.1" type="text/css" media="all">
+  <link rel="stylesheet" href="/css/style.css">
+
+  <script src="/js/jquery-3.1.1.min.js"></script>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.css" >
+  <link rel="stylesheet" href="/css/fashion.css" >
+  <link rel="stylesheet" href="/css/glyphs.css" >
+
+</head>
+
+
+
+  <body data-spy="scroll" data-target="#toc" data-offset="50">
+
+
+  
+
+
+<header id="allheader" class="site-header" role="banner" 
+   >
+  <div class="clearfix container">
+      <div class="site-branding">
+
+          <h1 class="site-title">
+            
+              <a href="/" rel="home" >
+                <img style="margin-bottom: 10px;"  width="975px" height="200px" alt="Hike News" src=" /images/IMG_5299.JPG">
+              </a>
+            
+          </h1>
+          
+          
+            
+          <nav id="main-navigation" class="main-navigation" role="navigation">
+            <a class="nav-open">Menu</a>
+            <a class="nav-close">Close</a>
+
+            <div class="clearfix sf-menu">
+              <ul id="main-nav" class="menu sf-js-enabled sf-arrows"  style="touch-action: pan-y;">
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/">首页</a> </li>
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/archives">归档</a> </li>
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/categories">分类</a> </li>
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/tags">标签</a> </li>
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/about">关于</a> </li>
+                    
+              </ul>
+            </div>
+          </nav>
+
+      </div>
+  </div>
+</header>
+
+
+  <div id="container">
+    <div id="wrap">
+            
+      <div id="content" class="outer">
+        
+          <section id="main" style="float:none;"><article id="post-树的diff算法（vue 2.0）" style="width: 66%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="clearfix post-1016 post type-post status-publish format-standard has-post-thumbnail hentry category-template-2 category-uncategorized tag-codex tag-edge-case tag-featured-image tag-image tag-template">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" class="article-title" itemprop="name">
+      树的diff算法（vue 2.0）
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2019/02/26/树的diff算法（vue 2.0）/" class="article-date">
+	  <time datetime="2019-02-25T16:26:33.000Z" itemprop="datePublished">二月 26, 2019</time>
+	</a>
+
+      
+	<span class="ico-folder"></span>
+    <a class="article-category-link" href="/categories/vue/">vue</a>
+ 
+      
+	<span id="busuanzi_container_page_pv">
+	  本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+	</span>
+
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="树的-diff-算法（vue-2-0）"><a href="#树的-diff-算法（vue-2-0）" class="headerlink" title="树的 diff 算法（vue 2.0）"></a>树的 diff 算法（vue 2.0）</h1><h2 id="模板转换成视图的过程"><a href="#模板转换成视图的过程" class="headerlink" title="模板转换成视图的过程"></a>模板转换成视图的过程</h2><ul>
+<li>Vue.js 通过编译将 template 模板转换成渲染函数(render ) ，执行渲染函数就可以得到一个虚拟节点树</li>
+<li>在对 Model 进行操作的时候，会触发对应 Dep 中的 Watcher 对象。Watcher 对象会调用对应的 update 来修改视图。这个过程主要是将新旧虚拟节点进行差异对比，然后根据对比结果进行 DOM 操作来更新视图。</li>
+</ul>
+<p>简单点讲，在 Vue 的底层实现上，Vue 将模板编译成虚拟 DOM 渲染函数。结合 Vue 自带的响应系统，在状态改变时，Vue 能够智能地计算出重新渲染组件的最小代价并应到 DOM 操作上。</p>
+<a id="more"></a>
+<p><img src="https://camo.githubusercontent.com/ecb8e60110bd61ee799c1ab28caa8d0cdce57b5c/68747470733a2f2f75706c6f61642d696d616765732e6a69616e7368752e696f2f75706c6f61645f696d616765732f333137343730312d303964383937356166343365643663642e706e673f696d6167654d6f6772322f6175746f2d6f7269656e742f7374726970253743696d61676556696577322f322f772f31323430" alt=""></p>
+<ul>
+<li><strong>渲染函数</strong>：渲染函数是用来生成 Virtual DOM 的。Vue 推荐使用模板来构建我们的应用界面，在底层实现中 Vue 会将模板编译成渲染函数，当然我们也可以不写模板，直接写渲染函数，以获得更好的控制。</li>
+<li><strong>VNode 虚拟节点</strong>：它可以代表一个真实的 dom 节点。通过 createElement 方法能将 VNode 渲染成 dom 节点。简单地说，vnode 可以理解成<strong>节点描述对象</strong>，它描述了应该怎样去创建真实的 DOM 节点。</li>
+<li><strong>patch(也叫做 patching 算法)</strong>：虚拟 DOM 最核心的部分，它可以将 vnode 渲染成真实的 DOM，这个过程是对比新旧虚拟节点之间有哪些不同，然后根据对比结果找出需要更新的的节点进行更新。这点我们从单词含义就可以看出， patch 本身就有补丁、修补的意思，其实际作用是在现有 DOM 上进行修改来实现更新视图的目的。Vue 的 Virtual DOM Patching 算法是基于<a href="https://github.com/snabbdom/snabbdom" target="_blank" rel="noopener">Snabbdom</a>的实现，并在些基础上作了很多的调整和改进。</li>
+</ul>
+<h2 id="Virtual-DOM-是什么？"><a href="#Virtual-DOM-是什么？" class="headerlink" title="Virtual DOM 是什么？"></a>Virtual DOM 是什么？</h2><p>Virtual DOM 其实就是一棵以 JavaScript 对象( VNode 节点)作为基础的树，用对象属性来描述节点，实际上它只是一层对真实 DOM 的抽象。最终可以通过一系列操作使这棵树映射到真实环境上。</p>
+<p>简单来说，可以把 Virtual DOM 理解为一个简单的 JS 对象，并且最少包含标签名( tag)、属性(attrs)和子元素对象( children)三个属性。不同的框架对这三个属性的命名会有点差别。</p>
+<p>对于虚拟 DOM，咱们来看一个简单的实例，就是下图所示的这个，详细的阐述了<code>模板 → 渲染函数 → 虚拟DOM树 → 真实DOM</code>的一个过程<br><img src="https://camo.githubusercontent.com/221b74e0795b9bfcd09d2ae7d46db2f4f114436f/68747470733a2f2f75706c6f61642d696d616765732e6a69616e7368752e696f2f75706c6f61645f696d616765732f333137343730312d363763646536623766653264633233622e706e673f696d6167654d6f6772322f6175746f2d6f7269656e742f7374726970253743696d61676556696577322f322f772f31323430" alt=""></p>
+<h2 id="Virtual-DOM-作用是什么？"><a href="#Virtual-DOM-作用是什么？" class="headerlink" title="Virtual DOM 作用是什么？"></a>Virtual DOM 作用是什么？</h2><p><strong>虚拟 DOM 的最终目标是将虚拟节点渲染到视图上</strong>。但是如果直接使用虚拟节点覆盖旧节点的话，会有很多不必要的 DOM 操作。例如，一个 ul 标签下很多个 li 标签，其中只有一个 li 有变化，这种情况下如果使用新的 ul 去替代旧的 ul,因为这些不必要的 DOM 操作而造成了性能上的浪费。</p>
+<p>为了避免不必要的 DOM 操作，虚拟 DOM 在虚拟节点映射到视图的过程中，将虚拟节点与上一次渲染视图所使用的旧虚拟节点（oldVnode）做对比，找出真正需要更新的节点来进行 DOM 操作，从而避免操作其他无需改动的 DOM。</p>
+<p>其实虚拟 DOM 在 Vue.js 主要做了两件事：</p>
+<ul>
+<li>提供与真实 DOM 节点所对应的虚拟节点 vnode</li>
+<li>将虚拟节点 vnode 和旧虚拟节点 oldVnode 进行对比，然后更新视图</li>
+</ul>
+<h2 id="为何需要-Virtual-DOM？"><a href="#为何需要-Virtual-DOM？" class="headerlink" title="为何需要 Virtual DOM？"></a>为何需要 Virtual DOM？</h2><ul>
+<li>具备跨平台的优势</li>
+</ul>
+<p>由于 Virtual DOM 是以 JavaScript 对象为基础而不依赖真实平台环境，所以使它具有了跨平台的能力，比如说浏览器平台、Weex、Node 等。</p>
+<ul>
+<li>操作 DOM 慢，js 运行效率高。我们可以将 DOM 对比操作放在 JS 层，提高效率。</li>
+</ul>
+<p>因为 DOM 操作的执行速度远不如 Javascript 的运算速度快，因此，把大量的 DOM 操作搬运到 Javascript 中，运用 patching 算法来计算出真正需要更新的节点，最大限度地减少 DOM 操作，从而显著提高性能。</p>
+<p>Virtual DOM 本质上就是在 JS 和 DOM 之间做了一个缓存。可以类比 CPU 和硬盘，既然硬盘这么慢，我们就在它们之间加个缓存：既然 DOM 这么慢，我们就在它们 JS 和 DOM 之间加个缓存。CPU（JS）只操作内存（Virtual DOM），最后的时候再把变更写入硬盘（DOM）</p>
+<ul>
+<li>提升渲染性能</li>
+</ul>
+<p>Virtual DOM 的优势不在于单次的操作，而是在大量、频繁的数据更新下，能够对视图进行合理、高效的更新。</p>
+<p>为了实现高效的 DOM 操作，一套高效的虚拟 DOM diff 算法显得很有必要。<strong>我们通过 patch 的核心—-diff 算法，找出本次 DOM 需要更新的节点来更新，其他的不更新</strong>。</p>
+<h2 id="VNode"><a href="#VNode" class="headerlink" title="VNode"></a>VNode</h2><h3 id="抽象-Dom-树"><a href="#抽象-Dom-树" class="headerlink" title="抽象 Dom 树"></a>抽象 Dom 树</h3><p>把真实 Dom 树抽象成一棵以 javascript 对象构成的抽象树，在修改抽象树数据后将抽象树转化成真实 Dom 重绘到页面上呢？于是虚拟 Dom 出现了，它是真实 Dom 的一层抽象，用属性描述真实 Dom 的各个特性。当它发生变化的时候，就会去修改视图。</p>
+<p>但是这样的 javascript 操作 Dom 进行重绘整个视图层是相当消耗性能的，我们是不是可以每次只更新它的修改呢？所以 Vue.js 将 Dom 抽象成一个以 javascript 对象为节点的虚拟 Dom 树，以 VNode 节点模拟真实 Dom，可以对这颗抽象树进行创建节点、删除节点以及修改节点等操作，在这过程中都不需要操作真实 Dom，只需要操作 javascript 对象，大大提升了性能。修改以后经过 diff 算法得出一些需要修改的最小单位，再将这些小单位的视图进行更新。这样做减少了很多不需要的 Dom 操作，大大提高了性能。</p>
+<p>Vue 就使用了这样的抽象节点 VNode，它是对真实 Dom 的一层抽象，而不依赖某个平台，它可以是浏览器平台，也可以是 weex，甚至是 node 平台也可以对这样一棵抽象 Dom 树进行创建删除修改等操作，这也为前后端同构提供了可能。</p>
+<h3 id="VNode-基类"><a href="#VNode-基类" class="headerlink" title="VNode 基类"></a>VNode 基类</h3><p>先来看一下 Vue.js 源码中对 VNode 类的定义。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="class"><span class="keyword">class</span> <span class="title">VNode</span> </span>&#123;</span><br><span class="line">  tag: string | <span class="keyword">void</span>;</span><br><span class="line">  data: VNodeData | <span class="keyword">void</span>;</span><br><span class="line">  children: ?<span class="built_in">Array</span>&lt;VNode&gt;;</span><br><span class="line">  text: string | <span class="keyword">void</span>;</span><br><span class="line">  elm: Node | <span class="keyword">void</span>;</span><br><span class="line">  ns: string | <span class="keyword">void</span>;</span><br><span class="line">  context: Component | <span class="keyword">void</span>; <span class="comment">// rendered in this component's scope</span></span><br><span class="line">  functionalContext: Component | <span class="keyword">void</span>; <span class="comment">// only for functional component root nodes</span></span><br><span class="line">  key: string | number | <span class="keyword">void</span>;</span><br><span class="line">  componentOptions: VNodeComponentOptions | <span class="keyword">void</span>;</span><br><span class="line">  componentInstance: Component | <span class="keyword">void</span>; <span class="comment">// component instance</span></span><br><span class="line">  parent: VNode | <span class="keyword">void</span>; <span class="comment">// component placeholder node</span></span><br><span class="line">  raw: boolean; <span class="comment">// contains raw HTML? (server only)</span></span><br><span class="line">  isStatic: boolean; <span class="comment">// hoisted static node</span></span><br><span class="line">  isRootInsert: boolean; <span class="comment">// necessary for enter transition check</span></span><br><span class="line">  isComment: boolean; <span class="comment">// empty comment placeholder?</span></span><br><span class="line">  isCloned: boolean; <span class="comment">// is a cloned node?</span></span><br><span class="line">  isOnce: boolean; <span class="comment">// is a v-once node?</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">constructor</span>(</span><br><span class="line">    tag?: string,</span><br><span class="line">    data?: VNodeData,</span><br><span class="line">    children?: ?Array&lt;VNode&gt;,</span><br><span class="line">    text?: string,</span><br><span class="line">    elm?: Node,</span><br><span class="line">    context?: Component,</span><br><span class="line">    componentOptions?: VNodeComponentOptions</span><br><span class="line">  ) &#123;</span><br><span class="line">    <span class="comment">/*当前节点的标签名*/</span></span><br><span class="line">    <span class="keyword">this</span>.tag = tag;</span><br><span class="line">    <span class="comment">/*当前节点对应的对象，包含了具体的一些数据信息，是一个VNodeData类型，可以参考VNodeData类型中的数据信息*/</span></span><br><span class="line">    <span class="keyword">this</span>.data = data;</span><br><span class="line">    <span class="comment">/*当前节点的子节点，是一个数组*/</span></span><br><span class="line">    <span class="keyword">this</span>.children = children;</span><br><span class="line">    <span class="comment">/*当前节点的文本*/</span></span><br><span class="line">    <span class="keyword">this</span>.text = text;</span><br><span class="line">    <span class="comment">/*当前虚拟节点对应的真实dom节点*/</span></span><br><span class="line">    <span class="keyword">this</span>.elm = elm;</span><br><span class="line">    <span class="comment">/*当前节点的名字空间*/</span></span><br><span class="line">    <span class="keyword">this</span>.ns = <span class="literal">undefined</span>;</span><br><span class="line">    <span class="comment">/*编译作用域*/</span></span><br><span class="line">    <span class="keyword">this</span>.context = context;</span><br><span class="line">    <span class="comment">/*函数化组件作用域*/</span></span><br><span class="line">    <span class="keyword">this</span>.functionalContext = <span class="literal">undefined</span>;</span><br><span class="line">    <span class="comment">/*节点的key属性，被当作节点的标志，用以优化*/</span></span><br><span class="line">    <span class="keyword">this</span>.key = data &amp;&amp; data.key;</span><br><span class="line">    <span class="comment">/*组件的option选项*/</span></span><br><span class="line">    <span class="keyword">this</span>.componentOptions = componentOptions;</span><br><span class="line">    <span class="comment">/*当前节点对应的组件的实例*/</span></span><br><span class="line">    <span class="keyword">this</span>.componentInstance = <span class="literal">undefined</span>;</span><br><span class="line">    <span class="comment">/*当前节点的父节点*/</span></span><br><span class="line">    <span class="keyword">this</span>.parent = <span class="literal">undefined</span>;</span><br><span class="line">    <span class="comment">/*简而言之就是是否为原生HTML或只是普通文本，innerHTML的时候为true，textContent的时候为false*/</span></span><br><span class="line">    <span class="keyword">this</span>.raw = <span class="literal">false</span>;</span><br><span class="line">    <span class="comment">/*静态节点标志*/</span></span><br><span class="line">    <span class="keyword">this</span>.isStatic = <span class="literal">false</span>;</span><br><span class="line">    <span class="comment">/*是否作为跟节点插入*/</span></span><br><span class="line">    <span class="keyword">this</span>.isRootInsert = <span class="literal">true</span>;</span><br><span class="line">    <span class="comment">/*是否为注释节点*/</span></span><br><span class="line">    <span class="keyword">this</span>.isComment = <span class="literal">false</span>;</span><br><span class="line">    <span class="comment">/*是否为克隆节点*/</span></span><br><span class="line">    <span class="keyword">this</span>.isCloned = <span class="literal">false</span>;</span><br><span class="line">    <span class="comment">/*是否有v-once指令*/</span></span><br><span class="line">    <span class="keyword">this</span>.isOnce = <span class="literal">false</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// DEPRECATED: alias for componentInstance for backwards compat.</span></span><br><span class="line">  <span class="comment">/* istanbul ignore next https://github.com/answershuto/learnVue*/</span></span><br><span class="line">  get child(): Component | <span class="keyword">void</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.componentInstance;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这是一个最基础的 VNode 节点，作为其他派生 VNode 类的基类，里面定义了下面这些数据。</p>
+<ul>
+<li>tag: 当前节点的标签名</li>
+<li>data: 当前节点对应的对象，包含了具体的一些数据信息，是一个 VNodeData 类型，可以参考 VNodeData 类型中的数据信息</li>
+<li>children: 当前节点的子节点，是一个数组</li>
+<li>text: 当前节点的文本</li>
+<li>elm: 当前虚拟节点对应的真实 dom 节点</li>
+<li>ns: 当前节点的名字空间</li>
+<li>context: 当前节点的编译作用域</li>
+<li>functionalContext: 函数化组件作用域</li>
+<li>key: 节点的 key 属性，被当作节点的标志，用以优化</li>
+<li>componentOptions: 组件的 option 选项</li>
+<li>componentInstance: 当前节点对应的组件的实例</li>
+<li>parent: 当前节点的父节点</li>
+<li>raw: 简而言之就是是否为原生 HTML 或只是普通文本，innerHTML 的时候为 true，textContent 的时候为 false</li>
+<li>isStatic: 是否为静态节点</li>
+<li>isRootInsert: 是否作为跟节点插入</li>
+<li>isComment: 是否为注释节点</li>
+<li>isCloned: 是否为克隆节点</li>
+<li>isOnce: 是否有 v-once 指令</li>
+</ul>
+<p>打个比方，比如说我现在有这么一个 VNode 树</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    tag: 'div'</span><br><span class="line">    data: &#123;</span><br><span class="line">        class: 'test'</span><br><span class="line">    &#125;,</span><br><span class="line">    children: [</span><br><span class="line">        &#123;</span><br><span class="line">            tag: 'span',</span><br><span class="line">            data: &#123;</span><br><span class="line">                class: 'demo'</span><br><span class="line">            &#125;</span><br><span class="line">            text: 'hello,VNode'</span><br><span class="line">        &#125;</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>渲染之后的结果就是这样的</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"test"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"demo"</span>&gt;</span>hello,VNode<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="生成一个新的-VNode-的方法"><a href="#生成一个新的-VNode-的方法" class="headerlink" title="生成一个新的 VNode 的方法"></a>生成一个新的 VNode 的方法</h3><p>下面这些方法都是一些常用的构造 VNode 的方法。</p>
+<ul>
+<li><strong>createEmptyVNode 创建一个空 VNode 节点</strong></li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*创建一个空VNode节点*/</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> createEmptyVNode = <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> node = <span class="keyword">new</span> VNode();</span><br><span class="line">  node.text = <span class="string">""</span>;</span><br><span class="line">  node.isComment = <span class="literal">true</span>;</span><br><span class="line">  <span class="keyword">return</span> node;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>createTextVNode 创建一个文本节点</strong></li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*创建一个文本节点*/</span></span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">createTextVNode</span>(<span class="params">val: string | number</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> VNode(<span class="literal">undefined</span>, <span class="literal">undefined</span>, <span class="literal">undefined</span>, <span class="built_in">String</span>(val));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>createComponent 创建一个组件节点</strong></li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br></pre></td><td class="code"><pre><span class="line"> <span class="comment">// plain options object: turn it into a constructor https://github.com/answershuto/learnVue</span></span><br><span class="line">  <span class="keyword">if</span> (isObject(Ctor)) &#123;</span><br><span class="line">    Ctor = baseCtor.extend(Ctor)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// if at this stage it's not a constructor or an async component factory,</span></span><br><span class="line">  <span class="comment">// reject.</span></span><br><span class="line">  <span class="comment">/*Github:https://github.com/answershuto*/</span></span><br><span class="line">  <span class="comment">/*如果在该阶段Ctor依然不是一个构造函数或者是一个异步组件工厂则直接返回*/</span></span><br><span class="line">  <span class="keyword">if</span> (<span class="keyword">typeof</span> Ctor !== <span class="string">'function'</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (process.env.NODE_ENV !== <span class="string">'production'</span>) &#123;</span><br><span class="line">      warn(<span class="string">`Invalid Component definition: <span class="subst">$&#123;<span class="built_in">String</span>(Ctor)&#125;</span>`</span>, context)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// async component</span></span><br><span class="line">  <span class="comment">/*处理异步组件*/</span></span><br><span class="line">  <span class="keyword">if</span> (isUndef(Ctor.cid)) &#123;</span><br><span class="line">    Ctor = resolveAsyncComponent(Ctor, baseCtor, context)</span><br><span class="line">    <span class="keyword">if</span> (Ctor === <span class="literal">undefined</span>) &#123;</span><br><span class="line">      <span class="comment">// return nothing if this is indeed an async component</span></span><br><span class="line">      <span class="comment">// wait for the callback to trigger parent update.</span></span><br><span class="line">      <span class="comment">/*如果这是一个异步组件则会不会返回任何东西（undifiened），直接return掉，等待回调函数去触发父组件更新。s*/</span></span><br><span class="line">      <span class="keyword">return</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// resolve constructor options in case global mixins are applied after</span></span><br><span class="line">  <span class="comment">// component constructor creation</span></span><br><span class="line">  resolveConstructorOptions(Ctor)</span><br><span class="line"></span><br><span class="line">  data = data || &#123;&#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// transform component v-model data into props &amp; events</span></span><br><span class="line">  <span class="keyword">if</span> (isDef(data.model)) &#123;</span><br><span class="line">    transformModel(Ctor.options, data)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// extract props</span></span><br><span class="line">  <span class="keyword">const</span> propsData = extractPropsFromVNodeData(data, Ctor, tag)</span><br><span class="line"></span><br><span class="line">  <span class="comment">// functional component</span></span><br><span class="line">  <span class="keyword">if</span> (isTrue(Ctor.options.functional)) &#123;</span><br><span class="line">    <span class="keyword">return</span> createFunctionalComponent(Ctor, propsData, data, context, children)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// extract listeners, since these needs to be treated as</span></span><br><span class="line">  <span class="comment">// child component listeners instead of DOM listeners</span></span><br><span class="line">  <span class="keyword">const</span> listeners = data.on</span><br><span class="line">  <span class="comment">// replace with listeners with .native modifier</span></span><br><span class="line">  data.on = data.nativeOn</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (isTrue(Ctor.options.abstract)) &#123;</span><br><span class="line">    <span class="comment">// abstract components do not keep anything</span></span><br><span class="line">    <span class="comment">// other than props &amp; listeners</span></span><br><span class="line">    data = &#123;&#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// merge component management hooks onto the placeholder node</span></span><br><span class="line">  mergeHooks(data)</span><br><span class="line"></span><br><span class="line">  <span class="comment">// return a placeholder vnode</span></span><br><span class="line">  <span class="keyword">const</span> name = Ctor.options.name || tag</span><br><span class="line">  <span class="keyword">const</span> vnode = <span class="keyword">new</span> VNode(</span><br><span class="line">    <span class="string">`vue-component-<span class="subst">$&#123;Ctor.cid&#125;</span><span class="subst">$&#123;name ? <span class="string">`-<span class="subst">$&#123;name&#125;</span>`</span> : <span class="string">''</span>&#125;</span>`</span>,</span><br><span class="line">    data, <span class="literal">undefined</span>, <span class="literal">undefined</span>, <span class="literal">undefined</span>, context,</span><br><span class="line">    &#123; Ctor, propsData, listeners, tag, children &#125;</span><br><span class="line">  )</span><br><span class="line">  <span class="keyword">return</span> vnode</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>cloneVNode 克隆一个 VNode 节点</strong></li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">cloneVNode</span>(<span class="params">vnode: VNode</span>): <span class="title">VNode</span> </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> cloned = <span class="keyword">new</span> VNode(</span><br><span class="line">    vnode.tag,</span><br><span class="line">    vnode.data,</span><br><span class="line">    vnode.children,</span><br><span class="line">    vnode.text,</span><br><span class="line">    vnode.elm,</span><br><span class="line">    vnode.context,</span><br><span class="line">    vnode.componentOptions</span><br><span class="line">  );</span><br><span class="line">  cloned.ns = vnode.ns;</span><br><span class="line">  cloned.isStatic = vnode.isStatic;</span><br><span class="line">  cloned.key = vnode.key;</span><br><span class="line">  cloned.isCloned = <span class="literal">true</span>;</span><br><span class="line">  <span class="keyword">return</span> cloned;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="createElement"><a href="#createElement" class="headerlink" title="createElement"></a>createElement</h3><p>createElement 用来创建一个虚拟节点。当 data 上已经绑定<strong>ob</strong>的时候，代表该对象已经被 Oberver 过了，所以创建一个空节点。tag 不存在的时候同样创建一个空节点。当 tag 不是一个 String 类型的时候代表 tag 是一个组件的构造类，直接用 new VNode 创建。当 tag 是 String 类型的时候，如果是保留标签，则用 new VNode 创建一个 VNode 实例，如果在 vm 的 option 的 components 找得到该 tag，代表这是一个组件，否则统一用 new VNode 创建。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// wrapper function for providing a more flexible interface</span></span><br><span class="line"><span class="comment">// without getting yelled at by flow</span></span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">createElement</span>(<span class="params"></span></span></span><br><span class="line"><span class="function"><span class="params">  context: Component,</span></span></span><br><span class="line"><span class="function"><span class="params">  tag: any,</span></span></span><br><span class="line"><span class="function"><span class="params">  data: any,</span></span></span><br><span class="line"><span class="function"><span class="params">  children: any,</span></span></span><br><span class="line"><span class="function"><span class="params">  normalizationType: any,</span></span></span><br><span class="line"><span class="function"><span class="params">  alwaysNormalize: boolean</span></span></span><br><span class="line"><span class="function"><span class="params"></span>): <span class="title">VNode</span> </span>&#123;</span><br><span class="line">  <span class="comment">/*兼容不传data的情况*/</span></span><br><span class="line">  <span class="keyword">if</span> (<span class="built_in">Array</span>.isArray(data) || isPrimitive(data)) &#123;</span><br><span class="line">    normalizationType = children;</span><br><span class="line">    children = data;</span><br><span class="line">    data = <span class="literal">undefined</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">/*如果alwaysNormalize为true，则normalizationType标记为ALWAYS_NORMALIZE*/</span></span><br><span class="line">  <span class="keyword">if</span> (isTrue(alwaysNormalize)) &#123;</span><br><span class="line">    normalizationType = ALWAYS_NORMALIZE;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">/*Github:https://github.com/answershuto*/</span></span><br><span class="line">  <span class="comment">/*创建虚拟节点*/</span></span><br><span class="line">  <span class="keyword">return</span> _createElement(context, tag, data, children, normalizationType);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*创建虚拟节点*/</span></span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">_createElement</span>(<span class="params"></span></span></span><br><span class="line"><span class="function"><span class="params">  context: Component,</span></span></span><br><span class="line"><span class="function"><span class="params">  tag?: string | Class&lt;Component&gt; | Function | Object,</span></span></span><br><span class="line"><span class="function"><span class="params">  data?: VNodeData,</span></span></span><br><span class="line"><span class="function"><span class="params">  children?: any,</span></span></span><br><span class="line"><span class="function"><span class="params">  normalizationType?: number</span></span></span><br><span class="line"><span class="function"><span class="params"></span>): <span class="title">VNode</span> </span>&#123;</span><br><span class="line">  <span class="comment">/*</span></span><br><span class="line"><span class="comment">    如果data未定义（undefined或者null）或者是data的__ob__已经定义（代表已经被observed，上面绑定了Oberver对象），</span></span><br><span class="line"><span class="comment">    https://cn.vuejs.org/v2/guide/render-function.html#约束</span></span><br><span class="line"><span class="comment">    那么创建一个空节点</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line">  <span class="keyword">if</span> (isDef(data) &amp;&amp; isDef((data: any).__ob__)) &#123;</span><br><span class="line">    process.env.NODE_ENV !== <span class="string">"production"</span> &amp;&amp;</span><br><span class="line">      warn(</span><br><span class="line">        <span class="string">`Avoid using observed data object as vnode data: <span class="subst">$&#123;<span class="built_in">JSON</span>.stringify(</span></span></span><br><span class="line"><span class="string"><span class="subst">          data</span></span></span><br><span class="line"><span class="string"><span class="subst">        )&#125;</span>\n`</span> + <span class="string">"Always create fresh vnode data objects in each render!"</span>,</span><br><span class="line">        context</span><br><span class="line">      );</span><br><span class="line">    <span class="keyword">return</span> createEmptyVNode();</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">/*如果tag不存在也是创建一个空节点*/</span></span><br><span class="line">  <span class="keyword">if</span> (!tag) &#123;</span><br><span class="line">    <span class="comment">// in case of component :is set to falsy value</span></span><br><span class="line">    <span class="keyword">return</span> createEmptyVNode();</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// support single function children as default scoped slot</span></span><br><span class="line">  <span class="comment">/*默认默认作用域插槽*/</span></span><br><span class="line">  <span class="keyword">if</span> (<span class="built_in">Array</span>.isArray(children) &amp;&amp; <span class="keyword">typeof</span> children[<span class="number">0</span>] === <span class="string">"function"</span>) &#123;</span><br><span class="line">    data = data || &#123;&#125;;</span><br><span class="line">    data.scopedSlots = &#123; <span class="attr">default</span>: children[<span class="number">0</span>] &#125;;</span><br><span class="line">    children.length = <span class="number">0</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span> (normalizationType === ALWAYS_NORMALIZE) &#123;</span><br><span class="line">    children = normalizeChildren(children);</span><br><span class="line">  &#125; <span class="keyword">else</span> <span class="keyword">if</span> (normalizationType === SIMPLE_NORMALIZE) &#123;</span><br><span class="line">    children = simpleNormalizeChildren(children);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">let</span> vnode, ns;</span><br><span class="line">  <span class="keyword">if</span> (<span class="keyword">typeof</span> tag === <span class="string">"string"</span>) &#123;</span><br><span class="line">    <span class="keyword">let</span> Ctor;</span><br><span class="line">    <span class="comment">/*获取tag的名字空间*/</span></span><br><span class="line">    ns = config.getTagNamespace(tag);</span><br><span class="line">    <span class="comment">/*判断是否是保留的标签*/</span></span><br><span class="line">    <span class="keyword">if</span> (config.isReservedTag(tag)) &#123;</span><br><span class="line">      <span class="comment">// platform built-in elements</span></span><br><span class="line">      <span class="comment">/*如果是保留的标签则创建一个相应节点*/</span></span><br><span class="line">      vnode = <span class="keyword">new</span> VNode(</span><br><span class="line">        config.parsePlatformTagName(tag),</span><br><span class="line">        data,</span><br><span class="line">        children,</span><br><span class="line">        <span class="literal">undefined</span>,</span><br><span class="line">        <span class="literal">undefined</span>,</span><br><span class="line">        context</span><br><span class="line">      );</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (</span><br><span class="line">      isDef((Ctor = resolveAsset(context.$options, <span class="string">"components"</span>, tag)))</span><br><span class="line">    ) &#123;</span><br><span class="line">      <span class="comment">// component</span></span><br><span class="line">      <span class="comment">/*从vm实例的option的components中寻找该tag，存在则就是一个组件，创建相应节点，Ctor为组件的构造类*/</span></span><br><span class="line">      vnode = createComponent(Ctor, data, context, children, tag);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="comment">// unknown or unlisted namespaced elements</span></span><br><span class="line">      <span class="comment">// check at runtime because it may get assigned a namespace when its</span></span><br><span class="line">      <span class="comment">// parent normalizes children</span></span><br><span class="line">      <span class="comment">/*未知的元素，在运行时检查，因为父组件可能在序列化子组件的时候分配一个名字空间*/</span></span><br><span class="line">      vnode = <span class="keyword">new</span> VNode(tag, data, children, <span class="literal">undefined</span>, <span class="literal">undefined</span>, context);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="comment">// direct component options / constructor</span></span><br><span class="line">    <span class="comment">/*tag不是字符串的时候则是组件的构造类*/</span></span><br><span class="line">    vnode = createComponent(tag, data, context, children);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span> (isDef(vnode)) &#123;</span><br><span class="line">    <span class="comment">/*如果有名字空间，则递归所有子节点应用该名字空间*/</span></span><br><span class="line">    <span class="keyword">if</span> (ns) applyNS(vnode, ns);</span><br><span class="line">    <span class="keyword">return</span> vnode;</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="comment">/*如果vnode没有成功创建则创建空节点*/</span></span><br><span class="line">    <span class="keyword">return</span> createEmptyVNode();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="diff-概解"><a href="#diff-概解" class="headerlink" title="diff 概解"></a>diff 概解</h2><h3 id="1-当数据发生变化时，vue-是怎么更新节点的？"><a href="#1-当数据发生变化时，vue-是怎么更新节点的？" class="headerlink" title="1.当数据发生变化时，vue 是怎么更新节点的？"></a>1.当数据发生变化时，vue 是怎么更新节点的？</h3><p>周所周知，Vue 通过数据绑定来修改视图，当某个数据被修改的时候，set 方法会让闭包中的 Dep 调用 notify 通知所有订阅者 Watcher，Watcher 通过 get 方法执行 vm._update(vm._render(), hydrating)。</p>
+<p>这里看一下_update 方法</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">Vue.prototype._update = <span class="function"><span class="keyword">function</span> (<span class="params">vnode: VNode, hydrating?: boolean</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> vm: Component = <span class="keyword">this</span></span><br><span class="line">    <span class="comment">/*如果已经该组件已经挂载过了则代表进入这个步骤是个更新的过程，触发beforeUpdate钩子*/</span></span><br><span class="line">    <span class="keyword">if</span> (vm._isMounted) &#123;</span><br><span class="line">      callHook(vm, <span class="string">'beforeUpdate'</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">const</span> prevEl = vm.$el</span><br><span class="line">    <span class="keyword">const</span> prevVnode = vm._vnode</span><br><span class="line">    <span class="keyword">const</span> prevActiveInstance = activeInstance</span><br><span class="line">    activeInstance = vm</span><br><span class="line">    vm._vnode = vnode</span><br><span class="line">    <span class="comment">// Vue.prototype.__patch__ is injected in entry points</span></span><br><span class="line">    <span class="comment">// based on the rendering backend used.</span></span><br><span class="line">    <span class="comment">/*基于后端渲染Vue.prototype.__patch__被用来作为一个入口*/</span></span><br><span class="line">    <span class="keyword">if</span> (!prevVnode) &#123;</span><br><span class="line">      <span class="comment">// initial render</span></span><br><span class="line">      vm.$el = vm.__patch__(</span><br><span class="line">        vm.$el, vnode, hydrating, <span class="literal">false</span> <span class="comment">/* removeOnly */</span>,</span><br><span class="line">        vm.$options._parentElm,</span><br><span class="line">        vm.$options._refElm</span><br><span class="line">      )</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="comment">// updates</span></span><br><span class="line">      vm.$el = vm.__patch__(prevVnode, vnode)</span><br><span class="line">    &#125;</span><br><span class="line">    activeInstance = prevActiveInstance</span><br><span class="line">    <span class="comment">// update __vue__ reference</span></span><br><span class="line">    <span class="comment">/*更新新的实例对象的__vue__*/</span></span><br><span class="line">    <span class="keyword">if</span> (prevEl) &#123;</span><br><span class="line">      prevEl.__vue__ = <span class="literal">null</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (vm.$el) &#123;</span><br><span class="line">      vm.$el.__vue__ = vm</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// if parent is an HOC, update its $el as well</span></span><br><span class="line">    <span class="keyword">if</span> (vm.$vnode &amp;&amp; vm.$parent &amp;&amp; vm.$vnode === vm.$parent._vnode) &#123;</span><br><span class="line">      vm.$parent.$el = vm.$el</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// updated hook is called by the scheduler to ensure that children are</span></span><br><span class="line">    <span class="comment">// updated in a parent's updated hook.</span></span><br><span class="line">  &#125;复制代码</span><br></pre></td></tr></table></figure>
+<p>_update 方法的第一个参数是一个 VNode 对象，在内部会将该 VNode 对象与之前旧的 VNode 对象进行<strong>patch</strong>。</p>
+<p>要知道渲染真实 DOM 的开销是很大的，比如有时候我们修改了某个数据，如果直接渲染到真实 dom 上会引起整个 dom 树的重绘和重排，有没有可能我们只更新我们修改的那一小块 dom 而不要更新整个 dom 呢？diff 算法能够帮助我们。</p>
+<p>我们先根据真实 DOM 生成一颗<code>virtual DOM</code>，当<code>virtual DOM</code>某个节点的数据改变后会生成一个新的<code>Vnode</code>，然后<code>Vnode</code>和<code>oldVnode</code>作对比，发现有不一样的地方就直接修改在真实的 DOM 上，然后使<code>oldVnode</code>的值为<code>Vnode</code>。</p>
+<p>diff 的过程就是调用名为<code>patch</code>的函数，比较新旧节点，一边比较一边给<strong>真实的 DOM</strong>打补丁。</p>
+<h3 id="2-virtual-DOM-和真实-DOM-的区别？"><a href="#2-virtual-DOM-和真实-DOM-的区别？" class="headerlink" title="2. virtual DOM 和真实 DOM 的区别？"></a>2. virtual DOM 和真实 DOM 的区别？</h3><p>虚拟 dom 对应的是真实 dom， 使用<code>document.CreateElement</code> 和 <code>document.CreateTextNode</code>创建的就是真实节点。</p>
+<p>virtual DOM 是将真实的 DOM 的数据抽取出来，以对象的形式模拟树形结构。比如 dom 是这样的：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">p</span>&gt;</span>123<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>对应的 virtual DOM（伪代码）：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> Vnode = &#123;</span><br><span class="line">  tag: <span class="string">"div"</span>,</span><br><span class="line">  children: [&#123; <span class="attr">tag</span>: <span class="string">"p"</span>, <span class="attr">text</span>: <span class="string">"123"</span> &#125;]</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p><strong>（温馨提示：<code>VNode</code>和<code>oldVNode</code>都是对象，一定要记住）</strong></p>
+<p><strong>virtual dom 很多时候都不是最优的操作，但它具有普适性，在效率、可维护性之间达平衡。</strong></p>
+<h3 id="3-diff-的比较方式？"><a href="#3-diff-的比较方式？" class="headerlink" title="3. diff 的比较方式？"></a>3. diff 的比较方式？</h3><p>在采取 diff 算法比较新旧节点的时候，比较只会在同层级进行, 不会跨层级比较。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;div&gt;</span><br><span class="line">    &lt;p&gt;<span class="number">123</span>&lt;<span class="regexp">/p&gt;</span></span><br><span class="line"><span class="regexp">&lt;/</span>div&gt;</span><br><span class="line"></span><br><span class="line">&lt;div&gt;</span><br><span class="line">    &lt;span&gt;<span class="number">456</span>&lt;<span class="regexp">/span&gt;</span></span><br><span class="line"><span class="regexp">&lt;/</span>div&gt;</span><br></pre></td></tr></table></figure>
+<p>上面的代码会分别比较同一层的两个 div 以及第二层的 p 和 span，但是不会拿 div 和 span 作比较。在别处看到的一张很形象的图：</p>
+<p><img src="/image/diff_1.png" alt=""></p>
+<h2 id="diff-流程图"><a href="#diff-流程图" class="headerlink" title="diff 流程图"></a>diff 流程图</h2><p>当数据发生改变时，set 方法会让调用<code>Dep.notify</code>通知所有订阅者 Watcher，订阅者就会调用<code>patch</code>给真实的 DOM 打补丁，更新相应的视图。</p>
+<p><img src="/image/diff_2.png" alt=""></p>
+<p>diff 算法包括几个步骤：</p>
+<ul>
+<li>用 JavaScript 对象结构表示 DOM 树的结构；然后用这个树构建一个真正的 DOM 树，插到文档当中</li>
+<li>当状态变更的时候，重新构造一棵新的对象树。然后用新的树和旧的树进行比较，记录两棵树差异</li>
+<li>把所记录的差异应用到所构建的真正的 DOM 树上，视图就更新了</li>
+</ul>
+<h2 id="diff-算法具体分析"><a href="#diff-算法具体分析" class="headerlink" title="diff 算法具体分析"></a>diff 算法具体分析</h2><h3 id="1-patch"><a href="#1-patch" class="headerlink" title="1. patch"></a>1. patch</h3><p>来看看<code>patch</code>是怎么打补丁的（代码只保留核心部分）</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">patch</span>(<span class="params">oldVnode, vnode</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// some code</span></span><br><span class="line">  <span class="keyword">if</span> (sameVnode(oldVnode, vnode)) &#123;</span><br><span class="line">    patchVnode(oldVnode, vnode);</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> oEl = oldVnode.el; <span class="comment">// 当前oldVnode对应的真实元素节点</span></span><br><span class="line">    <span class="keyword">let</span> parentEle = api.parentNode(oEl); <span class="comment">// 父元素</span></span><br><span class="line">    createEle(vnode); <span class="comment">// 根据Vnode生成新元素</span></span><br><span class="line">    <span class="keyword">if</span> (parentEle !== <span class="literal">null</span>) &#123;</span><br><span class="line">      api.insertBefore(parentEle, vnode.el, api.nextSibling(oEl)); <span class="comment">// 将新元素添加进父元素</span></span><br><span class="line">      api.removeChild(parentEle, oldVnode.el); <span class="comment">// 移除以前的旧元素节点</span></span><br><span class="line">      oldVnode = <span class="literal">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// some code</span></span><br><span class="line">  <span class="keyword">return</span> vnode;</span><br><span class="line">&#125;</span><br><span class="line">复制代码;</span><br></pre></td></tr></table></figure>
+<p>patch 函数接收两个参数<code>oldVnode</code>和<code>Vnode</code>分别代表新的节点和之前的旧节点</p>
+<ul>
+<li>判断两节点是否值得比较，值得比较则执行<code>patchVnode</code></li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">sameVnode</span>(<span class="params">a, b</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    a.key === b.key &amp;&amp; <span class="comment">// key值</span></span><br><span class="line">    a.tag === b.tag &amp;&amp; <span class="comment">// 标签名</span></span><br><span class="line">    a.isComment === b.isComment &amp;&amp; <span class="comment">// 是否为注释节点</span></span><br><span class="line">    <span class="comment">// 是否都定义了data，data包含一些具体信息，例如onclick , style</span></span><br><span class="line">    isDef(a.data) === isDef(b.data) &amp;&amp;</span><br><span class="line">    sameInputType(a, b) <span class="comment">// 当标签是&lt;input&gt;的时候，type必须相同</span></span><br><span class="line">  );</span><br><span class="line">&#125;</span><br><span class="line">复制代码;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>不值得比较则用<code>Vnode</code>替换<code>oldVnode</code></li>
+</ul>
+<p>如果两个节点都是一样的，那么就深入检查他们的子节点。如果两个节点不一样那就说明<code>Vnode</code>完全被改变了，就可以直接替换<code>oldVnode</code>。</p>
+<p>虽然这两个节点不一样但是他们的子节点一样怎么办？别忘了，diff 可是逐层比较的，如果第一层不一样那么就不会继续深入比较第二层了。（我在想这算是一个缺点吗？相同子节点不能重复利用了…）</p>
+<h3 id="2-patchVnode"><a href="#2-patchVnode" class="headerlink" title="2. patchVnode"></a>2. patchVnode</h3><p>当我们确定两个节点值得比较之后我们会对两个节点指定<code>patchVnode</code>方法。那么这个方法做了什么呢？</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">patchVnode (oldVnode, vnode) &#123;</span><br><span class="line">    <span class="keyword">const</span> el = vnode.el = oldVnode.el</span><br><span class="line">    <span class="keyword">let</span> i, oldCh = oldVnode.children, ch = vnode.children</span><br><span class="line">    <span class="keyword">if</span> (oldVnode === vnode) <span class="keyword">return</span></span><br><span class="line">    <span class="keyword">if</span> (oldVnode.text !== <span class="literal">null</span> &amp;&amp; vnode.text !== <span class="literal">null</span> &amp;&amp; oldVnode.text !== vnode.text) &#123;</span><br><span class="line">        api.setTextContent(el, vnode.text)</span><br><span class="line">    &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">        updateEle(el, vnode, oldVnode)</span><br><span class="line">    	<span class="keyword">if</span> (oldCh &amp;&amp; ch &amp;&amp; oldCh !== ch) &#123;</span><br><span class="line">            updateChildren(el, oldCh, ch)</span><br><span class="line">    	&#125;<span class="keyword">else</span> <span class="keyword">if</span> (ch)&#123;</span><br><span class="line">            createEle(vnode) <span class="comment">//create el's children dom</span></span><br><span class="line">    	&#125;<span class="keyword">else</span> <span class="keyword">if</span> (oldCh)&#123;</span><br><span class="line">            api.removeChildren(el)</span><br><span class="line">    	&#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
+<p>这个函数做了以下事情：</p>
+<ul>
+<li>找到对应的真实 dom，称为<code>el</code></li>
+<li>判断<code>Vnode</code>和<code>oldVnode</code>是否指向同一个对象，如果是，那么直接<code>return</code></li>
+<li>如果他们都有文本节点并且不相等，那么将<code>el</code>的文本节点设置为<code>Vnode</code>的文本节点。</li>
+<li>如果<code>oldVnode</code>有子节点而<code>Vnode</code>没有，则删除<code>el</code>的子节点</li>
+<li>如果<code>oldVnode</code>没有子节点而<code>Vnode</code>有，则将<code>Vnode</code>的子节点真实化之后添加到<code>el</code></li>
+<li>如果两者都有子节点，则执行<code>updateChildren</code>函数比较子节点，这一步很重要</li>
+</ul>
+<p>其他几个点都很好理解，我们详细来讲一下 updateChildren</p>
+<h3 id="3-updateChildren"><a href="#3-updateChildren" class="headerlink" title="3. updateChildren"></a>3. updateChildren</h3><p>代码量很大，不方便一行一行的讲解，所以下面结合一些示例图来描述一下。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br></pre></td><td class="code"><pre><span class="line">updateChildren (parentElm, oldCh, newCh) &#123;</span><br><span class="line">    <span class="keyword">let</span> oldStartIdx = <span class="number">0</span>, newStartIdx = <span class="number">0</span></span><br><span class="line">    <span class="keyword">let</span> oldEndIdx = oldCh.length - <span class="number">1</span></span><br><span class="line">    <span class="keyword">let</span> oldStartVnode = oldCh[<span class="number">0</span>]</span><br><span class="line">    <span class="keyword">let</span> oldEndVnode = oldCh[oldEndIdx]</span><br><span class="line">    <span class="keyword">let</span> newEndIdx = newCh.length - <span class="number">1</span></span><br><span class="line">    <span class="keyword">let</span> newStartVnode = newCh[<span class="number">0</span>]</span><br><span class="line">    <span class="keyword">let</span> newEndVnode = newCh[newEndIdx]</span><br><span class="line">    <span class="keyword">let</span> oldKeyToIdx</span><br><span class="line">    <span class="keyword">let</span> idxInOld</span><br><span class="line">    <span class="keyword">let</span> elmToMove</span><br><span class="line">    <span class="keyword">let</span> before</span><br><span class="line">    <span class="keyword">while</span> (oldStartIdx &lt;= oldEndIdx &amp;&amp; newStartIdx &lt;= newEndIdx) &#123;</span><br><span class="line">        <span class="keyword">if</span> (oldStartVnode == <span class="literal">null</span>) &#123;   <span class="comment">// 对于vnode.key的比较，会把oldVnode = null</span></span><br><span class="line">            oldStartVnode = oldCh[++oldStartIdx]</span><br><span class="line">        &#125;<span class="keyword">else</span> <span class="keyword">if</span> (oldEndVnode == <span class="literal">null</span>) &#123;</span><br><span class="line">            oldEndVnode = oldCh[--oldEndIdx]</span><br><span class="line">        &#125;<span class="keyword">else</span> <span class="keyword">if</span> (newStartVnode == <span class="literal">null</span>) &#123;</span><br><span class="line">            newStartVnode = newCh[++newStartIdx]</span><br><span class="line">        &#125;<span class="keyword">else</span> <span class="keyword">if</span> (newEndVnode == <span class="literal">null</span>) &#123;</span><br><span class="line">            newEndVnode = newCh[--newEndIdx]</span><br><span class="line">        &#125;<span class="keyword">else</span> <span class="keyword">if</span> (sameVnode(oldStartVnode, newStartVnode)) &#123;</span><br><span class="line">            patchVnode(oldStartVnode, newStartVnode)</span><br><span class="line">            oldStartVnode = oldCh[++oldStartIdx]</span><br><span class="line">            newStartVnode = newCh[++newStartIdx]</span><br><span class="line">        &#125;<span class="keyword">else</span> <span class="keyword">if</span> (sameVnode(oldEndVnode, newEndVnode)) &#123;</span><br><span class="line">            patchVnode(oldEndVnode, newEndVnode)</span><br><span class="line">            oldEndVnode = oldCh[--oldEndIdx]</span><br><span class="line">            newEndVnode = newCh[--newEndIdx]</span><br><span class="line">        &#125;<span class="keyword">else</span> <span class="keyword">if</span> (sameVnode(oldStartVnode, newEndVnode)) &#123;</span><br><span class="line">            patchVnode(oldStartVnode, newEndVnode)</span><br><span class="line">            api.insertBefore(parentElm, oldStartVnode.el, api.nextSibling(oldEndVnode.el))</span><br><span class="line">            oldStartVnode = oldCh[++oldStartIdx]</span><br><span class="line">            newEndVnode = newCh[--newEndIdx]</span><br><span class="line">        &#125;<span class="keyword">else</span> <span class="keyword">if</span> (sameVnode(oldEndVnode, newStartVnode)) &#123;</span><br><span class="line">            patchVnode(oldEndVnode, newStartVnode)</span><br><span class="line">            api.insertBefore(parentElm, oldEndVnode.el, oldStartVnode.el)</span><br><span class="line">            oldEndVnode = oldCh[--oldEndIdx]</span><br><span class="line">            newStartVnode = newCh[++newStartIdx]</span><br><span class="line">        &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">           <span class="comment">// 使用key时的比较</span></span><br><span class="line">            <span class="keyword">if</span> (oldKeyToIdx === <span class="literal">undefined</span>) &#123;</span><br><span class="line">                oldKeyToIdx = createKeyToOldIdx(oldCh, oldStartIdx, oldEndIdx) <span class="comment">// 有key生成index表</span></span><br><span class="line">            &#125;</span><br><span class="line">            idxInOld = oldKeyToIdx[newStartVnode.key]</span><br><span class="line">            <span class="keyword">if</span> (!idxInOld) &#123;</span><br><span class="line">                api.insertBefore(parentElm, createEle(newStartVnode).el, oldStartVnode.el)</span><br><span class="line">                newStartVnode = newCh[++newStartIdx]</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> &#123;</span><br><span class="line">                elmToMove = oldCh[idxInOld]</span><br><span class="line">                <span class="keyword">if</span> (elmToMove.sel !== newStartVnode.sel) &#123;</span><br><span class="line">                    api.insertBefore(parentElm, createEle(newStartVnode).el, oldStartVnode.el)</span><br><span class="line">                &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">                    patchVnode(elmToMove, newStartVnode)</span><br><span class="line">                    oldCh[idxInOld] = <span class="literal">null</span></span><br><span class="line">                    api.insertBefore(parentElm, elmToMove.el, oldStartVnode.el)</span><br><span class="line">                &#125;</span><br><span class="line">                newStartVnode = newCh[++newStartIdx]</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (oldStartIdx &gt; oldEndIdx) &#123;</span><br><span class="line">        before = newCh[newEndIdx + <span class="number">1</span>] == <span class="literal">null</span> ? <span class="literal">null</span> : newCh[newEndIdx + <span class="number">1</span>].el</span><br><span class="line">        addVnodes(parentElm, before, newCh, newStartIdx, newEndIdx)</span><br><span class="line">    &#125;<span class="keyword">else</span> <span class="keyword">if</span> (newStartIdx &gt; newEndIdx) &#123;</span><br><span class="line">        removeVnodes(parentElm, oldCh, oldStartIdx, oldEndIdx)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
+<p>先说一下这个函数做了什么</p>
+<ul>
+<li>将<code>Vnode</code>的子节点<code>Vch</code>和<code>oldVnode</code>的子节点<code>oldCh</code>提取出来</li>
+<li><code>oldCh</code>和<code>vCh</code>各有两个头尾的变量<code>StartIdx</code>和<code>EndIdx</code>，它们的 2 个变量相互比较，一共有 4 种比较方式。如果 4 种比较都没匹配，如果设置了<code>key</code>，就会用<code>key</code>进行比较，在比较的过程中，变量会往中间靠，一旦<code>StartIdx&gt;EndIdx</code>表明<code>oldCh</code>和<code>vCh</code>至少有一个已经遍历完了，就会结束比较。</li>
+</ul>
+<h4 id="图解-updateChildren"><a href="#图解-updateChildren" class="headerlink" title="图解 updateChildren"></a>图解 updateChildren</h4><p>终于来到了这一部分，上面的总结相信很多人也看得一脸懵逼，下面我们好好说道说道。</p>
+<p>粉红色的部分为 oldCh、黄色的部分为 vCh</p>
+<p><img src="/image/diff_3.png" alt=""></p>
+<p>我们将它们取出来并分别用 s 和 e 指针指向它们的头 child 和尾 child</p>
+<p><img src="/image/diff_4.png" alt=""></p>
+<p>现在分别对<code>oldS、oldE、S、E</code>两两做<code>sameVnode</code>比较，有四种比较方式，当其中两个能匹配上那么真实 dom 中的相应节点会移到 Vnode 相应的位置，这句话有点绕，打个比方</p>
+<ul>
+<li>如果是 oldS 和 E 匹配上了，那么真实 dom 中的第一个节点会移到最后</li>
+<li>如果是 oldE 和 S 匹配上了，那么真实 dom 中的最后一个节点会移到最前，匹配上的两个指针向中间移动</li>
+<li>如果四种匹配没有一对是成功的，分为两种情况<ul>
+<li>如果新旧子节点都存在 key，那么会根据<code>oldChild</code>的 key 生成一张 hash 表，用<code>S</code>的 key 与 hash 表做匹配，匹配成功就判断<code>S</code>和匹配节点是否为<code>sameNode</code>，如果是，就在真实 dom 中将成功的节点移到最前面，否则，将<code>S</code>生成对应的节点插入到 dom 中对应的<code>oldS</code>位置，<code>oldS</code>和<code>S</code>指针向中间移动。</li>
+<li>如果没有 key,则直接将<code>S</code>生成新的节点插入<code>真实DOM</code>（ps：这下可以解释为什么 v-for 的时候需要设置 key 了，如果没有 key 那么就只会做四种匹配，就算指针中间有可复用的节点都不能被复用了）</li>
+</ul>
+</li>
+</ul>
+<p>再配个图（假设下图中的所有节点都是有 key 的，且 key 为自身的值）</p>
+<p><img src="/image/diff_5.png" alt=""></p>
+<ul>
+<li>第一步</li>
+</ul>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">oldS = a, oldE = d；</span><br><span class="line">S = a, E = b;</span><br></pre></td></tr></table></figure>
+<p><code>oldS</code>和<code>S</code>匹配，则将 dom 中的 a 节点放到第一个，已经是第一个了就不管了，此时 dom 的位置为：a b d</p>
+<ul>
+<li>第二步</li>
+</ul>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">oldS = b, oldE = d；</span><br><span class="line">S = c, E = b;</span><br></pre></td></tr></table></figure>
+<p><code>oldS</code>和<code>E</code>匹配，就将原本的 b 节点移动到最后，因为<code>E</code>是最后一个节点，他们位置要一致，这就是上面说的：<strong>当其中两个能匹配上那么真实 dom 中的相应节点会移到 Vnode 相应的位置</strong>，此时 dom 的位置为：a d b</p>
+<ul>
+<li>第三步</li>
+</ul>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">oldS = d, oldE = d；</span><br><span class="line">S = c, E = d;</span><br></pre></td></tr></table></figure>
+<p><code>oldE</code>和<code>E</code>匹配，位置不变此时 dom 的位置为：a d b</p>
+<ul>
+<li>第四步</li>
+</ul>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">oldS++;</span><br><span class="line">oldE--;</span><br><span class="line">oldS &gt; oldE;</span><br></pre></td></tr></table></figure>
+<p>遍历结束，说明<code>oldCh</code>先遍历完。就将剩余的<code>vCh</code>节点根据自己的的 index 插入到真实 dom 中去，此时 dom 位置为：a c d b</p>
+<p>一次模拟完成。</p>
+<p>这个匹配过程的结束有两个条件：</p>
+<ul>
+<li><code>oldS &gt; oldE</code>表示<code>oldCh</code>先遍历完，那么就将多余的<code>vCh</code>根据 index 添加到 dom 中去（如上图）</li>
+<li><code>S &gt; E</code>表示 vCh 先遍历完，那么就在真实 dom 中将区间为<code>[oldS, oldE]</code>的多余节点删掉</li>
+</ul>
+<p><img src="/image/diff_6.png" alt=""></p>
+<p>下面再举一个例子，可以像上面那样自己试着模拟一下</p>
+<p><img src="/image/diff_7.png" alt=""></p>
+<p>当这些节点<code>sameVnode</code>成功后就会紧接着执行<code>patchVnode</code>了，可以看一下上面的代码</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (sameVnode(oldStartVnode, newStartVnode)) &#123;</span><br><span class="line">  patchVnode(oldStartVnode, newStartVnode);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>就这样层层递归下去，直到将 oldVnode 和 Vnode 中的所有子节点比对完。也将 dom 的所有补丁都打好啦。那么现在再回过去看 updateChildren 的代码会不会容易很多呢？</p>
+<h3 id="4-操作-dom"><a href="#4-操作-dom" class="headerlink" title="4. 操作 dom"></a>4. 操作 dom</h3><p>这里我们只是将虚拟 DOM 映射成了真实的 DOM。那如何给这些 DOM 加入 attr、class、style 等 DOM 属性呢？</p>
+<p>这要依赖于虚拟 DOM 的生命钩子。虚拟 DOM 提供了如下的钩子函数，分别在不同的时期会进行调用。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> hooks = [<span class="string">"create"</span>, <span class="string">"activate"</span>, <span class="string">"update"</span>, <span class="string">"remove"</span>, <span class="string">"destroy"</span>];</span><br><span class="line"></span><br><span class="line"><span class="comment">/*构建cbs回调函数，web平台上见/platforms/web/runtime/modules*/</span></span><br><span class="line"><span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; hooks.length; ++i) &#123;</span><br><span class="line">  cbs[hooks[i]] = [];</span><br><span class="line">  <span class="keyword">for</span> (j = <span class="number">0</span>; j &lt; modules.length; ++j) &#123;</span><br><span class="line">    <span class="keyword">if</span> (isDef(modules[j][hooks[i]])) &#123;</span><br><span class="line">      cbs[hooks[i]].push(modules[j][hooks[i]]);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>同理，也会根据不同平台有自己不同的实现，我们这里以 Web 平台为例。Web 平台的钩子函数见<a href="https://link.juejin.im?target=https%3A%2F%2Fgithub.com%2Fanswershuto%2FlearnVue%2Ftree%2Fmaster%2Fvue-src%2Fplatforms%2Fweb%2Fruntime%2Fmodules" target="_blank" rel="noopener">/platforms/web/runtime/modules</a>。里面有对 attr、class、props、events、style 以及 transition（过渡状态）的 DOM 属性进行操作。</p>
+<p>以 attr 为例，代码很简单。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* @flow */</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> &#123; isIE9 &#125; <span class="keyword">from</span> <span class="string">"core/util/env"</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> &#123; extend, isDef, isUndef &#125; <span class="keyword">from</span> <span class="string">"shared/util"</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> &#123;</span><br><span class="line">  isXlink,</span><br><span class="line">  xlinkNS,</span><br><span class="line">  getXlinkProp,</span><br><span class="line">  isBooleanAttr,</span><br><span class="line">  isEnumeratedAttr,</span><br><span class="line">  isFalsyAttrValue</span><br><span class="line">&#125; <span class="keyword">from</span> <span class="string">"web/util/index"</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*更新attr*/</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">updateAttrs</span>(<span class="params">oldVnode: VNodeWithData, vnode: VNodeWithData</span>) </span>&#123;</span><br><span class="line">  <span class="comment">/*如果旧的以及新的VNode节点均没有attr属性，则直接返回*/</span></span><br><span class="line">  <span class="keyword">if</span> (isUndef(oldVnode.data.attrs) &amp;&amp; isUndef(vnode.data.attrs)) &#123;</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">let</span> key, cur, old;</span><br><span class="line">  <span class="comment">/*VNode节点对应的Dom实例*/</span></span><br><span class="line">  <span class="keyword">const</span> elm = vnode.elm;</span><br><span class="line">  <span class="comment">/*旧VNode节点的attr*/</span></span><br><span class="line">  <span class="keyword">const</span> oldAttrs = oldVnode.data.attrs || &#123;&#125;;</span><br><span class="line">  <span class="comment">/*新VNode节点的attr*/</span></span><br><span class="line">  <span class="keyword">let</span> attrs: any = vnode.data.attrs || &#123;&#125;;</span><br><span class="line">  <span class="comment">// clone observed objects, as the user probably wants to mutate it</span></span><br><span class="line">  <span class="comment">/*如果新的VNode的attr已经有__ob__（代表已经被Observe处理过了）， 进行深拷贝*/</span></span><br><span class="line">  <span class="keyword">if</span> (isDef(attrs.__ob__)) &#123;</span><br><span class="line">    attrs = vnode.data.attrs = extend(&#123;&#125;, attrs);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/*遍历attr，不一致则替换*/</span></span><br><span class="line">  <span class="keyword">for</span> (key <span class="keyword">in</span> attrs) &#123;</span><br><span class="line">    cur = attrs[key];</span><br><span class="line">    old = oldAttrs[key];</span><br><span class="line">    <span class="keyword">if</span> (old !== cur) &#123;</span><br><span class="line">      setAttr(elm, key, cur);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// #4391: in IE9, setting type can reset value for input[type=radio]</span></span><br><span class="line">  <span class="comment">/* istanbul ignore if */</span></span><br><span class="line">  <span class="keyword">if</span> (isIE9 &amp;&amp; attrs.value !== oldAttrs.value) &#123;</span><br><span class="line">    setAttr(elm, <span class="string">"value"</span>, attrs.value);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">for</span> (key <span class="keyword">in</span> oldAttrs) &#123;</span><br><span class="line">    <span class="keyword">if</span> (isUndef(attrs[key])) &#123;</span><br><span class="line">      <span class="keyword">if</span> (isXlink(key)) &#123;</span><br><span class="line">        elm.removeAttributeNS(xlinkNS, getXlinkProp(key));</span><br><span class="line">      &#125; <span class="keyword">else</span> <span class="keyword">if</span> (!isEnumeratedAttr(key)) &#123;</span><br><span class="line">        elm.removeAttribute(key);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*设置attr*/</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">setAttr</span>(<span class="params">el: Element, key: string, value: any</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (isBooleanAttr(key)) &#123;</span><br><span class="line">    <span class="comment">// set attribute for blank value</span></span><br><span class="line">    <span class="comment">// e.g. &lt;option disabled&gt;Select one&lt;/option&gt;</span></span><br><span class="line">    <span class="keyword">if</span> (isFalsyAttrValue(value)) &#123;</span><br><span class="line">      el.removeAttribute(key);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      el.setAttribute(key, key);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125; <span class="keyword">else</span> <span class="keyword">if</span> (isEnumeratedAttr(key)) &#123;</span><br><span class="line">    el.setAttribute(</span><br><span class="line">      key,</span><br><span class="line">      isFalsyAttrValue(value) || value === <span class="string">"false"</span> ? <span class="string">"false"</span> : <span class="string">"true"</span></span><br><span class="line">    );</span><br><span class="line">  &#125; <span class="keyword">else</span> <span class="keyword">if</span> (isXlink(key)) &#123;</span><br><span class="line">    <span class="keyword">if</span> (isFalsyAttrValue(value)) &#123;</span><br><span class="line">      el.removeAttributeNS(xlinkNS, getXlinkProp(key));</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      el.setAttributeNS(xlinkNS, key, value);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (isFalsyAttrValue(value)) &#123;</span><br><span class="line">      el.removeAttribute(key);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      el.setAttribute(key, value);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  create: updateAttrs,</span><br><span class="line">  update: updateAttrs</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>attr 只需要在 create 以及 update 钩子被调用时更新 DOM 的 attr 属性即可。</p>
+
+      
+    </div>
+    <footer class="entry-meta entry-footer">
+      
+	<span class="ico-folder"></span>
+    <a class="article-category-link" href="/categories/vue/">vue</a>
+
+      
+  <span class="ico-tags"></span>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/vue/">vue</a></li></ul>
+
+      
+        
+	<div id="comment">
+		<!-- 来必力City版安装代码 -->
+		<div id="lv-container" data-id="city" data-uid="MTAyMC8yOTQ4MS82MDQ5">
+		<script type="text/javascript">
+		   (function(d, s) {
+		       var j, e = d.getElementsByTagName(s)[0];
+
+		       if (typeof LivereTower === 'function') { return; }
+
+		       j = d.createElement(s);
+		       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+		       j.async = true;
+
+		       e.parentNode.insertBefore(j, e);
+		   })(document, 'script');
+		</script>
+		<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+		</div>
+		<!-- City版安装代码已完成 -->
+	</div>
+
+
+
+      
+    </footer>
+    <hr class="entry-footer-hr">
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2019/03/07/九种实现跨域的方式/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">上一篇</strong>
+      <div class="article-nav-title">
+        
+          九种实现跨域的方式
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/02/22/leetcode算法刷题笔记（三）——排序/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">下一篇</strong>
+      <div class="article-nav-title">leetcode算法刷题笔记（三）——排序</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+<!-- Table of Contents -->
+
+  <aside id="sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    
+      <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#树的-diff-算法（vue-2-0）"><span class="nav-number">1.</span> <span class="nav-text">树的 diff 算法（vue 2.0）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#模板转换成视图的过程"><span class="nav-number">1.1.</span> <span class="nav-text">模板转换成视图的过程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Virtual-DOM-是什么？"><span class="nav-number">1.2.</span> <span class="nav-text">Virtual DOM 是什么？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Virtual-DOM-作用是什么？"><span class="nav-number">1.3.</span> <span class="nav-text">Virtual DOM 作用是什么？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#为何需要-Virtual-DOM？"><span class="nav-number">1.4.</span> <span class="nav-text">为何需要 Virtual DOM？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#VNode"><span class="nav-number">1.5.</span> <span class="nav-text">VNode</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#抽象-Dom-树"><span class="nav-number">1.5.1.</span> <span class="nav-text">抽象 Dom 树</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#VNode-基类"><span class="nav-number">1.5.2.</span> <span class="nav-text">VNode 基类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#生成一个新的-VNode-的方法"><span class="nav-number">1.5.3.</span> <span class="nav-text">生成一个新的 VNode 的方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#createElement"><span class="nav-number">1.5.4.</span> <span class="nav-text">createElement</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#diff-概解"><span class="nav-number">1.6.</span> <span class="nav-text">diff 概解</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-当数据发生变化时，vue-是怎么更新节点的？"><span class="nav-number">1.6.1.</span> <span class="nav-text">1.当数据发生变化时，vue 是怎么更新节点的？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-virtual-DOM-和真实-DOM-的区别？"><span class="nav-number">1.6.2.</span> <span class="nav-text">2. virtual DOM 和真实 DOM 的区别？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-diff-的比较方式？"><span class="nav-number">1.6.3.</span> <span class="nav-text">3. diff 的比较方式？</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#diff-流程图"><span class="nav-number">1.7.</span> <span class="nav-text">diff 流程图</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#diff-算法具体分析"><span class="nav-number">1.8.</span> <span class="nav-text">diff 算法具体分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-patch"><span class="nav-number">1.8.1.</span> <span class="nav-text">1. patch</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-patchVnode"><span class="nav-number">1.8.2.</span> <span class="nav-text">2. patchVnode</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-updateChildren"><span class="nav-number">1.8.3.</span> <span class="nav-text">3. updateChildren</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#图解-updateChildren"><span class="nav-number">1.8.3.1.</span> <span class="nav-text">图解 updateChildren</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-操作-dom"><span class="nav-number">1.8.4.</span> <span class="nav-text">4. 操作 dom</span></a></li></ol></li></ol></li></ol>
+    
+    </div>
+  </aside>
+</section>
+        
+      </div>
+
+    </div>
+    <!-- <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/categories" class="mobile-nav-link">Categories</a>
+  
+    <a href="/tags" class="mobile-nav-link">Tags</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav> -->
+    <footer id="footer" class="site-footer">
+  
+
+  <div class="clearfix container">
+      <div class="site-info">
+	      &copy; 2019 01不是包子脸 All Rights Reserved.
+        
+            <span id="busuanzi_container_site_uv">
+              本站访客数<span id="busuanzi_value_site_uv"></span>人次  
+              本站总访问量<span id="busuanzi_value_site_pv"></span>次
+            </span>
+          
+      </div>
+      <div class="site-credit">
+        Theme by <a href="https://github.com/iTimeTraveler/hexo-theme-hipaper" target="_blank">hipaper</a>
+      </div>
+  </div>
+</footer>
+
+
+<!-- min height -->
+
+<script>
+    var wrapdiv = document.getElementById("wrap");
+    var contentdiv = document.getElementById("content");
+
+    wrapdiv.style.minHeight = document.body.offsetHeight - document.getElementById("allheader").offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("allheader").offsetHeight - document.getElementById("footer").offsetHeight + "px";
+
+
+    <!-- headerblur min height -->
+    
+    
+</script>
+    
+<div style="display: none;">
+  <script src="https://s11.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+</div>
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+<script src="/js/bootstrap.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+
+
+
+
+  <div style="display: none;">
+    <script src="https://s95.cnzz.com/z_stat.php?id=1273997385&web_id=1273997385" language="JavaScript"></script>
+  </div>
+
+
+
+	<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+
+
+
+
+
+
+  </div>
+
+  <a id="rocket" href="#top" class=""></a>
+  <script type="text/javascript" src="/js/totop.js" async=""></script>
+  <!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/love.js"></script>
+</body>
+</html>
