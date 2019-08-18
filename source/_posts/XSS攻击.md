@@ -4,6 +4,8 @@ date: 2019-06-13 18:29:55
 tags:
   - javascript
 categories: javascript
+cover_img: https://i.screenshot.net/rw26db6
+feature_img: https://i.screenshot.net/rw26db6
 ---
 
 # XSS 攻击

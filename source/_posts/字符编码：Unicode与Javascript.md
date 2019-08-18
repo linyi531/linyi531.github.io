@@ -4,6 +4,8 @@ date: 2019-04-06 19:08:55
 tags:
   - javascript
 categories: javascript
+cover_img: https://i.screenshot.net/66zkpa4
+feature_img: https://i.screenshot.net/66zkpa4
 ---
 
 # 字符编码：Unicode 与 Javascript

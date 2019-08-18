@@ -5,6 +5,8 @@ tags:
   - React
   - 前端
 categories: React
+cover_img: https://i.screenshot.net/x25gjig
+feature_img: https://i.screenshot.net/x25gjig
 ---
 
 # Web Copmpoents

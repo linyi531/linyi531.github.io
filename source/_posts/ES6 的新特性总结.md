@@ -5,6 +5,8 @@ tags:
   - ES6
   - javascript
 categories: ES6
+cover_img: https://i.screenshot.net/md872iv
+feature_img: https://i.screenshot.net/md872iv
 ---
 
 # ES6 的新特性

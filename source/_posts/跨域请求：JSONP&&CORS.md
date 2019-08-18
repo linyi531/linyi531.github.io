@@ -5,6 +5,8 @@ tags:
   - javascript
   - 前端
 categories: javascript
+cover_img: https://i.screenshot.net/0eld9ik
+feature_img: https://i.screenshot.net/0eld9ik
 ---
 
 ## JSONP

@@ -7,6 +7,8 @@ tags:
   - 数组
   - javascript
 categories: 算法
+cover_img: https://i.screenshot.net/ognlzbx
+feature_img: https://i.screenshot.net/ognlzbx
 ---
 
 _该笔记只为个人所写算法，不一定是最优解法，仅供参考_

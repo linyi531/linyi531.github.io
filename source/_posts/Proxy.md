@@ -5,6 +5,8 @@ tags:
   - ES6
   - 前端
 categories: ES6
+cover_img: https://i.screenshot.net/zmxj2sj
+feature_img: https://i.screenshot.net/zmxj2sj
 ---
 
 # 概述

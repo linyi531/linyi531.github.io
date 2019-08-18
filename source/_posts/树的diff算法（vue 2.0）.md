@@ -4,6 +4,8 @@ date: 2019-02-26 00:26:33
 tags:
   - vue
 categories: vue
+cover_img: https://i.screenshot.net/1go81b2
+feature_img: https://i.screenshot.net/1go81b2
 ---
 
 # 树的 diff 算法（vue 2.0）

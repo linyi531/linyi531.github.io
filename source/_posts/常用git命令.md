@@ -4,6 +4,8 @@ date: 2018-09-16 11:50:00
 tags:
   - git
 categories: git
+cover_img: https://i.screenshot.net/pdgj2i3
+feature_img: https://i.screenshot.net/pdgj2i3
 ---
 
 ![](/image/git.png)

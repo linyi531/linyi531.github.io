@@ -5,6 +5,8 @@ tags:
   - javascript
   - ES6
 categories: ES6
+cover_img: https://i.screenshot.net/o53z6ar
+feature_img: https://i.screenshot.net/o53z6ar
 ---
 
 # ES6 装饰器
