@@ -28,7 +28,7 @@ feature_img: https://i.screenshot.net/q4oq8uj
 2. 解析器 Compile 解析模板中的`Directive`(指令)，收集指令所依赖的方法和数据,等待数据变化然后进行渲染
 3. Watcher 属于 Observer 和 Compile 桥梁,它将接收到的 Observer 产生的数据变化,并根据 Compile 提供的指令进行视图渲染,使得数据变化促使视图变化
 
-![MVVM](/image/MVVM.png)
+![](https://tva1.sinaimg.cn/large/006y8mN6ly1g6iy2rxn2jj310q0jugn4.jpg)
 
 - 在 `new Vue()` 后， Vue 会调用`_init` 函数进行初始化，也就是 init 过程，在 这个过程 Data 通过 Observer 转换成了 getter/setter 的形式，来对数据追踪变化，当被设置的对象被读取的时候会执行`getter` 函数，而在当被赋值的时候会执行 `setter`函数。
 - 当 render function 执行的时候，因为会读取所需对象的值，所以会触发`getter`函数从而将 Watcher 添加到依赖中进行依赖收集。
@@ -499,7 +499,7 @@ export default class Watcher {
 
 我们在上一节中实现了订阅者( Watcher),但是其中的`update`方法是将订阅者放入了一个待更新的队列中,而不是直接触发,原因如下:
 
-![image-20190721175729186](/Users/lilinyi/Library/Application Support/typora-user-images/image-20190721175729186.png)
+![](https://tva1.sinaimg.cn/large/006y8mN6ly1g6iy4crpf3j31260l6qbp.jpg)
 
 因此这个队列需要做的是**异步**且**去重**,因此我们用 `Set`作为数据结构储存 Watcher 来去重,同时用`Promise`模拟异步更新。
 

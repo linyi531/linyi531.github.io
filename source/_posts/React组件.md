@@ -11,11 +11,11 @@ feature_img: https://i.screenshot.net/x25gjig
 
 # Web Copmpoents
 
-![](/image/react2.png)
+![](https://tva1.sinaimg.cn/large/006y8mN6ly1g6j6p2nvl3j314i0oqgm8.jpg)
 
 # React 组件
 
-![](/image/react3.png)
+![](https://tva1.sinaimg.cn/large/006y8mN6ly1g6j6p1c7t9j31am0gejro.jpg)
 
 React 组件：
 
@@ -38,7 +38,7 @@ React 组件：
 
 <!-- more -->
 
-![](/image/react1.png)
+![](https://tva1.sinaimg.cn/large/006y8mN6ly1g6j6p4jv10j31b20tmjse.jpg)
 
 ## 自动绑定
 

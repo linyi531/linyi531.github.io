@@ -361,7 +361,7 @@ Flex 是 Flexible Box 的缩写，意为"弹性布局"，用来为盒状模型�
 - `space-between`：两端对齐，项目之间的间隔都相等。
 - `space-around`：每个项目两侧的间隔相等。所以，项目之间的间隔比项目与边框的间隔大一倍。
 
-![img](http://www.ruanyifeng.com/blogimg/asset/2015/bg2015071010.png)
+![](https://tva1.sinaimg.cn/large/006y8mN6ly1g6iyhrshycj30hp0l7dg9.jpg)
 
 #### 5.align-items
 
@@ -372,8 +372,7 @@ Flex 是 Flexible Box 的缩写，意为"弹性布局"，用来为盒状模型�
 - `center`：交叉轴的中点对齐。
 - `baseline`: 项目的第一行文字的基线对齐。
 - `stretch`（默认值）：如果项目未设置高度或设为 auto，将占满整个容器的高度。
-
-![img](http://www.ruanyifeng.com/blogimg/asset/2015/bg2015071011.png)
+  ![](https://tva1.sinaimg.cn/large/006y8mN6ly1g6iyikbcvij30h50lujrx.jpg)
 
 #### 6.align-content
 
@@ -385,8 +384,7 @@ Flex 是 Flexible Box 的缩写，意为"弹性布局"，用来为盒状模型�
 - `space-between`：与交叉轴两端对齐，轴线之间的间隔平均分布。
 - `space-around`：每根轴线两侧的间隔都相等。所以，轴线之间的间隔比轴线与边框的间隔大一倍。
 - `stretch`（默认值）：轴线占满整个交叉轴。
-
-![img](http://www.ruanyifeng.com/blogimg/asset/2015/bg2015071012.png)
+  ![](https://tva1.sinaimg.cn/large/006y8mN6ly1g6iyj94lshj30h80lumxy.jpg)
 
 ### 项目的属性
 
@@ -407,7 +405,7 @@ Flex 是 Flexible Box 的缩写，意为"弹性布局"，用来为盒状模型�
 }
 ```
 
-![img](http://www.ruanyifeng.com/blogimg/asset/2015/bg2015071013.png)
+![](https://tva1.sinaimg.cn/large/006y8mN6ly1g6iyk0vxo7j30kv0dct8w.jpg)
 
 #### 2.flex-grow
 
@@ -415,7 +413,7 @@ Flex 是 Flexible Box 的缩写，意为"弹性布局"，用来为盒状模型�
 
 如果所有项目的`flex-grow`属性都为 1，则它们将等分剩余空间（如果有的话）。如果一个项目的`flex-grow`属性为 2，其他项目都为 1，则前者占据的剩余空间将比其他项多一倍。
 
-![img](http://www.ruanyifeng.com/blogimg/asset/2015/bg2015071014.png)
+![](https://tva1.sinaimg.cn/large/006y8mN6ly1g6iylyev7sj30ma05v0sq.jpg)
 
 #### 3.flex-shrink
 
@@ -425,7 +423,7 @@ Flex 是 Flexible Box 的缩写，意为"弹性布局"，用来为盒状模型�
 
 负值对该属性无效。
 
-![img](http://www.ruanyifeng.com/blogimg/asset/2015/bg2015071015.jpg)
+![](https://tva1.sinaimg.cn/large/006y8mN6ly1g6iymkslb9j30jg041glp.jpg)
 
 #### 4.flex-basis
 
@@ -453,7 +451,7 @@ Flex 是 Flexible Box 的缩写，意为"弹性布局"，用来为盒状模型�
 }
 ```
 
-![img](http://www.ruanyifeng.com/blogimg/asset/2015/bg2015071016.png)
+![](https://tva1.sinaimg.cn/large/006y8mN6ly1g6iynadp42j30kn0aut8r.jpg)
 
 ### 兼容性
 
@@ -670,7 +668,7 @@ grid-template-areas:
 
 划分网格以后，容器的子元素会按照顺序，自动放置在每一个网格。默认的放置顺序是"先行后列"，即先填满第一行，再开始放入第二行，即下图数字的顺序。
 
-![img](https://www.wangbase.com/blogimg/asset/201903/bg2019032506.png)
+![](https://tva1.sinaimg.cn/large/006y8mN6ly1g6iyo19otvj30au0b6glp.jpg)
 
 - 这个顺序由`grid-auto-flow`属性决定，默认值是`row`，即"先行后列"。
 - 也可以将它设成`column`，变成"先列后行"。
@@ -828,7 +826,7 @@ grid-template-areas:
 
 ### 兼容性
 
-![](/image/css_1.png)
+![](https://tva1.sinaimg.cn/large/006y8mN6ly1g6iyqd0osoj326m0rok1w.jpg)
 
 ### 对比 Bootstrap
 

@@ -8,7 +8,7 @@ cover_img: https://i.screenshot.net/pdgj2i3
 feature_img: https://i.screenshot.net/pdgj2i3
 ---
 
-![](/image/git.png)
+![](https://tva1.sinaimg.cn/large/006y8mN6ly1g6j61mtymjj31e80qu3yu.jpg)
 红色代表工作区，绿色代表暂存区
 
 # 文件操作

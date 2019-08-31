@@ -133,7 +133,7 @@ CSRF 通常从第三方网站发起，被攻击的网站无法防止攻击发生
 
 2014 年，W3C 的 Web 应用安全工作组发布了 Referrer Policy 草案，对浏览器该如何发送 Referer 做了详细的规定。截止现在新版浏览器大部分已经支持了这份草案，我们终于可以灵活地控制自己网站的 Referer 策略了。新版的 Referrer Policy 规定了五种 Referer 策略：No Referrer、No Referrer When Downgrade、Origin Only、Origin When Cross-origin、和 Unsafe URL。之前就存在的三种策略：never、default 和 always，在新标准里换了个名称。他们的对应关系如下：
 
-![](/image/csrf.png)
+![](https://tva1.sinaimg.cn/large/006y8mN6ly1g6iyglvo3mj31bo0e63yy.jpg)
 
 根据上面的表格因此需要把 Referrer Policy 的策略设置成 same-origin，对于同源的链接和引用，会发送 Referer，referer 值为 Host 不带 Path；跨域访问则不携带 Referer。例如：`aaa.com`引用`bbb.com`的资源，不会发送 Referer。
 

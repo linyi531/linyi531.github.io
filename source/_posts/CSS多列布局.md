@@ -16,7 +16,7 @@ feature_img: https://i.screenshot.net/vr7g1cv
 - header 与 footer 等宽,content 略窄的单列布局
   <!-- more -->
 
-![](/image/css_2.png)
+![](https://tva1.sinaimg.cn/large/006y8mN6ly1g6iysrsoe5j31100h2q3f.jpg)
 
 ### 第一种：
 
@@ -614,8 +614,6 @@ Grid 布局，是一个基于网格的二维布局系统，目的是用来优化
 
   - 有一块内容`<main>`，当`<main>`的高康足够长的时候，紧跟在`<main>`后面的元素`<footer>`会跟在`<main>`元素的后面。
   - 当`<main>`元素比较短的时候(比如小于屏幕的高度),我们期望这个`<footer>`元素能够“粘连”在屏幕的底部
-
-[![img](https://camo.githubusercontent.com/ca3df0f40195d39216b98371ecfd7ecbdb724856/68747470733a2f2f757365722d676f6c642d63646e2e786974752e696f2f323031382f31322f32312f313637636562303662623165653736333f773d34353626683d33333226663d706e6726733d313032313135)](https://camo.githubusercontent.com/ca3df0f40195d39216b98371ecfd7ecbdb724856/68747470733a2f2f757365722d676f6c642d63646e2e786974752e696f2f323031382f31322f32312f313637636562303662623165653736333f773d34353626683d33333226663d706e6726733d313032313135)
 
 具体代码如下：
 

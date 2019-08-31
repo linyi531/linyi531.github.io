@@ -152,7 +152,7 @@ setTimeout
 
 宏任务和微任务的慨念，在我脑海中宏任务和为微任务如图所示
 
-[![img](https://image.fundebug.com/2018-12-10-01.png)](https://image.fundebug.com/2018-12-10-01.png)
+![](https://tva1.sinaimg.cn/large/006y8mN6ly1g6izm5nu3ij30f204qq2z.jpg)
 
 也就是「宏任务」、「微任务」都是队列。
 
@@ -170,19 +170,19 @@ setTimeout
 console.log("script start");
 ```
 
-[![img](https://image.fundebug.com/2018-12-10-02.png)](https://image.fundebug.com/2018-12-10-02.png)
+![](https://tva1.sinaimg.cn/large/006y8mN6ly1g6izmivm1ij30m801x745.jpg)
 
 #### 将 setTimeout 放入宏任务队列
 
 默认所包裹的代码，其实可以理解为是第一个宏任务，所以这里是宏任务 2
 
-[![img](https://image.fundebug.com/2018-12-10-03.png)](https://image.fundebug.com/2018-12-10-03.png)
+![](https://tva1.sinaimg.cn/large/006y8mN6ly1g6izmvovzjj30m8034dft.jpg)
 
 #### 调用 async1，打印 同步代码 console.log( ‘async1 start’ )
 
 我们说过看到带有 async 关键字的函数，不用害怕，它的仅仅是把 return 值包装成了 promise，其他并没有什么不同的地方。所以就很普通的打印 console.log( ‘async1 start’ )
 
-[![img](https://image.fundebug.com/2018-12-10-04.png)](https://image.fundebug.com/2018-12-10-04.png)
+![](https://tva1.sinaimg.cn/large/006y8mN6ly1g6izn7f29dj30m803dt8o.jpg)
 
 #### 分析一下 await async2()
 
@@ -193,13 +193,13 @@ console.log("script start");
 
 目前就直接打印 console.log(‘async2’)
 
-[![img](https://image.fundebug.com/2018-12-10-05.png)](https://image.fundebug.com/2018-12-10-05.png)
+![](https://tva1.sinaimg.cn/large/006y8mN6ly1g6iznit5adj30m803edfu.jpg)
 
 #### 被阻塞后，要执行 async 之外的代码
 
 执行 new Promise()，Promise 构造函数是直接调用的同步代码，所以 console.log( ‘promise1’ )
 
-[![img](https://image.fundebug.com/2018-12-10-06.png)](https://image.fundebug.com/2018-12-10-06.png)
+![](https://tva1.sinaimg.cn/large/006y8mN6ly1g6iznu7o6jj30m803l74a.jpg)
 
 #### 代码运行到 promise.then()
 
@@ -207,15 +207,14 @@ console.log("script start");
 
 **注意：这里只是把 promise2 推入微任务队列，并没有执行。微任务会在当前宏任务的同步代码执行完毕，才会依次执行**
 
-[![img](https://image.fundebug.com/2018-12-10-07.png)](https://image.fundebug.com/2018-12-10-07.png)
+![](https://tva1.sinaimg.cn/large/006y8mN6ly1g6izo8rmlkj30m803c0sp.jpg)
 
 #### 打印同步代码 console.log(‘script end’)
 
 执行完这个同步代码后，「async 外的代码」终于走了一遍
 
 下面该回到 await 表达式那里，执行 await Promise.resolve(undefined)了
-
-[![img](https://image.fundebug.com/2018-12-10-08.png)](https://image.fundebug.com/2018-12-10-08.png)
+![](https://tva1.sinaimg.cn/large/006y8mN6ly1g6izoj1zjkj30m803c749.jpg)
 
 #### 回到 async 内部，执行 await Promise.resolve(undefined)
 
@@ -251,7 +250,7 @@ await async2()执行结束，才能继续执行后面的代码
 
 如图
 
-[![img](https://image.fundebug.com/2018-12-10-09.png)](https://image.fundebug.com/2018-12-10-09.png)
+![](https://tva1.sinaimg.cn/large/006y8mN6ly1g6izovbp1aj30m8037q2y.jpg)
 
 #### 此时当前宏任务 1 都执行完了，要处理微任务队列里的代码。
 

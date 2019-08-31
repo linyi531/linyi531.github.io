@@ -156,7 +156,7 @@ module.exports = {
 webpack --mode=production
 ```
 
-![](/image/webpack.png)
+![](https://tva1.sinaimg.cn/large/006y8mN6ly1g6j6u0wvurj30k5072glt.jpg)
 
 ## 模块热替换(hot module replacement)
 

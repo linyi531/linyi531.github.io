@@ -21,7 +21,7 @@ feature_img: https://i.screenshot.net/o2w7gi5
 
 ## TCP 头格式
 
-![img](https://coolshell.cn/wp-content/uploads/2014/05/TCP-Header-01.jpg)
+![img](https://tva1.sinaimg.cn/large/006y8mN6ly1g6izttyfinj30m8090jsz.jpg)
 
 你需要注意这么几点：
 
@@ -50,7 +50,7 @@ feature_img: https://i.screenshot.net/o2w7gi5
 
 下图是从 Wireshark 中截了个我在访问 coolshell.cn 时的有数据传输的图给你看一下，SeqNum 是怎么变的。（使用 Wireshark 菜单中的 Statistics ->Flow Graph… ）
 
-![img](https://coolshell.cn/wp-content/uploads/2014/05/tcp_data_seq_num.jpg)
+![img](https://tva1.sinaimg.cn/large/006y8mN6ly1g6j5nx0rq0j30al0a1jsq.jpg)
 
 你可以看到，**SeqNum 的增加是和传输的字节数相关的**。上图中，三次握手后，来了两个 Len:1440 的包，而第二个包的 SeqNum 就成了 1441。然后第一个 ACK 回的是 1441，表示第一个 1440 收到了。
 
@@ -81,7 +81,7 @@ TCP 要保证所有的数据包都可以到达，所以，必需要有重传机�
 
 比如：如果发送方发出了 1，2，3，4，5 份数据，第一份先到送了，于是就 ack 回 2，结果 2 因为某些原因没收到，3 到达了，于是还是 ack 回 2，后面的 4 和 5 都到了，但是还是 ack 回 2，因为 2 还是没有收到，于是发送端收到了三个 ack=2 的确认，知道了 2 还没有到，于是就马上重转 2。然后，接收端收到了 2，此时因为 3，4，5 都收到了，于是 ack 回 6。示意图如下：
 
-![img](https://coolshell.cn/wp-content/uploads/2014/05/FASTIncast021.png)
+![img](https://tva1.sinaimg.cn/large/006y8mN6ly1g6j5o1shzuj30ci0833yx.jpg)
 
 Fast Retransmit 只解决了一个问题，就是 timeout 的问题，它依然面临一个艰难的选择，就是，是重传之前的一个还是重传所有的问题。对于上面的示例来说，是重传#2 呢还是重传#2，#3，#4，#5 呢？因为发送端并不清楚这连续的 3 个 ack(2)是谁传回来的？也许发送端发了 20 份数据，是#6，#10，#20 传来的呢。这样，发送端很有可能要重传从 2 到 20 的这堆数据（这就是某些 TCP 的实际的实现）。可见，这是一把双刃剑。
 
@@ -89,7 +89,7 @@ Fast Retransmit 只解决了一个问题，就是 timeout 的问题，它依然�
 
 另外一种更好的方式叫：**Selective Acknowledgment (SACK)**（参看[RFC 2018](http://tools.ietf.org/html/rfc2018)），这种方式需要在 TCP 头里加一个 SACK 的东西，ACK 还是 Fast Retransmit 的 ACK，SACK 则是汇报收到的数据碎版。参看下图：
 
-![img](https://coolshell.cn/wp-content/uploads/2014/05/tcp_sack_example-1024x577.jpg)
+![img](https://tva1.sinaimg.cn/large/006y8mN6ly1g6j5o7gj8sj30sg0g1ta5.jpg)
 
 这样，在发送端就可以根据回传的 SACK 来知道哪些数据到了，哪些没有到。于是就优化了 Fast Retransmit 的算法。当然，这个协议需要两边都支持。在 Linux 下，可以通过**tcp_sack**参数打开这个功能（Linux 2.4 后默认打开）。
 
@@ -190,7 +190,7 @@ Linux 下的 tcp_dsack 参数用于开启这个功能（Linux 2.4 后默认打�
 - 情况（a）是 ack 没回来，所以重传。如果你计算第一次发送和 ACK 的时间，那么，明显算大了。
 - 情况（b）是 ack 回来慢了，但是导致了重传，但刚重传不一会儿，之前 ACK 就回来了。如果你是算重传的时间和 ACK 回来的时间的差，就会算短了。
 
-![img](https://coolshell.cn/wp-content/uploads/2014/05/Karn-Partridge-Algorithm.jpg)
+![img](https://tva1.sinaimg.cn/large/006y8mN6ly1g6j5odttngj30kp098mxm.jpg)
 
 所以 1987 年的时候，搞了一个叫[Karn / Partridge Algorithm](http://en.wikipedia.org/wiki/Karn's_Algorithm)，这个算法的最大特点是——**忽略重传，不把重传的 RTT 做采样**（你看，你不需要去解决不存在的问题）。
 
@@ -214,7 +214,7 @@ Linux 下的 tcp_dsack 参数用于开启这个功能（Linux 2.4 后默认打�
 
 所以，TCP 引入了一些技术和设计来做网络流控，Sliding Window 是其中一个技术。 前面我们说过，**TCP 头里有一个字段叫 Window，又叫 Advertised-Window，这个字段是接收端告诉发送端自己还有多少缓冲区可以接收数据**。**于是发送端就可以根据这个接收端的处理能力来发送数据，而不会导致接收端处理不过来**。 为了说明滑动窗口，我们需要先看一下 TCP 缓冲区的一些数据结构：
 
-![img](https://coolshell.cn/wp-content/uploads/2014/05/sliding_window.jpg)
+![img](https://tva1.sinaimg.cn/large/006y8mN6ly1g6j5oinwowj30p60a13z5.jpg)
 
 上图中，我们可以看到：
 
@@ -227,8 +227,7 @@ Linux 下的 tcp_dsack 参数用于开启这个功能（Linux 2.4 后默认打�
 - 而发送方会根据这个窗口来控制发送数据的大小，以保证接收方可以处理。
 
 下面我们来看一下发送方的滑动窗口示意图：
-
-![img](https://coolshell.cn/wp-content/uploads/2014/05/tcpswwindows.png)
+![img](https://tva1.sinaimg.cn/large/006y8mN6ly1g6j5omcs7ej30ic07i750.jpg)
 
 上图中分成了四个部分，分别是：（其中那个黑模型就是滑动窗口）
 
@@ -238,12 +237,11 @@ Linux 下的 tcp_dsack 参数用于开启这个功能（Linux 2.4 后默认打�
 - \#4 窗口以外的数据（接收方没空间）
 
 下面是个滑动后的示意图（收到 36 的 ack，并发出了 46-51 的字节）：
-
-![img](https://coolshell.cn/wp-content/uploads/2014/05/tcpswslide.png)
+![img](https://tva1.sinaimg.cn/large/006y8mN6ly1g6j5oq49tuj30ic05uwev.jpg)
 
 下面我们来看一个接受端控制发送端的图示：
 
-![img](https://coolshell.cn/wp-content/uploads/2014/05/tcpswflow.png)
+![img](https://tva1.sinaimg.cn/large/006y8mN6ly1g6j5ot8lvsj30ii0n8wfy.jpg)
 
 ### Zero Window
 
@@ -307,7 +305,7 @@ setsockopt(sock_fd, IPPROTO_TCP, TCP_NODELAY, (char*)&value,sizeof(int));
 
 所以，我们可以看到，如果网速很快的话，ACK 也会返回得快，RTT 也会短，那么，这个慢启动就一点也不慢。下图说明了这个过程。
 
-![img](https://coolshell.cn/wp-content/uploads/2014/05/tcp.slow_.start_.jpg)
+![img](https://tva1.sinaimg.cn/large/006y8mN6ly1g6j5oz81ffj30ie0asjsi.jpg)
 
 一篇 Google 的论文《[An Argument for Increasing TCP’s Initial Congestion Window](http://static.googleusercontent.com/media/research.google.com/zh-CN//pubs/archive/36640.pdf)》Linux 3.0 后采用了这篇论文的建议——把 cwnd 初始化成了 10 个 MSS。而 Linux 3.0 以前，比如 2.6，Linux 采用了[RFC3390](http://www.rfc-editor.org/rfc/rfc3390.txt)，cwnd 是跟 MSS 的值来变的，如果 MSS< 1095，则 cwnd = 4；如果 MSS>2190，则 cwnd=2；其它情况下，则是 3。
 
@@ -374,7 +372,7 @@ setsockopt(sock_fd, IPPROTO_TCP, TCP_NODELAY, (char*)&value,sizeof(int));
 
 下面我们来看一个简单的图示以同时看一下上面的各种算法的样子：
 
-![img](https://coolshell.cn/wp-content/uploads/2014/05/tcp.fr_-1024x359.jpg)
+![img](https://tva1.sinaimg.cn/large/006y8mN6ly1g6j5p47j65j30sg09zgmc.jpg)
 
 #### FACK 算法
 
@@ -393,7 +391,7 @@ FACK 全称 Forward Acknowledgment 算法，论文地址在这里（PDF）[Forwa
 
 这个算法 1994 年被提出，它主要对 TCP Reno 做了些修改。这个算法通过对 RTT 的非常重的监控来计算一个基准 RTT。然后通过这个基准 RTT 来估计当前的网络实际带宽，如果实际带宽比我们的期望的带宽要小或是要多的活，那么就开始线性地减少或增加 cwnd 的大小。如果这个计算出来的 RTT 大于了 Timeout 后，那么，不等 ack 超时就直接重传。（Vegas 的核心思想是用 RTT 的值来影响拥塞窗口，而不是通过丢包） 这个算法的论文是《[TCP Vegas: End to End Congestion Avoidance on a Global Internet](http://www.cs.cmu.edu/~srini/15-744/F02/readings/BP95.pdf)》这篇论文给了 Vegas 和 New Reno 的对比：
 
-![img](https://coolshell.cn/wp-content/uploads/2014/05/tcp_vegas_newreno-1024x555.jpg)
+![img](https://tva1.sinaimg.cn/large/006y8mN6ly1g6j5p96am2j30sg0fftd3.jpg)
 
 关于这个算法实现，你可以参看 Linux 源码：[/net/ipv4/tcp_vegas.h](http://lxr.free-electrons.com/source/net/ipv4/tcp_vegas.h)， [/net/ipv4/tcp_vegas.c](http://lxr.free-electrons.com/source/net/ipv4/tcp_vegas.c)
 

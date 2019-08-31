@@ -56,7 +56,7 @@ U+0000 = null
 
 剩下的字符都放在辅助平面（缩写 SMP），码点范围从 U+010000 一直到 U+10FFFF。
 
-![](/image/unicode_1.png)
+![](https://tva1.sinaimg.cn/large/006y8mN6ly1g6iy7fmupoj30ug0fedin.jpg)
 
 ### 问题
 
@@ -79,7 +79,7 @@ U+0000 = 0x0000 0000
 U+597D = 0x0000 597D
 ```
 
-![](/image/unicode_2.png)
+![](https://tva1.sinaimg.cn/large/006y8mN6ly1g6iy7hhpnmj30tc0g8412.jpg)
 
 - #### UTF-32 的优点
 
@@ -125,7 +125,7 @@ UTF-16 编码介于 UTF-32 与 UTF-8 之间，同时结合了定长和变长两�
 
 它的编码规则很简单：基本平面的字符占用 2 个字节，辅助平面的字符占用 4 个字节。**也就是说，UTF-16 的编码长度要么是 2 个字节（U+0000 到 U+FFFF），要么是 4 个字节（U+010000 到 U+10FFFF）。**
 
-![](/image/unicode_3.png)
+![](https://tva1.sinaimg.cn/large/006y8mN6ly1g6iy7e7xfaj30q40e40v3.jpg)
 
 于是就有一个问题，当我们遇到两个字节，怎么看出它本身是一个字符，还是需要跟其他两个字节放在一起解读？
 
@@ -135,7 +135,7 @@ UTF-16 编码介于 UTF-32 与 UTF-8 之间，同时结合了定长和变长两�
 
 - #### 编码规则
 
-![](/image/unicode_4.png)
+![](https://tva1.sinaimg.cn/large/006y8mN6ly1g6iy7gmgarj30w20g2myq.jpg)
 
 **所以，当我们遇到两个字节，发现它的码点在 U+D800 到 U+DBFF 之间，就可以断定，紧跟在后面的两个字节的码点，应该在 U+DC00 到 U+DFFF 之间，这四个字节必须放在一起解读。**
 
@@ -166,14 +166,13 @@ _互联网还没出现的年代，曾经有两个团队，不约而同想搞统�
 **在 JavaScript 语言出现的时候，还没有 UTF-16 编码。**
 
 **由于 JavaScript 只能处理 UCS-2 编码，造成所有字符在这门语言中都是 2 个字节，如果是 4 个字节的字符，会当作两个双字节的字符处理。**JavaScript 的字符函数都受到这一点的影响，无法返回正确结果。
+![](https://tva1.sinaimg.cn/large/006y8mN6ly1g6iy7g1rsaj30xi0bogn7.jpg)
 
-![](/image/unicode_5.png)
+以字符![](https://tva1.sinaimg.cn/large/006y8mN6ly1g6iy7epbosj301c01g741.jpg)为例，它的 UTF-16 编码是 4 个字节的 0xD834 DF06。问题就来了，4 个字节的编码不属于 UCS-2，JavaScript 不认识，只会把它看作单独的两个字符 U+D834 和 U+DF06。前面说过，这两个码点是空的，所以 JavaScript 会认为![](https://tva1.sinaimg.cn/large/006y8mN6ly1g6iy7epbosj301c01g741.jpg)是两个空字符组成的字符串！
 
-以字符![](/image/unicode_0.png)为例，它的 UTF-16 编码是 4 个字节的 0xD834 DF06。问题就来了，4 个字节的编码不属于 UCS-2，JavaScript 不认识，只会把它看作单独的两个字符 U+D834 和 U+DF06。前面说过，这两个码点是空的，所以 JavaScript 会认为![](/image/unicode_0.png)是两个空字符组成的字符串！
+![](https://tva1.sinaimg.cn/large/006y8mN6ly1g6iy7gyspej30gk0go0tp.jpg)
 
-![](/image/unicode_6.png)
-
-上面代码表示，JavaScript 认为字符![](/image/unicode_0.png)的长度是 2，取到的第一个字符是空字符，取到的第一个字符的码点是 0xDB34。这些结果都不正确！
+上面代码表示，JavaScript 认为字符![](https://tva1.sinaimg.cn/large/006y8mN6ly1g6iy7epbosj301c01g741.jpg)的长度是 2，取到的第一个字符是空字符，取到的第一个字符的码点是 0xDB34。这些结果都不正确！
 
 解决这个问题，必须对码点做一个判断，然后手动调整。下面是正确的遍历字符串的写法。
 
@@ -229,7 +228,7 @@ JavaScript 允许直接用码点表示 Unicode 字符，写法是"反斜杠+u+�
 
 但是，这种表示法对 4 字节的码点无效。ES6 修正了这个问题，只要将码点放在大括号内，就能正确识别。
 
-![](/image/unicode_7.png)
+![](https://tva1.sinaimg.cn/large/006y8mN6ly1g6iy7f113bj30xo08mgm0.jpg)
 
 **（3）字符串处理函数**
 
@@ -242,8 +241,7 @@ ES6 新增了几个专门处理 4 字节码点的函数。
 **（4）正则表达式**
 
 ES6 提供了 u 修饰符，对正则表达式添加 4 字节码点的支持。
-
-![](/image/unicode_8.png)
+![](https://tva1.sinaimg.cn/large/006y8mN6ly1g6iy7emd6cj30xu08qt95.jpg)
 
 **（5）Unicode 正规化**
 

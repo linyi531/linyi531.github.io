@@ -19,7 +19,7 @@ QUIC 协议内置了 TLS 栈，实现了自己的[传输加密层](https://docs.
 
 <!-- more -->
 
-![](image/quic.png)
+![](https://tva1.sinaimg.cn/large/006y8mN6ly1g6izr9eluaj315w0k0aaa.jpg)
 
 从图上可以看出，QUIC 底层通过 UDP 协议替代了 TCP，上层只需要一层用于和远程服务器交互的 HTTP/2 API。这是因为 QUIC 协议已经包含了多路复用和连接管理，HTTP API 只需要完成 HTTP 协议的解析即可。
 
@@ -67,7 +67,7 @@ QUIC 协议内置了 TLS 栈，实现了自己的[传输加密层](https://docs.
 1. 传输层 0RTT 就能建立连接。
 2. 加密层 0RTT 就能建立加密连接。
 
-![](image/quic_1.png)
+![](https://tva1.sinaimg.cn/large/006y8mN6ly1g6izr8c4vjj314a0n0gpa.jpg)
 
 比如上图左边是 HTTPS 的一次完全握手的建连过程，需要 3 个 RTT。就算是 Session Resumption[14]，也需要至少 2 个 RTT。
 
@@ -97,7 +97,7 @@ TCP 为了保证可靠性，使用了基于字节序号的 Sequence Number 及 A
 
 QUIC 同样是一个可靠的协议，它使用 Packet Number 代替了 TCP 的 sequence number，并且每个 Packet Number 都严格递增，也就是说就算 Packet N 丢失了，重传的 Packet N 的 Packet Number 已经不是 N，而是一个比 N 大的值。而 TCP 呢，重传 segment 的 sequence number 和原始的 segment 的 Sequence Number 保持不变，也正是由于这个特性，引入了 Tcp 重传的歧义问题。
 
-![img](https://pic2.zhimg.com/80/v2-8db4c3c378edaac0060b4238e3554091_hd.jpg)
+![img](https://tva1.sinaimg.cn/large/006y8mN6ly1g6izrp5123j30k008rjro.jpg)
 
 ​ 图 2 Tcp 重传歧义性
 
@@ -107,7 +107,7 @@ QUIC 同样是一个可靠的协议，它使用 Packet Number 代替了 TCP 的 
 
 由于 Quic 重传的 Packet 和原始 Packet 的 Pakcet Number 是严格递增的，所以很容易就解决了这个问题。
 
-![img](https://pic2.zhimg.com/80/v2-086cc0ac3b95eb5bfe84a2d87bb2a645_hd.jpg)
+![img](https://tva1.sinaimg.cn/large/006y8mN6ly1g6izrs95mpj30k007xjrn.jpg)
 
 ​ 图 3 Quic 重传没有歧义性
 
@@ -118,8 +118,7 @@ QUIC 同样是一个可靠的协议，它使用 Packet Number 代替了 TCP 的 
 即一个 Stream 可以经过多个 Packet 传输，Packet Number 严格递增，没有依赖。但是 Packet 里的 Payload 如果是 Stream 的话，就需要依靠 Stream 的 Offset 来保证应用数据的顺序。如错误! 未找到引用源。所示，发送端先后发送了 Pakcet N 和 Pakcet N+1，Stream 的 Offset 分别是 x 和 x+y。
 
 假设 Packet N 丢失了，发起重传，重传的 Packet Number 是 N+2，但是它的 Stream 的 Offset 依然是 x，这样就算 Packet N + 2 是后到的，依然可以将 Stream x 和 Stream x+y 按照顺序组织起来，交给应用程序处理。
-
-![img](https://pic2.zhimg.com/80/v2-60985053d9de4e8e74042c33587ec35d_hd.jpg)
+![img](https://tva1.sinaimg.cn/large/006y8mN6ly1g6izrw4o31j30k005smxc.jpg)
 
 ​ 图 4 Stream Offset 保证有序性
 
@@ -147,19 +146,19 @@ Tcp 的 Timestamp 选项存在一个问题，它只是回显了发送方的时�
 
 这样就会导致 RTT 计算误差。如下图：
 
-![img](https://pic3.zhimg.com/80/v2-5466d84601e2fe87de92f06daba2f88e_hd.jpg)
+![img](https://tva1.sinaimg.cn/large/006y8mN6ly1g6izrzqtwlj30k00f4wf5.jpg)
 
 可以认为 TCP 的 RTT 计算：
 
-![img](https://pic1.zhimg.com/80/v2-49198a21c42de7615246ab7452cf51ac_hd.jpg)
+![img](https://tva1.sinaimg.cn/large/006y8mN6ly1g6izs42dncj308d015743.jpg)
 
 而 Quic 计算如下：
 
-![img](https://pic3.zhimg.com/80/v2-8cba385d551d72b867f8c437a34b9aba_hd.jpg)
+![img](https://tva1.sinaimg.cn/large/006y8mN6ly1g6izs6x1lbj30a70153yc.jpg)
 
 当然 RTT 的具体计算没有这么简单，需要采样，参考历史数值进行平滑计算，参考如下公式 [9]。
 
-![img](https://pic4.zhimg.com/80/v2-04c5bd39d745430fb858ec3458e81003_hd.jpg)
+![img](https://tva1.sinaimg.cn/large/006y8mN6ly1g6izs9tffbj308d01vwed.jpg)
 
 ### 3.基于 stream 和 connecton 级别的流量控制
 
@@ -178,17 +177,17 @@ QUIC 的流量控制和 TCP 有点区别，TCP 为了保证可靠性，窗口左
 
 但 QUIC 不同，就算此前有些 packet 没有接收到，它的滑动只取决于接收到的最大偏移字节数。
 
-![img](https://pic2.zhimg.com/80/v2-5f2ad22131453b3fd4c6351094b6b581_hd.jpg)
+![img](https://tva1.sinaimg.cn/large/006y8mN6ly1g6izsddv9lj30k0087q3a.jpg)
 
 ​ 图 5 Quic Flow Control
 
 针对 Stream：
 
-![img](https://pic1.zhimg.com/80/v2-536b207b20e3ddc1bbeac1942fae0214_hd.jpg)
+![img](https://tva1.sinaimg.cn/large/006y8mN6ly1g6izsh7d39j30bz011glh.jpg)
 
 针对 Connection：
 
-![img](https://pic3.zhimg.com/80/v2-7465703d69fbcc169c8f397b377e67a2_hd.jpg)
+![img](https://tva1.sinaimg.cn/large/006y8mN6ly1g6izsk0cpyj30gy011a9z.jpg)
 
 同样地，STGW 也在连接和 Stream 级别设置了不同的窗口数。
 
@@ -204,15 +203,14 @@ QUIC 一个连接上的多个 stream 之间没有依赖。这样假如 stream2 �
 
 多路复用是 HTTP2 最强大的特性，能够将多条请求在一条 TCP 连接上同时发出去。但也恶化了 TCP 的一个问题，队头阻塞，如下图示：
 
-![img](https://pic2.zhimg.com/80/v2-2dd2a9fb8693489b9a0b24771c8a40a1_hd.jpg)
+![img](https://tva1.sinaimg.cn/large/006y8mN6ly1g6izsn9t0ej30k007gq3a.jpg)
 
 ​ 图 6 HTTP2 队头阻塞
 
 HTTP2 在一个 TCP 连接上同时发送 4 个 Stream。其中 Stream1 已经正确到达，并被应用层读取。但是 Stream2 的第三个 tcp segment 丢失了，TCP 为了保证数据的可靠性，需要发送端重传第 3 个 segment 才能通知应用层读取接下去的数据，虽然这个时候 Stream3 和 Stream4 的全部数据已经到达了接收端，但都被阻塞住了。
 
 不仅如此，由于 HTTP2 强制使用 TLS，还存在一个 TLS 协议层面的队头阻塞 [12]。
-
-![img](https://pic3.zhimg.com/80/v2-f1c2dcdb8f3cb56c260f408420cea502_hd.jpg)
+![img](https://tva1.sinaimg.cn/large/006y8mN6ly1g6izsr1djhj30k00ctaac.jpg)
 
 ​ 图 7 TLS 队头阻塞
 
@@ -223,7 +221,7 @@ Record 是 TLS 协议处理的最小单位，最大不能超过 16K，一些服�
 1. QUIC 最基本的传输单元是 Packet，不会超过 MTU 的大小，整个加密和认证过程都是基于 Packet 的，不会跨越多个 Packet。这样就能避免 TLS 协议存在的队头阻塞。
 2. Stream 之间相互独立，比如 Stream2 丢了一个 Pakcet，不会影响 Stream3 和 Stream4。不存在 TCP 队头阻塞。（QUIC 协议直接通过底层使用 UDP 协议天然的避免了该问题。由于 UDP 协议没有严格的顺序，当一个数据包遇到问题需要重传时，只会影响该数据包对应的资源，其他独立的资源（如其他 css、js 文件）不会受到影响）
 
-![img](https://pic4.zhimg.com/80/v2-9e649330ab729b6438a8586c8b4f1bd3_hd.jpg)
+![img](https://tva1.sinaimg.cn/large/006y8mN6ly1g6izsvoeyqj30k007gdg7.jpg)
 
 ​ 图 8 QUIC 多路复用时没有队头阻塞的问题
 
@@ -241,7 +239,7 @@ TCP 协议头部没有经过任何加密和认证，所以在传输过程中很�
 
 如下图所示，红色部分是 Stream Frame 的报文头部，有认证。绿色部分是报文内容，全部经过加密。
 
-![img](https://pic1.zhimg.com/80/v2-04f12b295aae3fb44b490b852e5c1e44_hd.jpg)
+![img](https://tva1.sinaimg.cn/large/006y8mN6ly1g6izsyv3ovj30i3091dgf.jpg)
 
 ### 6.连接迁移
 
