@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://yoursite.com/2019/09/21/git%20merge%E5%92%8Cgit%20rebase%E7%9A%84%E5%8C%BA%E5%88%AB/</loc>
+    
+    <lastmod>2019-09-21T14:54:12.854Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://yoursite.com/about/index.html</loc>
     
     <lastmod>2019-09-21T14:38:58.245Z</lastmod>
@@ -23,6 +30,13 @@
   </url>
   
   <url>
+    <loc>http://yoursite.com/2019/05/23/CSS%E5%85%83%E7%B4%A0%E5%B1%85%E4%B8%AD/</loc>
+    
+    <lastmod>2019-09-21T14:26:18.053Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://yoursite.com/2019/06/18/CSRF%E6%94%BB%E5%87%BB/</loc>
     
     <lastmod>2019-09-21T14:26:18.053Z</lastmod>
@@ -31,13 +45,6 @@
   
   <url>
     <loc>http://yoursite.com/2019/05/08/CSS%E5%A4%9A%E5%88%97%E5%B8%83%E5%B1%80/</loc>
-    
-    <lastmod>2019-09-21T14:26:18.053Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2019/05/23/CSS%E5%85%83%E7%B4%A0%E5%B1%85%E4%B8%AD/</loc>
     
     <lastmod>2019-09-21T14:26:18.053Z</lastmod>
     
@@ -58,14 +65,14 @@
   </url>
   
   <url>
-    <loc>http://yoursite.com/2018/11/11/React%E7%BB%84%E4%BB%B6/</loc>
+    <loc>http://yoursite.com/2019/08/16/QUIC/</loc>
     
     <lastmod>2019-09-21T14:26:18.053Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://yoursite.com/2019/08/16/QUIC/</loc>
+    <loc>http://yoursite.com/2018/11/11/React%E7%BB%84%E4%BB%B6/</loc>
     
     <lastmod>2019-09-21T14:26:18.053Z</lastmod>
     
