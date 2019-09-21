@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+
+
+
+
+
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<link rel="preconnect" href="//pic.zhih.me">
+	<link rel="preconnect" href="//www.googletagmanager.com">
+	<link rel="preconnect" href="//zz.bdstatic.com">
+	<link rel="preconnect" href="//sp0.baidu.com">
+	<link rel="preconnect" href="//www.google-analytics.com">
+	<link rel="preconnect" href="//cdn1.lncld.net">
+	<link rel="preconnect" href="//unpkg.com">
+	<link rel="preconnect" href="//app-router.leancloud.cn">
+	<link rel="preconnect" href="//9qpuwspm.api.lncld.net">
+	<link rel="preconnect" href="//gravatar.loli.net">
+	<link rel="preload" href="https://pic.zhih.me/blog/header.jpg" as="image">
+
+	<title>浏览器同域名请求的最大并发数限制 | 01不是包子脸</title>
+
+	<meta name="HandheldFriendly" content="True">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+	<meta name="generator" content="hexo">
+	<meta name="author" content="Linyi Li">
+	<meta name="description" content>
+
+	
+	<meta name="keywords" content>
+	
+
+	
+	<link rel="shortcut icon" href="https://tva1.sinaimg.cn/large/006y8mN6ly1g6sjqjrb9wj30jj0jjjss.jpg">
+	<link rel="apple-touch-icon" href="https://tva1.sinaimg.cn/large/006y8mN6ly1g6sjqjrb9wj30jj0jjjss.jpg">
+	
+
+	
+	<meta name="theme-color" content="#3c484e">
+	<meta name="msapplication-TileColor" content="#3c484e">
+	
+
+	
+
+	
+
+	<meta property="og:site_name" content="01不是包子脸">
+	<meta property="og:type" content="article">
+	<meta property="og:title" content="浏览器同域名请求的最大并发数限制 | 01不是包子脸">
+	<meta property="og:description" content>
+	<meta property="og:url" content="http://yoursite.com/2019/09/14/浏览器同域名请求的最大并发数限制/">
+
+	
+	<meta property="article:published_time" content="2019-09-14T23:09:00+08:00"> 
+	<meta property="article:author" content="Linyi Li">
+	<meta property="article:published_first" content="01不是包子脸, /2019/09/14/浏览器同域名请求的最大并发数限制/">
+	
+
+	
+	
+	<link rel="stylesheet" href="/css/allinonecss.min.css">
+
+	
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-145838942-1"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag('js', new Date());
+		gtag('config', 'UA-145838942-1');
+	</script>
+	
+	
+	
+<link rel="canonical" href="http://yoursite.com/2019/09/14/浏览器同域名请求的最大并发数限制/">
+
+
+
+
+
+</head>
+<body class="post-template">
+	<div class="site-wrapper">
+		
+
+
+
+
+<header class="site-header post-site-header outer">
+    <div class="inner">
+        
+<nav class="site-nav"> 
+    <div class="site-nav-left">
+        <ul class="nav">
+            <li>
+                
+                
+                <a class="site-nav-logo" href="/" title="01不是包子脸">
+                    <img src="https://tva1.sinaimg.cn/large/006y8mN6ly1g6sjqjrb9wj30jj0jjjss.jpg" alt="01不是包子脸">
+                </a>
+                
+                
+            </li>
+            
+            
+            <li>
+                <a href="/" title="HOME">HOME</a>
+            </li>
+            
+            <li>
+                <a href="/about" title="ABOUT">ABOUT</a>
+            </li>
+            
+            <li>
+                <a href="/archives" title="ARCHIVES">ARCHIVES</a>
+            </li>
+            
+            
+        </ul> 
+    </div>
+    
+    <div class="search-button-area">
+        <a href="#search" class="search-button">Search ...</a>
+    </div>
+     
+    <div class="site-nav-right">
+        
+        <a href="#search" class="search-button">Search ...</a>
+         
+        
+<div class="social-links">
+    
+    <a class="social-link" title="weibo" href="https://weibo.com/2164694963/profile?rightmod=1&wvr=6&mod=personinfo" target="_blank" rel="noopener">
+        <svg viewbox="0 0 1141 1024" xmlns="http://www.w3.org/2000/svg"><path d="M916.48 518.144q27.648 21.504 38.912 51.712t9.216 62.976-14.336 65.536-31.744 59.392q-34.816 48.128-78.848 81.92t-91.136 56.32-94.72 35.328-89.6 18.944-75.264 7.68-51.712 1.536-49.152-2.56-68.096-10.24-78.336-21.504-79.872-36.352-74.24-55.296-59.904-78.848q-16.384-29.696-22.016-63.488t-5.632-86.016q0-22.528 7.68-51.2t27.136-63.488 53.248-75.776 86.016-90.112q51.2-48.128 105.984-85.504t117.248-57.856q28.672-10.24 63.488-11.264t57.344 11.264q10.24 11.264 19.456 23.04t12.288 29.184q3.072 14.336 0.512 27.648t-5.632 26.624-5.12 25.6 2.048 22.528q17.408 2.048 33.792-1.536t31.744-9.216 31.232-11.776 33.28-9.216q27.648-5.12 54.784-4.608t49.152 7.68 36.352 22.016 17.408 38.4q2.048 14.336-2.048 26.624t-8.704 23.04-7.168 22.016 1.536 23.552q3.072 7.168 14.848 13.312t27.136 12.288 32.256 13.312 29.184 16.384zM658.432 836.608q26.624-16.384 53.76-45.056t44.032-64 18.944-75.776-20.48-81.408q-19.456-33.792-47.616-57.344t-62.976-37.376-74.24-19.968-80.384-6.144q-78.848 0-139.776 16.384t-105.472 43.008-72.192 60.416-38.912 68.608q-11.264 33.792-6.656 67.072t20.992 62.976 42.496 53.248 57.856 37.888q58.368 25.6 119.296 32.256t116.224 0.512 100.864-21.504 74.24-33.792zM524.288 513.024q20.48 8.192 38.912 18.432t32.768 27.648q10.24 12.288 17.92 30.72t10.752 39.424 1.536 42.496-9.728 38.912q-8.192 18.432-19.968 37.376t-28.672 35.328-40.448 29.184-57.344 18.944q-61.44 11.264-117.76-11.264t-88.064-74.752q-12.288-39.936-13.312-70.656t16.384-66.56q13.312-27.648 40.448-51.712t62.464-38.912 75.264-17.408 78.848 12.8zM361.472 764.928q37.888 3.072 57.856-18.432t21.504-48.128-15.36-47.616-52.736-16.896q-27.648 3.072-43.008 23.552t-17.408 43.52 9.728 42.496 39.424 21.504zM780.288 6.144q74.752 0 139.776 19.968t113.664 57.856 76.288 92.16 27.648 122.88q0 33.792-16.384 50.688t-35.328 17.408-35.328-14.336-16.384-45.568q0-40.96-22.528-77.824t-59.392-64.512-84.48-43.52-96.768-15.872q-31.744 0-47.104-15.36t-14.336-34.304 18.944-34.304 51.712-15.36zM780.288 169.984q95.232 0 144.384 48.64t49.152 146.944q0 30.72-10.24 43.52t-22.528 11.264-22.528-14.848-10.24-35.84q0-60.416-34.816-96.256t-93.184-35.84q-19.456 0-28.672-10.752t-9.216-23.04 9.728-23.04 28.16-10.752z"/></svg>
+    </a>
+    
+    
+    <a class="social-link" title="github" href="https://github.com/linyi531" target="_blank" rel="noopener">
+        <svg viewbox="0 0 1049 1024" xmlns="http://www.w3.org/2000/svg"><path d="M524.979332 0C234.676191 0 0 234.676191 0 524.979332c0 232.068678 150.366597 428.501342 358.967656 498.035028 26.075132 5.215026 35.636014-11.299224 35.636014-25.205961 0-12.168395-0.869171-53.888607-0.869171-97.347161-146.020741 31.290159-176.441729-62.580318-176.441729-62.580318-23.467619-60.841976-58.234462-76.487055-58.234463-76.487055-47.804409-32.15933 3.476684-32.15933 3.476685-32.15933 53.019436 3.476684 80.83291 53.888607 80.83291 53.888607 46.935238 79.963739 122.553122 57.365291 152.97411 43.458554 4.345855-33.897672 18.252593-57.365291 33.028501-70.402857-116.468925-12.168395-239.022047-57.365291-239.022047-259.012982 0-57.365291 20.860106-104.300529 53.888607-140.805715-5.215026-13.037566-23.467619-66.926173 5.215027-139.067372 0 0 44.327725-13.906737 144.282399 53.888607 41.720212-11.299224 86.917108-17.383422 131.244833-17.383422s89.524621 6.084198 131.244833 17.383422C756.178839 203.386032 800.506564 217.29277 800.506564 217.29277c28.682646 72.1412 10.430053 126.029806 5.215026 139.067372 33.897672 36.505185 53.888607 83.440424 53.888607 140.805715 0 201.64769-122.553122 245.975415-239.891218 259.012982 19.121764 16.514251 35.636014 47.804409 35.636015 97.347161 0 70.402857-0.869171 126.898978-0.869172 144.282399 0 13.906737 9.560882 30.420988 35.636015 25.205961 208.601059-69.533686 358.967656-265.96635 358.967655-498.035028C1049.958663 234.676191 814.413301 0 524.979332 0z"/></svg>
+    </a>
+    
+    
+    
+    <a class="social-link" title="twitter" href="https://twitter.com/nFywOCNPid75cl5" target="_blank" rel="noopener">
+        <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 32 32"><path d="M30.063 7.313c-.813 1.125-1.75 2.125-2.875 2.938v.75c0 1.563-.188 3.125-.688 4.625a15.088 15.088 0 0 1-2.063 4.438c-.875 1.438-2 2.688-3.25 3.813a15.015 15.015 0 0 1-4.625 2.563c-1.813.688-3.75 1-5.75 1-3.25 0-6.188-.875-8.875-2.625.438.063.875.125 1.375.125 2.688 0 5.063-.875 7.188-2.5-1.25 0-2.375-.375-3.375-1.125s-1.688-1.688-2.063-2.875c.438.063.813.125 1.125.125.5 0 1-.063 1.5-.25-1.313-.25-2.438-.938-3.313-1.938a5.673 5.673 0 0 1-1.313-3.688v-.063c.813.438 1.688.688 2.625.688a5.228 5.228 0 0 1-1.875-2c-.5-.875-.688-1.813-.688-2.75 0-1.063.25-2.063.75-2.938 1.438 1.75 3.188 3.188 5.25 4.25s4.313 1.688 6.688 1.813a5.579 5.579 0 0 1 1.5-5.438c1.125-1.125 2.5-1.688 4.125-1.688s3.063.625 4.188 1.813a11.48 11.48 0 0 0 3.688-1.375c-.438 1.375-1.313 2.438-2.563 3.188 1.125-.125 2.188-.438 3.313-.875z"/></svg>
+
+    </a>
+    
+    
+    <a class="social-link" title="telegram" href="https://www.instagram.com/linyi531/" target="_blank" rel="noopener">
+        <svg viewbox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M679.428571 746.857143l84-396q5.142857-25.142857-6-36t-29.428571-4L234.285714 501.142857q-16.571429 6.285714-22.571428 14.285714t-1.428572 15.142858 18.285715 11.142857l126.285714 39.428571 293.142857-184.571428q12-8 18.285714-3.428572 4 2.857143-2.285714 8.571429l-237.142857 214.285714-9.142857 130.285714q13.142857 0 25.714285-12.571428l61.714286-59.428572 128 94.285715q36.571429 20.571429 46.285714-21.714286z m344.571429-234.857143q0 104-40.571429 198.857143t-109.142857 163.428571-163.428571 109.142857-198.857143 40.571429-198.857143-40.571429-163.428571-109.142857-109.142857-163.428571T0 512t40.571429-198.857143 109.142857-163.428571T313.142857 40.571429 512 0t198.857143 40.571429 163.428571 109.142857 109.142857 163.428571 40.571429 198.857143z"/></svg>
+    </a>
+    
+    
+    
+</div>
+    </div>
+</nav>
+    </div>
+</header>
+
+
+<div id="site-main" class="site-main outer" role="main">
+    <div class="inner">
+        <header class="post-full-header">
+            <div class="post-full-meta">
+                <time class="post-full-meta-date" datetime="2019-09-14T15:14:44.000Z">
+                    2019-09-14
+                </time>
+                
+                <span class="date-divider">/</span>
+                
+                <a href="/categories/浏览器/">浏览器</a>&nbsp;&nbsp;
+                
+                
+            </div>
+            <h1 class="post-full-title">浏览器同域名请求的最大并发数限制</h1>
+        </header>
+        <div class="post-full ">
+            
+            <figure class="post-full-image" style="background-image: url(https://tva1.sinaimg.cn/large/006y8mN6ly1g6zgdjg4gvj30u01901l7.jpg)">
+            </figure>
+            
+            <div class="post-full-content">
+                <article id="lightgallery" class="markdown-body">
+                    <h1 id="浏览器同域名请求的最大并发数限制"><a href="#浏览器同域名请求的最大并发数限制" class="headerlink" title="浏览器同域名请求的最大并发数限制"></a>浏览器同域名请求的最大并发数限制</h1><p>当我们在浏览网页的时候，对浏览速度有一个重要的影响因素，就是浏览器的并发数量。并发数量简单通俗的讲就是，当浏览器网页的时候同时工作的进行数量。</p>
+<p>如果同时只有 2 个并发连接数数量，那网页打开的时候只能依赖于这 2 条线程，前面如果有打开慢的内容，就会直接影响到后面的内容打开。但是如果同时有更多的并发连接数，这样就会大大的提高网页加载速度。但是浏览器的并发连接数也并非越大越好。</p>
+<p>HTTP 客户端一般对同一个服务器的并发连接个数都是有限制的。实际上，浏览器确实使用并行连接，但它们将并行连接的总数限制为少量（<strong>通常为四个</strong>）。服务器可以自由地关闭来自特定客户端的过多连接。</p>
+<h2 id="主流浏览器最大并发连接数"><a href="#主流浏览器最大并发连接数" class="headerlink" title="主流浏览器最大并发连接数"></a>主流浏览器最大并发连接数</h2><p>一些主流浏览器对 HTTP 1.1 和 HTTP 1.0 的最大并发连接数目，可以参考如下表格：</p>
+<table>
+<thead>
+<tr>
+<th>浏览器</th>
+<th>HTTP / 1.1</th>
+<th>HTTP / 1.0</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>IE 11</td>
+<td>6</td>
+<td>6</td>
+</tr>
+<tr>
+<td>IE 10</td>
+<td>6</td>
+<td>6</td>
+</tr>
+<tr>
+<td>IE 9</td>
+<td>10</td>
+<td>10</td>
+</tr>
+<tr>
+<td>IE 8</td>
+<td>6</td>
+<td>6</td>
+</tr>
+<tr>
+<td>IE 6,7</td>
+<td>2</td>
+<td>4</td>
+</tr>
+<tr>
+<td>火狐</td>
+<td>6</td>
+<td>6</td>
+</tr>
+<tr>
+<td>Safari 3,4</td>
+<td>4</td>
+<td>4</td>
+</tr>
+<tr>
+<td>Chrome 4+</td>
+<td>6</td>
+<td>6</td>
+</tr>
+<tr>
+<td>歌剧 9.63,10.00alpha</td>
+<td>4</td>
+<td>4</td>
+</tr>
+<tr>
+<td>Opera 10.51+</td>
+<td>8</td>
+<td>？</td>
+</tr>
+<tr>
+<td>iPhone 2</td>
+<td>4</td>
+<td>？</td>
+</tr>
+<tr>
+<td>iPhone 3</td>
+<td>6</td>
+<td>？</td>
+</tr>
+<tr>
+<td>iPhone 4</td>
+<td>4</td>
+<td>？</td>
+</tr>
+<tr>
+<td>iphone 5</td>
+<td>6</td>
+<td>？</td>
+</tr>
+<tr>
+<td>Android2-4</td>
+<td>4</td>
+<td>？</td>
+</tr>
+</tbody></table>
+<h3 id="Firefox-浏览器的最大并发连接数"><a href="#Firefox-浏览器的最大并发连接数" class="headerlink" title="Firefox 浏览器的最大并发连接数"></a>Firefox 浏览器的最大并发连接数</h3><p>在 Firefox 中的地址栏输入“about：config 中”，然后搜索并修改如下两个配置项目即可：</p>
+<ul>
+<li><code>network.http.max-persistent-connections-per-server:6</code>连接同一个服务器允许的最大持久连接数，默认为 6，可以不用更改。</li>
+<li><code>network.http.max-persistent-connections-per-proxy:8</code>每个代理服务器允许的最大持久连接数,公司用户使用代理服务器，但是外面的客户一般不使用代理，火狐推荐的每台代理服务器设置为：&lt;= 10。</li>
+</ul>
+<h4 id="Firefox3-6"><a href="#Firefox3-6" class="headerlink" title="Firefox3.6"></a>Firefox3.6</h4><p><img alt="img" class="post-img b-lazy" href="https://tva1.sinaimg.cn/large/006y8mN6ly1g6jbxx2j6tj30fq06faa1.jpg" data-src="https://tva1.sinaimg.cn/large/006y8mN6ly1g6jbxx2j6tj30fq06faa1.jpg"></p>
+<p>和 IE8 的几乎完全一样：</p>
+<ul>
+<li>最大并发 HTTP 连接数为 6 个（可在 about:config 中修改）。</li>
+<li>javascript 文件不会阻塞其他资源的加载，多个 javascript 文件可以一起加载。</li>
+<li>会分析 HTML 结构，优先下载 script 和 link 标签定义的外部资源。</li>
+</ul>
+<h4 id="Firefox4-beta12"><a href="#Firefox4-beta12" class="headerlink" title="Firefox4 beta12"></a>Firefox4 beta12</h4><p><img alt="img" class="post-img b-lazy" href="https://tva1.sinaimg.cn/large/006y8mN6ly1g6jby0whawj30fv07n3yj.jpg" data-src="https://tva1.sinaimg.cn/large/006y8mN6ly1g6jby0whawj30fv07n3yj.jpg"></p>
+<p>不知是因为设计理念上的不同，还是因为 beta 版未照顾到这一块，Firefox4 反而退化了，和 Firefox3.6 的区别主要体现在对资源类型的处理上，Firefox4 不再严格地优先下载 script 和 link 标签定义的外部资源，而是按照 HTML 结构中出现的顺序来进行加载。</p>
+<h3 id="IE-浏览器的最大并发连接数"><a href="#IE-浏览器的最大并发连接数" class="headerlink" title="IE 浏览器的最大并发连接数"></a>IE 浏览器的最大并发连接数</h3><p>用“注册表编辑器”命令打开注册表编辑器，找到：</p>
+<p>[HKEY_CURRRENT_USER \ Software \ Microsoft \ Windows \ CurrentVersion \ Internet Settings]，可以看到<strong>MaxConnectionsPerServer</strong>和<strong>MaxConnectionsPer1_0Server</strong>这两个键（分别是针对 HTTP 1.1 和 HTTP 1.0 的设置）</p>
+<p><strong>对于 IE 9</strong></p>
+<p>[HKEY_CURRRENT_USER \ Software \ Policies \ Microsoft \ Internet Exploer \ Main \ FeatureControl，可以看到<strong>FEATURE_MAXCONNECTIONSPER1_0SERVER</strong>和<strong>FEATURE_MAXCONNECTIONSPERSERVER</strong>这两个键（分别是针对 HTTP 1.1 和 HTTP 1.0 的设置）</p>
+<h4 id="IE8"><a href="#IE8" class="headerlink" title="IE8"></a>IE8</h4><p><img alt="img" class="post-img b-lazy" href="https://tva1.sinaimg.cn/large/006y8mN6ly1g6jbx8rdwaj30g407pweh.jpg" data-src="https://tva1.sinaimg.cn/large/006y8mN6ly1g6jbx8rdwaj30g407pweh.jpg"></p>
+<p>和 IE6 完全不同的瀑布图，其特点有：</p>
+<ul>
+<li>最大并发 HTTP 连接数为 6 个。</li>
+<li>javascript 文件已经不会阻塞其他资源的加载，甚至多个 javascript 文件可以一起加载，并且会保证执行的顺序。</li>
+<li>会分析 HTML 结构，优先下载 script 和 link 标签定义的外部资源。</li>
+</ul>
+<h3 id="chrome-浏览器的最大并发连接数"><a href="#chrome-浏览器的最大并发连接数" class="headerlink" title="chrome 浏览器的最大并发连接数"></a>chrome 浏览器的最大并发连接数</h3><h4 id="Chrome8"><a href="#Chrome8" class="headerlink" title="Chrome8"></a>Chrome8</h4><p><img alt="img" class="post-img b-lazy" href="https://tva1.sinaimg.cn/large/006y8mN6ly1g6jbzcty9xj30fw07zwef.jpg" data-src="https://tva1.sinaimg.cn/large/006y8mN6ly1g6jbzcty9xj30fw07zwef.jpg"></p>
+<p>Chrome 自带的工具不能很清楚地表示各请求的开始时间，所以使用了 Fiddler 的瀑布图，从图上可以看出，Chrome 也是比较特立独行的一位，其特点有：</p>
+<ul>
+<li>最大并发 HTTP 连接数为 6。</li>
+<li>head 部分的资源会单独下载，且阻塞 body 中的其他资源的加载。</li>
+<li>会优先加载 script 和 link 标签定义的资源。</li>
+</ul>
+<h3 id="opera-浏览器的最大并发连接数"><a href="#opera-浏览器的最大并发连接数" class="headerlink" title="opera 浏览器的最大并发连接数"></a>opera 浏览器的最大并发连接数</h3><h4 id="Opera11"><a href="#Opera11" class="headerlink" title="Opera11"></a>Opera11</h4><p><img alt="img" class="post-img b-lazy" href="https://tva1.sinaimg.cn/large/006y8mN6ly1g6jbzixw3tj30fj0813yh.jpg" data-src="https://tva1.sinaimg.cn/large/006y8mN6ly1g6jbzixw3tj30fj0813yh.jpg"></p>
+<p>先报怨一下，Dragonfly 不怎么好用来着……Opera 的资源加载也比较有特色，而且很难看出规律，只能大致总结一下：</p>
+<ul>
+<li>Opera 的最大并发 HTTP 连接数默认为 16，可在 opera:config - Performance - Max Connections Server 查看和修改。</li>
+<li>javascript 文件的加载会阻塞其他 script 和 link 标签定义的外部资源的加载，如图中的 2.js。但不会阻塞图片等其他资源的加载，如图中的 3.js。</li>
+<li>会一定程度上对资源的优先级进行优化，但由于 javascript 文件要阻止后续部分资源的加载，又为了充分利用最大 HTTP 连接数，因此不能严格先加载所有的 script 和 link 标签定义的资源，导致瀑布图上各类型资源有相互穿插，难寻规律。</li>
+</ul>
+<h2 id="HTTP-连接请求与线程"><a href="#HTTP-连接请求与线程" class="headerlink" title="HTTP 连接请求与线程"></a>HTTP 连接请求与线程</h2><p>HTTP 连接是复杂，有状态的对象，所以它必须被妥善管理。<strong>一个 HTTP 连接请求在同一时间只能被一个线程访问。</strong></p>
+<p>HttpClient 使用一个叫做的 Http 连接管理器的特殊实体类来管理的 Http 连接。Http 连接管理器在新建的 HTTP 连接时，作为工厂类；管理持久的 http 连接的生命周期；同步持久连接（确保线程安全，即一个 HTTP 连接同一时间只能被一个线程访问）。</p>
+<p>如果一个的 Http 连接被释放或者被它的消费者明确表示要关闭，那么底层的连接就会和它的代理进行分离，并且该连接会被交还给连接管理器。这是，即使服务消费者仍然持有代理的引用，它也不能再执行 I / O 操作，或者更改的 Http 连接的状态。</p>
+<h3 id="连接池管理器"><a href="#连接池管理器" class="headerlink" title="连接池管理器"></a>连接池管理器</h3><p>连接池管理器是个复杂的类，它管理着连接池，可以同时为很多线程提供 HTTP 连接请求。当请求一个新的连接时，如果连接池有有可用的持久连接，连接管理器就会使用其中的一个，而不是再创建一个新的连接。</p>
+<p>当使用了请求连接池管理器后，HttpClient 的就可以同时执行多个线程的请求了。</p>
+<p>连接池管理器会根据它的配置来分配请求连接。如果连接池中的所有连接都被占用了，那么后续的请求就会被阻塞，直到有连接被释放回连接池中。</p>
+<h3 id="线程池的原理"><a href="#线程池的原理" class="headerlink" title="线程池的原理"></a>线程池的原理</h3><p>线程池的原理很简单，类似于操作系统中的缓冲区的概念，它的流程如下：</p>
+<p>线程池在还没有任务到来之前，创建一定数量的线程，放入空闲队列中。这些线程都是处于睡眠状态，即均为启动，不消耗 CPU，而只是占用较小的内存空间。当客户端有一个新请求时，就会唤醒线程池中的某一个睡眠线程，让它来处理客户端的这个请求，当处理完这个请求后，线程又处于睡眠状态。</p>
+<p>线程池能节约大量的的系统资源，使得更多的 CPU 时间和内存用来处理实际的商业应用，而不是频繁的线程创建与销毁</p>
+<p>每个线程需要大约 1MB 内存，线程开的越多，消耗的内存也就越大。</p>
+<p>在什么情况下使用线程池：</p>
+<ol>
+<li>单个任务处理的时间比较短</li>
+<li>将需处理的任务的数量大</li>
+</ol>
+<h3 id="数据库连接池"><a href="#数据库连接池" class="headerlink" title="数据库连接池"></a>数据库连接池</h3><p>数据库连接池的解决方案是在应用程序启动时建立足够的数据库连接，并讲这些连接组成一个连接池（简单说：在一个“池”里放了好多半成品的数据库联接对象），由应用程序动态地对池中的连接进行申请，使用和释放。对于多于连接池中连接数的并发请求，应该在请求队列中排队等待。并且应用程序可以根据池中连接的使用率，动态增加或减少池中的连接数。<br>连接池技术尽可能多地重用了消耗内存地资源，大大节省了内存，提高了服务器地服务效率，能够支持更多的客户服务。通过使用连接池，将大大提高程序运行效率，同时，我们可以通过其自身的管理机制来监视数据库连接的数量，使用情况等。</p>
+<p>1）最小连接数是连接池一直保持的数据库连接，所以如果应用程序对数据库连接的使用量不大，将会有大量的数据库连接资源被浪费;<br>2）最大连接数是连接池能申请的最大连接数，如果数据库连接请求超过此数，后面的数据库连接请求将被加入到等待队列中，这会影响之后的数据库操作。</p>
+<p><strong>数据库连接是一种关键的有限的昂贵的资源，这一点在多用户的网页应用程序中体现得尤为突出。</strong>一个数据库连接对象均对应一个物理数据库连接，每次操作都打开一个物理连接，使用完都关闭连接，这样造成系统的性能低下。</p>
+<h3 id="WebSphere-Application-Server-性能"><a href="#WebSphere-Application-Server-性能" class="headerlink" title="WebSphere Application Server 性能"></a>WebSphere Application Server 性能</h3><p><a href="http://websphere.sys-con.com/node/46514/print" target="_blank" rel="noopener">http://websphere.sys-con.com/node/46514/print</a></p>
+<p>构建服务器应用程序的一个过于简单的模型是：每当一个请求到达就创建一个新的服务对象，然后在新的服务对象中为服务请求，但当有大量请求并发访问时，服务器不断的创建和销毁对象的开销很大。</p>
+<p>在面向对象的编程中，创建和销毁对象是很浪费资源的，因为创建一个对象要获取内存资源或者其它更多资源。在 Java 的中更是如此，虚拟机试图跟踪每一个对象，以便能够在对象销毁后进行垃圾回收。所以，提高程序效率的一个手段就是尽可能减少创建和销毁对象的次数。利用已有的对象来服务就是“池化资源”技术产生的原因。</p>
+<p><strong>HTTP 侦听器</strong><br>HTTP 侦听器负责在 HTTP 服务器级别创建线程。这里发生的大多数处理是静态页面服务，或 HTTP post / GET 传递命令到后端。这是必须考虑的第一级线程配置。</p>
+<p><strong>Web 容器</strong><br>Web 容器负责在应用程序服务器级别创建线程池。此级别的大多数处理包括 servlet，JSP，EJB，动态页面创建和后端传递处理。Web 容器是必须配置的第二级线程池配置。</p>
+<p><strong>ORB 容器</strong> ORB 容器负责在对象级创建线程池。这里发生的大部分处理包括处理基于非 Web 的客户端。ORB 容器是必须配置的线程池配置的第三级。</p>
+<p><strong>数据源</strong><br>数据源级负责创建从数据库或“传统”系统访问的连接线程。这些线程是必须解决的第四级配置</p>
+<h3 id="WAS-线程池数与-IHS-server"><a href="#WAS-线程池数与-IHS-server" class="headerlink" title="WAS 线程池数与 IHS server"></a>WAS 线程池数与 IHS server</h3><p>假定一个浏览器的并发连接请求数为 10，通常同一时间内会有多个用户并发访问网站。又考虑到，一个 Http 连接请求在同一时间只能被一个线程访问。所以，IHS 服务器的 httpd.conf 里的 maxclients（允许建立的总线程数）要能够处理峰值时刻的浏览器连接请求才行。同时，考虑不是所有的连接请求都会到 was server，有的连接只是为了在 web 服务器上取静态资源，所以，was 上的线程池数目（Thread pools ：50 ）会远小于 IHS server 上的 maxclients 值譬如 400）。</p>
+
+                </article>
+                <ul class="tags-postTags">
+                    
+                    <li>
+                        <a href="/tags/前端/" rel="tag"># 前端</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/tags/浏览器/" rel="tag"># 浏览器</a>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    
+    <nav id="gobottom" class="pagination">
+        
+        <span class="prev-next-post">·</span>
+        
+        <a class="next-post" title="前端优化" href="/2019/09/08/前端优化/">
+            前端优化 →
+        </a>
+        
+    </nav>
+
+    
+    <div class="inner">
+        <div id="comment"></div>
+    </div>
+    
+</div>
+
+<div class="toc-bar">
+    <div class="toc-btn-bar">
+        <a href="#site-main" class="toc-btn">
+            <svg viewbox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M793.024 710.272a32 32 0 1 0 45.952-44.544l-310.304-320a32 32 0 0 0-46.4 0.48l-297.696 320a32 32 0 0 0 46.848 43.584l274.752-295.328 286.848 295.808z"/></svg>
+        </a>
+        <div class="toc-btn toc-switch">
+            <svg class="toc-open" viewbox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M779.776 480h-387.2a32 32 0 0 0 0 64h387.2a32 32 0 0 0 0-64M779.776 672h-387.2a32 32 0 0 0 0 64h387.2a32 32 0 0 0 0-64M256 288a32 32 0 1 0 0 64 32 32 0 0 0 0-64M392.576 352h387.2a32 32 0 0 0 0-64h-387.2a32 32 0 0 0 0 64M256 480a32 32 0 1 0 0 64 32 32 0 0 0 0-64M256 672a32 32 0 1 0 0 64 32 32 0 0 0 0-64"/></svg>
+            <svg class="toc-close hide" viewbox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M512 960c-247.039484 0-448-200.960516-448-448S264.960516 64 512 64 960 264.960516 960 512 759.039484 960 512 960zM512 128.287273c-211.584464 0-383.712727 172.128262-383.712727 383.712727 0 211.551781 172.128262 383.712727 383.712727 383.712727 211.551781 0 383.712727-172.159226 383.712727-383.712727C895.712727 300.415536 723.551781 128.287273 512 128.287273z"/><path d="M557.05545 513.376159l138.367639-136.864185c12.576374-12.416396 12.672705-32.671738 0.25631-45.248112s-32.704421-12.672705-45.248112-0.25631l-138.560301 137.024163-136.447897-136.864185c-12.512727-12.512727-32.735385-12.576374-45.248112-0.063647-12.512727 12.480043-12.54369 32.735385-0.063647 45.248112l136.255235 136.671523-137.376804 135.904314c-12.576374 12.447359-12.672705 32.671738-0.25631 45.248112 6.271845 6.335493 14.496116 9.504099 22.751351 9.504099 8.12794 0 16.25588-3.103239 22.496761-9.247789l137.567746-136.064292 138.687596 139.136568c6.240882 6.271845 14.432469 9.407768 22.65674 9.407768 8.191587 0 16.352211-3.135923 22.591372-9.34412 12.512727-12.480043 12.54369-32.704421 0.063647-45.248112L557.05545 513.376159z"/></svg>
+        </div>
+        <a href="#gobottom" class="toc-btn">
+            <svg viewbox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M231.424 346.208a32 32 0 0 0-46.848 43.584l297.696 320a32 32 0 0 0 46.4 0.48l310.304-320a32 32 0 1 0-45.952-44.544l-286.848 295.808-274.752-295.36z"/></svg>
+        </a>
+    </div>
+    <div class="toc-main">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#浏览器同域名请求的最大并发数限制"><span class="toc-text">浏览器同域名请求的最大并发数限制</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#主流浏览器最大并发连接数"><span class="toc-text">主流浏览器最大并发连接数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Firefox-浏览器的最大并发连接数"><span class="toc-text">Firefox 浏览器的最大并发连接数</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Firefox3-6"><span class="toc-text">Firefox3.6</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Firefox4-beta12"><span class="toc-text">Firefox4 beta12</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#IE-浏览器的最大并发连接数"><span class="toc-text">IE 浏览器的最大并发连接数</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#IE8"><span class="toc-text">IE8</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#chrome-浏览器的最大并发连接数"><span class="toc-text">chrome 浏览器的最大并发连接数</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Chrome8"><span class="toc-text">Chrome8</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#opera-浏览器的最大并发连接数"><span class="toc-text">opera 浏览器的最大并发连接数</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Opera11"><span class="toc-text">Opera11</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HTTP-连接请求与线程"><span class="toc-text">HTTP 连接请求与线程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#连接池管理器"><span class="toc-text">连接池管理器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#线程池的原理"><span class="toc-text">线程池的原理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#数据库连接池"><span class="toc-text">数据库连接池</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#WebSphere-Application-Server-性能"><span class="toc-text">WebSphere Application Server 性能</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#WAS-线程池数与-IHS-server"><span class="toc-text">WAS 线程池数与 IHS server</span></a></li></ol></li></ol></li></ol>
+    </div>
+</div>
+
+
+
+	</div>
+	
+
+
+<aside class="read-next outer">
+    <div class="inner">
+        <div class="read-next-feed">
+            
+            
+
+<article class="read-next-card" style="background-image: url(https://tva1.sinaimg.cn/large/006y8mN6ly1g77gpw5lrfj31bt0u0qv6.jpg)">
+  <header class="read-next-card-header">
+    <small class="read-next-card-header-sitetitle">&mdash; 01不是包子脸 &mdash;</small>
+    <h3 class="read-next-card-header-title">最新文章</h3>
+  </header>
+  <div class="read-next-divider">
+    <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24">
+      <path d="M13 14.5s2 3 5 3 5.5-2.463 5.5-5.5S21 6.5 18 6.5c-5 0-7 11-12 11C2.962 17.5.5 15.037.5 12S3 6.5 6 6.5s4.5 3.5 4.5 3.5"/>
+    </svg>
+  </div>
+  <div class="read-next-card-content">
+    <ul>
+      
+      
+      
+      <li>
+        <a href="/2019/09/14/浏览器同域名请求的最大并发数限制/">浏览器同域名请求的最大并发数限制</a>
+      </li>
+      
+      
+      
+      <li>
+        <a href="/2019/09/08/前端优化/">前端优化</a>
+      </li>
+      
+      
+      
+      <li>
+        <a href="/2019/08/31/CSS的position属性/">CSS的position属性</a>
+      </li>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+    </ul>
+  </div>
+  <footer class="read-next-card-footer">
+    <a href="/archives">  MORE  → </a>
+  </footer>
+</article>
+
+            
+            
+            
+
+<article class="read-next-card" style="background-image: url(https://tva1.sinaimg.cn/large/006y8mN6ly1g77gpw5lrfj31bt0u0qv6.jpg)">
+    <header class="read-next-card-header tagcloud-card">
+        <h3 class="read-next-card-header-title">分类</h3>
+    </header>
+    <div class="read-next-card-content">
+        <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/CSS/">CSS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/ES6/">ES6</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/HTTP/">HTTP</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/React/">React</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/git/">git</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/javascript/">javascript</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/vue/">vue</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/">前端</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端工具/">前端工具</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/浏览器/">浏览器</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/移动端/">移动端</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/算法/">算法</a></li></ul>
+    </div>
+</article>
+
+
+            
+            
+            
+
+<article class="read-next-card" style="background-image: url(https://tva1.sinaimg.cn/large/006y8mN6ly1g77gpw5lrfj31bt0u0qv6.jpg)">
+	<header class="read-next-card-header tagcloud-card">
+		<h3 class="read-next-card-header-title">标签云</h3>
+	</header>
+	<div class="read-next-card-content-ext">
+		<a href="/tags/CSS/" style="font-size: 19.71px;">CSS</a> <a href="/tags/ES6/" style="font-size: 21.14px;">ES6</a> <a href="/tags/HTTP/" style="font-size: 16.86px;">HTTP</a> <a href="/tags/React/" style="font-size: 15.43px;">React</a> <a href="/tags/git/" style="font-size: 14px;">git</a> <a href="/tags/javascript/" style="font-size: 22.57px;">javascript</a> <a href="/tags/leetcode/" style="font-size: 16.86px;">leetcode</a> <a href="/tags/vue/" style="font-size: 16.86px;">vue</a> <a href="/tags/webpack/" style="font-size: 15.43px;">webpack</a> <a href="/tags/前端/" style="font-size: 24px;">前端</a> <a href="/tags/回溯/" style="font-size: 14px;">回溯</a> <a href="/tags/性能优化/" style="font-size: 14px;">性能优化</a> <a href="/tags/排序/" style="font-size: 14px;">排序</a> <a href="/tags/数组/" style="font-size: 14px;">数组</a> <a href="/tags/浏览器/" style="font-size: 19.71px;">浏览器</a> <a href="/tags/移动端/" style="font-size: 14px;">移动端</a> <a href="/tags/算法/" style="font-size: 18.29px;">算法</a> <a href="/tags/跨域/" style="font-size: 14px;">跨域</a>
+	</div>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+	
+
+
+
+
+<div id="search" class="search-overlay">
+    <div class="search-form">
+        
+        <img class="search-overlay-logo" src="https://tva1.sinaimg.cn/large/006y8mN6ly1g6sjqjrb9wj30jj0jjjss.jpg" alt="01不是包子脸">
+        
+        <input id="local-search-input" class="search-input" type="text" name="search" placeholder="搜索 ...">
+        <a class="search-overlay-close" href="#"></a>
+    </div>
+    <div id="local-search-result"></div>
+</div>
+
+<footer class="site-footer outer">
+	<div class="site-footer-content inner">
+		<div class="copyright">
+			<a href="/" title="01不是包子脸">01不是包子脸</a>
+			&copy; 2019
+		</div>
+		<nav class="site-footer-nav">
+			
+			<a href="https://hexo.io" title="Hexo" target="_blank" rel="noopener">Hexo</a>
+			<a href="https://github.com/xzhih/hexo-theme-casper" title="Casper" target="_blank" rel="noopener">Casper</a>
+		</nav>
+	</div>
+</footer>
+	
+
+
+<script>if(window.navigator && navigator.serviceWorker) {navigator.serviceWorker.getRegistrations().then(function(registrations) {for(let registration of registrations) {registration.unregister()}})}</script>
+
+
+<script async src="/js/allinone.min.js" id="scriptLoad"></script>
+
+
+
+
+
+
+<script>
+    document.getElementById('scriptLoad').addEventListener('load', function () {
+        var bLazy = new Blazy()
+    })
+</script>
+
+
+
+
+<div class="floating-header">
+	<div class="floating-header-logo">
+        <a href="/" title="01不是包子脸">
+			
+                <img src="https://tva1.sinaimg.cn/large/006y8mN6ly1g6sjqjrb9wj30jj0jjjss.jpg" alt="01不是包子脸 icon">
+			
+            <span>01不是包子脸</span>
+        </a>
+    </div>
+    <span class="floating-header-divider">&mdash;</span>
+    <div class="floating-header-title">浏览器同域名请求的最大并发数限制</div>
+    <progress class="progress" value="0">
+        <span class="progress-container">
+            <span class="progress-bar"></span>
+        </span>
+    </progress>
+</div>
+<script>
+    document.getElementById('scriptLoad').addEventListener('load', function () {
+        postProgressBar()
+    })
+</script>
+
+
+
+
+<script src="/js/lightgallery.min.js"></script>
+<link rel="stylesheet" href="/css/lightgallery.min.css">
+<script>
+    lightGallery(document.getElementById('lightgallery'), {
+        selector: '.post-img'
+    });
+</script>
+
+
+
+
+<script async src="https://cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script async src="https://unpkg.com/valine@1.3.4/dist/Valine.min.js"></script>
+<script>
+    window.addEventListener("load", function() {
+        new Valine({
+            el: '#comment' ,
+            verify: false,
+            notify: false,
+            appId: 'RKl7DjTGeDG8TMedBcYhiagz-gzGzoHsz',
+            appKey: 'pcwdBNPnrqDUcLyj3H0TaeHy',
+            placeholder: '爱我就留下评论吧～～',
+            pageSize: 10,
+            avatar: 'mm',
+            visitor: true,
+        })
+    });
+</script>
+
+
+
+
+
+<script>
+    document.getElementById('scriptLoad').addEventListener('load', function(){
+        searchFunc("/")
+    });
+</script>
+
+
+
+
+
+
+</body>
+</html>

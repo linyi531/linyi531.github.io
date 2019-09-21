@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+
+
+
+
+
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<link rel="preconnect" href="//pic.zhih.me">
+	<link rel="preconnect" href="//www.googletagmanager.com">
+	<link rel="preconnect" href="//zz.bdstatic.com">
+	<link rel="preconnect" href="//sp0.baidu.com">
+	<link rel="preconnect" href="//www.google-analytics.com">
+	<link rel="preconnect" href="//cdn1.lncld.net">
+	<link rel="preconnect" href="//unpkg.com">
+	<link rel="preconnect" href="//app-router.leancloud.cn">
+	<link rel="preconnect" href="//9qpuwspm.api.lncld.net">
+	<link rel="preconnect" href="//gravatar.loli.net">
+	<link rel="preload" href="https://pic.zhih.me/blog/header.jpg" as="image">
+
+	<title>JS引擎执行机制 | 01不是包子脸</title>
+
+	<meta name="HandheldFriendly" content="True">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+	<meta name="generator" content="hexo">
+	<meta name="author" content="Linyi Li">
+	<meta name="description" content>
+
+	
+	<meta name="keywords" content>
+	
+
+	
+	<link rel="shortcut icon" href="https://tva1.sinaimg.cn/large/006y8mN6ly1g6sjqjrb9wj30jj0jjjss.jpg">
+	<link rel="apple-touch-icon" href="https://tva1.sinaimg.cn/large/006y8mN6ly1g6sjqjrb9wj30jj0jjjss.jpg">
+	
+
+	
+	<meta name="theme-color" content="#3c484e">
+	<meta name="msapplication-TileColor" content="#3c484e">
+	
+
+	
+
+	
+
+	<meta property="og:site_name" content="01不是包子脸">
+	<meta property="og:type" content="article">
+	<meta property="og:title" content="JS引擎执行机制 | 01不是包子脸">
+	<meta property="og:description" content>
+	<meta property="og:url" content="http://yoursite.com/2019/07/30/JS引擎执行机制/">
+
+	
+	<meta property="article:published_time" content="2019-07-30T13:07:00+08:00"> 
+	<meta property="article:author" content="Linyi Li">
+	<meta property="article:published_first" content="01不是包子脸, /2019/07/30/JS引擎执行机制/">
+	
+
+	
+	
+	<link rel="stylesheet" href="/css/allinonecss.min.css">
+
+	
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-145838942-1"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag('js', new Date());
+		gtag('config', 'UA-145838942-1');
+	</script>
+	
+	
+	
+<link rel="canonical" href="http://yoursite.com/2019/07/30/JS引擎执行机制/">
+
+
+
+
+
+</head>
+<body class="post-template">
+	<div class="site-wrapper">
+		
+
+
+
+
+<header class="site-header post-site-header outer">
+    <div class="inner">
+        
+<nav class="site-nav"> 
+    <div class="site-nav-left">
+        <ul class="nav">
+            <li>
+                
+                
+                <a class="site-nav-logo" href="/" title="01不是包子脸">
+                    <img src="https://tva1.sinaimg.cn/large/006y8mN6ly1g6sjqjrb9wj30jj0jjjss.jpg" alt="01不是包子脸">
+                </a>
+                
+                
+            </li>
+            
+            
+            <li>
+                <a href="/" title="HOME">HOME</a>
+            </li>
+            
+            <li>
+                <a href="/about" title="ABOUT">ABOUT</a>
+            </li>
+            
+            <li>
+                <a href="/archives" title="ARCHIVES">ARCHIVES</a>
+            </li>
+            
+            
+        </ul> 
+    </div>
+    
+    <div class="search-button-area">
+        <a href="#search" class="search-button">Search ...</a>
+    </div>
+     
+    <div class="site-nav-right">
+        
+        <a href="#search" class="search-button">Search ...</a>
+         
+        
+<div class="social-links">
+    
+    <a class="social-link" title="weibo" href="https://weibo.com/2164694963/profile?rightmod=1&wvr=6&mod=personinfo" target="_blank" rel="noopener">
+        <svg viewbox="0 0 1141 1024" xmlns="http://www.w3.org/2000/svg"><path d="M916.48 518.144q27.648 21.504 38.912 51.712t9.216 62.976-14.336 65.536-31.744 59.392q-34.816 48.128-78.848 81.92t-91.136 56.32-94.72 35.328-89.6 18.944-75.264 7.68-51.712 1.536-49.152-2.56-68.096-10.24-78.336-21.504-79.872-36.352-74.24-55.296-59.904-78.848q-16.384-29.696-22.016-63.488t-5.632-86.016q0-22.528 7.68-51.2t27.136-63.488 53.248-75.776 86.016-90.112q51.2-48.128 105.984-85.504t117.248-57.856q28.672-10.24 63.488-11.264t57.344 11.264q10.24 11.264 19.456 23.04t12.288 29.184q3.072 14.336 0.512 27.648t-5.632 26.624-5.12 25.6 2.048 22.528q17.408 2.048 33.792-1.536t31.744-9.216 31.232-11.776 33.28-9.216q27.648-5.12 54.784-4.608t49.152 7.68 36.352 22.016 17.408 38.4q2.048 14.336-2.048 26.624t-8.704 23.04-7.168 22.016 1.536 23.552q3.072 7.168 14.848 13.312t27.136 12.288 32.256 13.312 29.184 16.384zM658.432 836.608q26.624-16.384 53.76-45.056t44.032-64 18.944-75.776-20.48-81.408q-19.456-33.792-47.616-57.344t-62.976-37.376-74.24-19.968-80.384-6.144q-78.848 0-139.776 16.384t-105.472 43.008-72.192 60.416-38.912 68.608q-11.264 33.792-6.656 67.072t20.992 62.976 42.496 53.248 57.856 37.888q58.368 25.6 119.296 32.256t116.224 0.512 100.864-21.504 74.24-33.792zM524.288 513.024q20.48 8.192 38.912 18.432t32.768 27.648q10.24 12.288 17.92 30.72t10.752 39.424 1.536 42.496-9.728 38.912q-8.192 18.432-19.968 37.376t-28.672 35.328-40.448 29.184-57.344 18.944q-61.44 11.264-117.76-11.264t-88.064-74.752q-12.288-39.936-13.312-70.656t16.384-66.56q13.312-27.648 40.448-51.712t62.464-38.912 75.264-17.408 78.848 12.8zM361.472 764.928q37.888 3.072 57.856-18.432t21.504-48.128-15.36-47.616-52.736-16.896q-27.648 3.072-43.008 23.552t-17.408 43.52 9.728 42.496 39.424 21.504zM780.288 6.144q74.752 0 139.776 19.968t113.664 57.856 76.288 92.16 27.648 122.88q0 33.792-16.384 50.688t-35.328 17.408-35.328-14.336-16.384-45.568q0-40.96-22.528-77.824t-59.392-64.512-84.48-43.52-96.768-15.872q-31.744 0-47.104-15.36t-14.336-34.304 18.944-34.304 51.712-15.36zM780.288 169.984q95.232 0 144.384 48.64t49.152 146.944q0 30.72-10.24 43.52t-22.528 11.264-22.528-14.848-10.24-35.84q0-60.416-34.816-96.256t-93.184-35.84q-19.456 0-28.672-10.752t-9.216-23.04 9.728-23.04 28.16-10.752z"/></svg>
+    </a>
+    
+    
+    <a class="social-link" title="github" href="https://github.com/linyi531" target="_blank" rel="noopener">
+        <svg viewbox="0 0 1049 1024" xmlns="http://www.w3.org/2000/svg"><path d="M524.979332 0C234.676191 0 0 234.676191 0 524.979332c0 232.068678 150.366597 428.501342 358.967656 498.035028 26.075132 5.215026 35.636014-11.299224 35.636014-25.205961 0-12.168395-0.869171-53.888607-0.869171-97.347161-146.020741 31.290159-176.441729-62.580318-176.441729-62.580318-23.467619-60.841976-58.234462-76.487055-58.234463-76.487055-47.804409-32.15933 3.476684-32.15933 3.476685-32.15933 53.019436 3.476684 80.83291 53.888607 80.83291 53.888607 46.935238 79.963739 122.553122 57.365291 152.97411 43.458554 4.345855-33.897672 18.252593-57.365291 33.028501-70.402857-116.468925-12.168395-239.022047-57.365291-239.022047-259.012982 0-57.365291 20.860106-104.300529 53.888607-140.805715-5.215026-13.037566-23.467619-66.926173 5.215027-139.067372 0 0 44.327725-13.906737 144.282399 53.888607 41.720212-11.299224 86.917108-17.383422 131.244833-17.383422s89.524621 6.084198 131.244833 17.383422C756.178839 203.386032 800.506564 217.29277 800.506564 217.29277c28.682646 72.1412 10.430053 126.029806 5.215026 139.067372 33.897672 36.505185 53.888607 83.440424 53.888607 140.805715 0 201.64769-122.553122 245.975415-239.891218 259.012982 19.121764 16.514251 35.636014 47.804409 35.636015 97.347161 0 70.402857-0.869171 126.898978-0.869172 144.282399 0 13.906737 9.560882 30.420988 35.636015 25.205961 208.601059-69.533686 358.967656-265.96635 358.967655-498.035028C1049.958663 234.676191 814.413301 0 524.979332 0z"/></svg>
+    </a>
+    
+    
+    
+    <a class="social-link" title="twitter" href="https://twitter.com/nFywOCNPid75cl5" target="_blank" rel="noopener">
+        <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 32 32"><path d="M30.063 7.313c-.813 1.125-1.75 2.125-2.875 2.938v.75c0 1.563-.188 3.125-.688 4.625a15.088 15.088 0 0 1-2.063 4.438c-.875 1.438-2 2.688-3.25 3.813a15.015 15.015 0 0 1-4.625 2.563c-1.813.688-3.75 1-5.75 1-3.25 0-6.188-.875-8.875-2.625.438.063.875.125 1.375.125 2.688 0 5.063-.875 7.188-2.5-1.25 0-2.375-.375-3.375-1.125s-1.688-1.688-2.063-2.875c.438.063.813.125 1.125.125.5 0 1-.063 1.5-.25-1.313-.25-2.438-.938-3.313-1.938a5.673 5.673 0 0 1-1.313-3.688v-.063c.813.438 1.688.688 2.625.688a5.228 5.228 0 0 1-1.875-2c-.5-.875-.688-1.813-.688-2.75 0-1.063.25-2.063.75-2.938 1.438 1.75 3.188 3.188 5.25 4.25s4.313 1.688 6.688 1.813a5.579 5.579 0 0 1 1.5-5.438c1.125-1.125 2.5-1.688 4.125-1.688s3.063.625 4.188 1.813a11.48 11.48 0 0 0 3.688-1.375c-.438 1.375-1.313 2.438-2.563 3.188 1.125-.125 2.188-.438 3.313-.875z"/></svg>
+
+    </a>
+    
+    
+    <a class="social-link" title="telegram" href="https://www.instagram.com/linyi531/" target="_blank" rel="noopener">
+        <svg viewbox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M679.428571 746.857143l84-396q5.142857-25.142857-6-36t-29.428571-4L234.285714 501.142857q-16.571429 6.285714-22.571428 14.285714t-1.428572 15.142858 18.285715 11.142857l126.285714 39.428571 293.142857-184.571428q12-8 18.285714-3.428572 4 2.857143-2.285714 8.571429l-237.142857 214.285714-9.142857 130.285714q13.142857 0 25.714285-12.571428l61.714286-59.428572 128 94.285715q36.571429 20.571429 46.285714-21.714286z m344.571429-234.857143q0 104-40.571429 198.857143t-109.142857 163.428571-163.428571 109.142857-198.857143 40.571429-198.857143-40.571429-163.428571-109.142857-109.142857-163.428571T0 512t40.571429-198.857143 109.142857-163.428571T313.142857 40.571429 512 0t198.857143 40.571429 163.428571 109.142857 109.142857 163.428571 40.571429 198.857143z"/></svg>
+    </a>
+    
+    
+    
+</div>
+    </div>
+</nav>
+    </div>
+</header>
+
+
+<div id="site-main" class="site-main outer" role="main">
+    <div class="inner">
+        <header class="post-full-header">
+            <div class="post-full-meta">
+                <time class="post-full-meta-date" datetime="2019-07-30T05:13:29.000Z">
+                    2019-07-30
+                </time>
+                
+                <span class="date-divider">/</span>
+                
+                <a href="/categories/javascript/">javascript</a>&nbsp;&nbsp;
+                
+                
+            </div>
+            <h1 class="post-full-title">JS引擎执行机制</h1>
+        </header>
+        <div class="post-full ">
+            
+            <figure class="post-full-image" style="background-image: url(https://tva1.sinaimg.cn/large/006y8mN6ly1g77hjxa00mj30u0190e82.jpg)">
+            </figure>
+            
+            <div class="post-full-content">
+                <article id="lightgallery" class="markdown-body">
+                    <h1 id="JS-引擎执行机制"><a href="#JS-引擎执行机制" class="headerlink" title="JS 引擎执行机制"></a>JS 引擎执行机制</h1><p><strong>(1) JS 是单线程语言</strong></p>
+<p><strong>(2) JS 的 Event Loop 是 JS 的执行机制。深入了解 JS 的执行,就等于深入了解 JS 里的 event loop</strong></p>
+<a id="more"></a>
+
+<h2 id="JS-为什么是单线程的-为什么需要异步-单线程又是如何实现异步的呢"><a href="#JS-为什么是单线程的-为什么需要异步-单线程又是如何实现异步的呢" class="headerlink" title="JS 为什么是单线程的? 为什么需要异步? 单线程又是如何实现异步的呢?"></a>JS 为什么是单线程的? 为什么需要异步? 单线程又是如何实现异步的呢?</h2><ul>
+<li><p>JS 最初被设计用在浏览器中,那么想象一下,如果浏览器中的 JS 是多线程的。</p>
+<p>场景描述:</p>
+<p>那么现在有 2 个线程,process1 process2,由于是多线程的 JS,所以他们对同一个 dom,同时进行操作。process1 删除了该 dom,而 process2 编辑了该 dom,同时下达 2 个矛盾的命令,浏览器究竟该如何执行呢?</p>
+</li>
+<li><p>JS 为什么需要异步?</p>
+<p>如果 JS 中不存在异步,只能自上而下执行,如果上一行解析时间很长,那么下面的代码就会被阻塞。<br>对于用户而言,阻塞就意味着”卡死”,这样就导致了很差的用户体验</p>
+</li>
+<li><p>JS 单线程又是如何实现异步的呢?</p>
+<p><strong>是通过的事件循环(event loop),理解了 event loop 机制,就理解了 JS 的执行机制</strong></p>
+</li>
+</ul>
+<h2 id="JS-中的-event-loop"><a href="#JS-中的-event-loop" class="headerlink" title="JS 中的 event loop"></a>JS 中的 event loop</h2><h3 id="event-loop（1）"><a href="#event-loop（1）" class="headerlink" title="event loop（1）"></a>event loop（1）</h3><p>JS 里的一种分类方式,就是将任务分为: 同步任务和异步任务</p>
+<p>JS 的执行机制是：</p>
+<ul>
+<li>首先判断 JS 是同步还是异步,同步就进入主线程,异步就进入 event table</li>
+<li>异步任务在 event table 中注册函数,当满足触发条件后,被推入 event queue</li>
+<li>同步任务进入主线程后一直执行,直到主线程空闲时,才会去 event queue 中查看是否有可执行的异步任务,如果有就推入主线程中</li>
+</ul>
+<h3 id="event-loop（2）"><a href="#event-loop（2）" class="headerlink" title="event loop（2）"></a>event loop（2）</h3><p>准确的划分方式是:</p>
+<ul>
+<li>macro-task(宏任务)：包括整体代码 script，setTimeout，setInterval</li>
+<li>micro-task(微任务)：Promise.then，process.nextTick</li>
+</ul>
+<p>JS 的执行机制是：</p>
+<ul>
+<li>执行一个宏任务,过程中如果遇到微任务,就将其放到微任务的【事件队列】里</li>
+<li>当前宏任务执行完成后,会查看微任务的【事件队列】,并将里面全部的微任务依次执行完</li>
+</ul>
+<p><strong>重复以上 2 步骤,结合 event loop(1) event loop(2) ,就是更为准确的 JS 执行机制了。</strong></p>
+<h2 id="理解-JavaScript-的-async-await"><a href="#理解-JavaScript-的-async-await" class="headerlink" title="理解 JavaScript 的 async/await"></a>理解 JavaScript 的 async/await</h2><h3 id="async-和-await-在干什么"><a href="#async-和-await-在干什么" class="headerlink" title="async 和 await 在干什么"></a>async 和 await 在干什么</h3><p>先从字面意思来理解。async 是“异步”的简写，而 await 可以认为是 async wait 的简写。所以应该很好理解 async 用于申明一个 function 是异步的，而 await 用于等待一个异步方法执行完成。</p>
+<ul>
+<li>async 函数返回的是一个 <strong>Promise</strong> 对象。<ul>
+<li>如果在函数中 <code>return</code> 一个直接量，async 会把这个直接量通过 <code>Promise.resolve()</code> 封装成 Promise 对象。</li>
+<li>如果 async 函数没有返回值，又该如何？很容易想到，它会返回 <code>Promise.resolve(undefined)</code>。</li>
+<li>Promise 的特点——无等待，所以在没有 <code>await</code> 的情况下执行 async 函数，它会立即执行，返回一个 Promise 对象，并且，绝不会阻塞后面的语句。这和普通返回 Promise 对象的函数并无二致。</li>
+</ul>
+</li>
+<li>await 等待的是一个表达式。<ul>
+<li>这个表达式的计算结果是 Promise 对象或者其它值（换句话说，就是没有特殊限定）。</li>
+<li>await 不仅仅用于等 Promise 对象，它可以等任意表达式的结果，所以，await 后面实际是可以接普通函数调用或者直接量的。</li>
+</ul>
+</li>
+<li>await 等到了要等的，然后呢？<ul>
+<li><code>await</code> 是个运算符，用于组成表达式，await 表达式的运算结果取决于它等的东西。</li>
+<li>如果它等到的不是一个 Promise 对象，那 await 表达式的运算结果就是它等到的东西。</li>
+<li>如果它等到的是一个 Promise 对象，await 就忙起来了，它会阻塞后面的代码，等着 Promise 对象 resolve，然后得到 resolve 的值，作为 await 表达式的运算结果。</li>
+</ul>
+</li>
+</ul>
+<p>这就是 await 必须用在 async 函数中的原因。async 函数调用不会造成阻塞，它内部所有的阻塞都被封装在一个 Promise 对象中异步执行。</p>
+<h3 id="await-等待的表达式详解"><a href="#await-等待的表达式详解" class="headerlink" title="await 等待的表达式详解"></a>await 等待的表达式详解</h3><p><strong>await 等的是右侧「表达式」的结果</strong></p>
+<p>await 是从<strong>右向左执行的</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">async1</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">"async1 start"</span>);</span><br><span class="line">  <span class="keyword">await</span> async2();</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">"async1 end"</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">async2</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">"async2"</span>);</span><br><span class="line">&#125;</span><br><span class="line">async1();</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"script start"</span>);</span><br></pre></td></tr></table></figure>
+
+<p>先执行 async2 后，发现有 await 关键字，于是让出线程，阻塞代码</p>
+<p>右侧表达式的结果:</p>
+<ul>
+<li>如果不是 promise , await 会阻塞后面的代码，先执行 async 外面的同步代码，同步代码执行完，再回到 async 内部，把这个非 promise 的东西，作为 await 表达式的结果</li>
+<li>如果它等到的是一个 promise 对象，await 也会暂停 async 后面的代码，先执行 async 外面的同步代码，等着 Promise 对象 fulfilled，然后把 resolve 的参数作为 await 表达式的运算结果。</li>
+</ul>
+<h3 id="async-await-的优势在于处理-then-链"><a href="#async-await-的优势在于处理-then-链" class="headerlink" title="async/await 的优势在于处理 then 链"></a>async/await 的优势在于处理 then 链</h3><p>单一的 Promise 链并不能发现 async/await 的优势，但是，如果需要处理由多个 Promise 组成的 then 链的时候，优势就能体现出来了。</p>
+<ul>
+<li>Async/await 代码清晰很多，几乎跟同步代码一样。</li>
+<li>Promise 方案的死穴—— 链式调用参数传递太麻烦</li>
+</ul>
+<h2 id="async-await-和-promise-的执行顺序"><a href="#async-await-和-promise-的执行顺序" class="headerlink" title="async/await 和 promise 的执行顺序"></a>async/await 和 promise 的执行顺序</h2><h3 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">async1</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">"async1 start"</span>);</span><br><span class="line">  <span class="keyword">await</span> async2();</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">"async1 end"</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">async2</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">"async2"</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"script start"</span>);</span><br><span class="line">setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">"setTimeout"</span>);</span><br><span class="line">&#125;, <span class="number">0</span>);</span><br><span class="line">async1();</span><br><span class="line"><span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="keyword">function</span>(<span class="params">resolve</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">"promise1"</span>);</span><br><span class="line">  resolve();</span><br><span class="line">&#125;).then(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">"promise2"</span>);</span><br><span class="line">&#125;);</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"script end"</span>);</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">script start</span><br><span class="line">async1 start</span><br><span class="line">async2</span><br><span class="line">promise1</span><br><span class="line">script end</span><br><span class="line">promise2</span><br><span class="line">async1 end</span><br><span class="line">setTimeout</span><br></pre></td></tr></table></figure>
+
+<p>宏任务和微任务的慨念，在我脑海中宏任务和为微任务如图所示</p>
+<p><img alt="img" class="post-img b-lazy" href="https://tva1.sinaimg.cn/large/006y8mN6ly1g6izm5nu3ij30f204qq2z.jpg" data-src="https://tva1.sinaimg.cn/large/006y8mN6ly1g6izm5nu3ij30f204qq2z.jpg"></p>
+<p>也就是「宏任务」、「微任务」都是队列。</p>
+<p>一段代码执行时，会先执行宏任务中的同步代码，</p>
+<ul>
+<li>如果执行中遇到 setTimeout 之类宏任务，那么就把这个 setTimeout 内部的函数推入「宏任务的队列」中，下一轮宏任务执行时调用。</li>
+<li>如果执行中遇到 promise.then()之类的微任务，就会推入到「当前宏任务的微任务队列」中，在本轮宏任务的同步代码执行都完成后，依次执行所有的微任务 1、2、3</li>
+</ul>
+<h3 id="例子分析执行顺序"><a href="#例子分析执行顺序" class="headerlink" title="例子分析执行顺序"></a>例子分析执行顺序</h3><h4 id="直接打印同步代码-console-log-‘script-start’"><a href="#直接打印同步代码-console-log-‘script-start’" class="headerlink" title="直接打印同步代码 console.log(‘script start’)"></a>直接打印同步代码 console.log(‘script start’)</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 首先是2个函数声明，虽然有async关键字，但不是调用我们就不看。然后首先是打印同步代码</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"script start"</span>);</span><br></pre></td></tr></table></figure>
+
+<p><img alt="img" class="post-img b-lazy" href="https://tva1.sinaimg.cn/large/006y8mN6ly1g6izmivm1ij30m801x745.jpg" data-src="https://tva1.sinaimg.cn/large/006y8mN6ly1g6izmivm1ij30m801x745.jpg"></p>
+<h4 id="将-setTimeout-放入宏任务队列"><a href="#将-setTimeout-放入宏任务队列" class="headerlink" title="将 setTimeout 放入宏任务队列"></a>将 setTimeout 放入宏任务队列</h4><p>默认所包裹的代码，其实可以理解为是第一个宏任务，所以这里是宏任务 2</p>
+<p><img alt="img" class="post-img b-lazy" href="https://tva1.sinaimg.cn/large/006y8mN6ly1g6izmvovzjj30m8034dft.jpg" data-src="https://tva1.sinaimg.cn/large/006y8mN6ly1g6izmvovzjj30m8034dft.jpg"></p>
+<h4 id="调用-async1，打印-同步代码-console-log-‘async1-start’"><a href="#调用-async1，打印-同步代码-console-log-‘async1-start’" class="headerlink" title="调用 async1，打印 同步代码 console.log( ‘async1 start’ )"></a>调用 async1，打印 同步代码 console.log( ‘async1 start’ )</h4><p>我们说过看到带有 async 关键字的函数，不用害怕，它的仅仅是把 return 值包装成了 promise，其他并没有什么不同的地方。所以就很普通的打印 console.log( ‘async1 start’ )</p>
+<p><img alt="img" class="post-img b-lazy" href="https://tva1.sinaimg.cn/large/006y8mN6ly1g6izn7f29dj30m803dt8o.jpg" data-src="https://tva1.sinaimg.cn/large/006y8mN6ly1g6izn7f29dj30m803dt8o.jpg"></p>
+<h4 id="分析一下-await-async2"><a href="#分析一下-await-async2" class="headerlink" title="分析一下 await async2()"></a>分析一下 await async2()</h4><p>前文提过 await，1.它先计算出右侧的结果，2.然后看到 await 后，中断 async 函数</p>
+<ul>
+<li>先得到 await 右侧表达式的结果。执行 async2()，打印同步代码 console.log(‘async2’), 并且 return Promise.resolve(undefined)</li>
+<li>await 后，中断 async 函数，先执行 async 外的同步代码</li>
+</ul>
+<p>目前就直接打印 console.log(‘async2’)</p>
+<p><img alt="img" class="post-img b-lazy" href="https://tva1.sinaimg.cn/large/006y8mN6ly1g6iznit5adj30m803edfu.jpg" data-src="https://tva1.sinaimg.cn/large/006y8mN6ly1g6iznit5adj30m803edfu.jpg"></p>
+<h4 id="被阻塞后，要执行-async-之外的代码"><a href="#被阻塞后，要执行-async-之外的代码" class="headerlink" title="被阻塞后，要执行 async 之外的代码"></a>被阻塞后，要执行 async 之外的代码</h4><p>执行 new Promise()，Promise 构造函数是直接调用的同步代码，所以 console.log( ‘promise1’ )</p>
+<p><img alt="img" class="post-img b-lazy" href="https://tva1.sinaimg.cn/large/006y8mN6ly1g6iznu7o6jj30m803l74a.jpg" data-src="https://tva1.sinaimg.cn/large/006y8mN6ly1g6iznu7o6jj30m803l74a.jpg"></p>
+<h4 id="代码运行到-promise-then"><a href="#代码运行到-promise-then" class="headerlink" title="代码运行到 promise.then()"></a>代码运行到 promise.then()</h4><p>代码运行到 promise.then()，发现这个是微任务，所以暂时不打印，只是推入当前宏任务的微任务队列中。</p>
+<p><strong>注意：这里只是把 promise2 推入微任务队列，并没有执行。微任务会在当前宏任务的同步代码执行完毕，才会依次执行</strong></p>
+<p><img alt="img" class="post-img b-lazy" href="https://tva1.sinaimg.cn/large/006y8mN6ly1g6izo8rmlkj30m803c0sp.jpg" data-src="https://tva1.sinaimg.cn/large/006y8mN6ly1g6izo8rmlkj30m803c0sp.jpg"></p>
+<h4 id="打印同步代码-console-log-‘script-end’"><a href="#打印同步代码-console-log-‘script-end’" class="headerlink" title="打印同步代码 console.log(‘script end’)"></a>打印同步代码 console.log(‘script end’)</h4><p>执行完这个同步代码后，「async 外的代码」终于走了一遍</p>
+<p>下面该回到 await 表达式那里，执行 await Promise.resolve(undefined)了<br><img alt="img" class="post-img b-lazy" href="https://tva1.sinaimg.cn/large/006y8mN6ly1g6izoj1zjkj30m803c749.jpg" data-src="https://tva1.sinaimg.cn/large/006y8mN6ly1g6izoj1zjkj30m803c749.jpg"></p>
+<h4 id="回到-async-内部，执行-await-Promise-resolve-undefined"><a href="#回到-async-内部，执行-await-Promise-resolve-undefined" class="headerlink" title="回到 async 内部，执行 await Promise.resolve(undefined)"></a>回到 async 内部，执行 await Promise.resolve(undefined)</h4><p>这部分可能不太好理解，我尽量表达我的想法。</p>
+<p>对于 await Promise.resolve(undefined) 如何理解呢？</p>
+<p>根据 <a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/await" target="_blank" rel="noopener">MDN</a> 原话我们知道</p>
+<p><strong>如果一个 Promise 被传递给一个 await 操作符，await 将等待 Promise 正常处理完成并返回其处理结果。</strong></p>
+<p>在我们这个例子中，就是 Promise.resolve(undefined)正常处理完成，并返回其处理结果。那么 await async2()就算是执行结束了。</p>
+<p>目前这个 promise 的状态是 fulfilled，等其处理结果返回就可以执行 await 下面的代码了。</p>
+<p>那何时能拿到处理结果呢？</p>
+<p>回忆平时我们用 promise，调用 resolve 后，何时能拿到处理结果？是不是需要在 then 的第一个参数里，才能拿到结果。</p>
+<p>（调用 resolve 时，会把 then 的参数推入微任务队列，等主线程空闲时，再调用它）</p>
+<p>所以这里的 await Promise.resolve() 就类似于</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Promise</span>.resolve(<span class="literal">undefined</span>).then(<span class="function"><span class="params">undefined</span> =&gt;</span> &#123;&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>把 then 的第一个回调参数 (undefined) =&gt; {} 推入微任务队列。</p>
+<p>then 执行完，才是 await async2()执行结束。</p>
+<p>await async2()执行结束，才能继续执行后面的代码</p>
+<p>如图</p>
+<p><img alt="img" class="post-img b-lazy" href="https://tva1.sinaimg.cn/large/006y8mN6ly1g6izovbp1aj30m8037q2y.jpg" data-src="https://tva1.sinaimg.cn/large/006y8mN6ly1g6izovbp1aj30m8037q2y.jpg"></p>
+<h4 id="此时当前宏任务-1-都执行完了，要处理微任务队列里的代码。"><a href="#此时当前宏任务-1-都执行完了，要处理微任务队列里的代码。" class="headerlink" title="此时当前宏任务 1 都执行完了，要处理微任务队列里的代码。"></a>此时当前宏任务 1 都执行完了，要处理微任务队列里的代码。</h4><p>微任务队列，先进选出的原则，</p>
+<ol>
+<li>执行微任务 1，打印 promise2</li>
+<li>执行微任务 2，没什么内容..</li>
+</ol>
+<p>但是微任务 2 执行后，await async2()语句结束，后面的代码不再被阻塞，所以打印</p>
+<p>console.log(‘async1 end’)</p>
+<h4 id="宏任务-1-执行完成后-执行宏任务-2"><a href="#宏任务-1-执行完成后-执行宏任务-2" class="headerlink" title="宏任务 1 执行完成后,执行宏任务 2"></a>宏任务 1 执行完成后,执行宏任务 2</h4><p>宏任务 2 的执行比较简单，就是打印</p>
+<p>console.log(‘setTimeout’)</p>
+
+                </article>
+                <ul class="tags-postTags">
+                    
+                    <li>
+                        <a href="/tags/javascript/" rel="tag"># javascript</a>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    
+    <nav id="gobottom" class="pagination">
+        
+        <a class="prev-post" title="promise" href="/2019/08/05/promise/">
+            ← promise
+        </a>
+        
+        <span class="prev-next-post">·</span>
+        
+        <a class="next-post" title="JS事件机制" href="/2019/07/24/JS事件机制/">
+            JS事件机制 →
+        </a>
+        
+    </nav>
+
+    
+    <div class="inner">
+        <div id="comment"></div>
+    </div>
+    
+</div>
+
+<div class="toc-bar">
+    <div class="toc-btn-bar">
+        <a href="#site-main" class="toc-btn">
+            <svg viewbox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M793.024 710.272a32 32 0 1 0 45.952-44.544l-310.304-320a32 32 0 0 0-46.4 0.48l-297.696 320a32 32 0 0 0 46.848 43.584l274.752-295.328 286.848 295.808z"/></svg>
+        </a>
+        <div class="toc-btn toc-switch">
+            <svg class="toc-open" viewbox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M779.776 480h-387.2a32 32 0 0 0 0 64h387.2a32 32 0 0 0 0-64M779.776 672h-387.2a32 32 0 0 0 0 64h387.2a32 32 0 0 0 0-64M256 288a32 32 0 1 0 0 64 32 32 0 0 0 0-64M392.576 352h387.2a32 32 0 0 0 0-64h-387.2a32 32 0 0 0 0 64M256 480a32 32 0 1 0 0 64 32 32 0 0 0 0-64M256 672a32 32 0 1 0 0 64 32 32 0 0 0 0-64"/></svg>
+            <svg class="toc-close hide" viewbox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M512 960c-247.039484 0-448-200.960516-448-448S264.960516 64 512 64 960 264.960516 960 512 759.039484 960 512 960zM512 128.287273c-211.584464 0-383.712727 172.128262-383.712727 383.712727 0 211.551781 172.128262 383.712727 383.712727 383.712727 211.551781 0 383.712727-172.159226 383.712727-383.712727C895.712727 300.415536 723.551781 128.287273 512 128.287273z"/><path d="M557.05545 513.376159l138.367639-136.864185c12.576374-12.416396 12.672705-32.671738 0.25631-45.248112s-32.704421-12.672705-45.248112-0.25631l-138.560301 137.024163-136.447897-136.864185c-12.512727-12.512727-32.735385-12.576374-45.248112-0.063647-12.512727 12.480043-12.54369 32.735385-0.063647 45.248112l136.255235 136.671523-137.376804 135.904314c-12.576374 12.447359-12.672705 32.671738-0.25631 45.248112 6.271845 6.335493 14.496116 9.504099 22.751351 9.504099 8.12794 0 16.25588-3.103239 22.496761-9.247789l137.567746-136.064292 138.687596 139.136568c6.240882 6.271845 14.432469 9.407768 22.65674 9.407768 8.191587 0 16.352211-3.135923 22.591372-9.34412 12.512727-12.480043 12.54369-32.704421 0.063647-45.248112L557.05545 513.376159z"/></svg>
+        </div>
+        <a href="#gobottom" class="toc-btn">
+            <svg viewbox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M231.424 346.208a32 32 0 0 0-46.848 43.584l297.696 320a32 32 0 0 0 46.4 0.48l310.304-320a32 32 0 1 0-45.952-44.544l-286.848 295.808-274.752-295.36z"/></svg>
+        </a>
+    </div>
+    <div class="toc-main">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#JS-引擎执行机制"><span class="toc-text">JS 引擎执行机制</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#JS-为什么是单线程的-为什么需要异步-单线程又是如何实现异步的呢"><span class="toc-text">JS 为什么是单线程的? 为什么需要异步? 单线程又是如何实现异步的呢?</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JS-中的-event-loop"><span class="toc-text">JS 中的 event loop</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#event-loop（1）"><span class="toc-text">event loop（1）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#event-loop（2）"><span class="toc-text">event loop（2）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#理解-JavaScript-的-async-await"><span class="toc-text">理解 JavaScript 的 async/await</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#async-和-await-在干什么"><span class="toc-text">async 和 await 在干什么</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#await-等待的表达式详解"><span class="toc-text">await 等待的表达式详解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#async-await-的优势在于处理-then-链"><span class="toc-text">async/await 的优势在于处理 then 链</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#async-await-和-promise-的执行顺序"><span class="toc-text">async/await 和 promise 的执行顺序</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#例子"><span class="toc-text">例子</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#例子分析执行顺序"><span class="toc-text">例子分析执行顺序</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#直接打印同步代码-console-log-‘script-start’"><span class="toc-text">直接打印同步代码 console.log(‘script start’)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#将-setTimeout-放入宏任务队列"><span class="toc-text">将 setTimeout 放入宏任务队列</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#调用-async1，打印-同步代码-console-log-‘async1-start’"><span class="toc-text">调用 async1，打印 同步代码 console.log( ‘async1 start’ )</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#分析一下-await-async2"><span class="toc-text">分析一下 await async2()</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#被阻塞后，要执行-async-之外的代码"><span class="toc-text">被阻塞后，要执行 async 之外的代码</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#代码运行到-promise-then"><span class="toc-text">代码运行到 promise.then()</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#打印同步代码-console-log-‘script-end’"><span class="toc-text">打印同步代码 console.log(‘script end’)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#回到-async-内部，执行-await-Promise-resolve-undefined"><span class="toc-text">回到 async 内部，执行 await Promise.resolve(undefined)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#此时当前宏任务-1-都执行完了，要处理微任务队列里的代码。"><span class="toc-text">此时当前宏任务 1 都执行完了，要处理微任务队列里的代码。</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#宏任务-1-执行完成后-执行宏任务-2"><span class="toc-text">宏任务 1 执行完成后,执行宏任务 2</span></a></li></ol></li></ol></li></ol></li></ol>
+    </div>
+</div>
+
+
+
+	</div>
+	
+
+
+<aside class="read-next outer">
+    <div class="inner">
+        <div class="read-next-feed">
+            
+            
+
+<article class="read-next-card" style="background-image: url(https://tva1.sinaimg.cn/large/006y8mN6ly1g77gpw5lrfj31bt0u0qv6.jpg)">
+  <header class="read-next-card-header">
+    <small class="read-next-card-header-sitetitle">&mdash; 01不是包子脸 &mdash;</small>
+    <h3 class="read-next-card-header-title">最新文章</h3>
+  </header>
+  <div class="read-next-divider">
+    <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24">
+      <path d="M13 14.5s2 3 5 3 5.5-2.463 5.5-5.5S21 6.5 18 6.5c-5 0-7 11-12 11C2.962 17.5.5 15.037.5 12S3 6.5 6 6.5s4.5 3.5 4.5 3.5"/>
+    </svg>
+  </div>
+  <div class="read-next-card-content">
+    <ul>
+      
+      
+      
+      <li>
+        <a href="/2019/09/14/浏览器同域名请求的最大并发数限制/">浏览器同域名请求的最大并发数限制</a>
+      </li>
+      
+      
+      
+      <li>
+        <a href="/2019/09/08/前端优化/">前端优化</a>
+      </li>
+      
+      
+      
+      <li>
+        <a href="/2019/08/31/CSS的position属性/">CSS的position属性</a>
+      </li>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+    </ul>
+  </div>
+  <footer class="read-next-card-footer">
+    <a href="/archives">  MORE  → </a>
+  </footer>
+</article>
+
+            
+            
+            
+
+<article class="read-next-card" style="background-image: url(https://tva1.sinaimg.cn/large/006y8mN6ly1g77gpw5lrfj31bt0u0qv6.jpg)">
+    <header class="read-next-card-header tagcloud-card">
+        <h3 class="read-next-card-header-title">分类</h3>
+    </header>
+    <div class="read-next-card-content">
+        <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/CSS/">CSS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/ES6/">ES6</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/HTTP/">HTTP</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/React/">React</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/git/">git</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/javascript/">javascript</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/vue/">vue</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/">前端</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端工具/">前端工具</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/浏览器/">浏览器</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/移动端/">移动端</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/算法/">算法</a></li></ul>
+    </div>
+</article>
+
+
+            
+            
+            
+
+<article class="read-next-card" style="background-image: url(https://tva1.sinaimg.cn/large/006y8mN6ly1g77gpw5lrfj31bt0u0qv6.jpg)">
+	<header class="read-next-card-header tagcloud-card">
+		<h3 class="read-next-card-header-title">标签云</h3>
+	</header>
+	<div class="read-next-card-content-ext">
+		<a href="/tags/CSS/" style="font-size: 19.71px;">CSS</a> <a href="/tags/ES6/" style="font-size: 21.14px;">ES6</a> <a href="/tags/HTTP/" style="font-size: 16.86px;">HTTP</a> <a href="/tags/React/" style="font-size: 15.43px;">React</a> <a href="/tags/git/" style="font-size: 14px;">git</a> <a href="/tags/javascript/" style="font-size: 22.57px;">javascript</a> <a href="/tags/leetcode/" style="font-size: 16.86px;">leetcode</a> <a href="/tags/vue/" style="font-size: 16.86px;">vue</a> <a href="/tags/webpack/" style="font-size: 15.43px;">webpack</a> <a href="/tags/前端/" style="font-size: 24px;">前端</a> <a href="/tags/回溯/" style="font-size: 14px;">回溯</a> <a href="/tags/性能优化/" style="font-size: 14px;">性能优化</a> <a href="/tags/排序/" style="font-size: 14px;">排序</a> <a href="/tags/数组/" style="font-size: 14px;">数组</a> <a href="/tags/浏览器/" style="font-size: 19.71px;">浏览器</a> <a href="/tags/移动端/" style="font-size: 14px;">移动端</a> <a href="/tags/算法/" style="font-size: 18.29px;">算法</a> <a href="/tags/跨域/" style="font-size: 14px;">跨域</a>
+	</div>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+	
+
+
+
+
+<div id="search" class="search-overlay">
+    <div class="search-form">
+        
+        <img class="search-overlay-logo" src="https://tva1.sinaimg.cn/large/006y8mN6ly1g6sjqjrb9wj30jj0jjjss.jpg" alt="01不是包子脸">
+        
+        <input id="local-search-input" class="search-input" type="text" name="search" placeholder="搜索 ...">
+        <a class="search-overlay-close" href="#"></a>
+    </div>
+    <div id="local-search-result"></div>
+</div>
+
+<footer class="site-footer outer">
+	<div class="site-footer-content inner">
+		<div class="copyright">
+			<a href="/" title="01不是包子脸">01不是包子脸</a>
+			&copy; 2019
+		</div>
+		<nav class="site-footer-nav">
+			
+			<a href="https://hexo.io" title="Hexo" target="_blank" rel="noopener">Hexo</a>
+			<a href="https://github.com/xzhih/hexo-theme-casper" title="Casper" target="_blank" rel="noopener">Casper</a>
+		</nav>
+	</div>
+</footer>
+	
+
+
+<script>if(window.navigator && navigator.serviceWorker) {navigator.serviceWorker.getRegistrations().then(function(registrations) {for(let registration of registrations) {registration.unregister()}})}</script>
+
+
+<script async src="/js/allinone.min.js" id="scriptLoad"></script>
+
+
+
+
+
+
+<script>
+    document.getElementById('scriptLoad').addEventListener('load', function () {
+        var bLazy = new Blazy()
+    })
+</script>
+
+
+
+
+<div class="floating-header">
+	<div class="floating-header-logo">
+        <a href="/" title="01不是包子脸">
+			
+                <img src="https://tva1.sinaimg.cn/large/006y8mN6ly1g6sjqjrb9wj30jj0jjjss.jpg" alt="01不是包子脸 icon">
+			
+            <span>01不是包子脸</span>
+        </a>
+    </div>
+    <span class="floating-header-divider">&mdash;</span>
+    <div class="floating-header-title">JS引擎执行机制</div>
+    <progress class="progress" value="0">
+        <span class="progress-container">
+            <span class="progress-bar"></span>
+        </span>
+    </progress>
+</div>
+<script>
+    document.getElementById('scriptLoad').addEventListener('load', function () {
+        postProgressBar()
+    })
+</script>
+
+
+
+
+<script src="/js/lightgallery.min.js"></script>
+<link rel="stylesheet" href="/css/lightgallery.min.css">
+<script>
+    lightGallery(document.getElementById('lightgallery'), {
+        selector: '.post-img'
+    });
+</script>
+
+
+
+
+<script async src="https://cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script async src="https://unpkg.com/valine@1.3.4/dist/Valine.min.js"></script>
+<script>
+    window.addEventListener("load", function() {
+        new Valine({
+            el: '#comment' ,
+            verify: false,
+            notify: false,
+            appId: 'RKl7DjTGeDG8TMedBcYhiagz-gzGzoHsz',
+            appKey: 'pcwdBNPnrqDUcLyj3H0TaeHy',
+            placeholder: '爱我就留下评论吧～～',
+            pageSize: 10,
+            avatar: 'mm',
+            visitor: true,
+        })
+    });
+</script>
+
+
+
+
+
+<script>
+    document.getElementById('scriptLoad').addEventListener('load', function(){
+        searchFunc("/")
+    });
+</script>
+
+
+
+
+
+
+</body>
+</html>

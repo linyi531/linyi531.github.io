@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+
+
+
+
+
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<link rel="preconnect" href="//pic.zhih.me">
+	<link rel="preconnect" href="//www.googletagmanager.com">
+	<link rel="preconnect" href="//zz.bdstatic.com">
+	<link rel="preconnect" href="//sp0.baidu.com">
+	<link rel="preconnect" href="//www.google-analytics.com">
+	<link rel="preconnect" href="//cdn1.lncld.net">
+	<link rel="preconnect" href="//unpkg.com">
+	<link rel="preconnect" href="//app-router.leancloud.cn">
+	<link rel="preconnect" href="//9qpuwspm.api.lncld.net">
+	<link rel="preconnect" href="//gravatar.loli.net">
+	<link rel="preload" href="https://pic.zhih.me/blog/header.jpg" as="image">
+
+	<title>前端优化 | 01不是包子脸</title>
+
+	<meta name="HandheldFriendly" content="True">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+	<meta name="generator" content="hexo">
+	<meta name="author" content="Linyi Li">
+	<meta name="description" content>
+
+	
+	<meta name="keywords" content>
+	
+
+	
+	<link rel="shortcut icon" href="https://tva1.sinaimg.cn/large/006y8mN6ly1g6sjqjrb9wj30jj0jjjss.jpg">
+	<link rel="apple-touch-icon" href="https://tva1.sinaimg.cn/large/006y8mN6ly1g6sjqjrb9wj30jj0jjjss.jpg">
+	
+
+	
+	<meta name="theme-color" content="#3c484e">
+	<meta name="msapplication-TileColor" content="#3c484e">
+	
+
+	
+
+	
+
+	<meta property="og:site_name" content="01不是包子脸">
+	<meta property="og:type" content="article">
+	<meta property="og:title" content="前端优化 | 01不是包子脸">
+	<meta property="og:description" content>
+	<meta property="og:url" content="http://yoursite.com/2019/09/08/前端优化/">
+
+	
+	<meta property="article:published_time" content="2019-09-08T23:09:00+08:00"> 
+	<meta property="article:author" content="Linyi Li">
+	<meta property="article:published_first" content="01不是包子脸, /2019/09/08/前端优化/">
+	
+
+	
+	
+	<link rel="stylesheet" href="/css/allinonecss.min.css">
+
+	
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-145838942-1"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag('js', new Date());
+		gtag('config', 'UA-145838942-1');
+	</script>
+	
+	
+	
+<link rel="canonical" href="http://yoursite.com/2019/09/08/前端优化/">
+
+
+
+
+
+</head>
+<body class="post-template">
+	<div class="site-wrapper">
+		
+
+
+
+
+<header class="site-header post-site-header outer">
+    <div class="inner">
+        
+<nav class="site-nav"> 
+    <div class="site-nav-left">
+        <ul class="nav">
+            <li>
+                
+                
+                <a class="site-nav-logo" href="/" title="01不是包子脸">
+                    <img src="https://tva1.sinaimg.cn/large/006y8mN6ly1g6sjqjrb9wj30jj0jjjss.jpg" alt="01不是包子脸">
+                </a>
+                
+                
+            </li>
+            
+            
+            <li>
+                <a href="/" title="HOME">HOME</a>
+            </li>
+            
+            <li>
+                <a href="/about" title="ABOUT">ABOUT</a>
+            </li>
+            
+            <li>
+                <a href="/archives" title="ARCHIVES">ARCHIVES</a>
+            </li>
+            
+            
+        </ul> 
+    </div>
+    
+    <div class="search-button-area">
+        <a href="#search" class="search-button">Search ...</a>
+    </div>
+     
+    <div class="site-nav-right">
+        
+        <a href="#search" class="search-button">Search ...</a>
+         
+        
+<div class="social-links">
+    
+    <a class="social-link" title="weibo" href="https://weibo.com/2164694963/profile?rightmod=1&wvr=6&mod=personinfo" target="_blank" rel="noopener">
+        <svg viewbox="0 0 1141 1024" xmlns="http://www.w3.org/2000/svg"><path d="M916.48 518.144q27.648 21.504 38.912 51.712t9.216 62.976-14.336 65.536-31.744 59.392q-34.816 48.128-78.848 81.92t-91.136 56.32-94.72 35.328-89.6 18.944-75.264 7.68-51.712 1.536-49.152-2.56-68.096-10.24-78.336-21.504-79.872-36.352-74.24-55.296-59.904-78.848q-16.384-29.696-22.016-63.488t-5.632-86.016q0-22.528 7.68-51.2t27.136-63.488 53.248-75.776 86.016-90.112q51.2-48.128 105.984-85.504t117.248-57.856q28.672-10.24 63.488-11.264t57.344 11.264q10.24 11.264 19.456 23.04t12.288 29.184q3.072 14.336 0.512 27.648t-5.632 26.624-5.12 25.6 2.048 22.528q17.408 2.048 33.792-1.536t31.744-9.216 31.232-11.776 33.28-9.216q27.648-5.12 54.784-4.608t49.152 7.68 36.352 22.016 17.408 38.4q2.048 14.336-2.048 26.624t-8.704 23.04-7.168 22.016 1.536 23.552q3.072 7.168 14.848 13.312t27.136 12.288 32.256 13.312 29.184 16.384zM658.432 836.608q26.624-16.384 53.76-45.056t44.032-64 18.944-75.776-20.48-81.408q-19.456-33.792-47.616-57.344t-62.976-37.376-74.24-19.968-80.384-6.144q-78.848 0-139.776 16.384t-105.472 43.008-72.192 60.416-38.912 68.608q-11.264 33.792-6.656 67.072t20.992 62.976 42.496 53.248 57.856 37.888q58.368 25.6 119.296 32.256t116.224 0.512 100.864-21.504 74.24-33.792zM524.288 513.024q20.48 8.192 38.912 18.432t32.768 27.648q10.24 12.288 17.92 30.72t10.752 39.424 1.536 42.496-9.728 38.912q-8.192 18.432-19.968 37.376t-28.672 35.328-40.448 29.184-57.344 18.944q-61.44 11.264-117.76-11.264t-88.064-74.752q-12.288-39.936-13.312-70.656t16.384-66.56q13.312-27.648 40.448-51.712t62.464-38.912 75.264-17.408 78.848 12.8zM361.472 764.928q37.888 3.072 57.856-18.432t21.504-48.128-15.36-47.616-52.736-16.896q-27.648 3.072-43.008 23.552t-17.408 43.52 9.728 42.496 39.424 21.504zM780.288 6.144q74.752 0 139.776 19.968t113.664 57.856 76.288 92.16 27.648 122.88q0 33.792-16.384 50.688t-35.328 17.408-35.328-14.336-16.384-45.568q0-40.96-22.528-77.824t-59.392-64.512-84.48-43.52-96.768-15.872q-31.744 0-47.104-15.36t-14.336-34.304 18.944-34.304 51.712-15.36zM780.288 169.984q95.232 0 144.384 48.64t49.152 146.944q0 30.72-10.24 43.52t-22.528 11.264-22.528-14.848-10.24-35.84q0-60.416-34.816-96.256t-93.184-35.84q-19.456 0-28.672-10.752t-9.216-23.04 9.728-23.04 28.16-10.752z"/></svg>
+    </a>
+    
+    
+    <a class="social-link" title="github" href="https://github.com/linyi531" target="_blank" rel="noopener">
+        <svg viewbox="0 0 1049 1024" xmlns="http://www.w3.org/2000/svg"><path d="M524.979332 0C234.676191 0 0 234.676191 0 524.979332c0 232.068678 150.366597 428.501342 358.967656 498.035028 26.075132 5.215026 35.636014-11.299224 35.636014-25.205961 0-12.168395-0.869171-53.888607-0.869171-97.347161-146.020741 31.290159-176.441729-62.580318-176.441729-62.580318-23.467619-60.841976-58.234462-76.487055-58.234463-76.487055-47.804409-32.15933 3.476684-32.15933 3.476685-32.15933 53.019436 3.476684 80.83291 53.888607 80.83291 53.888607 46.935238 79.963739 122.553122 57.365291 152.97411 43.458554 4.345855-33.897672 18.252593-57.365291 33.028501-70.402857-116.468925-12.168395-239.022047-57.365291-239.022047-259.012982 0-57.365291 20.860106-104.300529 53.888607-140.805715-5.215026-13.037566-23.467619-66.926173 5.215027-139.067372 0 0 44.327725-13.906737 144.282399 53.888607 41.720212-11.299224 86.917108-17.383422 131.244833-17.383422s89.524621 6.084198 131.244833 17.383422C756.178839 203.386032 800.506564 217.29277 800.506564 217.29277c28.682646 72.1412 10.430053 126.029806 5.215026 139.067372 33.897672 36.505185 53.888607 83.440424 53.888607 140.805715 0 201.64769-122.553122 245.975415-239.891218 259.012982 19.121764 16.514251 35.636014 47.804409 35.636015 97.347161 0 70.402857-0.869171 126.898978-0.869172 144.282399 0 13.906737 9.560882 30.420988 35.636015 25.205961 208.601059-69.533686 358.967656-265.96635 358.967655-498.035028C1049.958663 234.676191 814.413301 0 524.979332 0z"/></svg>
+    </a>
+    
+    
+    
+    <a class="social-link" title="twitter" href="https://twitter.com/nFywOCNPid75cl5" target="_blank" rel="noopener">
+        <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 32 32"><path d="M30.063 7.313c-.813 1.125-1.75 2.125-2.875 2.938v.75c0 1.563-.188 3.125-.688 4.625a15.088 15.088 0 0 1-2.063 4.438c-.875 1.438-2 2.688-3.25 3.813a15.015 15.015 0 0 1-4.625 2.563c-1.813.688-3.75 1-5.75 1-3.25 0-6.188-.875-8.875-2.625.438.063.875.125 1.375.125 2.688 0 5.063-.875 7.188-2.5-1.25 0-2.375-.375-3.375-1.125s-1.688-1.688-2.063-2.875c.438.063.813.125 1.125.125.5 0 1-.063 1.5-.25-1.313-.25-2.438-.938-3.313-1.938a5.673 5.673 0 0 1-1.313-3.688v-.063c.813.438 1.688.688 2.625.688a5.228 5.228 0 0 1-1.875-2c-.5-.875-.688-1.813-.688-2.75 0-1.063.25-2.063.75-2.938 1.438 1.75 3.188 3.188 5.25 4.25s4.313 1.688 6.688 1.813a5.579 5.579 0 0 1 1.5-5.438c1.125-1.125 2.5-1.688 4.125-1.688s3.063.625 4.188 1.813a11.48 11.48 0 0 0 3.688-1.375c-.438 1.375-1.313 2.438-2.563 3.188 1.125-.125 2.188-.438 3.313-.875z"/></svg>
+
+    </a>
+    
+    
+    <a class="social-link" title="telegram" href="https://www.instagram.com/linyi531/" target="_blank" rel="noopener">
+        <svg viewbox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M679.428571 746.857143l84-396q5.142857-25.142857-6-36t-29.428571-4L234.285714 501.142857q-16.571429 6.285714-22.571428 14.285714t-1.428572 15.142858 18.285715 11.142857l126.285714 39.428571 293.142857-184.571428q12-8 18.285714-3.428572 4 2.857143-2.285714 8.571429l-237.142857 214.285714-9.142857 130.285714q13.142857 0 25.714285-12.571428l61.714286-59.428572 128 94.285715q36.571429 20.571429 46.285714-21.714286z m344.571429-234.857143q0 104-40.571429 198.857143t-109.142857 163.428571-163.428571 109.142857-198.857143 40.571429-198.857143-40.571429-163.428571-109.142857-109.142857-163.428571T0 512t40.571429-198.857143 109.142857-163.428571T313.142857 40.571429 512 0t198.857143 40.571429 163.428571 109.142857 109.142857 163.428571 40.571429 198.857143z"/></svg>
+    </a>
+    
+    
+    
+</div>
+    </div>
+</nav>
+    </div>
+</header>
+
+
+<div id="site-main" class="site-main outer" role="main">
+    <div class="inner">
+        <header class="post-full-header">
+            <div class="post-full-meta">
+                <time class="post-full-meta-date" datetime="2019-09-08T15:48:15.000Z">
+                    2019-09-8
+                </time>
+                
+                <span class="date-divider">/</span>
+                
+                <a href="/categories/前端/">前端</a>&nbsp;&nbsp;
+                
+                
+            </div>
+            <h1 class="post-full-title">前端优化</h1>
+        </header>
+        <div class="post-full ">
+            
+            <figure class="post-full-image" style="background-image: url(https://tva1.sinaimg.cn/large/006y8mN6ly1g6sjnakxoaj30u01hc4qq.jpg)">
+            </figure>
+            
+            <div class="post-full-content">
+                <article id="lightgallery" class="markdown-body">
+                    <h1 id="前端优化"><a href="#前端优化" class="headerlink" title="前端优化"></a>前端优化</h1><h2 id="前端性能衡量指标"><a href="#前端性能衡量指标" class="headerlink" title="前端性能衡量指标"></a>前端性能衡量指标</h2><ul>
+<li><strong>白屏时间</strong> 该时间点表示浏览器开始绘制页面，在此之前页面都是白屏，也称为开始渲染时间</li>
+<li><strong>首屏时间</strong> 该时间点表示用户看到第一屏页面的时间</li>
+<li><strong>用户可交互时间</strong> 也叫 DOM Ready,该时间点表示 DOM 解析完成，资源还没有完成，这个时候用户与页面可以交互了</li>
+<li><strong>完全加载时间</strong> 该时间点是 window.onload 时间触发的时间，表示原始文档和所用引用的内容已经加载完成，用户最明显的感觉就是浏览器 tab 上 loading 状态结束</li>
+<li><strong>首字节时间（TTFB）</strong> 第一字节响应时间（TTFB）=发送请求到 WEB 服务器的时间+WEB 服务器处理请求并生成响应花费的时间+WEB 服务器生成响应到浏览器花费的时间</li>
+<li><strong>DNS 解析时间</strong></li>
+<li><strong>TCP 连接时间</strong></li>
+<li><strong>HTTP 请求时间</strong></li>
+<li><strong>HTTP 响应时间</strong></li>
+</ul>
+<h2 id="优化原则"><a href="#优化原则" class="headerlink" title="优化原则"></a>优化原则</h2><p>雅虎 14 条优化原则：</p>
+<ol>
+<li><p>尽可能的减少 HTTP 的请求数 content</p>
+</li>
+<li><p>使用 CDN（Content Delivery Network） server</p>
+</li>
+<li><p>添加 Expires 头(或者 Cache-control ) server</p>
+</li>
+<li><p>Gzip 组件 server</p>
+</li>
+<li><p>将 CSS 样式放在页面的上方 css</p>
+</li>
+<li><p>将脚本移动到底部（包括内联的） javascript</p>
+</li>
+<li><p>避免使用 CSS 中的 Expressions css</p>
+</li>
+<li><p>将 JavaScript 和 CSS 独立成外部文件 javascript css</p>
+</li>
+<li><p>减少 DNS 查询 content</p>
+</li>
+<li><p>压缩 JavaScript 和 CSS (包括内联的) javascript css</p>
+</li>
+<li><p>避免重定向 server</p>
+</li>
+<li><p>移除重复的脚本 javascript</p>
+</li>
+<li><p>配置实体标签（ETags） css</p>
+</li>
+<li><p>使 AJAX 缓存</p>
+</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>优化方向</th>
+<th>优化手段</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>请求数量</td>
+<td>合并脚本和样式表，CSS Sprites，拆分初始化负载，划分主域，字体图标，雪碧图片等</td>
+</tr>
+<tr>
+<td>请求带宽</td>
+<td>开启服务器 GZip，精简 JavaScript，移除重复脚本，图像优化（包括图片大小 kb）</td>
+</tr>
+<tr>
+<td>缓存利用</td>
+<td>使用 CDN，使用外部 JavaScript 和 CSS，添加 Expires 头，减少 DNS 查找，配置 ETag，使 AjaX 可缓存</td>
+</tr>
+<tr>
+<td>页面结构</td>
+<td>将样式表放在顶部，将脚本放在底部，尽早刷新文档的输出</td>
+</tr>
+<tr>
+<td>代码校验</td>
+<td>避免 CSS 表达式，避免重定向</td>
+</tr>
+</tbody></table>
+<h2 id="网络相关"><a href="#网络相关" class="headerlink" title="网络相关"></a>网络相关</h2><h3 id="DNS-预解析"><a href="#DNS-预解析" class="headerlink" title="DNS 预解析"></a>DNS 预解析</h3><p>DNS 解析也是需要时间的，可以通过预解析的方式来预先获得域名所对应的 IP。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">"dns-prefetch"</span> <span class="attr">href</span>=<span class="string">"//yuchengkai.cn"</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="利用缓存"><a href="#利用缓存" class="headerlink" title="利用缓存"></a>利用缓存</h3><p>缓存对于前端性能优化来说是个很重要的点，良好的缓存策略可以降低资源的重复加载提高网页的整体加载速度。</p>
+<p>通常浏览器缓存策略分为两种：强缓存和协商缓存</p>
+<h4 id="选择合适的缓存策略"><a href="#选择合适的缓存策略" class="headerlink" title="选择合适的缓存策略"></a>选择合适的缓存策略</h4><p>对于大部分的场景都可以使用强缓存配合协商缓存解决，但是在一些特殊的地方可能需要选择特殊的缓存策略</p>
+<ul>
+<li>对于某些不需要缓存的资源，可以使用 <code>Cache-control: no-store</code> ，表示该资源不需要缓存</li>
+<li>对于频繁变动的资源，可以使用 <code>Cache-Control: no-cache</code> 并配合 <code>ETag</code> 使用，表示该资源已被缓存，但是每次都会发送请求询问资源是否更新。</li>
+<li>对于代码文件来说，通常使用 <code>Cache-Control: max-age=31536000</code> 并配合策略缓存使用，然后对文件进行指纹处理，一旦文件名变动就会立刻下载新的文件。</li>
+</ul>
+<h3 id="使用-HTTP-2-0"><a href="#使用-HTTP-2-0" class="headerlink" title="使用 HTTP / 2.0"></a>使用 HTTP / 2.0</h3><p>因为浏览器会有并发请求限制，在 HTTP / 1.1 时代，每个请求都需要建立和断开，消耗了好几个 RTT 时间，并且由于 TCP 慢启动的原因，加载体积大的文件会需要更多的时间。</p>
+<p>在 HTTP / 2.0 中引入了多路复用，能够让多个请求使用同一个 TCP 链接，极大的加快了网页的加载速度。并且还支持 Header 压缩，进一步的减少了请求的数据大小。</p>
+<h3 id="预加载-amp-懒加载"><a href="#预加载-amp-懒加载" class="headerlink" title="预加载&amp;懒加载"></a>预加载&amp;懒加载</h3><h4 id="预加载"><a href="#预加载" class="headerlink" title="预加载"></a>预加载</h4><p>在开发中，可能会遇到这样的情况。有些资源不需要马上用到，但是希望尽早获取，这时候就可以使用预加载。</p>
+<p>预加载其实是声明式的 <code>fetch</code> ，强制浏览器请求资源，并且不会阻塞 <code>onload</code> 事件，可以使用以下代码开启预加载</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">"preload"</span> <span class="attr">href</span>=<span class="string">"http://example.com"</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>预加载可以一定程度上降低首屏的加载时间，因为可以将一些不影响首屏但重要的文件延后加载，唯一缺点就是兼容性不好。</p>
+<h4 id="预渲染"><a href="#预渲染" class="headerlink" title="预渲染"></a>预渲染</h4><p>可以通过预渲染将下载的文件预先在后台渲染，可以使用以下代码开启预渲染</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">"prerender"</span> <span class="attr">href</span>=<span class="string">"http://example.com"</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>预渲染虽然可以提高页面的加载速度，但是要确保该页面百分百会被用户在之后打开，否则就白白浪费资源去渲染。</p>
+<h4 id="懒执行"><a href="#懒执行" class="headerlink" title="懒执行"></a>懒执行</h4><p>懒执行就是将某些逻辑延迟到使用时再计算。该技术可以用于首屏优化，对于某些耗时逻辑并不需要在首屏就使用的，就可以使用懒执行。懒执行需要唤醒，一般可以通过定时器或者事件的调用来唤醒。</p>
+<h4 id="懒加载"><a href="#懒加载" class="headerlink" title="懒加载"></a>懒加载</h4><p>懒加载就是将不关键的资源延后加载。</p>
+<p>懒加载的原理就是只加载自定义区域（通常是可视区域，但也可以是即将进入可视区域）内需要加载的东西。对于图片来说，先设置图片标签的 <code>src</code> 属性为一张占位图，将真实的图片资源放入一个自定义属性中，当进入自定义区域时，就将自定义属性替换为 <code>src</code> 属性，这样图片就会去下载资源，实现了图片懒加载。</p>
+<p>懒加载不仅可以用于图片，也可以使用在别的资源上。比如进入可视区域才开始播放视频等等。</p>
+<h2 id="文件优化"><a href="#文件优化" class="headerlink" title="文件优化"></a>文件优化</h2><h3 id="图片优化"><a href="#图片优化" class="headerlink" title="图片优化"></a>图片优化</h3><h4 id="图片大小计算"><a href="#图片大小计算" class="headerlink" title="图片大小计算"></a>图片大小计算</h4><p>在实际项目中，一张图片可能并不需要使用那么多颜色去显示，我们可以通过减少每个像素的调色板来相应缩小图片的大小。</p>
+<p>了解了如何计算图片大小的知识，那么对于如何优化图片，想必大家已经有 2 个思路了：</p>
+<ul>
+<li>减少像素点</li>
+<li>减少每个像素点能够显示的颜色</li>
+</ul>
+<h4 id="图片加载优化"><a href="#图片加载优化" class="headerlink" title="图片加载优化"></a>图片加载优化</h4><ol>
+<li>不用图片。很多时候会使用到很多修饰类图片，其实这类修饰图片完全可以用 CSS 去代替。</li>
+<li>对于移动端来说，屏幕宽度就那么点，完全没有必要去加载原图浪费带宽。一般图片都用 CDN 加载，可以计算出适配屏幕的宽度，然后去请求相应裁剪好的图片。</li>
+<li>小图使用 base64 格式</li>
+<li>将多个图标文件整合到一张图片中（雪碧图）</li>
+<li>选择正确的图片格式：<ul>
+<li>对于能够显示 WebP 格式的浏览器尽量使用 WebP 格式。因为 WebP 格式具有更好的图像数据压缩算法，能带来更小的图片体积，而且拥有肉眼识别无差异的图像质量，缺点就是兼容性并不好</li>
+<li>小图使用 PNG，其实对于大部分图标这类图片，完全可以使用 SVG 代替</li>
+<li>照片使用 JPEG</li>
+</ul>
+</li>
+</ol>
+<h3 id="其他文件优化"><a href="#其他文件优化" class="headerlink" title="其他文件优化"></a>其他文件优化</h3><ul>
+<li>CSS 文件放在 <code>head</code> 中</li>
+<li>服务端开启文件压缩功能</li>
+<li>将 <code>script</code> 标签放在 <code>body</code> 底部，因为 JS 文件执行会阻塞渲染。当然也可以把 <code>script</code> 标签放在任意位置然后加上 <code>defer</code> ，表示该文件会并行下载，但是会放到 HTML 解析完成后顺序执行。对于没有任何依赖的 JS 文件可以加上 <code>async</code> ，表示加载和渲染后续文档元素的过程将和 JS 文件的加载与执行并行无序进行。</li>
+<li>执行 JS 代码过长会卡住渲染，对于需要很多时间计算的代码可以考虑使用 <code>Webworker</code>。<code>Webworker</code> 可以让我们另开一个线程执行脚本而不影响渲染。</li>
+</ul>
+<h3 id="CDN"><a href="#CDN" class="headerlink" title="CDN"></a>CDN</h3><blockquote>
+<p>CDN 的全称是 Content Delivery Network，即内容分发网络。CDN 是构建在网络之上的内容分发网络，依靠部署在各地的边缘服务器，通过中心平台的负载均衡、内容分发、调度等功能模块，使用户就近获取所需内容，降低网络拥塞，提高用户访问响应速度和命中率。CDN 的关键技术主要有内容存储和分发技术。—— 科学百科</p>
+</blockquote>
+<p><img alt="img" class="post-img b-lazy" href="https://tva1.sinaimg.cn/large/006y8mN6ly1g6p436ax42j30ia09l74f.jpg" data-src="https://tva1.sinaimg.cn/large/006y8mN6ly1g6p436ax42j30ia09l74f.jpg"></p>
+<h4 id="CDN-存在的意义"><a href="#CDN-存在的意义" class="headerlink" title="CDN 存在的意义"></a>CDN 存在的意义</h4><p>为了不让网络拥塞成为互联网发展的障碍。</p>
+<h4 id="CDN-的优势"><a href="#CDN-的优势" class="headerlink" title="CDN 的优势"></a>CDN 的优势</h4><ol>
+<li>CDN 节点解决了跨运营商和跨地域访问的问题，访问延时大大降低；</li>
+<li>大部分请求在 CDN 边缘节点完成，CDN 起到了分流作用，减轻了源站的负载；</li>
+<li>降低“广播风暴”的影响，提高网络访问的稳定性；节省骨干网带宽，减少带宽需求量。</li>
+</ol>
+<h4 id="CDN-的核心点"><a href="#CDN-的核心点" class="headerlink" title="CDN 的核心点"></a>CDN 的核心点</h4><ul>
+<li><p>缓存：将从根服务器请求来的资源按要求缓存。</p>
+</li>
+<li><p>回源：当有用户访问某个资源的时候，如果被解析到的那个 CDN 节点没有缓存响应的内容，或者是缓存已经到期，就会回源站去获取。没有人访问，CDN 节点不会主动去源站请求资源。</p>
+</li>
+</ul>
+<h4 id="关键技术"><a href="#关键技术" class="headerlink" title="关键技术"></a>关键技术</h4><ol>
+<li>内容发布：它借助于建立索引、缓存、流分裂、组播（Multicast）等技术，将内容发布或投递到距离用户最近的远程服务点（POP）处；</li>
+<li>内容路由：它是整体性的网络负载均衡技术，通过内容路由器中的重定向（DNS）机制，在多个远程 POP 上均衡用户的请求，以使用户请求得到最近内容源的响应；</li>
+<li>内容交换：它根据内容的可用性、服务器的可用性以及用户的背景，在 POP 的缓存服务器上，利用应用层交换、流分裂、重定向（ICP、WCCP）等技术，智能地平衡负载流量；</li>
+<li>性能管理：它通过内部和外部监控系统，获取网络部件的状况信息，测量内容发布的端到端性能（如包丢失、延时、平均带宽、启动时间、帧速率等），保证网络处于最佳的运行状态。</li>
+</ol>
+<h4 id="CDN-amp-静态资源"><a href="#CDN-amp-静态资源" class="headerlink" title="CDN &amp; 静态资源"></a>CDN &amp; 静态资源</h4><p>静态资源本身具有访问频率高、承接流量大的特点，因此静态资源加载速度始终是前端性能的一个非常关键的指标。CDN 是静态资源提速的重要手段。</p>
+<p>静态资源尽量使用 CDN 加载，由于浏览器对于单个域名有并发请求上限，可以考虑使用多个 CDN 域名。对于 CDN 加载静态资源需要注意 CDN 域名要与主站不同，否则每次请求都会带上主站的 Cookie。</p>
+<h2 id="其他优化"><a href="#其他优化" class="headerlink" title="其他优化"></a>其他优化</h2><h3 id="使用-Webpack-优化项目"><a href="#使用-Webpack-优化项目" class="headerlink" title="使用 Webpack 优化项目"></a>使用 Webpack 优化项目</h3><ul>
+<li>对于 Webpack4，打包项目使用 production 模式，这样会自动开启代码压缩</li>
+<li>使用 ES6 模块来开启 tree shaking，这个技术可以移除没有使用的代码</li>
+<li>优化图片，对于小图可以使用 base64 的方式写入文件中</li>
+<li>按照路由拆分代码，实现按需加载</li>
+<li>给打包出来的文件名添加哈希，实现浏览器缓存文件</li>
+</ul>
+<h3 id="监控"><a href="#监控" class="headerlink" title="监控"></a>监控</h3><p>对于代码运行错误，通常的办法是使用 <code>window.onerror</code> 拦截报错。该方法能拦截到大部分的详细报错信息，但是也有例外</p>
+<ul>
+<li>对于跨域的代码运行错误会显示 <code>Script error.</code> 对于这种情况我们需要给 <code>script</code> 标签添加 <code>crossorigin</code> 属性</li>
+<li>对于某些浏览器可能不会显示调用栈信息，这种情况可以通过 <code>arguments.callee.caller</code> 来做栈递归</li>
+</ul>
+<p>对于异步代码来说，可以使用 <code>catch</code> 的方式捕获错误。比如 <code>Promise</code> 可以直接使用 <code>catch</code> 函数，<code>async await</code> 可以使用 <code>try catch</code></p>
+<p>但是要注意线上运行的代码都是压缩过的，需要在打包时生成 sourceMap 文件便于 debug。</p>
+<p>对于捕获的错误需要上传给服务器，通常可以通过 <code>img</code> 标签的 <code>src</code> 发起一个请求。</p>
+<h2 id="如何优化第二次加载速度？（增量加载）"><a href="#如何优化第二次加载速度？（增量加载）" class="headerlink" title="如何优化第二次加载速度？（增量加载）"></a>如何优化第二次加载速度？（增量加载）</h2><p><a href="https://juejin.im/post/5d00820b5188255ee806a1c7" target="_blank" rel="noopener">前端性能优化三部曲(加载篇)</a></p>
+<p><a href="https://juejin.im/entry/599403656fb9a0247f4f2ee3" target="_blank" rel="noopener">移动 H5 首屏秒开优化方案探讨</a></p>
+<ol>
+<li><strong>降低请求量：</strong>合并资源，减少 HTTP 请求数，minify / gzip 压缩，webP，lazyLoad。</li>
+<li><strong>加快请求速度：</strong>预解析 DNS，减少域名数，并行加载，CDN 分发。</li>
+<li><strong>缓存：</strong>HTTP 协议缓存请求，离线缓存 manifest，离线数据缓存 localStorage。</li>
+<li><strong>渲染：</strong>JS/CSS 优化，加载顺序，服务端渲染，pipeline。</li>
+</ol>
+<p>其中对首屏启动速度影响最大的就是网络请求，所以优化的重点就是缓存</p>
+<p><strong>增量式更新”</strong>的解决方案，简单地说就是在版本更新的时候不需要重新加载资源，只需要加载一段很小的 diff 信息，然后合并到当前资源上，类似 git merge 的效果。</p>
+<p>增量加载的一种思路：</p>
+<p>1、用户端使用 LocalStorage 或者其它储存方案，存储一份原始代码+时间戳：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    timeStamp: &quot;20161026xxxxxx&quot;,</span><br><span class="line">    data: &quot;aaabbbccc&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>2、每次加载资源的时候向服务器发送这个时间戳；</p>
+<p>3、服务器从接受到时间戳中识别出客户端的版本，和最新的版本做一次 diff，返回两者的 diff 信息：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">diff(<span class="string">"aaabbbccc"</span>, <span class="string">"aaagggccc"</span>);</span><br><span class="line"><span class="comment">// 假设我们的diff信息这样表示：</span></span><br><span class="line"><span class="comment">// [3, "-3", "+ggg", 3]</span></span><br></pre></td></tr></table></figure>
+
+<p>4、客户端接收到这个 diff 信息之后，把本地资源和时间戳更新到最新，实现一次增量更新：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mergeDiff(<span class="string">"aaabbbccc"</span>, [<span class="number">3</span>, <span class="string">"-3"</span>, <span class="string">"+ggg"</span>, <span class="number">3</span>]);</span><br><span class="line"><span class="comment">//=&gt; "aaagggccc"</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="面试题（如何渲染几万条数据并不卡住界）"><a href="#面试题（如何渲染几万条数据并不卡住界）" class="headerlink" title="面试题（如何渲染几万条数据并不卡住界）"></a>面试题（如何渲染几万条数据并不卡住界）</h2><p>这道题考察了如何在不卡住页面的情况下渲染数据，也就是说不能一次性将几万条都渲染出来，而应该一次渲染部分 DOM，那么就可以通过 <code>requestAnimationFrame</code> 来每 16 ms 刷新一次。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">"viewport"</span> <span class="attr">content</span>=<span class="string">"width=device-width, initial-scale=1.0"</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"X-UA-Compatible"</span> <span class="attr">content</span>=<span class="string">"ie=edge"</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Document<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">ul</span>&gt;</span></span><br><span class="line">      控件</span><br><span class="line">    <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript">      setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span></span><br><span class="line"><span class="actionscript">        <span class="comment">// 插入十万条数据</span></span></span><br><span class="line"><span class="actionscript">        <span class="keyword">const</span> total = <span class="number">100000</span>;</span></span><br><span class="line"><span class="actionscript">        <span class="comment">// 一次插入 20 条，如果觉得性能不好就减少</span></span></span><br><span class="line"><span class="actionscript">        <span class="keyword">const</span> once = <span class="number">20</span>;</span></span><br><span class="line"><span class="actionscript">        <span class="comment">// 渲染数据总共需要几次</span></span></span><br><span class="line"><span class="actionscript">        <span class="keyword">const</span> loopCount = total / once;</span></span><br><span class="line"><span class="javascript">        <span class="keyword">let</span> countOfRender = <span class="number">0</span>;</span></span><br><span class="line"><span class="javascript">        <span class="keyword">let</span> ul = <span class="built_in">document</span>.querySelector(<span class="string">"ul"</span>);</span></span><br><span class="line"><span class="actionscript">        <span class="function"><span class="keyword">function</span> <span class="title">add</span><span class="params">()</span> </span>&#123;</span></span><br><span class="line"><span class="actionscript">          <span class="comment">// 优化性能，插入不会造成回流</span></span></span><br><span class="line"><span class="javascript">          <span class="keyword">const</span> fragment = <span class="built_in">document</span>.createDocumentFragment();</span></span><br><span class="line"><span class="javascript">          <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; once; i++) &#123;</span></span><br><span class="line"><span class="javascript">            <span class="keyword">const</span> li = <span class="built_in">document</span>.createElement(<span class="string">"li"</span>);</span></span><br><span class="line"><span class="javascript">            li.innerText = <span class="built_in">Math</span>.floor(<span class="built_in">Math</span>.random() * total);</span></span><br><span class="line">            fragment.appendChild(li);</span><br><span class="line">          &#125;</span><br><span class="line">          ul.appendChild(fragment);</span><br><span class="line">          countOfRender += 1;</span><br><span class="line"><span class="vbscript">          <span class="keyword">loop</span>();</span></span><br><span class="line">        &#125;</span><br><span class="line"><span class="actionscript">        <span class="function"><span class="keyword">function</span> <span class="title">loop</span><span class="params">()</span> </span>&#123;</span></span><br><span class="line"><span class="actionscript">          <span class="keyword">if</span> (countOfRender &lt; loopCount) &#123;</span></span><br><span class="line"><span class="javascript">            <span class="built_in">window</span>.requestAnimationFrame(add);</span></span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line"><span class="vbscript">        <span class="keyword">loop</span>();</span></span><br><span class="line">      &#125;, 0);</span><br><span class="line">    <span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="拓展知识之-Gzip"><a href="#拓展知识之-Gzip" class="headerlink" title="拓展知识之 Gzip"></a>拓展知识之 Gzip</h2><h3 id="基本介绍"><a href="#基本介绍" class="headerlink" title="基本介绍"></a>基本介绍</h3><p>gzip 是 GNUzip 的缩写，最早用于 UNIX 系统的文件压缩。HTTP 协议上的 gzip 编码是一种用来改进 web 应用程序性能的技术，web 服务器和客户端（浏览器）必须共同支持 gzip。目前主流的浏览器，Chrome,firefox,IE 等都支持该协议。常见的服务器如 Apache，Nginx，IIS 同样支持 gzip。</p>
+<p>gzip 压缩比率在 3 到 10 倍左右，可以大大节省服务器的网络带宽。而在实际应用中，并不是对所有文件进行压缩，通常只是压缩静态文件。</p>
+<h3 id="gzip-工作原理："><a href="#gzip-工作原理：" class="headerlink" title="gzip 工作原理："></a>gzip 工作原理：</h3><p><img alt="img" class="post-img b-lazy" href="https://tva1.sinaimg.cn/large/006y8mN6ly1g6sjepqxiaj30go0bcaa9.jpg" data-src="https://tva1.sinaimg.cn/large/006y8mN6ly1g6sjepqxiaj30go0bcaa9.jpg"></p>
+<ol>
+<li>浏览器请求 url，并在 request header 中设置属性 accept-encoding:gzip。表明浏览器支持 gzip。</li>
+<li>服务器收到浏览器发送的请求之后，判断浏览器是否支持 gzip，如果支持 gzip，则向浏览器传送压缩过的内容，不支持则向浏览器发送未经压缩的内容。一般情况下，浏览器和服务器都支持 gzip，response headers 返回包含 content-encoding:gzip。</li>
+<li>浏览器接收到服务器的响应之后判断内容是否被压缩，如果被压缩则解压缩显示页面内容。</li>
+</ol>
+<h3 id="Nginx-中开启-gzip"><a href="#Nginx-中开启-gzip" class="headerlink" title="Nginx 中开启 gzip"></a>Nginx 中开启 gzip</h3><p>如果服务端接口使用 nodejs 和 express，那么开启 nginx 非常简单。启用 compress() 中间件即可并在 nginx.conf 中添加 gzip 配置项即可，express.compress() gzip 压缩中间件，通过 filter 函数设置需要压缩的文件类型。压缩算法为 gzip/deflate。这个中间件应该放置在所有的中间件最前面以保证所有的返回都是被压缩的。如果使用 java 开发，需要配置 filter。</p>
+<p><img alt="img" class="post-img b-lazy" href="https://tva1.sinaimg.cn/large/006y8mN6ly1g6sjg93f23j30go03eq2v.jpg" data-src="https://tva1.sinaimg.cn/large/006y8mN6ly1g6sjg93f23j30go03eq2v.jpg"></p>
+<p>添加完参数后，运行 nginx –t 检查一下语法，若语法检测通过，则开始访问 url 检测 gzip 是否添加成功。</p>
+<ol>
+<li>gzip on：开启 gzip。</li>
+<li>gzip_comp_level：gzip 压缩比。</li>
+<li>gzip_min_length：允许被压缩的页面最小字节数。</li>
+<li>gzip_types：匹配 MIME 类型进行压缩，text/html 默认被压缩。</li>
+</ol>
+<h3 id="检测-gzip-是否开启"><a href="#检测-gzip-是否开启" class="headerlink" title="检测 gzip 是否开启"></a>检测 gzip 是否开启</h3><p>如果没有现成的项目代码，这里提供一个比较简单的检测方式。首先在本地安装 nginx，在 nginx 默认目录下面添加了两个静态文件 bootstrap.css、bootstrap.js。</p>
+<p>OS X 系统的默认路径为：/usr/local/Cellar/nginx/1.10.2_1/html，Windows 系统直接复制文件到文件夹下面。</p>
+<p>拷贝文件指令可参考：cp -r bootstrap.js /usr/local/Cellar/nginx/1.10.2_1/html，在 nginx 的默认成功跳转页面 index.html 引入这两个静态文件。index.html 页面内容如图所示。</p>
+<p><img alt="img" class="post-img b-lazy" href="https://tva1.sinaimg.cn/large/006y8mN6ly1g6sjhnk9acj30go0c90tb.jpg" data-src="https://tva1.sinaimg.cn/large/006y8mN6ly1g6sjhnk9acj30go0c90tb.jpg"></p>
+<p>做好这一切的准备工作之后，浏览器输入<a href="https://link.juejin.im/?target=https%3A%2F%2Flink.zhihu.com%2F%3Ftarget%3Dhttp%3A%2F%2Flocalhost%3A8080%2F" target="_blank" rel="noopener">http://localhost:8080/</a>。出现如图所示页面表明 nginx 启动成功。</p>
+<p><img alt="img" class="post-img b-lazy" href="https://tva1.sinaimg.cn/large/006y8mN6ly1g6sjii979gj30go048wei.jpg" data-src="https://tva1.sinaimg.cn/large/006y8mN6ly1g6sjii979gj30go048wei.jpg"></p>
+<p>nginx 启动成功界面。</p>
+<p>此时打开 Chrome 控制台，可以看到 network 信息，response headers 中返回了 content-encoding:gzip，表明 gzip 开启成功。</p>
+<p>gzip 未开启前 network 信息如图所示：</p>
+<p><img alt="img" class="post-img b-lazy" href="https://tva1.sinaimg.cn/large/006y8mN6ly1g6sjjd5bavj30go02ogll.jpg" data-src="https://tva1.sinaimg.cn/large/006y8mN6ly1g6sjjd5bavj30go02ogll.jpg"></p>
+<p>开启后返回 network 信息如图所示：</p>
+<p><img alt="img" class="post-img b-lazy" href="https://tva1.sinaimg.cn/large/006y8mN6ly1g6sjjxm19cj30go02m0sp.jpg" data-src="https://tva1.sinaimg.cn/large/006y8mN6ly1g6sjjxm19cj30go02m0sp.jpg"></p>
+<p>url 请求的 headers 报文如图所示：</p>
+<p><img alt="img" class="post-img b-lazy" href="https://tva1.sinaimg.cn/large/006y8mN6ly1g6sjk4yn88j30go0a4jrt.jpg" data-src="https://tva1.sinaimg.cn/large/006y8mN6ly1g6sjk4yn88j30go0a4jrt.jpg"></p>
+<p>对比以上三图可以看出 gzip 压缩效率非常高，且经过压缩后静态文件大小不到原来的五分之一。这里值得一提的是静态资源文件越大，gzip 的压缩效率越高。所以对于静态资源量非常大的网站，开启 gzip 可节省大量流量，而同时 gzip 的应用远不止提高 web 性能,Android，IOS 底层网络请求同样可用。</p>
+
+                </article>
+                <ul class="tags-postTags">
+                    
+                    <li>
+                        <a href="/tags/前端/" rel="tag"># 前端</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/tags/性能优化/" rel="tag"># 性能优化</a>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    
+    <nav id="gobottom" class="pagination">
+        
+        <a class="prev-post" title="浏览器同域名请求的最大并发数限制" href="/2019/09/14/浏览器同域名请求的最大并发数限制/">
+            ← 浏览器同域名请求的最大并发数限制
+        </a>
+        
+        <span class="prev-next-post">·</span>
+        
+        <a class="next-post" title="CSS的position属性" href="/2019/08/31/CSS的position属性/">
+            CSS的position属性 →
+        </a>
+        
+    </nav>
+
+    
+    <div class="inner">
+        <div id="comment"></div>
+    </div>
+    
+</div>
+
+<div class="toc-bar">
+    <div class="toc-btn-bar">
+        <a href="#site-main" class="toc-btn">
+            <svg viewbox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M793.024 710.272a32 32 0 1 0 45.952-44.544l-310.304-320a32 32 0 0 0-46.4 0.48l-297.696 320a32 32 0 0 0 46.848 43.584l274.752-295.328 286.848 295.808z"/></svg>
+        </a>
+        <div class="toc-btn toc-switch">
+            <svg class="toc-open" viewbox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M779.776 480h-387.2a32 32 0 0 0 0 64h387.2a32 32 0 0 0 0-64M779.776 672h-387.2a32 32 0 0 0 0 64h387.2a32 32 0 0 0 0-64M256 288a32 32 0 1 0 0 64 32 32 0 0 0 0-64M392.576 352h387.2a32 32 0 0 0 0-64h-387.2a32 32 0 0 0 0 64M256 480a32 32 0 1 0 0 64 32 32 0 0 0 0-64M256 672a32 32 0 1 0 0 64 32 32 0 0 0 0-64"/></svg>
+            <svg class="toc-close hide" viewbox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M512 960c-247.039484 0-448-200.960516-448-448S264.960516 64 512 64 960 264.960516 960 512 759.039484 960 512 960zM512 128.287273c-211.584464 0-383.712727 172.128262-383.712727 383.712727 0 211.551781 172.128262 383.712727 383.712727 383.712727 211.551781 0 383.712727-172.159226 383.712727-383.712727C895.712727 300.415536 723.551781 128.287273 512 128.287273z"/><path d="M557.05545 513.376159l138.367639-136.864185c12.576374-12.416396 12.672705-32.671738 0.25631-45.248112s-32.704421-12.672705-45.248112-0.25631l-138.560301 137.024163-136.447897-136.864185c-12.512727-12.512727-32.735385-12.576374-45.248112-0.063647-12.512727 12.480043-12.54369 32.735385-0.063647 45.248112l136.255235 136.671523-137.376804 135.904314c-12.576374 12.447359-12.672705 32.671738-0.25631 45.248112 6.271845 6.335493 14.496116 9.504099 22.751351 9.504099 8.12794 0 16.25588-3.103239 22.496761-9.247789l137.567746-136.064292 138.687596 139.136568c6.240882 6.271845 14.432469 9.407768 22.65674 9.407768 8.191587 0 16.352211-3.135923 22.591372-9.34412 12.512727-12.480043 12.54369-32.704421 0.063647-45.248112L557.05545 513.376159z"/></svg>
+        </div>
+        <a href="#gobottom" class="toc-btn">
+            <svg viewbox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M231.424 346.208a32 32 0 0 0-46.848 43.584l297.696 320a32 32 0 0 0 46.4 0.48l310.304-320a32 32 0 1 0-45.952-44.544l-286.848 295.808-274.752-295.36z"/></svg>
+        </a>
+    </div>
+    <div class="toc-main">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#前端优化"><span class="toc-text">前端优化</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#前端性能衡量指标"><span class="toc-text">前端性能衡量指标</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#优化原则"><span class="toc-text">优化原则</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#网络相关"><span class="toc-text">网络相关</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#DNS-预解析"><span class="toc-text">DNS 预解析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#利用缓存"><span class="toc-text">利用缓存</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#选择合适的缓存策略"><span class="toc-text">选择合适的缓存策略</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用-HTTP-2-0"><span class="toc-text">使用 HTTP / 2.0</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#预加载-amp-懒加载"><span class="toc-text">预加载&amp;懒加载</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#预加载"><span class="toc-text">预加载</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#预渲染"><span class="toc-text">预渲染</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#懒执行"><span class="toc-text">懒执行</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#懒加载"><span class="toc-text">懒加载</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#文件优化"><span class="toc-text">文件优化</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#图片优化"><span class="toc-text">图片优化</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#图片大小计算"><span class="toc-text">图片大小计算</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#图片加载优化"><span class="toc-text">图片加载优化</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#其他文件优化"><span class="toc-text">其他文件优化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CDN"><span class="toc-text">CDN</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#CDN-存在的意义"><span class="toc-text">CDN 存在的意义</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#CDN-的优势"><span class="toc-text">CDN 的优势</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#CDN-的核心点"><span class="toc-text">CDN 的核心点</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#关键技术"><span class="toc-text">关键技术</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#CDN-amp-静态资源"><span class="toc-text">CDN &amp; 静态资源</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#其他优化"><span class="toc-text">其他优化</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#使用-Webpack-优化项目"><span class="toc-text">使用 Webpack 优化项目</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#监控"><span class="toc-text">监控</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#如何优化第二次加载速度？（增量加载）"><span class="toc-text">如何优化第二次加载速度？（增量加载）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#面试题（如何渲染几万条数据并不卡住界）"><span class="toc-text">面试题（如何渲染几万条数据并不卡住界）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#拓展知识之-Gzip"><span class="toc-text">拓展知识之 Gzip</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#基本介绍"><span class="toc-text">基本介绍</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#gzip-工作原理："><span class="toc-text">gzip 工作原理：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Nginx-中开启-gzip"><span class="toc-text">Nginx 中开启 gzip</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#检测-gzip-是否开启"><span class="toc-text">检测 gzip 是否开启</span></a></li></ol></li></ol></li></ol>
+    </div>
+</div>
+
+
+
+	</div>
+	
+
+
+<aside class="read-next outer">
+    <div class="inner">
+        <div class="read-next-feed">
+            
+            
+
+<article class="read-next-card" style="background-image: url(https://tva1.sinaimg.cn/large/006y8mN6ly1g77gpw5lrfj31bt0u0qv6.jpg)">
+  <header class="read-next-card-header">
+    <small class="read-next-card-header-sitetitle">&mdash; 01不是包子脸 &mdash;</small>
+    <h3 class="read-next-card-header-title">最新文章</h3>
+  </header>
+  <div class="read-next-divider">
+    <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24">
+      <path d="M13 14.5s2 3 5 3 5.5-2.463 5.5-5.5S21 6.5 18 6.5c-5 0-7 11-12 11C2.962 17.5.5 15.037.5 12S3 6.5 6 6.5s4.5 3.5 4.5 3.5"/>
+    </svg>
+  </div>
+  <div class="read-next-card-content">
+    <ul>
+      
+      
+      
+      <li>
+        <a href="/2019/09/14/浏览器同域名请求的最大并发数限制/">浏览器同域名请求的最大并发数限制</a>
+      </li>
+      
+      
+      
+      <li>
+        <a href="/2019/09/08/前端优化/">前端优化</a>
+      </li>
+      
+      
+      
+      <li>
+        <a href="/2019/08/31/CSS的position属性/">CSS的position属性</a>
+      </li>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+    </ul>
+  </div>
+  <footer class="read-next-card-footer">
+    <a href="/archives">  MORE  → </a>
+  </footer>
+</article>
+
+            
+            
+            
+
+<article class="read-next-card" style="background-image: url(https://tva1.sinaimg.cn/large/006y8mN6ly1g77gpw5lrfj31bt0u0qv6.jpg)">
+    <header class="read-next-card-header tagcloud-card">
+        <h3 class="read-next-card-header-title">分类</h3>
+    </header>
+    <div class="read-next-card-content">
+        <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/CSS/">CSS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/ES6/">ES6</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/HTTP/">HTTP</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/React/">React</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/git/">git</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/javascript/">javascript</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/vue/">vue</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/">前端</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端工具/">前端工具</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/浏览器/">浏览器</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/移动端/">移动端</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/算法/">算法</a></li></ul>
+    </div>
+</article>
+
+
+            
+            
+            
+
+<article class="read-next-card" style="background-image: url(https://tva1.sinaimg.cn/large/006y8mN6ly1g77gpw5lrfj31bt0u0qv6.jpg)">
+	<header class="read-next-card-header tagcloud-card">
+		<h3 class="read-next-card-header-title">标签云</h3>
+	</header>
+	<div class="read-next-card-content-ext">
+		<a href="/tags/CSS/" style="font-size: 19.71px;">CSS</a> <a href="/tags/ES6/" style="font-size: 21.14px;">ES6</a> <a href="/tags/HTTP/" style="font-size: 16.86px;">HTTP</a> <a href="/tags/React/" style="font-size: 15.43px;">React</a> <a href="/tags/git/" style="font-size: 14px;">git</a> <a href="/tags/javascript/" style="font-size: 22.57px;">javascript</a> <a href="/tags/leetcode/" style="font-size: 16.86px;">leetcode</a> <a href="/tags/vue/" style="font-size: 16.86px;">vue</a> <a href="/tags/webpack/" style="font-size: 15.43px;">webpack</a> <a href="/tags/前端/" style="font-size: 24px;">前端</a> <a href="/tags/回溯/" style="font-size: 14px;">回溯</a> <a href="/tags/性能优化/" style="font-size: 14px;">性能优化</a> <a href="/tags/排序/" style="font-size: 14px;">排序</a> <a href="/tags/数组/" style="font-size: 14px;">数组</a> <a href="/tags/浏览器/" style="font-size: 19.71px;">浏览器</a> <a href="/tags/移动端/" style="font-size: 14px;">移动端</a> <a href="/tags/算法/" style="font-size: 18.29px;">算法</a> <a href="/tags/跨域/" style="font-size: 14px;">跨域</a>
+	</div>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+	
+
+
+
+
+<div id="search" class="search-overlay">
+    <div class="search-form">
+        
+        <img class="search-overlay-logo" src="https://tva1.sinaimg.cn/large/006y8mN6ly1g6sjqjrb9wj30jj0jjjss.jpg" alt="01不是包子脸">
+        
+        <input id="local-search-input" class="search-input" type="text" name="search" placeholder="搜索 ...">
+        <a class="search-overlay-close" href="#"></a>
+    </div>
+    <div id="local-search-result"></div>
+</div>
+
+<footer class="site-footer outer">
+	<div class="site-footer-content inner">
+		<div class="copyright">
+			<a href="/" title="01不是包子脸">01不是包子脸</a>
+			&copy; 2019
+		</div>
+		<nav class="site-footer-nav">
+			
+			<a href="https://hexo.io" title="Hexo" target="_blank" rel="noopener">Hexo</a>
+			<a href="https://github.com/xzhih/hexo-theme-casper" title="Casper" target="_blank" rel="noopener">Casper</a>
+		</nav>
+	</div>
+</footer>
+	
+
+
+<script>if(window.navigator && navigator.serviceWorker) {navigator.serviceWorker.getRegistrations().then(function(registrations) {for(let registration of registrations) {registration.unregister()}})}</script>
+
+
+<script async src="/js/allinone.min.js" id="scriptLoad"></script>
+
+
+
+
+
+
+<script>
+    document.getElementById('scriptLoad').addEventListener('load', function () {
+        var bLazy = new Blazy()
+    })
+</script>
+
+
+
+
+<div class="floating-header">
+	<div class="floating-header-logo">
+        <a href="/" title="01不是包子脸">
+			
+                <img src="https://tva1.sinaimg.cn/large/006y8mN6ly1g6sjqjrb9wj30jj0jjjss.jpg" alt="01不是包子脸 icon">
+			
+            <span>01不是包子脸</span>
+        </a>
+    </div>
+    <span class="floating-header-divider">&mdash;</span>
+    <div class="floating-header-title">前端优化</div>
+    <progress class="progress" value="0">
+        <span class="progress-container">
+            <span class="progress-bar"></span>
+        </span>
+    </progress>
+</div>
+<script>
+    document.getElementById('scriptLoad').addEventListener('load', function () {
+        postProgressBar()
+    })
+</script>
+
+
+
+
+<script src="/js/lightgallery.min.js"></script>
+<link rel="stylesheet" href="/css/lightgallery.min.css">
+<script>
+    lightGallery(document.getElementById('lightgallery'), {
+        selector: '.post-img'
+    });
+</script>
+
+
+
+
+<script async src="https://cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script async src="https://unpkg.com/valine@1.3.4/dist/Valine.min.js"></script>
+<script>
+    window.addEventListener("load", function() {
+        new Valine({
+            el: '#comment' ,
+            verify: false,
+            notify: false,
+            appId: 'RKl7DjTGeDG8TMedBcYhiagz-gzGzoHsz',
+            appKey: 'pcwdBNPnrqDUcLyj3H0TaeHy',
+            placeholder: '爱我就留下评论吧～～',
+            pageSize: 10,
+            avatar: 'mm',
+            visitor: true,
+        })
+    });
+</script>
+
+
+
+
+
+<script>
+    document.getElementById('scriptLoad').addEventListener('load', function(){
+        searchFunc("/")
+    });
+</script>
+
+
+
+
+
+
+</body>
+</html>
