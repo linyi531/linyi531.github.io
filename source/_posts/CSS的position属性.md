@@ -48,7 +48,7 @@ feature_img: https://tva1.sinaimg.cn/large/006y8mN6ly1g6j7eh7b5pj30u0190wyl.jpg
 }
 ```
 
-![](https://tva1.sinaimg.cn/large/006y8mN6ly1g6iyqx5px1j312q0b40t2.jpg)
+![img](https://tva1.sinaimg.cn/large/006y8mN6ly1g6iyqx5px1j312q0b40t2.jpg)
 
 ## absolute
 

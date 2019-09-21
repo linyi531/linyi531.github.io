@@ -4,11 +4,11 @@ date: 2018-09-16 11:50:00
 tags:
   - git
 categories: git
-cover_img: https://tva1.sinaimg.cn/large/006y8mN6ly1g77gxs21fbj30u0140b2d.jpg
-feature_img: https://tva1.sinaimg.cn/large/006y8mN6ly1g77gxs21fbj30u0140b2d.jpg
+cover_img: https://tva1.sinaimg.cn/large/006y8mN6ly1g77hz4cpvjj31900u0ts1.jpg
+feature_img: https://tva1.sinaimg.cn/large/006y8mN6ly1g77hz4cpvjj31900u0ts1.jpg
 ---
 # 常用git命令
-![](https://tva1.sinaimg.cn/large/006y8mN6ly1g6j61mtymjj31e80qu3yu.jpg)
+![img](https://tva1.sinaimg.cn/large/006y8mN6ly1g6j61mtymjj31e80qu3yu.jpg)
 红色代表工作区，绿色代表暂存区
 
 ## 文件操作

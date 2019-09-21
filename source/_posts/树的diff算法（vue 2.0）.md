@@ -19,7 +19,7 @@ feature_img: https://tva1.sinaimg.cn/large/006y8mN6ly1g77ha49my6j32aq0u0npf.jpg
 
 <!-- more -->
 
-![](https://tva1.sinaimg.cn/large/006y8mN6ly1g6ixrpspcuj30qd07hdge.jpg)
+![img](https://tva1.sinaimg.cn/large/006y8mN6ly1g6ixrpspcuj30qd07hdge.jpg)
 
 - **渲染函数**：渲染函数是用来生成 Virtual DOM 的。Vue 推荐使用模板来构建我们的应用界面，在底层实现中 Vue 会将模板编译成渲染函数，当然我们也可以不写模板，直接写渲染函数，以获得更好的控制。
 - **VNode 虚拟节点**：它可以代表一个真实的 dom 节点。通过 createElement 方法能将 VNode 渲染成 dom 节点。简单地说，vnode 可以理解成**节点描述对象**，它描述了应该怎样去创建真实的 DOM 节点。
@@ -32,7 +32,7 @@ Virtual DOM 其实就是一棵以 JavaScript 对象( VNode 节点)作为基础�
 简单来说，可以把 Virtual DOM 理解为一个简单的 JS 对象，并且最少包含标签名( tag)、属性(attrs)和子元素对象( children)三个属性。不同的框架对这三个属性的命名会有点差别。
 
 对于虚拟 DOM，咱们来看一个简单的实例，就是下图所示的这个，详细的阐述了`模板 → 渲染函数 → 虚拟DOM树 → 真实DOM`的一个过程
-![](https://tva1.sinaimg.cn/large/006y8mN6ly1g6ixs748iqj30yg06emxd.jpg)
+![img](https://tva1.sinaimg.cn/large/006y8mN6ly1g6ixs748iqj30yg06emxd.jpg)
 
 ## Virtual DOM 作用是什么？
 
@@ -541,13 +541,13 @@ var Vnode = {
 
 上面的代码会分别比较同一层的两个 div 以及第二层的 p 和 span，但是不会拿 div 和 span 作比较。在别处看到的一张很形象的图：
 
-![](https://tva1.sinaimg.cn/large/006y8mN6ly1g6ixvc151vj30ah05j3yl.jpg)
+![img](https://tva1.sinaimg.cn/large/006y8mN6ly1g6ixvc151vj30ah05j3yl.jpg)
 
 ## diff 流程图
 
 当数据发生改变时，set 方法会让调用`Dep.notify`通知所有订阅者 Watcher，订阅者就会调用`patch`给真实的 DOM 打补丁，更新相应的视图。
 
-![](https://tva1.sinaimg.cn/large/006y8mN6ly1g6iy0rlxm3j310c0syq4w.jpg)
+![img](https://tva1.sinaimg.cn/large/006y8mN6ly1g6iy0rlxm3j310c0syq4w.jpg)
 
 diff 算法包括几个步骤：
 
@@ -730,10 +730,10 @@ updateChildren (parentElm, oldCh, newCh) {
 
 粉红色的部分为 oldCh、黄色的部分为 vCh
 
-![](https://tva1.sinaimg.cn/large/006y8mN6ly1g6iy0sb71dj311i0ccmyf.jpg)
+![img](https://tva1.sinaimg.cn/large/006y8mN6ly1g6iy0sb71dj311i0ccmyf.jpg)
 
 我们将它们取出来并分别用 s 和 e 指针指向它们的头 child 和尾 child
-![](https://tva1.sinaimg.cn/large/006y8mN6ly1g6iy0tc3qkj31100h8gnl.jpg)
+![img](https://tva1.sinaimg.cn/large/006y8mN6ly1g6iy0tc3qkj31100h8gnl.jpg)
 
 现在分别对`oldS、oldE、S、E`两两做`sameVnode`比较，有四种比较方式，当其中两个能匹配上那么真实 dom 中的相应节点会移到 Vnode 相应的位置，这句话有点绕，打个比方
 
@@ -745,7 +745,7 @@ updateChildren (parentElm, oldCh, newCh) {
 
 再配个图（假设下图中的所有节点都是有 key 的，且 key 为自身的值）
 
-![](https://tva1.sinaimg.cn/large/006y8mN6ly1g6iy0ulelpj311u0oy41x.jpg)
+![img](https://tva1.sinaimg.cn/large/006y8mN6ly1g6iy0ulelpj311u0oy41x.jpg)
 
 - 第一步
 
@@ -793,11 +793,11 @@ oldS > oldE;
 - `oldS > oldE`表示`oldCh`先遍历完，那么就将多余的`vCh`根据 index 添加到 dom 中去（如上图）
 - `S > E`表示 vCh 先遍历完，那么就在真实 dom 中将区间为`[oldS, oldE]`的多余节点删掉
 
-![](https://tva1.sinaimg.cn/large/006y8mN6ly1g6iy0vmjjqj311m0ik75k.jpg)
+![img](https://tva1.sinaimg.cn/large/006y8mN6ly1g6iy0vmjjqj311m0ik75k.jpg)
 
 下面再举一个例子，可以像上面那样自己试着模拟一下
 
-![](https://tva1.sinaimg.cn/large/006y8mN6ly1g6iy0wmkh1j31180kmq5k.jpg)
+![img](https://tva1.sinaimg.cn/large/006y8mN6ly1g6iy0wmkh1j31180kmq5k.jpg)
 
 当这些节点`sameVnode`成功后就会紧接着执行`patchVnode`了，可以看一下上面的代码
 

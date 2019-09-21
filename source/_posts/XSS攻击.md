@@ -35,7 +35,7 @@ XSS 的本质是：恶意代码未经过滤，与网站正常的代码混在一�
 
 根据攻击的来源，XSS 攻击可分为存储型、反射型和 DOM 型三种。
 
-![](https://tva1.sinaimg.cn/large/006y8mN6ly1g6j5yj76xtj31by0ecgm2.jpg)
+![img](https://tva1.sinaimg.cn/large/006y8mN6ly1g6j5yj76xtj31by0ecgm2.jpg)
 
 #### 存储型 XSS
 
@@ -116,7 +116,7 @@ XSS 攻击有两大要素：
 
     常用的模板引擎，如 doT.js、ejs、FreeMarker 等，对于 HTML 转义通常只有一个规则，就是把 `& < > " ' /` 这几个字符转义掉，确实能起到一定的 XSS 防护作用，但并不完善：
 
-  ![](https://tva1.sinaimg.cn/large/006y8mN6ly1g6j5yiazcnj31by0giaac.jpg)
+  ![img](https://tva1.sinaimg.cn/large/006y8mN6ly1g6j5yiazcnj31by0giaac.jpg)
 
 - ### 预防 DOM 型 XSS 攻击
 
@@ -168,7 +168,7 @@ XSS 攻击有两大要素：
 - **利用模板引擎**
   开启模板引擎自带的 HTML 转义功能。例如：
   在 ejs 中，尽量使用 `<%= data %>` 而不是 `<%- data %>`；
-  ![](https://tva1.sinaimg.cn/large/006y8mN6ly1g6j6vu6iq2j30ns01gjr9.jpg)
+  ![img](https://tva1.sinaimg.cn/large/006y8mN6ly1g6j6vu6iq2j30ns01gjr9.jpg)
   在 FreeMarker 中，确保引擎版本高于 2.3.24，并且选择正确的 `freemarker.core.OutputFormat`。
 - **避免内联事件**
   尽量不要使用 `onLoad="onload('{{data}}')"`、`onClick="go('{{action}}')"` 这种拼接内联事件的写法。在 JavaScript 中通过 `.addEventlistener()` 事件绑定会更安全。
@@ -208,7 +208,7 @@ XSS 攻击有两大要素：
 
 - `escapeHTML()` 按照如下规则进行转义：
 
-![](https://tva1.sinaimg.cn/large/006y8mN6ly1g6j5yh9feqj30ne0gqglm.jpg)
+![img](https://tva1.sinaimg.cn/large/006y8mN6ly1g6j5yh9feqj30ne0gqglm.jpg)
 
 - 连 `javascript:` 这样的字符串如果出现在特定的位置也会引发 XSS 攻击。
 
@@ -218,4 +218,4 @@ XSS 攻击有两大要素：
 
   要实现一个 `escapeEmbedJSON()` 函数，对内联 JSON 进行转义。
 
-![](https://tva1.sinaimg.cn/large/006y8mN6ly1g6j5ygpakdj31bk0csq2y.jpg)
+![img](https://tva1.sinaimg.cn/large/006y8mN6ly1g6j5ygpakdj31bk0csq2y.jpg)

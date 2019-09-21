@@ -16,7 +16,7 @@ feature_img: https://tva1.sinaimg.cn/large/006y8mN6ly1g77hfrv1u6j30u0190wxh.jpg
 - header 与 footer 等宽,content 略窄的单列布局
   <!-- more -->
 
-![](https://tva1.sinaimg.cn/large/006y8mN6ly1g6iysrsoe5j31100h2q3f.jpg)
+![img](https://tva1.sinaimg.cn/large/006y8mN6ly1g6iysrsoe5j31100h2q3f.jpg)
 
 ### 第一种：
 

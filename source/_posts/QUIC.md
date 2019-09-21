@@ -19,7 +19,7 @@ QUIC 协议内置了 TLS 栈，实现了自己的[传输加密层](https://docs.
 
 <!-- more -->
 
-![](https://tva1.sinaimg.cn/large/006y8mN6ly1g6izr9eluaj315w0k0aaa.jpg)
+![img](https://tva1.sinaimg.cn/large/006y8mN6ly1g6izr9eluaj315w0k0aaa.jpg)
 
 从图上可以看出，QUIC 底层通过 UDP 协议替代了 TCP，上层只需要一层用于和远程服务器交互的 HTTP/2 API。这是因为 QUIC 协议已经包含了多路复用和连接管理，HTTP API 只需要完成 HTTP 协议的解析即可。
 
@@ -67,7 +67,7 @@ QUIC 协议内置了 TLS 栈，实现了自己的[传输加密层](https://docs.
 1. 传输层 0RTT 就能建立连接。
 2. 加密层 0RTT 就能建立加密连接。
 
-![](https://tva1.sinaimg.cn/large/006y8mN6ly1g6izr8c4vjj314a0n0gpa.jpg)
+![img](https://tva1.sinaimg.cn/large/006y8mN6ly1g6izr8c4vjj314a0n0gpa.jpg)
 
 比如上图左边是 HTTPS 的一次完全握手的建连过程，需要 3 个 RTT。就算是 Session Resumption[14]，也需要至少 2 个 RTT。
 

@@ -11,11 +11,11 @@ feature_img: https://tva1.sinaimg.cn/large/006y8mN6ly1g77ho2ktr0j30u011i1l0.jpg
 
 # Web Copmpoents
 
-![](https://tva1.sinaimg.cn/large/006y8mN6ly1g6j6p2nvl3j314i0oqgm8.jpg)
+![img](https://tva1.sinaimg.cn/large/006y8mN6ly1g6j6p2nvl3j314i0oqgm8.jpg)
 
 # React 组件
 
-![](https://tva1.sinaimg.cn/large/006y8mN6ly1g6j6p1c7t9j31am0gejro.jpg)
+![img](https://tva1.sinaimg.cn/large/006y8mN6ly1g6j6p1c7t9j31am0gejro.jpg)
 
 React 组件：
 
@@ -38,7 +38,7 @@ React 组件：
 
 <!-- more -->
 
-![](https://tva1.sinaimg.cn/large/006y8mN6ly1g6j6p4jv10j31b20tmjse.jpg)
+![img](https://tva1.sinaimg.cn/large/006y8mN6ly1g6j6p4jv10j31b20tmjse.jpg)
 
 ## 自动绑定
 

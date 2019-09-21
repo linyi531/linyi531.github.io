@@ -130,7 +130,7 @@ display:table 在表现上类似 block 元素，但是宽度为内容宽。
 
 - ### 多块级元素水平居中
 
-![](https://tva1.sinaimg.cn/large/006y8mN6ly1g6iywusnatj30gg03q3yv.jpg)
+![img](https://tva1.sinaimg.cn/large/006y8mN6ly1g6iywusnatj30gg03q3yv.jpg)
 
 #### ① 利用 flex 布局
 
@@ -166,7 +166,7 @@ display:table 在表现上类似 block 元素，但是宽度为内容宽。
 
 **通过子元素设置 relative + 负 margin,原理见下图：**
 
-![](https://tva1.sinaimg.cn/large/006y8mN6ly1g6iyzsq98xj30i80acmx5.jpg)
+![img](https://tva1.sinaimg.cn/large/006y8mN6ly1g6iyzsq98xj30i80acmx5.jpg)
 **注意：样式设置在浮动元素本身**
 
 ```html
@@ -181,7 +181,7 @@ display:table 在表现上类似 block 元素，但是宽度为内容宽。
 #### ② 不定宽的浮动元素
 
 通过父子容器都相对定位，偏移位移见下图：
-![](https://tva1.sinaimg.cn/large/006y8mN6ly1g6iyxlpetcj30pw06tmx8.jpg)
+![img](https://tva1.sinaimg.cn/large/006y8mN6ly1g6iyxlpetcj30pw06tmx8.jpg)
 **注意：要清除浮动，给外部元素加上 float。这里的父元素就是外部元素**
 
 ```html
@@ -258,7 +258,7 @@ position:relative; right:50%; }
 </style>
 ```
 
-![](https://tva1.sinaimg.cn/large/006y8mN6ly1g6iz0f2donj30k504ejrj.jpg)
+![img](https://tva1.sinaimg.cn/large/006y8mN6ly1g6iz0f2donj30k504ejrj.jpg)
 
 #### ② 利用表布局（table）
 
