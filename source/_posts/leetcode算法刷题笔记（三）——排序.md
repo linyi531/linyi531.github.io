@@ -7,8 +7,8 @@ tags:
   - 排序
   - javascript
 categories: 算法
-cover_img: https://i.screenshot.net/8onywck
-feature_img: https://i.screenshot.net/8onywck
+cover_img: https://tva1.sinaimg.cn/large/006y8mN6ly1g77hkmr53fj30u01901ky.jpg
+feature_img: https://tva1.sinaimg.cn/large/006y8mN6ly1g77hkmr53fj30u01901ky.jpg
 ---
 
 _该笔记只为个人所写算法，不一定是最优解法，仅供参考_

@@ -4,8 +4,8 @@ date: 2019-07-24 15:22:00
 tags:
   - javascript
 categories: javascript
-cover_img: https://i.screenshot.net/lrk8wur
-feature_img: https://i.screenshot.net/lrk8wur
+cover_img: https://tva1.sinaimg.cn/large/006y8mN6ly1g77hja0uuij30u01404qp.jpg
+feature_img: https://tva1.sinaimg.cn/large/006y8mN6ly1g77hja0uuij30u01404qp.jpg
 ---
 
 # JS 事件机制

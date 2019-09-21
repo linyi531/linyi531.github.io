@@ -4,8 +4,8 @@ date: 2018-12-05 15:12:28
 tags:
   - webpack
 categories: 前端工具
-cover_img: https://i.screenshot.net/pygnms4
-feature_img: https://i.screenshot.net/pygnms4
+cover_img: https://tva1.sinaimg.cn/large/006y8mN6ly1g77hpi9legj30u0190x6u.jpg
+feature_img: https://tva1.sinaimg.cn/large/006y8mN6ly1g77hpi9legj30u0190x6u.jpg
 ---
 
 ## 代码分离

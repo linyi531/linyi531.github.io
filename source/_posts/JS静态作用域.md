@@ -4,8 +4,8 @@ date: 2019-07-11 11:01:34
 tags:
   - javascript
 categories: javascript
-cover_img: https://i.screenshot.net/9z6vqie
-feature_img: https://i.screenshot.net/9z6vqie
+cover_img: https://tva1.sinaimg.cn/large/006y8mN6ly1g77hja0uuij30u01404qp.jpg
+feature_img: https://tva1.sinaimg.cn/large/006y8mN6ly1g77hja0uuij30u01404qp.jpg
 ---
 
 # JS 静态作用域

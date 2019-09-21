@@ -4,8 +4,8 @@ date: 2019-07-30 13:13:29
 tags:
   - javascript
 categories: javascript
-cover_img: https://i.screenshot.net/zj17wa6
-feature_img: https://i.screenshot.net/zj17wa6
+cover_img: https://tva1.sinaimg.cn/large/006y8mN6ly1g77hjxa00mj30u0190e82.jpg
+feature_img: https://tva1.sinaimg.cn/large/006y8mN6ly1g77hjxa00mj30u0190e82.jpg
 ---
 
 # JS 引擎执行机制

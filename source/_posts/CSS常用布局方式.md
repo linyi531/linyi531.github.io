@@ -4,8 +4,8 @@ date: 2019-05-02 15:44:43
 tags:
   - CSS
 categories: CSS
-cover_img: https://i.screenshot.net/r108lfn
-feature_img: https://i.screenshot.net/r108lfn
+cover_img: https://tva1.sinaimg.cn/large/006y8mN6ly1g77hfmiaxij31900u07wj.jpg
+feature_img: https://tva1.sinaimg.cn/large/006y8mN6ly1g77hfmiaxij31900u07wj.jpg
 ---
 
 # CSS 常用布局方式

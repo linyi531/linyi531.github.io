@@ -4,8 +4,8 @@ date: 2018-11-25 12:03:08
 tags:
   - webpack
 categories: 前端工具
-cover_img: https://i.screenshot.net/d81vzi0
-feature_img: https://i.screenshot.net/d81vzi0
+cover_img: https://tva1.sinaimg.cn/large/006y8mN6ly1g77hpme7uvj30u0190kjo.jpg
+feature_img: https://tva1.sinaimg.cn/large/006y8mN6ly1g77hpme7uvj30u0190kjo.jpg
 ---
 
 # 基本概念

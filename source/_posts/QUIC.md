@@ -5,8 +5,8 @@ tags:
   - HTTP
   - 浏览器
 categories: 浏览器
-cover_img: https://i.screenshot.net/x5p80ax
-feature_img: https://i.screenshot.net/x5p80ax
+cover_img: https://tva1.sinaimg.cn/large/006y8mN6ly1g77hm7vc24j31bt0u0h45.jpg
+feature_img: https://tva1.sinaimg.cn/large/006y8mN6ly1g77hm7vc24j31bt0u0h45.jpg
 ---
 
 # QUIC

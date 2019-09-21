@@ -4,14 +4,14 @@ date: 2018-09-16 11:50:00
 tags:
   - git
 categories: git
-cover_img: https://i.screenshot.net/pdgj2i3
-feature_img: https://i.screenshot.net/pdgj2i3
+cover_img: https://tva1.sinaimg.cn/large/006y8mN6ly1g77gxs21fbj30u0140b2d.jpg
+feature_img: https://tva1.sinaimg.cn/large/006y8mN6ly1g77gxs21fbj30u0140b2d.jpg
 ---
-
+# 常用git命令
 ![](https://tva1.sinaimg.cn/large/006y8mN6ly1g6j61mtymjj31e80qu3yu.jpg)
 红色代表工作区，绿色代表暂存区
 
-# 文件操作
+## 文件操作
 
 1. git init  
    在当前目录下新建一个 git 仓库（master 分支）
@@ -81,7 +81,7 @@ feature_img: https://i.screenshot.net/pdgj2i3
     git reset [版本号]
     回退到版本号为……的 commit
 
-# 分支操作
+## 分支操作
 
 1. git branch develop
    创建 develop 分支,但依然停留在当前分支
@@ -103,7 +103,7 @@ feature_img: https://i.screenshot.net/pdgj2i3
    git rebase -i [提交记录号]
    将 HEAD 指向记录号所在位置
 
-# 远程仓库
+## 远程仓库
 
 1. git remote add origin [SSH 地址]
    创建远程仓库连接
@@ -130,7 +130,7 @@ feature_img: https://i.screenshot.net/pdgj2i3
 8. git clone [url]
    下载一个项目和它的整个代码历史
 
-# 打 tag
+## 打 tag
 
 1. vim package.json
    (vim package-lock.json)

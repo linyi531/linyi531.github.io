@@ -4,8 +4,8 @@ date: 2019-04-28 12:37:08
 tags:
   - CSS
 categories: CSS
-cover_img: https://i.screenshot.net/qz9o1im
-feature_img: https://i.screenshot.net/qz9o1im
+cover_img: https://tva1.sinaimg.cn/large/006y8mN6ly1g77hesdfcoj31400u07wi.jpg
+feature_img: https://tva1.sinaimg.cn/large/006y8mN6ly1g77hesdfcoj31400u07wi.jpg
 ---
 
 # CSS3 新特性

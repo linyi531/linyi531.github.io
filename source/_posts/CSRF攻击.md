@@ -4,8 +4,8 @@ date: 2019-06-18 20:05:23
 tags:
   - javascript
 categories: javascript
-cover_img: https://i.screenshot.net/6lp67av
-feature_img: https://i.screenshot.net/6lp67av
+cover_img: https://tva1.sinaimg.cn/large/006y8mN6ly1g77hebhs25j30u01904qr.jpg
+feature_img: https://tva1.sinaimg.cn/large/006y8mN6ly1g77hebhs25j30u01904qr.jpg
 ---
 
 # CSRF 攻击

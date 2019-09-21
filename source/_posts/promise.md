@@ -5,8 +5,8 @@ tags:
   - javascript
   - ES6
 categories: ES6
-cover_img: https://i.screenshot.net/9437rum
-feature_img: https://i.screenshot.net/9437rum
+cover_img: https://tva1.sinaimg.cn/large/006y8mN6ly1g77hlxxwk7j31900u01kz.jpg
+feature_img: https://tva1.sinaimg.cn/large/006y8mN6ly1g77hlxxwk7j31900u01kz.jpg
 ---
 
 # promise

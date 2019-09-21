@@ -4,8 +4,8 @@ date: 2019-05-08 11:25:33
 tags:
   - CSS
 categories: CSS
-cover_img: https://i.screenshot.net/vr7g1cv
-feature_img: https://i.screenshot.net/vr7g1cv
+cover_img: https://tva1.sinaimg.cn/large/006y8mN6ly1g77hfrv1u6j30u0190wxh.jpg
+feature_img: https://tva1.sinaimg.cn/large/006y8mN6ly1g77hfrv1u6j30u0190wxh.jpg
 ---
 
 ## 1.单列布局

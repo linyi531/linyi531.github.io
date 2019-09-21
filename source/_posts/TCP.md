@@ -5,8 +5,8 @@ tags:
   - HTTP
   - 浏览器
 categories: 浏览器
-cover_img: https://i.screenshot.net/o2w7gi5
-feature_img: https://i.screenshot.net/o2w7gi5
+cover_img: https://tva1.sinaimg.cn/large/006y8mN6ly1g77ho2ktr0j30u011i1l0.jpg
+feature_img: https://tva1.sinaimg.cn/large/006y8mN6ly1g77ho2ktr0j30u011i1l0.jpg
 ---
 
 # TCP
