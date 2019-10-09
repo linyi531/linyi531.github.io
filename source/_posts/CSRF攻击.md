@@ -2,8 +2,9 @@
 title: CSRF攻击
 date: 2019-06-18 20:05:23
 tags:
-  - javascript
-categories: javascript
+  - JavaScript
+  - 安全
+categories: 安全
 cover_img: https://tva1.sinaimg.cn/large/006y8mN6ly1g77hebhs25j30u01904qr.jpg
 feature_img: https://tva1.sinaimg.cn/large/006y8mN6ly1g77hebhs25j30u01904qr.jpg
 ---

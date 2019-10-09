@@ -3,7 +3,7 @@ title: Proxy
 date: 2018-10-27 11:07:46
 tags:
   - ES6
-  - 前端
+  - JavaScript
 categories: ES6
 cover_img: https://tva1.sinaimg.cn/large/006y8mN6ly1g77hm3hws0j31900u01kx.jpg
 feature_img: https://tva1.sinaimg.cn/large/006y8mN6ly1g77hm3hws0j31900u01kx.jpg

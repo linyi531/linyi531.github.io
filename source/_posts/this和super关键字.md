@@ -3,7 +3,7 @@ title: this和super关键字
 date: 2018-09-24 18:41:35
 tags:
   - ES6
-  - 前端
+  - JavaScript
 categories: ES6
 cover_img: https://tva1.sinaimg.cn/large/006y8mN6ly1g77houkndbj30u0190qv6.jpg
 feature_img: https://tva1.sinaimg.cn/large/006y8mN6ly1g77hp1ssv2j30u01907wp.jpg

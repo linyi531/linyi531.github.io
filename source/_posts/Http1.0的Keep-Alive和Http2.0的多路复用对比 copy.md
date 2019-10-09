@@ -1,9 +1,10 @@
 ---
 title: Http/1.0的Keep-Alive和Http/2.0的多路复用对比
-date: 2019-10-09 16:14:38
+date: 2019-10-04 16:14:38
 tags:
   - HTTP
-categories: HTTP
+  - 浏览器
+categories: 浏览器
 cover_img: https://tva1.sinaimg.cn/large/006y8mN6ly1g7s0p7lyp1j318g0u0qv8.jpg
 feature_img: https://tva1.sinaimg.cn/large/006y8mN6ly1g7s0p7lyp1j318g0u0qv8.jpg
 ---

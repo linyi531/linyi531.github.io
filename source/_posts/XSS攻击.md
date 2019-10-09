@@ -2,8 +2,9 @@
 title: XSS攻击
 date: 2019-06-13 18:29:55
 tags:
-  - javascript
-categories: javascript
+  - JavaScript
+  - 安全
+categories: 安全
 cover_img: https://tva1.sinaimg.cn/large/006y8mN6ly1g77hppoib4j30u01907td.jpg
 feature_img: https://tva1.sinaimg.cn/large/006y8mN6ly1g77hppoib4j30u01907td.jpg
 ---

@@ -2,8 +2,8 @@
 title: 双向数据绑定Proxy和Object.defineProperty对比
 date: 2019-03-11 11:52:12
 tags:
-  - vue
-categories: vue
+  - VUE
+categories: VUE
 cover_img: https://tva1.sinaimg.cn/large/006y8mN6ly1g77hankac9j30u0190b2b.jpg
 feature_img: https://tva1.sinaimg.cn/large/006y8mN6ly1g77hankac9j30u0190b2b.jpg
 ---

@@ -3,7 +3,7 @@ title: var，let和const声明及区别
 date: 2018-07-04 11:29:59
 tags:
   - ES6
-  - 前端
+  - JavaScript
 categories: ES6
 cover_img: https://tva1.sinaimg.cn/large/006y8mN6ly1g77hp1ssv2j30u01907wp.jpg
 feature_img: https://tva1.sinaimg.cn/large/006y8mN6ly1g77hp1ssv2j30u01907wp.jpg

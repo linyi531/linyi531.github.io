@@ -3,9 +3,9 @@ title: leetcode算法刷题笔记（一）——数组
 date: 2018-12-19 00:07:06
 tags:
   - 算法
-  - leetcode
+  - LeetCode
   - 数组
-  - javascript
+  - JavaScript
 categories: 算法
 cover_img: https://tva1.sinaimg.cn/large/006y8mN6ly1g77hxz5jyvj30u01404qq.jpg
 feature_img: https://tva1.sinaimg.cn/large/006y8mN6ly1g77hxz5jyvj30u01404qq.jpg

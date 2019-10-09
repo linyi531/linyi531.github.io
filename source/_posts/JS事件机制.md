@@ -2,8 +2,8 @@
 title: JS事件机制
 date: 2019-07-24 15:22:00
 tags:
-  - javascript
-categories: javascript
+  - JavaScript
+categories: JavaScript
 cover_img: https://tva1.sinaimg.cn/large/006y8mN6ly1g77hja0uuij30u01404qp.jpg
 feature_img: https://tva1.sinaimg.cn/large/006y8mN6ly1g77hja0uuij30u01404qp.jpg
 ---

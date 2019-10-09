@@ -2,7 +2,7 @@
 title: ES6 装饰器
 date: 2019-08-18 22:47:55
 tags:
-  - javascript
+  - JavaScript
   - ES6
 categories: ES6
 cover_img: https://tva1.sinaimg.cn/large/006y8mN6ly1g77hh9uyfvj31900u0u0y.jpg

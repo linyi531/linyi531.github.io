@@ -2,7 +2,7 @@
 title: QUIC
 date: 2019-08-16 01:52:20
 tags:
-  - HTTP
+  - TCP/IP
   - 浏览器
 categories: 浏览器
 cover_img: https://tva1.sinaimg.cn/large/006y8mN6ly1g77hm7vc24j31bt0u0h45.jpg

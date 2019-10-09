@@ -2,8 +2,8 @@
 title: JS引擎执行机制
 date: 2019-07-30 13:13:29
 tags:
-  - javascript
-categories: javascript
+  - JavaScript
+categories: JavaScript
 cover_img: https://tva1.sinaimg.cn/large/006y8mN6ly1g77hjxa00mj30u0190e82.jpg
 feature_img: https://tva1.sinaimg.cn/large/006y8mN6ly1g77hjxa00mj30u0190e82.jpg
 ---

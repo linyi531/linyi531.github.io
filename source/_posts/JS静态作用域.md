@@ -2,8 +2,8 @@
 title: JS静态作用域
 date: 2019-07-11 11:01:34
 tags:
-  - javascript
-categories: javascript
+  - JavaScript
+categories: JavaScript
 cover_img: https://tva1.sinaimg.cn/large/006y8mN6ly1g77hu59uofj31900u0hdw.jpg
 feature_img: https://tva1.sinaimg.cn/large/006y8mN6ly1g77hu59uofj31900u0hdw.jpg
 ---

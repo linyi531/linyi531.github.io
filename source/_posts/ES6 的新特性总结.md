@@ -3,7 +3,7 @@ title: ES6 的新特性总结
 date: 2019-06-01 22:23:01
 tags:
   - ES6
-  - javascript
+  - JavaScript
 categories: ES6
 cover_img: https://tva1.sinaimg.cn/large/006y8mN6ly1g77hh66ecdj30u0180b2d.jpg
 feature_img: https://tva1.sinaimg.cn/large/006y8mN6ly1g77hh66ecdj30u0180b2d.jpg

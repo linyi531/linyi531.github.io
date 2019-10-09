@@ -3,7 +3,6 @@ title: React组件
 date: 2018-11-11 12:10:52
 tags:
   - React
-  - 前端
 categories: React
 cover_img: https://tva1.sinaimg.cn/large/006y8mN6ly1g77ho2ktr0j30u011i1l0.jpg
 feature_img: https://tva1.sinaimg.cn/large/006y8mN6ly1g77ho2ktr0j30u011i1l0.jpg

@@ -2,9 +2,10 @@
 title: 跨域请求：JSONP&&CORS
 date: 2018-09-03 17:28:34
 tags:
-  - javascript
-  - 前端
-categories: javascript
+  - 跨域
+  - JavaScript
+  - 浏览器
+categories: JavaScript
 cover_img: https://tva1.sinaimg.cn/large/006y8mN6ly1g77h4g6mxoj30u018xu0y.jpg
 feature_img: https://tva1.sinaimg.cn/large/006y8mN6ly1g77h4g6mxoj30u018xu0y.jpg
 ---

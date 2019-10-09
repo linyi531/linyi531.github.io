@@ -3,9 +3,9 @@ title: leetcode算法刷题笔记（三）——排序
 date: 2019-02-22 14:54:39
 tags:
   - 算法
-  - leetcode
+  - LeetCode
   - 排序
-  - javascript
+  - JavaScript
 categories: 算法
 cover_img: https://tva1.sinaimg.cn/large/006y8mN6ly1g77hkmr53fj30u01901ky.jpg
 feature_img: https://tva1.sinaimg.cn/large/006y8mN6ly1g77hkmr53fj30u01901ky.jpg

@@ -1,8 +1,8 @@
 ---
-title: promise
+title: Promise
 date: 2019-08-05 19:44:02
 tags:
-  - javascript
+  - JavaScript
   - ES6
 categories: ES6
 cover_img: https://tva1.sinaimg.cn/large/006y8mN6ly1g77hlxxwk7j31900u01kz.jpg

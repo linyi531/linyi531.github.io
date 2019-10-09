@@ -2,7 +2,7 @@
 title: TCP
 date: 2019-08-11 21:15:33
 tags:
-  - HTTP
+  - TCP/IP
   - 浏览器
 categories: 浏览器
 cover_img: https://tva1.sinaimg.cn/large/006y8mN6ly1g77ho2ktr0j30u011i1l0.jpg

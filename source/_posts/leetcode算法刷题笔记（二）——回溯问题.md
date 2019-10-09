@@ -3,9 +3,9 @@ title: leetcode算法刷题笔记（二）——回溯问题
 date: 2019-01-15 22:07:43
 tags:
   - 算法
-  - leetcode
+  - LeetCode
   - 回溯
-  - javascript
+  - JavaScript
 categories: 算法
 cover_img: https://tva1.sinaimg.cn/large/006y8mN6ly1g77hkvrypkj30u01907wk.jpg
 feature_img: https://tva1.sinaimg.cn/large/006y8mN6ly1g77hkvrypkj30u01907wk.jpg

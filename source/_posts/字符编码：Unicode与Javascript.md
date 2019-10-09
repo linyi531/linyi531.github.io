@@ -1,9 +1,9 @@
 ---
-title: 字符编码：Unicode与Javascript
+title: 字符编码：Unicode与JavaScript
 date: 2019-04-06 19:08:55
 tags:
-  - javascript
-categories: javascript
+  - JavaScript
+categories: JavaScript
 cover_img: https://tva1.sinaimg.cn/large/006y8mN6ly1g77hcau3fij31940u01kx.jpg
 feature_img: https://tva1.sinaimg.cn/large/006y8mN6ly1g77hcau3fij31940u01kx.jpg
 ---
