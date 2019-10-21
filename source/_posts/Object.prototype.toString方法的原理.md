@@ -1,6 +1,6 @@
 ---
 title: Object.prototype.toString方法的原理
-date: 2019-10-15 12:33:37
+date: 2019-10-28 12:33:37
 tags:
   - JavaScript
 categories: JavaScript
