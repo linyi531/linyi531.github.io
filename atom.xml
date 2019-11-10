@@ -144,9 +144,9 @@
       <category term="浏览器" scheme="http://yoursite.com/categories/%E6%B5%8F%E8%A7%88%E5%99%A8/"/>
     
     
-      <category term="浏览器" scheme="http://yoursite.com/tags/%E6%B5%8F%E8%A7%88%E5%99%A8/"/>
-    
       <category term="TCP/IP" scheme="http://yoursite.com/tags/TCP-IP/"/>
+    
+      <category term="浏览器" scheme="http://yoursite.com/tags/%E6%B5%8F%E8%A7%88%E5%99%A8/"/>
     
   </entry>
   
@@ -171,9 +171,9 @@
       <category term="浏览器" scheme="http://yoursite.com/categories/%E6%B5%8F%E8%A7%88%E5%99%A8/"/>
     
     
-      <category term="HTTP" scheme="http://yoursite.com/tags/HTTP/"/>
-    
       <category term="浏览器" scheme="http://yoursite.com/tags/%E6%B5%8F%E8%A7%88%E5%99%A8/"/>
+    
+      <category term="HTTP" scheme="http://yoursite.com/tags/HTTP/"/>
     
   </entry>
   
@@ -349,9 +349,9 @@
       <category term="浏览器" scheme="http://yoursite.com/categories/%E6%B5%8F%E8%A7%88%E5%99%A8/"/>
     
     
-      <category term="浏览器" scheme="http://yoursite.com/tags/%E6%B5%8F%E8%A7%88%E5%99%A8/"/>
-    
       <category term="TCP/IP" scheme="http://yoursite.com/tags/TCP-IP/"/>
+    
+      <category term="浏览器" scheme="http://yoursite.com/tags/%E6%B5%8F%E8%A7%88%E5%99%A8/"/>
     
   </entry>
   
@@ -378,9 +378,9 @@
       <category term="浏览器" scheme="http://yoursite.com/categories/%E6%B5%8F%E8%A7%88%E5%99%A8/"/>
     
     
-      <category term="浏览器" scheme="http://yoursite.com/tags/%E6%B5%8F%E8%A7%88%E5%99%A8/"/>
-    
       <category term="TCP/IP" scheme="http://yoursite.com/tags/TCP-IP/"/>
+    
+      <category term="浏览器" scheme="http://yoursite.com/tags/%E6%B5%8F%E8%A7%88%E5%99%A8/"/>
     
   </entry>
   
@@ -500,9 +500,9 @@
     
       <category term="安全" scheme="http://yoursite.com/tags/%E5%AE%89%E5%85%A8/"/>
     
-      <category term="HTTP" scheme="http://yoursite.com/tags/HTTP/"/>
-    
       <category term="浏览器" scheme="http://yoursite.com/tags/%E6%B5%8F%E8%A7%88%E5%99%A8/"/>
+    
+      <category term="HTTP" scheme="http://yoursite.com/tags/HTTP/"/>
     
   </entry>
   
