@@ -22,7 +22,7 @@
 	<link rel="preconnect" href="//gravatar.loli.net">
 	<link rel="preload" href="https://pic.zhih.me/blog/header.jpg" as="image">
 
-	<title>webpack基础知识（一） | 01不是包子脸</title>
+	<title>伪类和伪元素 | 01不是包子脸</title>
 
 	<meta name="HandheldFriendly" content="True">
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
@@ -50,14 +50,14 @@
 
 	<meta property="og:site_name" content="01不是包子脸">
 	<meta property="og:type" content="article">
-	<meta property="og:title" content="webpack基础知识（一） | 01不是包子脸">
+	<meta property="og:title" content="伪类和伪元素 | 01不是包子脸">
 	<meta property="og:description" content>
-	<meta property="og:url" content="http://yoursite.com/2018/11/25/webpack基础知识（一）/">
+	<meta property="og:url" content="http://yoursite.com/2019/11/16/伪类和伪元素/">
 
 	
-	<meta property="article:published_time" content="2018-11-25T12:11:00+08:00"> 
+	<meta property="article:published_time" content="2019-11-16T19:11:00+08:00"> 
 	<meta property="article:author" content="Linyi Li">
-	<meta property="article:published_first" content="01不是包子脸, /2018/11/25/webpack基础知识（一）/">
+	<meta property="article:published_first" content="01不是包子脸, /2019/11/16/伪类和伪元素/">
 	
 
 	
@@ -75,7 +75,7 @@
 	
 	
 	
-<link rel="canonical" href="http://yoursite.com/2018/11/25/webpack基础知识（一）/">
+<link rel="canonical" href="http://yoursite.com/2019/11/16/伪类和伪元素/">
 
 
 
@@ -167,104 +167,159 @@
     <div class="inner">
         <header class="post-full-header">
             <div class="post-full-meta">
-                <time class="post-full-meta-date" datetime="2018-11-25T04:03:08.000Z">
-                    2018-11-25
+                <time class="post-full-meta-date" datetime="2019-11-16T11:40:32.000Z">
+                    2019-11-16
                 </time>
                 
                 <span class="date-divider">/</span>
                 
-                <a href="/categories/前端工具/">前端工具</a>&nbsp;&nbsp;
+                <a href="/categories/CSS/">CSS</a>&nbsp;&nbsp;
                 
                 
             </div>
-            <h1 class="post-full-title">webpack基础知识（一）</h1>
+            <h1 class="post-full-title">伪类和伪元素</h1>
         </header>
         <div class="post-full ">
             
-            <figure class="post-full-image" style="background-image: url(https://tva1.sinaimg.cn/large/006y8mN6ly1g77hpme7uvj30u0190kjo.jpg)">
+            <figure class="post-full-image" style="background-image: url(https://tva1.sinaimg.cn/large/006y8mN6ly1g904gdvphfj31900u0qvo.jpg)">
             </figure>
             
             <div class="post-full-content">
                 <article id="lightgallery" class="markdown-body">
-                    <h1 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h1><p>webpack 是一个现代 JavaScript 应用程序的静态模块打包器(module bundler)。当 webpack 处理应用程序时，它会递归地构建一个依赖关系图(dependency graph)，其中包含应用程序需要的每个模块，然后将所有这些模块打包成一个或多个 bundle。<br>通过声明模块所需的依赖，webpack 能够利用这些信息去构建依赖图，然后使用图生成一个优化过的，会以正确顺序执行的 bundle。</p>
-<a id="more"></a>
+                    <h1 id="伪类和伪元素"><a href="#伪类和伪元素" class="headerlink" title="伪类和伪元素"></a>伪类和伪元素</h1><p><code>css</code>引入伪类和伪元素概念是为了格式化文档树以外的信息。也就是说，伪类和伪元素是用来修饰不在文档树中的部分。</p>
+<ul>
+<li>伪类用于当已有元素处于的某个状态时，为其添加对应的样式，这个状态是根据用户行为而动态变化的。比如说，当用户悬停在指定的元素时，我们可以通过<code>:hover</code>来描述这个元素的状态。虽然它和普通的<code>css</code>类相似，可以为已有的元素添加样式，但是它只有处于<code>dom</code>树无法描述的状态下才能为元素添加样式，所以将其称为伪类。</li>
+<li>伪元素用于创建一些不在文档树中的元素，并为其添加样式。比如说，我们可以通过<code>:before</code>来在一个元素前增加一些文本，并为这些文本添加样式。虽然用户可以看到这些文本，但是这些文本实际上不在文档树中。</li>
+</ul>
+<p>伪类的效果可以通过添加一个实际的类来达到，而伪元素的效果则需要通过添加一个实际的元素才能达到，这也是为什么他们一个称为伪类，一个称为伪元素的原因。</p>
+<p>伪类和伪元素的根本区别在于：它们是否创造了<strong>新</strong>的元素,,   这个新创造的元素就叫  “伪无素” 。</p>
+<p>##伪类</p>
+<p>伪类前面是一个冒号，<code>E:first-child</code>会对现有的元素进行筛选</p>
+<ul>
+<li><p><code>:link</code>:选择未访问的链接</p>
+</li>
+<li><p><code>:visited</code>:选择已访问的链接</p>
+</li>
+<li><p><code>:hover</code>:选择鼠标指针浮动在其上的元素</p>
+</li>
+<li><p><code>:active</code>:选择活动的链接</p>
+</li>
+<li><p><code>:focus</code>:选择获取焦点的输入字段</p>
+</li>
+<li><p><code>:not()</code>:一个否定伪类，用于匹配不符合参数选择器的元素。</p>
+</li>
+<li><p><code>:first-child</code>:匹配元素的第一个子元素。</p>
+</li>
+<li><p><code>:last-child</code>:匹配元素的最后一个子元素。</p>
+</li>
+<li><p><code>:first-of-type</code>:匹配属于其父元素的首个特定类型的子元素的每个元素。</p>
+</li>
+<li><p><code>:last-of-type</code>:匹配属于其父元素的最后一个特定类型的子元素的每个元素。</p>
+</li>
+<li><p><code>:nth-child</code>:<code>:nth-child</code>根据元素的位置匹配一个或者多个元素，它接受一个 an+b 形式的参数，an+b 匹配到的元素</p>
+</li>
+<li><p><code>:nth-last-child</code>:<code>:nth-last-child</code> 与<code>:nth-child</code>相似，不同之处在于它是从最后一个子元素开始计数的。</p>
+</li>
+<li><p><code>:nth-of-type</code>:<code>:nth-of-type</code> 与 <code>nth-child</code>相似，不同之处在于它是只匹配特定类型的元素。</p>
+</li>
+<li><p><code>:nth-last-type</code>:<code>:nth-last-of-type</code> 与 <code>nth-of-type</code>相似，不同之处在于它是从最后一个子元素开始计数的。</p>
+</li>
+<li><p><code>:only-child</code> :当元素是其父元素中唯一一个特定类型的子元素时，<code>:only-child</code>匹配该元素。</p>
+</li>
+<li><p><code>:target</code> :当URL带有锚名称，指向文档内某个具体的元素时，<code>:target</code>匹配该元素。</p>
+</li>
+<li><p><code>:checked</code>:<code>:checked</code>匹配被选中的 input 元素，这个 input 元素包括 radio 和 checkbox。</p>
+</li>
+<li><p><code>:default</code>: 匹配默认选中的元素</p>
+</li>
+<li><p><code>:disabled</code>: 匹配禁用的表单元素。</p>
+</li>
+<li><p><code>:empty</code> :匹配没有子元素的元素</p>
+</li>
+<li><p><code>:enabled</code>: 匹配没有设置 disabled 属性的表单元素。</p>
+</li>
+<li><p><code>:in-range</code>: 匹配在指定区域内元素。</p>
+</li>
+<li><p><code>:out-of-range</code>: 与<code>:in-range</code>相反，它匹配不在指定区域内的元素。</p>
+</li>
+<li><p><code>:indeterminate</code>:indeterminate 的英文意思是“ 不确定的”。当某组中的单选框或复选框还没有选取状态时，:indeterminate 匹配该组中所有的单选框或复选框。</p>
+</li>
+<li><p><code>:valid</code> :匹配条件验证正确的表单元素。</p>
+</li>
+<li><p><code>:invalid</code>: 与<code>:valid</code> 相反，匹配条件验证错误的表单元素。</p>
+</li>
+<li><p><code>:optional</code>:匹配是具有 optional 属性的表单元素。当表单元素没有设置为 required 时，即为 optional 属性。</p>
+</li>
+<li><p><code>:required</code>: 与<code>:optional</code>相反匹配设置了 required 属性的表单元素。</p>
+</li>
+<li><p><code>:read-only</code>: 匹配设置了只读属性的元素，表单元素可以通过设置“readonly” 属性来定义元素只读。</p>
+</li>
+<li><p><code>:read-write</code>: 匹配处于编辑状态的元素。input，textarea 和设置了 contenteditable 的 HTML 元素获取焦点时即处于编辑状态。</p>
+</li>
+<li><p><code>:scope</code>: 匹配处于 style 作用域下的元素。当 style 没有设置 scope 属性时，style 内的样式会对整个 html 起作用。</p>
+</li>
+<li><p><code>:dir</code>:匹配指定阅读方向的元素，当 HTML 元素中设置了 dir 属性时该伪类才能生效。现时支持的阅读方向有两种：ltr（从左往右）和 rtl（从右往左）。目前，只有火狐浏览器支持:dir 伪类，并在火狐浏览器中使用时需要添加前缀 ( -moz-dir() )。</p>
+</li>
+<li><p><code>:lang</code>:匹配设置了特定语言的元素，设置特定语言可以通过为了 HTML 元素设置 lang=”” 属性，设置 meta 元素的 charset=”” 属性，或者是在 http 头部上设置语言属性。</p>
+<p>实际上，lang=”” 属性不只可以在 html 标签上设置，也可以在其他的元素上设置。</p>
+</li>
+</ul>
+<ul>
+<li><code>:root</code>:匹配文档的根元素。一般的 html 文件的根元素是 html 元素，而 SVG 或 XML 文件的根元素则可能是其他元素。</li>
+<li><code>:fullscreen</code>: 匹配处于全屏模式下的元素。全屏模式不是通过按 F11 来打开的全屏模式，而是通过 Javascript 的 Fullscreen API 来打开的，不同的浏览器有不同的 Fullscreen API。目前，:fullscreen 需要添加前缀才能使用。</li>
+</ul>
+<p><img alt="img" class="post-img b-lazy" href="https://tva1.sinaimg.cn/large/006y8mN6ly1g79wl6d5ouj30gi0exq4h.jpg" data-src="https://tva1.sinaimg.cn/large/006y8mN6ly1g79wl6d5ouj30gi0exq4h.jpg"></p>
+<p>##伪元素</p>
+<p>伪元素前面是两个冒号，<code>E::first-line</code>会创造出不存在的新元素，由于css对单冒号的伪元素也支持，所以这样很容易让新学者混淆。但实际上现在css3已经明确规定了伪类单冒号，伪元素双冒号的规则。</p>
+<ul>
+<li><p><code>::before/:before</code>在被选元素前插入内容。需要使用 content 属性来指定要插入的内容。被插入的内容实际上不在文档树中。</p>
+</li>
+<li><p><code>::after/:after</code> 在被元素后插入内容，其用法和特性与<code>:before</code>相似。</p>
+<p>对于伪元素 <code>:before</code> 和 <code>:after</code> 而言，属性 <code>content</code> 是必须设置的，我们知道属性的值可以为字符串，也可以有其它形式，比如指向一张图片的 <code>URL:</code></p>
+<p><code>content: url(&#39;img/icon.png&#39;)</code></p>
+</li>
+<li><p><code>::first-letter/:first-letter</code> 匹配元素中文本的首字母。被修饰的首字母不在文档树中</p>
+</li>
+<li><p><code>::first-line/:first-line</code> 匹配元素中第一行的文本。这个伪元素只能用在块元素中，不能用在内联元素中。</p>
+</li>
+<li><p><code>::selection</code> 匹配用户被用户选中或者处于高亮状态的部分。在火狐浏览器使用时需要添加<code>-moz</code>前缀。该伪元素只支持双冒号的形式。</p>
+</li>
+<li><p><code>::placeholder</code> 匹配占位符的文本，只有元素设置了<code>placeholder</code>属性时，该伪元素才能生效。</p>
+<p>伪元素不是<code>CSS</code>的标准，它的实现可能在将来会有所改变，所以要决定使用时必须谨慎。在一些浏览器中（<code>IE10</code>和<code>Firefox18</code>及其以下版本）会使用单冒号的形式。</p>
+</li>
+</ul>
+<ul>
+<li><code>::backdrop</code> 用于改变全屏模式下的背景颜色，全屏模式的默认颜色为黑色。该伪元素只支持双冒号的形式</li>
+</ul>
+<p>注意：</p>
+<ul>
+<li>配合伪类使用<ul>
+<li>伪元素 <code>:before</code> 还可以配合伪类使用，这里举经常与 <code>:before</code> 配合使用的伪类 <code>:hover</code> 为例：</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.before</span><span class="selector-pseudo">:hover</span><span class="selector-pseudo">:before</span>&#123;<span class="attribute">content</span>:<span class="string">'you before'</span>; <span class="attribute">color</span>:red;&#125;</span><br><span class="line">&lt;div class="before"&gt; me&lt;/div&gt;</span><br></pre></td></tr></table></figure>
 
-<h2 id="依赖图-dependency-graph"><a href="#依赖图-dependency-graph" class="headerlink" title="依赖图(dependency graph)"></a>依赖图(dependency graph)</h2><p>任何时候，一个文件依赖于另一个文件，webpack 就把此视为文件之间有 依赖关系 。这使得 webpack 可以接收非代码资源(non-code asset)（例如图像或 web 字体），并且可以把它们作为 <em>依赖</em> 提供给你的应用程序。</p>
-<p>webpack 从命令行或配置文件中定义的一个模块列表开始，处理你的应用程序。 从这些 入口起点 开始，webpack 递归地构建一个 依赖图 ，这个依赖图包含着应用程序所需的每个模块，然后将所有这些模块打包为少量的 bundle - 通常只有一个 - 可由浏览器加载。</p>
-<h2 id="入口"><a href="#入口" class="headerlink" title="入口"></a>入口</h2><p>入口起点(entry point)指示 webpack 应该使用哪个模块，来作为构建其内部依赖图的开始。进入入口起点后，webpack 会找出有哪些模块和库是入口起点（直接和间接）依赖的。<br>每个依赖项随即被处理，最后输出到称之为 bundles 的文件中。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  entry: <span class="string">"./path/to/my/entry/file.js"</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>配合取值函数 <code>attr()</code> 使用</li>
+</ul>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">a</span><span class="selector-pseudo">::before</span>&#123;<span class="attribute">content</span>: <span class="built_in">attr</span>(title)&#125;</span><br><span class="line">&lt;a href="https://blog.ihoey.com" title="梦魇小栈"&gt;&lt;/a&gt;</span><br><span class="line"></span><br><span class="line">效果</span><br><span class="line">&lt;a href="https://blog.ihoey.com" title="梦魇小栈"&gt;梦魇小栈&lt;/a&gt;</span><br></pre></td></tr></table></figure>
 
-<p>入口配置支持：</p>
-<ol>
-<li>单个入口语法<br>注：向 entry 传入一个「文件路径(file path)数组」时将创建“多个主入口(multi-main entry)”。在你想要多个依赖文件一起注入，并且将它们的依赖导向(graph)到一个“chunk”时，传入数组的方式就很有用。</li>
-<li>对象语法<br>这是应用程序中定义入口的最可扩展的方式。</li>
-</ol>
-<h2 id="出口-output"><a href="#出口-output" class="headerlink" title="出口(output)"></a>出口(output)</h2><p>output 属性告诉 webpack 在哪里输出它所创建的 bundles，以及如何命名这些文件，默认值为 ./dist。基本上，整个应用程序结构，都会被编译到你指定的输出路径的文件夹中。你可以通过在配置中指定一个 output 字段，来配置这些处理过程：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">"path"</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  entry: <span class="string">"./path/to/my/entry/file.js"</span>,</span><br><span class="line">  output: &#123;</span><br><span class="line">    path: path.resolve(__dirname, <span class="string">"dist"</span>),</span><br><span class="line">    filename: <span class="string">"my-first-webpack.bundle.js"</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<p>filename 用于输出文件的文件名。目标输出目录 path 的绝对路径。</p>
-<p>注：如果配置创建了多个单独的 “chunk”（例如，使用多个入口起点或使用像 CommonsChunkPlugin 这样的插件），则应该使用占位符(substitutions)来确保每个文件具有唯一的名称。</p>
-<p>设定 HtmlWebpackPlugin，虽然在 dist/ 文件夹我们已经有 index.html 这个文件，然而 HtmlWebpackPlugin 还是会默认生成 index.html 文件。这就是说，它会用新生成的 index.html 文件，把我们的原来的替换。</p>
-<h3 id="使用-source-map"><a href="#使用-source-map" class="headerlink" title="使用 source map"></a>使用 source map</h3><p>当 webpack 打包源代码时，可能会很难追踪到错误和警告在源代码中的原始位置。例如，如果将三个源文件（a.js, b.js 和 c.js）打包到一个 bundle（bundle.js）中，而其中一个源文件包含一个错误，那么堆栈跟踪就会简单地指向到 bundle.js。<br>为了更容易地追踪错误和警告，JavaScript 提供了 source map 功能，将编译后的代码映射回原始源代码。如果一个错误来自于 b.js，source map 就会明确的告诉你。</p>
-<h2 id="loader"><a href="#loader" class="headerlink" title="loader"></a>loader</h2><p>loader 让 webpack 能够去处理那些非 JavaScript 文件（webpack 自身只理解 JavaScript）。loader 可以将所有类型的文件转换为 webpack 能够处理的有效模块，然后你就可以利用 webpack 的打包能力，对它们进行处理。</p>
-<p>本质上，webpack loader 将所有类型的文件，转换为应用程序的依赖图（和最终的 bundle）可以直接引用的模块。</p>
-<h3 id="在-webpack-的配置中-loader-有两个目标："><a href="#在-webpack-的配置中-loader-有两个目标：" class="headerlink" title="在 webpack 的配置中 loader 有两个目标："></a>在 webpack 的配置中 loader 有两个目标：</h3><ol>
-<li>test 属性，用于标识出应该被对应的 loader 进行转换的某个或某些文件。</li>
-<li>use 属性，表示进行转换时，应该使用哪个 loader。</li>
-</ol>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">"path"</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> config = &#123;</span><br><span class="line">  output: &#123;</span><br><span class="line">    filename: <span class="string">"my-first-webpack.bundle.js"</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="built_in">module</span>: &#123;</span><br><span class="line">    rules: [&#123; <span class="attr">test</span>: <span class="regexp">/\.txt$/</span>, <span class="attr">use</span>: <span class="string">"raw-loader"</span> &#125;]</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = config;</span><br></pre></td></tr></table></figure>
-
-<h3 id="在你的应用程序中，有三种使用-loader-的方式："><a href="#在你的应用程序中，有三种使用-loader-的方式：" class="headerlink" title="在你的应用程序中，有三种使用 loader 的方式："></a>在你的应用程序中，有三种使用 loader 的方式：</h3><ol>
-<li>配置（推荐）：在 webpack.config.js 文件中指定 loader。<br>module.rules 允许你在 webpack 配置中指定多个 loader。 这是展示 loader 的一种简明方式，并且有助于使代码变得简洁。同时让你对各个 loader 有个全局概览</li>
-<li>内联：在每个 import 语句中显式指定 loader。<br>可以在 import 语句或任何等效于 “import” 的方式中指定 loader。使用 ! 将资源中的 loader 分开。分开的每个部分都相对于当前目录解析。</li>
-<li>CLI：在 shell 命令中指定它们。</li>
-</ol>
-<h3 id="loader-特性："><a href="#loader-特性：" class="headerlink" title="loader 特性："></a>loader 特性：</h3><ol>
-<li>loader 支持链式传递。能够对资源使用流水线(pipeline)。一组链式的 loader 将按照相反的顺序执行。loader 链中的第一个 loader 返回值给下一个 loader。在最后一个 loader，返回 webpack 所预期的 JavaScript。</li>
-<li>loader 可以是同步的，也可以是异步的。</li>
-<li>loader 运行在 Node.js 中，并且能够执行任何可能的操作。</li>
-<li>loader 接收查询参数。用于对 loader 传递配置。</li>
-<li>loader 也能够使用 options 对象进行配置。</li>
-<li>除了使用 package.json 常见的 main 属性，还可以将普通的 npm 模块导出为 loader，做法是在 package.json 里定义一个 loader 字段。</li>
-<li>插件(plugin)可以为 loader 带来更多特性。</li>
-<li>loader 能够产生额外的任意文件。</li>
-</ol>
-<h2 id="插件-plugins"><a href="#插件-plugins" class="headerlink" title="插件(plugins)"></a>插件(plugins)</h2><p>loader 被用于转换某些类型的模块，而插件则可以用于执行范围更广的任务。插件的范围包括，从打包优化和压缩，一直到重新定义环境中的变量。插件接口功能极其强大，可以用来处理各种各样的任务。<br>插件目的在于解决 loader 无法实现的其他事。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> HtmlWebpackPlugin = <span class="built_in">require</span>(<span class="string">"html-webpack-plugin"</span>); <span class="comment">// 通过 npm 安装</span></span><br><span class="line"><span class="keyword">const</span> webpack = <span class="built_in">require</span>(<span class="string">"webpack"</span>); <span class="comment">// 用于访问内置插件</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> config = &#123;</span><br><span class="line">  <span class="built_in">module</span>: &#123;</span><br><span class="line">    rules: [&#123; <span class="attr">test</span>: <span class="regexp">/\.txt$/</span>, <span class="attr">use</span>: <span class="string">"raw-loader"</span> &#125;]</span><br><span class="line">  &#125;,</span><br><span class="line">  plugins: [<span class="keyword">new</span> HtmlWebpackPlugin(&#123; <span class="attr">template</span>: <span class="string">"./src/index.html"</span> &#125;)]</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = config;</span><br></pre></td></tr></table></figure>
-
-<h3 id="用法："><a href="#用法：" class="headerlink" title="用法："></a>用法：</h3><p>用 require（）引入<br>由于插件可以携带参数/选项，你必须在 webpack 配置中，向 plugins 属性传入 new 实例。</p>
-<h2 id="模式"><a href="#模式" class="headerlink" title="模式"></a>模式</h2><p>提供 mode 配置选项，告知 webpack 使用相应模式的内置优化。<br>通过选择 development 或 production 之中的一个，来设置 mode 参数，可以启用相应模式下的 webpack 内置的优化</p>
-<h3 id="用法：-1"><a href="#用法：-1" class="headerlink" title="用法："></a>用法：</h3><ol>
-<li>只在配置中提供 mode 选项：</li>
-</ol>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  mode: <span class="string">"production"</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<ol start="2">
-<li>从 CLI 参数中传递：</li>
-</ol>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">webpack --mode=production</span><br></pre></td></tr></table></figure>
-
-<p><img alt="img" class="post-img b-lazy" href="https://tva1.sinaimg.cn/large/006y8mN6ly1g6j6u0wvurj30k5072glt.jpg" data-src="https://tva1.sinaimg.cn/large/006y8mN6ly1g6j6u0wvurj30k5072glt.jpg"></p>
-<h2 id="模块热替换-hot-module-replacement"><a href="#模块热替换-hot-module-replacement" class="headerlink" title="模块热替换(hot module replacement)"></a>模块热替换(hot module replacement)</h2><p>模块热替换(HMR - Hot Module Replacement)功能会在应用程序运行过程中替换、添加或删除模块，而无需重新加载整个页面。主要是通过以下几种方式，来显著加快开发速度：</p>
-<ol>
-<li>保留在完全重新加载页面时丢失的应用程序状态。</li>
-<li>只更新变更内容，以节省宝贵的开发时间。</li>
-<li>调整样式更加快速 - 几乎相当于在浏览器调试器中更改样式。</li>
-</ol>
-<h2 id="tree-shaking"><a href="#tree-shaking" class="headerlink" title="tree shaking"></a>tree shaking</h2><p>通常用于描述移除 JavaScript 上下文中的未引用代码(dead-code)。它依赖于 ES2015 模块系统中的静态结构特性，例如 import 和 export。</p>
-<p>如果所有代码都不包含副作用，我们就可以简单地将 package.json 的 “sideEffects” 属性标记为 false，来告知 webpack，它可以安全地删除未用到的 export 导出。<br>注：「副作用」的定义是，在导入时会执行特殊行为的代码，而不是仅仅暴露一个 export 或多个 export。</p>
-<p>如果你的代码确实有一些副作用，那么可以改为提供一个数组：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="string">"name"</span>: <span class="string">"your-project"</span>,</span><br><span class="line">  <span class="string">"sideEffects"</span>: [</span><br><span class="line">    <span class="string">"./src/some-side-effectful-file.js"</span></span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>数组方式支持相关文件的相对路径、绝对路径和 glob 模式。它在内部使用 micromatch。</p>
-<p>注意，任何导入的文件都会受到 tree shaking 的影响。这意味着，如果在项目中使用类似 css-loader 并导入 CSS 文件，则需要将其添加到 side effect 列表中，以免在生产模式中无意中将它删除。</p>
-<p>从 webpack 4 开始，也可以通过 “mode” 配置选项轻松切换到压缩输出，只需设置为 “production”。</p>
+<p><img alt="img" class="post-img b-lazy" href="https://tva1.sinaimg.cn/large/006y8mN6ly1g79wlwrg6aj30dn05w3yy.jpg" data-src="https://tva1.sinaimg.cn/large/006y8mN6ly1g79wlwrg6aj30dn05w3yy.jpg"></p>
 
                 </article>
                 <ul class="tags-postTags">
                     
                     <li>
-                        <a href="/tags/webpack/" rel="tag"># webpack</a>
+                        <a href="/tags/CSS/" rel="tag"># CSS</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/tags/伪元素/" rel="tag"># 伪元素</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/tags/伪类/" rel="tag"># 伪类</a>
                     </li>
                     
                 </ul>
@@ -275,14 +330,10 @@
     
     <nav id="gobottom" class="pagination">
         
-        <a class="prev-post" title="webpack基础知识（二）" href="/2018/12/05/webpack基础知识（二）/">
-            ← webpack基础知识（二）
-        </a>
-        
         <span class="prev-next-post">·</span>
         
-        <a class="next-post" title="React组件" href="/2018/11/11/React组件/">
-            React组件 →
+        <a class="next-post" title="sass&less对比" href="/2019/11/11/sass&less对比/">
+            sass&less对比 →
         </a>
         
     </nav>
@@ -308,7 +359,7 @@
         </a>
     </div>
     <div class="toc-main">
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#基本概念"><span class="toc-text">基本概念</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#依赖图-dependency-graph"><span class="toc-text">依赖图(dependency graph)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#入口"><span class="toc-text">入口</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#出口-output"><span class="toc-text">出口(output)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#使用-source-map"><span class="toc-text">使用 source map</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#loader"><span class="toc-text">loader</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#在-webpack-的配置中-loader-有两个目标："><span class="toc-text">在 webpack 的配置中 loader 有两个目标：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#在你的应用程序中，有三种使用-loader-的方式："><span class="toc-text">在你的应用程序中，有三种使用 loader 的方式：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#loader-特性："><span class="toc-text">loader 特性：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#插件-plugins"><span class="toc-text">插件(plugins)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#用法："><span class="toc-text">用法：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#模式"><span class="toc-text">模式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#用法：-1"><span class="toc-text">用法：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#模块热替换-hot-module-replacement"><span class="toc-text">模块热替换(hot module replacement)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#tree-shaking"><span class="toc-text">tree shaking</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#伪类和伪元素"><span class="toc-text">伪类和伪元素</span></a></li></ol>
     </div>
 </div>
 
@@ -560,7 +611,7 @@
         </a>
     </div>
     <span class="floating-header-divider">&mdash;</span>
-    <div class="floating-header-title">webpack基础知识（一）</div>
+    <div class="floating-header-title">伪类和伪元素</div>
     <progress class="progress" value="0">
         <span class="progress-container">
             <span class="progress-bar"></span>
