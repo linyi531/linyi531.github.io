@@ -5,8 +5,8 @@ tags:
   - CSS
   - 布局
 categories: CSS
-cover_img: https://tva1.sinaimg.cn/large/006y8mN6ly1g77hebhs25j30u01904qr.jpg
-feature_img: hhttps://tva1.sinaimg.cn/large/006y8mN6ly1g77hebhs25j30u01904qr.jpg
+cover_img: https://tva1.sinaimg.cn/large/006y8mN6ly1g904fe6mqoj31900u0qvp.jpg
+feature_img: https://tva1.sinaimg.cn/large/006y8mN6ly1g904fe6mqoj31900u0qvp.jpg
 ---
 
 # BFC
