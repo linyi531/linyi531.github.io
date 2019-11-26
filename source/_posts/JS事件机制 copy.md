@@ -4,8 +4,8 @@ date: 2019-11-26 13:29:24
 tags:
   - JavaScript
 categories: JavaScript
-cover_img: https://tva1.sinaimg.cn/large/006y8mN6ly1g77hja0uuij30u01404qp.jpg
-feature_img: https://tva1.sinaimg.cn/large/006y8mN6ly1g77hja0uuij30u01404qp.jpg
+cover_img: https://tva1.sinaimg.cn/large/006y8mN6ly1g9bdv3db80j31900u0hdt.jpg
+feature_img: https://tva1.sinaimg.cn/large/006y8mN6ly1g9bdv3db80j31900u0hdt.jpg
 ---
 
 # 循环中的异步操作问题小结
