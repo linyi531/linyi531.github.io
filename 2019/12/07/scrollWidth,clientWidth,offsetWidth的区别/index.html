@@ -22,7 +22,7 @@
 	<link rel="preconnect" href="//gravatar.loli.net">
 	<link rel="preload" href="https://pic.zhih.me/blog/header.jpg" as="image">
 
-	<title>Category: 移动端 | 01不是包子脸</title>
+	<title>scrollWidth,clientWidth,offsetWidth的区别 | 01不是包子脸</title>
 
 	<meta name="HandheldFriendly" content="True">
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
@@ -31,7 +31,7 @@
 	<meta name="description" content>
 
 	
-	<meta name="keywords" content="hexo, casper, ghost, theme">
+	<meta name="keywords" content>
 	
 
 	
@@ -49,11 +49,15 @@
 	
 
 	<meta property="og:site_name" content="01不是包子脸">
-	<meta property="og:type" content="blog">
-	<meta property="og:title" content="Category: 移动端 | 01不是包子脸">
+	<meta property="og:type" content="article">
+	<meta property="og:title" content="scrollWidth,clientWidth,offsetWidth的区别 | 01不是包子脸">
 	<meta property="og:description" content>
-	<meta property="og:url" content="http://yoursite.com/categories/移动端/index.html">
+	<meta property="og:url" content="http://yoursite.com/2019/12/07/scrollWidth,clientWidth,offsetWidth的区别/">
 
+	
+	<meta property="article:published_time" content="2019-12-07T22:12:00+08:00"> 
+	<meta property="article:author" content="Linyi Li">
+	<meta property="article:published_first" content="01不是包子脸, /2019/12/07/scrollWidth,clientWidth,offsetWidth的区别/">
 	
 
 	
@@ -71,20 +75,22 @@
 	
 	
 	
+<link rel="canonical" href="http://yoursite.com/2019/12/07/scrollWidth,clientWidth,offsetWidth的区别/">
+
+
+
 
 
 </head>
-<body class="tag-template">
+<body class="post-template">
 	<div class="site-wrapper">
-		 
+		
 
 
 
 
-<header class="site-header outer " style="background-image: url(https://tva1.sinaimg.cn/large/006y8mN6ly1g77gpw5lrfj31bt0u0qv6.jpg)">
+<header class="site-header post-site-header outer">
     <div class="inner">
-        
-        
         
 <nav class="site-nav"> 
     <div class="site-nav-left">
@@ -153,87 +159,121 @@
 </div>
     </div>
 </nav>
-        
-        <div class="site-header-content">
-            
-            <h1 class="site-title">
-                Category: 移动端
-            </h1>
-            <h2 class="site-description">分类</h2>
-        </div>
-        
-        
     </div>
 </header>
 
 
 <div id="site-main" class="site-main outer" role="main">
-	<div class="inner">
-		<div class="post-feed">
-			
-			<article class="post-card post ">
-				
-				<a class="post-card-image-link" title="移动端的触屏事件" href="/2019/03/22/移动端的触屏事件/">
-					<div class="post-card-image b-lazy" data-src="https://tva1.sinaimg.cn/large/006y8mN6ly1g77hardplej31es0u0e6x.jpg"></div>
-				</a>
-				
-				<div class="post-card-content">
-					<a class="post-card-content-link" title="移动端的触屏事件" href="/2019/03/22/移动端的触屏事件/">
-						<header class="post-card-header">
-							<span class="post-card-tags">
-								
-								
-								移动端
-								| 
-								
-								<time datetime="2019-03-22T08:28:36.000Z">
-									2019-03-22
-								</time>
-							</span>
-							<h2 class="post-card-title">移动端的触屏事件</h2>
-						</header>
-						<div class="post-card-excerpt">
-							<p>
-								
-								
-								
-								
-								
-								
-								移动端的触屏事件1.原生触摸事件（touch 类事件）在移动端，原生触摸事件只有以下三种类型，其他所有的触摸事件都是由这三种事件相结合产生的，例如，上划、下滑、
-								...
-							</p>
-						</div>
-					</a>
-					<footer class="post-card-meta">
-						<div class="author-list">
-							<div class="author-list-item">
-								<div class="author-name-tooltip">Linyi Li</div>
-								
-								<a href="/about" class="static-avatar">
-									<img class="author-profile-image" src="https://tva1.sinaimg.cn/large/006y8mN6ly1g7s1r0gh0qj30u00u0nnt.jpg" alt="Linyi Li">
-								</a>
-								
-							</div>
-						</div>
-						<span class="reading-time">
-							3
-							min read
-						</span>
-					</footer>
-				</div>
-			</article>
-			
-		</div>
-	</div>
+    <div class="inner">
+        <header class="post-full-header">
+            <div class="post-full-meta">
+                <time class="post-full-meta-date" datetime="2019-12-07T14:01:34.000Z">
+                    2019-12-7
+                </time>
+                
+                <span class="date-divider">/</span>
+                
+                <a href="/categories/CSS/">CSS</a>&nbsp;&nbsp;
+                
+                
+            </div>
+            <h1 class="post-full-title">scrollWidth,clientWidth,offsetWidth的区别</h1>
+        </header>
+        <div class="post-full ">
+            
+            <figure class="post-full-image" style="background-image: url(https://tva1.sinaimg.cn/large/006tNbRwgy1g9oibg5zl2j31900u0b29.jpg)">
+            </figure>
+            
+            <div class="post-full-content">
+                <article id="lightgallery" class="markdown-body">
+                    <h1 id="scrollWidth-clientWidth-offsetWidth的区别"><a href="#scrollWidth-clientWidth-offsetWidth的区别" class="headerlink" title="scrollWidth,clientWidth,offsetWidth的区别"></a>scrollWidth,clientWidth,offsetWidth的区别</h1><h2 id="总体说明"><a href="#总体说明" class="headerlink" title="总体说明"></a>总体说明</h2><h3 id="元素对象："><a href="#元素对象：" class="headerlink" title="元素对象："></a>元素对象：</h3><ul>
+<li>offsetLeft、offsetTop属性：获取元素相对于文档左上角的坐标位置。</li>
+</ul>
+<ul>
+<li><p>scrollWidth：对象的<strong>实际内容</strong>的宽度，不包括边线宽度，会随对象中内容超过可视区后而变大。</p>
+<p>scrollWidth=元素的width+padding</p>
+</li>
+<li><p>clientWidth：对象内容的<strong>可视区的宽度</strong>，不包括滚动条等边线，会随对象显示大小的变化而改变。</p>
+<p>clientWidth=元素的width+padding</p>
+</li>
+<li><p>offsetWidth：对象<strong>整体的实际宽度</strong>，包括滚动条等边线，会随对象显示大小的变化而改变。</p>
+<p>offsetWidth=元素的width+padding+border</p>
+</li>
+</ul>
+<p><img alt="img" class="post-img b-lazy" href="https://tva1.sinaimg.cn/large/006y8mN6ly1g7aq0kktmyj30gx0gqtam.jpg" data-src="https://tva1.sinaimg.cn/large/006y8mN6ly1g7aq0kktmyj30gx0gqtam.jpg"></p>
+<p>###window对象：</p>
+<ul>
+<li><p>innerWidth：窗口中文档显示区域的宽度，不包括菜单栏、工具栏等部分。该属性可读可写。浏览器窗口的内部宽度（对于IE9+、Chrome、Firefox、Opera 以及 Safari）</p>
+</li>
+<li><p>pageXOffset：整数只读属性，表示文档向右滚动过的像素数。IE不支持该属性，使用body元素的scrollLeft属性替代。</p>
+</li>
+<li></li>
+</ul>
+<p>##情况一</p>
+<p>元素内无内容或者内容不超过可视区，滚动不出现或不可用的情况下。</p>
+<ul>
+<li>scrollWidth=clientWidth，两者皆为内容可视区的宽度。</li>
+<li>offsetWidth为元素的实际宽度。</li>
+</ul>
+<p><img alt="img" class="post-img b-lazy" href="https://tva1.sinaimg.cn/large/006y8mN6ly1g7aoj7ezc9j30eo07hjs6.jpg" data-src="https://tva1.sinaimg.cn/large/006y8mN6ly1g7aoj7ezc9j30eo07hjs6.jpg"></p>
+<p>##情况二</p>
+<p>元素的内容超过可视区，滚动条出现和可用的情况下。</p>
+<ul>
+<li>scrollWidth&gt;clientWidth。</li>
+<li>scrollWidth为实际内容的宽度。</li>
+<li>clientWidth是内容可视区的宽度。</li>
+<li>offsetWidth是元素的实际宽度。</li>
+</ul>
+<p><img alt="img" class="post-img b-lazy" href="https://tva1.sinaimg.cn/large/006y8mN6ly1g7aokjodirj30h40a1q41.jpg" data-src="https://tva1.sinaimg.cn/large/006y8mN6ly1g7aokjodirj30h40a1q41.jpg"></p>
+<h2 id="针对文档-document-的各个height、width、top、left的说明"><a href="#针对文档-document-的各个height、width、top、left的说明" class="headerlink" title="针对文档(document)的各个height、width、top、left的说明"></a>针对文档(document)的各个height、width、top、left的说明</h2><p><img alt="img" class="post-img b-lazy" href="https://tva1.sinaimg.cn/large/006y8mN6ly1g7apu7784cj30dw0fa0tw.jpg" data-src="https://tva1.sinaimg.cn/large/006y8mN6ly1g7apu7784cj30dw0fa0tw.jpg"></p>
+<h2 id="针对网页中一个div的各个属性值的说明"><a href="#针对网页中一个div的各个属性值的说明" class="headerlink" title="针对网页中一个div的各个属性值的说明"></a>针对网页中一个div的各个属性值的说明</h2><p><img alt="img" class="post-img b-lazy" href="https://tva1.sinaimg.cn/large/006y8mN6ly1g7apvi51ygj30jg0ga400.jpg" data-src="https://tva1.sinaimg.cn/large/006y8mN6ly1g7apvi51ygj30jg0ga400.jpg"></p>
+
+                </article>
+                <ul class="tags-postTags">
+                    
+                    <li>
+                        <a href="/tags/CSS/" rel="tag"># CSS</a>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    
+    <nav id="gobottom" class="pagination">
+        
+        <span class="prev-next-post">·</span>
+        
+        <a class="next-post" title="循环中的异步操作问题小结" href="/2019/11/26/JS事件机制 copy/">
+            循环中的异步操作问题小结 →
+        </a>
+        
+    </nav>
+
+    
+    <div class="inner">
+        <div id="comment"></div>
+    </div>
+    
 </div>
 
-
-
-<div class="outer">
-	<nav class="pagination">
-		
-	</nav>
+<div class="toc-bar">
+    <div class="toc-btn-bar">
+        <a href="#site-main" class="toc-btn">
+            <svg viewbox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M793.024 710.272a32 32 0 1 0 45.952-44.544l-310.304-320a32 32 0 0 0-46.4 0.48l-297.696 320a32 32 0 0 0 46.848 43.584l274.752-295.328 286.848 295.808z"/></svg>
+        </a>
+        <div class="toc-btn toc-switch">
+            <svg class="toc-open" viewbox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M779.776 480h-387.2a32 32 0 0 0 0 64h387.2a32 32 0 0 0 0-64M779.776 672h-387.2a32 32 0 0 0 0 64h387.2a32 32 0 0 0 0-64M256 288a32 32 0 1 0 0 64 32 32 0 0 0 0-64M392.576 352h387.2a32 32 0 0 0 0-64h-387.2a32 32 0 0 0 0 64M256 480a32 32 0 1 0 0 64 32 32 0 0 0 0-64M256 672a32 32 0 1 0 0 64 32 32 0 0 0 0-64"/></svg>
+            <svg class="toc-close hide" viewbox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M512 960c-247.039484 0-448-200.960516-448-448S264.960516 64 512 64 960 264.960516 960 512 759.039484 960 512 960zM512 128.287273c-211.584464 0-383.712727 172.128262-383.712727 383.712727 0 211.551781 172.128262 383.712727 383.712727 383.712727 211.551781 0 383.712727-172.159226 383.712727-383.712727C895.712727 300.415536 723.551781 128.287273 512 128.287273z"/><path d="M557.05545 513.376159l138.367639-136.864185c12.576374-12.416396 12.672705-32.671738 0.25631-45.248112s-32.704421-12.672705-45.248112-0.25631l-138.560301 137.024163-136.447897-136.864185c-12.512727-12.512727-32.735385-12.576374-45.248112-0.063647-12.512727 12.480043-12.54369 32.735385-0.063647 45.248112l136.255235 136.671523-137.376804 135.904314c-12.576374 12.447359-12.672705 32.671738-0.25631 45.248112 6.271845 6.335493 14.496116 9.504099 22.751351 9.504099 8.12794 0 16.25588-3.103239 22.496761-9.247789l137.567746-136.064292 138.687596 139.136568c6.240882 6.271845 14.432469 9.407768 22.65674 9.407768 8.191587 0 16.352211-3.135923 22.591372-9.34412 12.512727-12.480043 12.54369-32.704421 0.063647-45.248112L557.05545 513.376159z"/></svg>
+        </div>
+        <a href="#gobottom" class="toc-btn">
+            <svg viewbox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M231.424 346.208a32 32 0 0 0-46.848 43.584l297.696 320a32 32 0 0 0 46.4 0.48l310.304-320a32 32 0 1 0-45.952-44.544l-286.848 295.808-274.752-295.36z"/></svg>
+        </a>
+    </div>
+    <div class="toc-main">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#scrollWidth-clientWidth-offsetWidth的区别"><span class="toc-text">scrollWidth,clientWidth,offsetWidth的区别</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#总体说明"><span class="toc-text">总体说明</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#元素对象："><span class="toc-text">元素对象：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#针对文档-document-的各个height、width、top、left的说明"><span class="toc-text">针对文档(document)的各个height、width、top、left的说明</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#针对网页中一个div的各个属性值的说明"><span class="toc-text">针对网页中一个div的各个属性值的说明</span></a></li></ol></li></ol>
+    </div>
 </div>
 
 
@@ -466,6 +506,9 @@
 
 
 
+
+
+
 <script>
     document.getElementById('scriptLoad').addEventListener('load', function () {
         var bLazy = new Blazy()
@@ -475,14 +518,60 @@
 
 
 
+<div class="floating-header">
+	<div class="floating-header-logo">
+        <a href="/" title="01不是包子脸">
+			
+                <img src="https://tva1.sinaimg.cn/large/006y8mN6ly1g6sjqjrb9wj30jj0jjjss.jpg" alt="01不是包子脸 icon">
+			
+            <span>01不是包子脸</span>
+        </a>
+    </div>
+    <span class="floating-header-divider">&mdash;</span>
+    <div class="floating-header-title">scrollWidth,clientWidth,offsetWidth的区别</div>
+    <progress class="progress" value="0">
+        <span class="progress-container">
+            <span class="progress-bar"></span>
+        </span>
+    </progress>
+</div>
+<script>
+    document.getElementById('scriptLoad').addEventListener('load', function () {
+        postProgressBar()
+    })
+</script>
 
 
 
 
+<script src="/js/lightgallery.min.js"></script>
+<link rel="stylesheet" href="/css/lightgallery.min.css">
+<script>
+    lightGallery(document.getElementById('lightgallery'), {
+        selector: '.post-img'
+    });
+</script>
 
 
 
 
+<script async src="https://cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script async src="https://unpkg.com/valine@1.3.4/dist/Valine.min.js"></script>
+<script>
+    window.addEventListener("load", function() {
+        new Valine({
+            el: '#comment' ,
+            verify: false,
+            notify: false,
+            appId: 'RKl7DjTGeDG8TMedBcYhiagz-gzGzoHsz',
+            appKey: 'pcwdBNPnrqDUcLyj3H0TaeHy',
+            placeholder: '来聊聊天吧～～',
+            pageSize: 10,
+            avatar: 'mm',
+            visitor: true,
+        })
+    });
+</script>
 
 
 

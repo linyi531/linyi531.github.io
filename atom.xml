@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2019-11-26T05:36:52.906Z</updated>
+  <updated>2019-12-07T14:03:51.796Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,31 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>scrollWidth,clientWidth,offsetWidth的区别</title>
+    <link href="http://yoursite.com/2019/12/07/scrollWidth,clientWidth,offsetWidth%E7%9A%84%E5%8C%BA%E5%88%AB/"/>
+    <id>http://yoursite.com/2019/12/07/scrollWidth,clientWidth,offsetWidth的区别/</id>
+    <published>2019-12-07T14:01:34.000Z</published>
+    <updated>2019-12-07T14:03:51.796Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="scrollWidth-clientWidth-offsetWidth的区别"><a href="#scrollWidth-clientWidth-offsetWidth的区别" class="headerlink" title="scrollWidth,clientWidth,offsetWidth的区别"></a>scrollWidth,clientWidth,offsetWidth的区别</h1><h2 id="总体说明"><a href="#总体说明" class="headerlink" title="总体说明"></a>总体说明</h2><h3 id="元素对象："><a href="#元素对象：" class="headerlink" title="元素对象："></a>元素对象：</h3><ul><li>offsetLeft、offsetTop属性：获取元素相对于文档左上角的坐标位置。</li></ul><ul><li><p>scrollWidth：对象的<strong>实际内容</strong>的宽度，不包括边线宽度，会随对象中内容超过可视区后而变大。</p><p>scrollWidth=元素的width+padding</p></li><li><p>clientWidth：对象内容的<strong>可视区的宽度</strong>，不包括滚动条等边线，会随对象显示大小的变化而改变。</p><p>clientWidth=元素的width+padding</p></li><li><p>offsetWidth：对象<strong>整体的实际宽度</strong>，包括滚动条等边线，会随对象显示大小的变化而改变。</p><p>offsetWidth=元素的width+padding+border</p></li></ul><p><img src="https://tva1.sinaimg.cn/large/006y8mN6ly1g7aq0kktmyj30gx0gqtam.jpg" alt="img"></p><p>###window对象：</p><ul><li><p>innerWidth：窗口中文档显示区域的宽度，不包括菜单栏、工具栏等部分。该属性可读可写。浏览器窗口的内部宽度（对于IE9+、Chrome、Firefox、Opera 以及 Safari）</p></li><li><p>pageXOffset：整数只读属性，表示文档向右滚动过的像素数。IE不支持该属性，使用body元素的scrollLeft属性替代。</p></li><li></li></ul><p>##情况一</p><p>元素内无内容或者内容不超过可视区，滚动不出现或不可用的情况下。</p><ul><li>scrollWidth=clientWidth，两者皆为内容可视区的宽度。</li><li>offsetWidth为元素的实际宽度。</li></ul><p><img src="https://tva1.sinaimg.cn/large/006y8mN6ly1g7aoj7ezc9j30eo07hjs6.jpg" alt="img"></p><p>##情况二</p><p>元素的内容超过可视区，滚动条出现和可用的情况下。</p><ul><li>scrollWidth&gt;clientWidth。</li><li>scrollWidth为实际内容的宽度。</li><li>clientWidth是内容可视区的宽度。</li><li>offsetWidth是元素的实际宽度。</li></ul><p><img src="https://tva1.sinaimg.cn/large/006y8mN6ly1g7aokjodirj30h40a1q41.jpg" alt="img"></p><h2 id="针对文档-document-的各个height、width、top、left的说明"><a href="#针对文档-document-的各个height、width、top、left的说明" class="headerlink" title="针对文档(document)的各个height、width、top、left的说明"></a>针对文档(document)的各个height、width、top、left的说明</h2><p><img src="https://tva1.sinaimg.cn/large/006y8mN6ly1g7apu7784cj30dw0fa0tw.jpg" alt="img"></p><h2 id="针对网页中一个div的各个属性值的说明"><a href="#针对网页中一个div的各个属性值的说明" class="headerlink" title="针对网页中一个div的各个属性值的说明"></a>针对网页中一个div的各个属性值的说明</h2><p><img src="https://tva1.sinaimg.cn/large/006y8mN6ly1g7apvi51ygj30jg0ga400.jpg" alt="img"></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;scrollWidth-clientWidth-offsetWidth的区别&quot;&gt;&lt;a href=&quot;#scrollWidth-clientWidth-offsetWidth的区别&quot; class=&quot;headerlink&quot; title=&quot;scrollWidth,clie
+      
+    
+    </summary>
+    
+      <category term="CSS" scheme="http://yoursite.com/categories/CSS/"/>
+    
+    
+      <category term="CSS" scheme="http://yoursite.com/tags/CSS/"/>
+    
+  </entry>
   
   <entry>
     <title>循环中的异步操作问题小结</title>
@@ -501,30 +526,6 @@
     
       &lt;h1 id=&quot;JS-事件机制&quot;&gt;&lt;a href=&quot;#JS-事件机制&quot; class=&quot;headerlink&quot; title=&quot;JS 事件机制&quot;&gt;&lt;/a&gt;JS 事件机制&lt;/h1&gt;&lt;h2 id=&quot;js-里一般的阻止事件默认行为怎么做？&quot;&gt;&lt;a href=&quot;#js-里一般的阻止事件默认行为怎么做？&quot; class=&quot;headerlink&quot; title=&quot;js 里一般的阻止事件默认行为怎么做？&quot;&gt;&lt;/a&gt;js 里一般的阻止事件默认行为怎么做？&lt;/h2&gt;&lt;p&gt;event.preventDefault()可以取消默认事件&lt;/p&gt;
 &lt;p&gt;event.stopPropagation()起到阻止捕获和冒泡阶段中当前事件的进一步传播。&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="JavaScript" scheme="http://yoursite.com/categories/JavaScript/"/>
-    
-    
-      <category term="JavaScript" scheme="http://yoursite.com/tags/JavaScript/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>JS静态作用域</title>
-    <link href="http://yoursite.com/2019/07/11/JS%E9%9D%99%E6%80%81%E4%BD%9C%E7%94%A8%E5%9F%9F/"/>
-    <id>http://yoursite.com/2019/07/11/JS静态作用域/</id>
-    <published>2019-07-11T03:01:34.000Z</published>
-    <updated>2019-11-10T14:37:39.020Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="JS-静态作用域"><a href="#JS-静态作用域" class="headerlink" title="JS 静态作用域"></a>JS 静态作用域</h1><h2 id="js-的作用域和别的编程语言的作用域有什么区别"><a href="#js-的作用域和别的编程语言的作用域有什么区别" class="headerlink" title="js 的作用域和别的编程语言的作用域有什么区别"></a>js 的作用域和别的编程语言的作用域有什么区别</h2><h3 id="作用域"><a href="#作用域" class="headerlink" title="作用域"></a>作用域</h3><p>作用域是指程序源代码中定义变量的区域。</p><p>作用域规定了如何查找变量，也就是确定当前执行代码对变量的访问权限。</p><p>JavaScript 采用词法作用域(lexical scoping)，也就是静态作用域。</p><a id="more"></a><h3 id="静态作用域与动态作用域"><a href="#静态作用域与动态作用域" class="headerlink" title="静态作用域与动态作用域"></a>静态作用域与动态作用域</h3><p>因为 JavaScript 采用的是词法作用域，函数的作用域在函数定义的时候就决定了。</p><p>而与词法作用域相对的是动态作用域，函数的作用域是在函数调用的时候才决定的。</p><p>让我们认真看个例子就能明白之间的区别：</p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> value = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(value);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">bar</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> value = <span class="number">2</span>;</span><br><span class="line">  foo();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">bar();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 结果是 ???</span></span><br></pre></td></tr></table></figure><p>假设 JavaScript 采用静态作用域，让我们分析下执行过程：</p><p>执行 foo 函数，先从 foo 函数内部查找是否有局部变量 value，如果没有，就根据书写的位置，查找上面一层的代码，也就是 value 等于 1，所以结果会打印 1。</p><p>假设 JavaScript 采用动态作用域，让我们分析下执行过程：</p><p>执行 foo 函数，依然是从 foo 函数内部查找是否有局部变量 value。如果没有，就从调用函数的作用域，也就是 bar 函数内部查找 value 变量，所以结果会打印 2。</p><p>前面我们已经说了，JavaScript 采用的是静态作用域，所以这个例子的结果是 1。</p><p>最后，让我们看一个《JavaScript 权威指南》中的例子：</p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> scope = <span class="string">"global scope"</span>;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">checkscope</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> scope = <span class="string">"local scope"</span>;</span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">f</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> scope;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> f();</span><br><span class="line">&#125;</span><br><span class="line">checkscope();</span><br><span class="line"><span class="keyword">var</span> scope = <span class="string">"global scope"</span>;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">checkscope</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> scope = <span class="string">"local scope"</span>;</span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">f</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> scope;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> f;</span><br><span class="line">&#125;</span><br><span class="line">checkscope()();</span><br></pre></td></tr></table></figure><p>猜猜两段代码各自的执行结果是多少？</p><p>这里直接告诉大家结果，两段代码都会打印：<code>local scope</code>。</p><p>原因也很简单，因为 JavaScript 采用的是词法作用域，函数的作用域基于函数创建的位置。</p><p>而引用《JavaScript 权威指南》的回答就是：</p><p>JavaScript 函数的执行用到了作用域链，这个作用域链是在函数定义的时候创建的。嵌套的函数 f() 定义在这个作用域链里，其中的变量 scope 一定是局部变量，不管何时何地执行函数 f()，这种绑定在执行 f() 时依然有效。</p><p><strong>bash 就是动态作用域</strong></p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;h1 id=&quot;JS-静态作用域&quot;&gt;&lt;a href=&quot;#JS-静态作用域&quot; class=&quot;headerlink&quot; title=&quot;JS 静态作用域&quot;&gt;&lt;/a&gt;JS 静态作用域&lt;/h1&gt;&lt;h2 id=&quot;js-的作用域和别的编程语言的作用域有什么区别&quot;&gt;&lt;a href=&quot;#js-的作用域和别的编程语言的作用域有什么区别&quot; class=&quot;headerlink&quot; title=&quot;js 的作用域和别的编程语言的作用域有什么区别&quot;&gt;&lt;/a&gt;js 的作用域和别的编程语言的作用域有什么区别&lt;/h2&gt;&lt;h3 id=&quot;作用域&quot;&gt;&lt;a href=&quot;#作用域&quot; class=&quot;headerlink&quot; title=&quot;作用域&quot;&gt;&lt;/a&gt;作用域&lt;/h3&gt;&lt;p&gt;作用域是指程序源代码中定义变量的区域。&lt;/p&gt;
-&lt;p&gt;作用域规定了如何查找变量，也就是确定当前执行代码对变量的访问权限。&lt;/p&gt;
-&lt;p&gt;JavaScript 采用词法作用域(lexical scoping)，也就是静态作用域。&lt;/p&gt;
     
     </summary>
     
