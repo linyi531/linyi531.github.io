@@ -1,0 +1,1058 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+
+
+
+
+
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<link rel="preconnect" href="//pic.zhih.me">
+	<link rel="preconnect" href="//www.googletagmanager.com">
+	<link rel="preconnect" href="//zz.bdstatic.com">
+	<link rel="preconnect" href="//sp0.baidu.com">
+	<link rel="preconnect" href="//www.google-analytics.com">
+	<link rel="preconnect" href="//cdn1.lncld.net">
+	<link rel="preconnect" href="//unpkg.com">
+	<link rel="preconnect" href="//app-router.leancloud.cn">
+	<link rel="preconnect" href="//9qpuwspm.api.lncld.net">
+	<link rel="preconnect" href="//gravatar.loli.net">
+	<link rel="preload" href="https://pic.zhih.me/blog/header.jpg" as="image">
+
+	<title>深入浅出Node.js学习笔记（二） | 01不是包子脸</title>
+
+	<meta name="HandheldFriendly" content="True">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+	<meta name="generator" content="hexo">
+	<meta name="author" content="Linyi Li">
+	<meta name="description" content>
+
+	
+	<meta name="keywords" content>
+	
+
+	
+	<link rel="shortcut icon" href="https://tva1.sinaimg.cn/large/006y8mN6ly1g6sjqjrb9wj30jj0jjjss.jpg">
+	<link rel="apple-touch-icon" href="https://tva1.sinaimg.cn/large/006y8mN6ly1g6sjqjrb9wj30jj0jjjss.jpg">
+	
+
+	
+	<meta name="theme-color" content="#3c484e">
+	<meta name="msapplication-TileColor" content="#3c484e">
+	
+
+	
+
+	
+
+	<meta property="og:site_name" content="01不是包子脸">
+	<meta property="og:type" content="article">
+	<meta property="og:title" content="深入浅出Node.js学习笔记（二） | 01不是包子脸">
+	<meta property="og:description" content>
+	<meta property="og:url" content="http://yoursite.com/2019/12/19/深入浅出Node.js学习笔记（二）/">
+
+	
+	<meta property="article:published_time" content="2019-12-19T17:12:00+08:00"> 
+	<meta property="article:author" content="Linyi Li">
+	<meta property="article:published_first" content="01不是包子脸, /2019/12/19/深入浅出Node.js学习笔记（二）/">
+	
+
+	
+	
+	<link rel="stylesheet" href="/css/allinonecss.min.css">
+
+	
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-145838942-1"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag('js', new Date());
+		gtag('config', 'UA-145838942-1');
+	</script>
+	
+	
+	
+<link rel="canonical" href="http://yoursite.com/2019/12/19/深入浅出Node.js学习笔记（二）/">
+
+
+
+
+
+</head>
+<body class="post-template">
+	<div class="site-wrapper">
+		
+
+
+
+
+<header class="site-header post-site-header outer">
+    <div class="inner">
+        
+<nav class="site-nav"> 
+    <div class="site-nav-left">
+        <ul class="nav">
+            <li>
+                
+                
+                <a class="site-nav-logo" href="/" title="01不是包子脸">
+                    <img src="https://tva1.sinaimg.cn/large/006y8mN6ly1g6sjqjrb9wj30jj0jjjss.jpg" alt="01不是包子脸">
+                </a>
+                
+                
+            </li>
+            
+            
+            <li>
+                <a href="/" title="HOME">HOME</a>
+            </li>
+            
+            <li>
+                <a href="/about" title="ABOUT">ABOUT</a>
+            </li>
+            
+            <li>
+                <a href="/archives" title="ARCHIVES">ARCHIVES</a>
+            </li>
+            
+            
+        </ul> 
+    </div>
+    
+    <div class="search-button-area">
+        <a href="#search" class="search-button">Search ...</a>
+    </div>
+     
+    <div class="site-nav-right">
+        
+        <a href="#search" class="search-button">Search ...</a>
+         
+        
+<div class="social-links">
+    
+    <a class="social-link" title="weibo" href="https://weibo.com/2164694963/profile?rightmod=1&wvr=6&mod=personinfo" target="_blank" rel="noopener">
+        <svg viewbox="0 0 1141 1024" xmlns="http://www.w3.org/2000/svg"><path d="M916.48 518.144q27.648 21.504 38.912 51.712t9.216 62.976-14.336 65.536-31.744 59.392q-34.816 48.128-78.848 81.92t-91.136 56.32-94.72 35.328-89.6 18.944-75.264 7.68-51.712 1.536-49.152-2.56-68.096-10.24-78.336-21.504-79.872-36.352-74.24-55.296-59.904-78.848q-16.384-29.696-22.016-63.488t-5.632-86.016q0-22.528 7.68-51.2t27.136-63.488 53.248-75.776 86.016-90.112q51.2-48.128 105.984-85.504t117.248-57.856q28.672-10.24 63.488-11.264t57.344 11.264q10.24 11.264 19.456 23.04t12.288 29.184q3.072 14.336 0.512 27.648t-5.632 26.624-5.12 25.6 2.048 22.528q17.408 2.048 33.792-1.536t31.744-9.216 31.232-11.776 33.28-9.216q27.648-5.12 54.784-4.608t49.152 7.68 36.352 22.016 17.408 38.4q2.048 14.336-2.048 26.624t-8.704 23.04-7.168 22.016 1.536 23.552q3.072 7.168 14.848 13.312t27.136 12.288 32.256 13.312 29.184 16.384zM658.432 836.608q26.624-16.384 53.76-45.056t44.032-64 18.944-75.776-20.48-81.408q-19.456-33.792-47.616-57.344t-62.976-37.376-74.24-19.968-80.384-6.144q-78.848 0-139.776 16.384t-105.472 43.008-72.192 60.416-38.912 68.608q-11.264 33.792-6.656 67.072t20.992 62.976 42.496 53.248 57.856 37.888q58.368 25.6 119.296 32.256t116.224 0.512 100.864-21.504 74.24-33.792zM524.288 513.024q20.48 8.192 38.912 18.432t32.768 27.648q10.24 12.288 17.92 30.72t10.752 39.424 1.536 42.496-9.728 38.912q-8.192 18.432-19.968 37.376t-28.672 35.328-40.448 29.184-57.344 18.944q-61.44 11.264-117.76-11.264t-88.064-74.752q-12.288-39.936-13.312-70.656t16.384-66.56q13.312-27.648 40.448-51.712t62.464-38.912 75.264-17.408 78.848 12.8zM361.472 764.928q37.888 3.072 57.856-18.432t21.504-48.128-15.36-47.616-52.736-16.896q-27.648 3.072-43.008 23.552t-17.408 43.52 9.728 42.496 39.424 21.504zM780.288 6.144q74.752 0 139.776 19.968t113.664 57.856 76.288 92.16 27.648 122.88q0 33.792-16.384 50.688t-35.328 17.408-35.328-14.336-16.384-45.568q0-40.96-22.528-77.824t-59.392-64.512-84.48-43.52-96.768-15.872q-31.744 0-47.104-15.36t-14.336-34.304 18.944-34.304 51.712-15.36zM780.288 169.984q95.232 0 144.384 48.64t49.152 146.944q0 30.72-10.24 43.52t-22.528 11.264-22.528-14.848-10.24-35.84q0-60.416-34.816-96.256t-93.184-35.84q-19.456 0-28.672-10.752t-9.216-23.04 9.728-23.04 28.16-10.752z"/></svg>
+    </a>
+    
+    
+    <a class="social-link" title="github" href="https://github.com/linyi531" target="_blank" rel="noopener">
+        <svg viewbox="0 0 1049 1024" xmlns="http://www.w3.org/2000/svg"><path d="M524.979332 0C234.676191 0 0 234.676191 0 524.979332c0 232.068678 150.366597 428.501342 358.967656 498.035028 26.075132 5.215026 35.636014-11.299224 35.636014-25.205961 0-12.168395-0.869171-53.888607-0.869171-97.347161-146.020741 31.290159-176.441729-62.580318-176.441729-62.580318-23.467619-60.841976-58.234462-76.487055-58.234463-76.487055-47.804409-32.15933 3.476684-32.15933 3.476685-32.15933 53.019436 3.476684 80.83291 53.888607 80.83291 53.888607 46.935238 79.963739 122.553122 57.365291 152.97411 43.458554 4.345855-33.897672 18.252593-57.365291 33.028501-70.402857-116.468925-12.168395-239.022047-57.365291-239.022047-259.012982 0-57.365291 20.860106-104.300529 53.888607-140.805715-5.215026-13.037566-23.467619-66.926173 5.215027-139.067372 0 0 44.327725-13.906737 144.282399 53.888607 41.720212-11.299224 86.917108-17.383422 131.244833-17.383422s89.524621 6.084198 131.244833 17.383422C756.178839 203.386032 800.506564 217.29277 800.506564 217.29277c28.682646 72.1412 10.430053 126.029806 5.215026 139.067372 33.897672 36.505185 53.888607 83.440424 53.888607 140.805715 0 201.64769-122.553122 245.975415-239.891218 259.012982 19.121764 16.514251 35.636014 47.804409 35.636015 97.347161 0 70.402857-0.869171 126.898978-0.869172 144.282399 0 13.906737 9.560882 30.420988 35.636015 25.205961 208.601059-69.533686 358.967656-265.96635 358.967655-498.035028C1049.958663 234.676191 814.413301 0 524.979332 0z"/></svg>
+    </a>
+    
+    
+    
+    <a class="social-link" title="twitter" href="https://twitter.com/nFywOCNPid75cl5" target="_blank" rel="noopener">
+        <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 32 32"><path d="M30.063 7.313c-.813 1.125-1.75 2.125-2.875 2.938v.75c0 1.563-.188 3.125-.688 4.625a15.088 15.088 0 0 1-2.063 4.438c-.875 1.438-2 2.688-3.25 3.813a15.015 15.015 0 0 1-4.625 2.563c-1.813.688-3.75 1-5.75 1-3.25 0-6.188-.875-8.875-2.625.438.063.875.125 1.375.125 2.688 0 5.063-.875 7.188-2.5-1.25 0-2.375-.375-3.375-1.125s-1.688-1.688-2.063-2.875c.438.063.813.125 1.125.125.5 0 1-.063 1.5-.25-1.313-.25-2.438-.938-3.313-1.938a5.673 5.673 0 0 1-1.313-3.688v-.063c.813.438 1.688.688 2.625.688a5.228 5.228 0 0 1-1.875-2c-.5-.875-.688-1.813-.688-2.75 0-1.063.25-2.063.75-2.938 1.438 1.75 3.188 3.188 5.25 4.25s4.313 1.688 6.688 1.813a5.579 5.579 0 0 1 1.5-5.438c1.125-1.125 2.5-1.688 4.125-1.688s3.063.625 4.188 1.813a11.48 11.48 0 0 0 3.688-1.375c-.438 1.375-1.313 2.438-2.563 3.188 1.125-.125 2.188-.438 3.313-.875z"/></svg>
+
+    </a>
+    
+    
+    <a class="social-link" title="telegram" href="https://www.instagram.com/linyi531/" target="_blank" rel="noopener">
+        <svg viewbox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M679.428571 746.857143l84-396q5.142857-25.142857-6-36t-29.428571-4L234.285714 501.142857q-16.571429 6.285714-22.571428 14.285714t-1.428572 15.142858 18.285715 11.142857l126.285714 39.428571 293.142857-184.571428q12-8 18.285714-3.428572 4 2.857143-2.285714 8.571429l-237.142857 214.285714-9.142857 130.285714q13.142857 0 25.714285-12.571428l61.714286-59.428572 128 94.285715q36.571429 20.571429 46.285714-21.714286z m344.571429-234.857143q0 104-40.571429 198.857143t-109.142857 163.428571-163.428571 109.142857-198.857143 40.571429-198.857143-40.571429-163.428571-109.142857-109.142857-163.428571T0 512t40.571429-198.857143 109.142857-163.428571T313.142857 40.571429 512 0t198.857143 40.571429 163.428571 109.142857 109.142857 163.428571 40.571429 198.857143z"/></svg>
+    </a>
+    
+    
+    
+</div>
+    </div>
+</nav>
+    </div>
+</header>
+
+
+<div id="site-main" class="site-main outer" role="main">
+    <div class="inner">
+        <header class="post-full-header">
+            <div class="post-full-meta">
+                <time class="post-full-meta-date" datetime="2019-12-19T09:25:43.000Z">
+                    2019-12-19
+                </time>
+                
+                <span class="date-divider">/</span>
+                
+                <a href="/categories/Node-js/">Node.js</a>&nbsp;&nbsp;
+                
+                
+            </div>
+            <h1 class="post-full-title">深入浅出Node.js学习笔记（二）</h1>
+        </header>
+        <div class="post-full ">
+            
+            <figure class="post-full-image" style="background-image: url(https://tva1.sinaimg.cn/large/006tNbRwgy1gadm4v0imcj31900u0b29.jpg)">
+            </figure>
+            
+            <div class="post-full-content">
+                <article id="lightgallery" class="markdown-body">
+                    <h1 id="深入浅出Node-js学习笔记（二）"><a href="#深入浅出Node-js学习笔记（二）" class="headerlink" title="深入浅出Node.js学习笔记（二）"></a>深入浅出Node.js学习笔记（二）</h1><h2 id="第四章-异步编程"><a href="#第四章-异步编程" class="headerlink" title="第四章 异步编程"></a>第四章 异步编程</h2><h3 id="函数式编程"><a href="#函数式编程" class="headerlink" title="函数式编程"></a>函数式编程</h3><h4 id="高阶函数"><a href="#高阶函数" class="headerlink" title="高阶函数"></a>高阶函数</h4><p>高阶函数是可以把函数作为参数，或是将函数作为返回值的函数</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params">x</span>) </span>&#123; </span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> x; </span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>后续传递风格(Continuation Passing Style)的结果接收 方式，而非单一的返回值形式。后续传递风格的程序编写将函数的业务重点从返回值转移到了回调函数中。</p>
+<h5 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h5><p>ECMAScript5中提供的一些数组方法(sort()、forEach()、 map()、reduce()、reduceRight()、filter()、every()、some())十分典型</p>
+<h4 id="偏函数用法"><a href="#偏函数用法" class="headerlink" title="偏函数用法"></a>偏函数用法</h4><p>偏函数用法是指创建一个调用另外一个部分——参数或变量已经预置的函数——的函数的用法</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> toString = <span class="built_in">Object</span>.prototype.toString;</span><br><span class="line"><span class="keyword">var</span> isString = <span class="function"><span class="keyword">function</span> (<span class="params">obj</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> toString.call(obj) == <span class="string">'[object String]'</span>;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">var</span> isFunction = <span class="function"><span class="keyword">function</span> (<span class="params">obj</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> toString.call(obj) == <span class="string">'[object Function]'</span>; </span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>我们需要重复去定义一些相似的函数，如果有更多的isXXX()，就会出现更多的冗余代码.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> isType = <span class="function"><span class="keyword">function</span> (<span class="params">type</span>) </span>&#123; </span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> (<span class="params">obj</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> toString.call(obj) == <span class="string">'[object '</span> + type + <span class="string">']'</span>; </span><br><span class="line">  &#125;;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">var</span> isString = isType(<span class="string">'String'</span>);</span><br><span class="line"><span class="keyword">var</span> isFunction = isType(<span class="string">'Function'</span>);</span><br></pre></td></tr></table></figure>
+
+<p>这 种通过指定部分参数来产生一个新的定制函数的形式就是偏函数</p>
+<h3 id="异步编程的优势与难点"><a href="#异步编程的优势与难点" class="headerlink" title="异步编程的优势与难点"></a>异步编程的优势与难点</h3><h4 id="优势"><a href="#优势" class="headerlink" title="优势"></a>优势</h4><p>最大的特性：基于事件驱动的非阻塞I/O模型</p>
+<p>非阻塞I/O可以使CPU与I/O并不相互依赖等待，让资源得到更好的利用</p>
+<p>并行带来的想象空间更大，延展而开的是分布式和云。并行使得各个单点之间能够更有效地组织起来</p>
+<p><img alt="image-20191213111035164" class="post-img b-lazy" href="https://tva1.sinaimg.cn/large/006tNbRwgy1g9ux6kboyzj30qc0iu3zv.jpg" data-src="https://tva1.sinaimg.cn/large/006tNbRwgy1g9ux6kboyzj30qc0iu3zv.jpg"></p>
+<h4 id="难点"><a href="#难点" class="headerlink" title="难点"></a>难点</h4><h5 id="难点1-异常处理"><a href="#难点1-异常处理" class="headerlink" title="难点1:异常处理"></a>难点1:异常处理</h5><p>异步I/O的实现主要包含两个阶段:提交请求和处理结果。这两个阶段中间有事件循环的调度，两者彼此不关联。异步方法则通常在第一个阶段提交请求后立即返回，因为异常并不一定发生在这个阶段，try/catch的功效在此处不会发挥任何作用。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> <span class="keyword">async</span> = <span class="function"><span class="keyword">function</span> (<span class="params">callback</span>) </span>&#123;</span><br><span class="line">  process.nextTick(callback);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">  <span class="keyword">async</span>(callback); </span><br><span class="line">&#125; <span class="keyword">catch</span> (e) &#123; </span><br><span class="line">  <span class="comment">// TODO</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>调用async()方法后，callback被存放起来，直到下一个事件循环(Tick)才会取出来执行。尝试对异步方法进行try/catch操作只能捕获当次事件循环内的异常，对callback执行时抛出的异常将无能为力。</p>
+<p>Node在处理异常上形成了一种约定，将异常作为回调函数的第一个实参传回，如果为空值，则表明异步调用没有异常抛出：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">async</span>(<span class="function"><span class="keyword">function</span> (<span class="params">err, results</span>) </span>&#123; </span><br><span class="line">  <span class="comment">// TODO</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>自行编写的异步方法上，需要去遵循这样一些原则: </p>
+<ul>
+<li>原则一:必须执行调用者传入的回调函数; </li>
+<li>原则二:正确传递回异常供调用者判断。</li>
+</ul>
+<h5 id="难点2-函数嵌套过深"><a href="#难点2-函数嵌套过深" class="headerlink" title="难点2:函数嵌套过深"></a>难点2:函数嵌套过深</h5><h5 id="难点3-阻塞代码"><a href="#难点3-阻塞代码" class="headerlink" title="难点3:阻塞代码"></a>难点3:阻塞代码</h5><p>没有sleep()这样的线程沉睡功能</p>
+<p>setInterval()和setTimeout()并不能阻塞后续代码的持续执行</p>
+<h5 id="难点4-多线程编程"><a href="#难点4-多线程编程" class="headerlink" title="难点4:多线程编程"></a>难点4:多线程编程</h5><p>对于服务器端而言，如果服务器是多核CPU，单个Node进程实质上是没有充分利用多核CPU的。</p>
+<p>Node借鉴了这个模式，child_process是其基础API，cluster模块是更深层次的应用。借助Web Workers的模式，开发人员要更多地去面临跨线程的编程，这对于以往的JavaScript编程经验是较少考虑的。</p>
+<h5 id="难点5-异步转同步"><a href="#难点5-异步转同步" class="headerlink" title="难点5:异步转同步"></a>难点5:异步转同步</h5><p>Node中试图同步式编程，但并不能得到原生支持，需要借助库或者编译等手段来实现</p>
+<h3 id="异步编程解决方案"><a href="#异步编程解决方案" class="headerlink" title="异步编程解决方案"></a>异步编程解决方案</h3><h4 id="事件发布-订阅模式"><a href="#事件发布-订阅模式" class="headerlink" title="事件发布/订阅模式"></a>事件发布/订阅模式</h4><p>事件监听器模式是一种广泛用于异步编程的模式，是回调函数的事件化，又称发布/订阅模式</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 订阅</span></span><br><span class="line">emitter.on(<span class="string">"event1"</span>, <span class="function"><span class="keyword">function</span> (<span class="params">message</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(message); </span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment">// 发布</span></span><br><span class="line">emitter.emit(<span class="string">'event1'</span>, <span class="string">"I am message!"</span>);</span><br></pre></td></tr></table></figure>
+
+<p>事件发布/订阅模式可以实现一个事件与多 个回调函数的关联，这些回调函数又称为事件侦听器。通过emit()发布事件后，消息会立即传递给当前事件的所有侦听器执行。侦听器可以很灵活地添加和删除，使得事件和具体处理逻辑之间可以很轻松地关联和解耦。</p>
+<p>Node对事件发布/订阅的机制做了一些额外的处理，这大多是基于健壮性而考虑的:</p>
+<ul>
+<li>如果对一个事件添加了超过10个侦听器，将会得到一条警告。这一处设计与Node自身单线程运行有关，设计者认为侦听器太多可能导致内存泄漏，所以存在这样一条警告。调用emitter.setMaxListeners(0);可以将这个限制去掉。另一方面，由于事件发布会引起一系列侦听器执行，如果事件相关的侦听器过多，可能存在过多占用CPU的情景。</li>
+<li>为了处理异常，EventEmitter对象对error事件进行了特殊对待。如果运行期间的错误触发了error事件，EventEmitter会检查是否有对error事件添加过侦听器。如果添加了，这个错误将会交由该侦听器处理，否则这个错误将会作为异常抛出。如果外部没有捕获这个异常，将会引起线程退出。一个健壮的EventEmitter实例应该对error事件做处理。</li>
+</ul>
+<h5 id="1-继承events模块"><a href="#1-继承events模块" class="headerlink" title="1. 继承events模块"></a>1. 继承events模块</h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> events = <span class="built_in">require</span>(<span class="string">'events'</span>);</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Stream</span>(<span class="params"></span>) </span>&#123; </span><br><span class="line">  events.EventEmitter.call(<span class="keyword">this</span>);</span><br><span class="line">&#125;</span><br><span class="line">util.inherits(Stream, events.EventEmitter);</span><br></pre></td></tr></table></figure>
+
+<p>Node在util模块中封装了继承的方法，所以此处可以很便利地调用。开发者可以通过这样的方式轻松继承EventEmitter类，利用事件机制解决业务问题。在Node提供的核心模块中，有近半数都继承自EventEmitter。</p>
+<h5 id="2-利用事件队列解决雪崩问题"><a href="#2-利用事件队列解决雪崩问题" class="headerlink" title="2. 利用事件队列解决雪崩问题"></a>2. 利用事件队列解决雪崩问题</h5><p>雪崩问题，就是在高访问量、大并发量的情况下缓存失效的情景，此时大量的请求同时涌入数据库中，数据库无法同时承受如此大的查询请求，进而往前影响到网站整体的响应速度</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> proxy = <span class="keyword">new</span> events.EventEmitter();</span><br><span class="line"><span class="keyword">var</span> status = <span class="string">"ready"</span>;</span><br><span class="line"><span class="keyword">var</span> select = <span class="function"><span class="keyword">function</span> (<span class="params">callback</span>) </span>&#123;</span><br><span class="line">  proxy.once(<span class="string">"selected"</span>, callback); </span><br><span class="line">  <span class="keyword">if</span> (status === <span class="string">"ready"</span>) &#123;</span><br><span class="line">    status = <span class="string">"pending"</span>;</span><br><span class="line">    db.select(<span class="string">"SQL"</span>, <span class="function"><span class="keyword">function</span> (<span class="params">results</span>) </span>&#123;</span><br><span class="line">      proxy.emit(<span class="string">"selected"</span>, results);</span><br><span class="line">      status = <span class="string">"ready"</span>; </span><br><span class="line">    &#125;);</span><br><span class="line"> &#125; </span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>利用了once()方法，将所有请求的回调都压入事件队列中，利用其执行一次就会将监视器移除的特点，保证每一个回调只会被执行一次。对于相同的SQL语句，保证在同一个查询开始到结束的过程中永远只有一次。</p>
+<h5 id="3-多异步之间的协作方案"><a href="#3-多异步之间的协作方案" class="headerlink" title="3. 多异步之间的协作方案"></a>3. 多异步之间的协作方案</h5><p>由于多个异步场景中回调函数的执行并不能保证顺序，且回调函数之间互相没有任何交集，所以需要借助一个第三方函数和第三方变量来处理异步协作的结果。通常，我们把这个用于检测次数的变量叫做哨兵变量</p>
+<h5 id="4-EventProxy的原理"><a href="#4-EventProxy的原理" class="headerlink" title="4. EventProxy的原理"></a>4. EventProxy的原理</h5><p>EventProxy来自于Backbone的事件模块，Backbone的事件模块是Model、View模块的基础功能，在前端有广泛的使用。它在每个非all事件触发时都会触发一次all事件</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Trigger an event, firing all bound callbacks. Callbacks are passed the </span></span><br><span class="line"><span class="comment">// same arguments as `trigger` is, apart from the event name.</span></span><br><span class="line"><span class="comment">// Listening for `"all"` passes the true event name as the first argument </span></span><br><span class="line">trigger : <span class="function"><span class="keyword">function</span>(<span class="params">eventName</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> list, calls, ev, callback, args;</span><br><span class="line">  <span class="keyword">var</span> both = <span class="number">2</span>;</span><br><span class="line">  <span class="keyword">if</span> (!(calls = <span class="keyword">this</span>._callbacks)) <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">  <span class="keyword">while</span> (both--) &#123;</span><br><span class="line">    ev = both ? eventName : <span class="string">'all'</span>; </span><br><span class="line">    <span class="keyword">if</span> (list = calls[ev]) &#123;</span><br><span class="line">      <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>, l = list.length; i &lt; l; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span> (!(callback = list[i])) &#123;</span><br><span class="line">          list.splice(i, <span class="number">1</span>); i--; l--; </span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">          args = both ? <span class="built_in">Array</span>.prototype.slice.call(<span class="built_in">arguments</span>, <span class="number">1</span>) : <span class="built_in">arguments</span>;</span><br><span class="line"></span><br><span class="line">          callback[<span class="number">0</span>].apply(callback[<span class="number">1</span>] || <span class="keyword">this</span>, args); </span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">this</span>; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>EventProxy则是将all当做一个事件流的拦截层，在其中注入一些业务来处理单一事件无法解决的异步处理问题。类似的扩展方法还有all()、tail()、after()、not()和any()等。</p>
+<h5 id="5-EventProxy的异常处理"><a href="#5-EventProxy的异常处理" class="headerlink" title="5. EventProxy的异常处理"></a>5. EventProxy的异常处理</h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">exports.getContent = <span class="function"><span class="keyword">function</span> (<span class="params">callback</span>) </span>&#123; </span><br><span class="line">  <span class="keyword">var</span> ep = <span class="keyword">new</span> EventProxy();</span><br><span class="line">  ep.all(<span class="string">'tpl'</span>, <span class="string">'data'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">tpl, data</span>) </span>&#123; </span><br><span class="line">    <span class="comment">// 成功回调</span></span><br><span class="line">    callback(<span class="literal">null</span>, &#123;</span><br><span class="line">      template: tpl,</span><br><span class="line">      data: data </span><br><span class="line">    &#125;);</span><br><span class="line">&#125;); </span><br><span class="line">  <span class="comment">//绑定错误处理函数 </span></span><br><span class="line">  ep.fail(callback);</span><br><span class="line">  fs.readFile(<span class="string">'template.tpl'</span>, <span class="string">'utf-8'</span>, ep.done(<span class="string">'tpl'</span>));</span><br><span class="line">  db.get(<span class="string">'some sql'</span>, ep.done(<span class="string">'data'</span>)); </span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>EventProxy提供了fail()和done()这两个实例方法来优化异常处理，使得开发者将精力关注在业务部分，而不是在异常捕获上。</p>
+<h6 id="fail-方法的实现"><a href="#fail-方法的实现" class="headerlink" title="fail()方法的实现"></a>fail()方法的实现</h6><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ep.fail(callback);</span><br></pre></td></tr></table></figure>
+
+<p>等价于：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ep.fail(<span class="function"><span class="keyword">function</span> (<span class="params">err</span>) </span>&#123; </span><br><span class="line">  callback(err);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>又等价于:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">ep.bind(<span class="string">'error'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">err</span>) </span>&#123; </span><br><span class="line">  <span class="comment">// 卸载掉所有处理函数 </span></span><br><span class="line">  ep.unbind();</span><br><span class="line">  <span class="comment">// 异常回调</span></span><br><span class="line">  callback(err); </span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h6 id="done-方法的实现"><a href="#done-方法的实现" class="headerlink" title="done()方法的实现"></a>done()方法的实现</h6><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ep.done(<span class="string">'tpl'</span>);</span><br></pre></td></tr></table></figure>
+
+<p>等价于:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> (<span class="params">err, content</span>) </span>&#123; </span><br><span class="line">  <span class="keyword">if</span> (err) &#123;</span><br><span class="line">  <span class="comment">// 一旦发生异常，一律交给error事件处理函数处理</span></span><br><span class="line">  <span class="keyword">return</span> ep.emit(<span class="string">'error'</span>, err); </span><br><span class="line">  &#125;</span><br><span class="line">  ep.emit(<span class="string">'tpl'</span>, content); </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="Promise-Deferred模式"><a href="#Promise-Deferred模式" class="headerlink" title="Promise/Deferred模式"></a>Promise/Deferred模式</h4><p>先执行异步调用，延迟传递处理的方式</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$.<span class="keyword">get</span>('/api') </span><br><span class="line">  .success(onSuccess) </span><br><span class="line">  .error(onError) </span><br><span class="line">  .complete(onComplete);</span><br></pre></td></tr></table></figure>
+
+<p>这使得即使不调用success()、error()等方法，Ajax也会执行，这样的调用方式比预先传入回调让人觉得舒适一些。</p>
+<p>在原始的API中，一个事件只能处理一个回调，而通过Deferred对象，可以对事件加入任意的业务处理逻辑。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$.<span class="keyword">get</span>('/api') </span><br><span class="line">  .success(onSuccess1) </span><br><span class="line">  .success(onSuccess2);</span><br></pre></td></tr></table></figure>
+
+<p>CommonJS草案目前已经抽象出了Promises/A、 Promises/B、Promises/D这样典型的异步Promise/Deferred模型，这使得异步操作可以以一种优雅的方式出现。</p>
+<h5 id="Promises-A"><a href="#Promises-A" class="headerlink" title="Promises/A"></a>Promises/A</h5><ul>
+<li>Promise操作只会处在3种状态的一种:未完成态、完成态和失败态。</li>
+<li>Promise的状态只会出现从未完成态向完成态或失败态转化，不能逆反。完成态和失败态不能互相转化。</li>
+<li>Promise的状态一旦转化，将不能被更改。</li>
+</ul>
+<p><img alt="image-20191216113903367" class="post-img b-lazy" href="https://tva1.sinaimg.cn/large/006tNbRwgy1g9yev5y4i1j30gs0c4q3v.jpg" data-src="https://tva1.sinaimg.cn/large/006tNbRwgy1g9yev5y4i1j30gs0c4q3v.jpg"></p>
+<h6 id="Promise对象的then"><a href="#Promise对象的then" class="headerlink" title="Promise对象的then()"></a>Promise对象的then()</h6><p>一个Promise对象只要具备then()方法即可</p>
+<ul>
+<li>接受完成态、错误态的回调方法。在操作完成或出现错误时，将会调用对应方法。</li>
+<li>可选地支持progress事件回调作为第三个方法。</li>
+<li>then()方法只接受function对象，其余对象将被忽略。 </li>
+<li>then()方法继续返回Promise对象，以实现链式调用。</li>
+</ul>
+<h6 id="Deferred，延迟对象"><a href="#Deferred，延迟对象" class="headerlink" title="Deferred，延迟对象"></a>Deferred，延迟对象</h6><p>触发执行这些回调函数的地方，实现这些功能的对象通常被称为Deferred，即延迟对象</p>
+<h6 id="Promise和Deferred的差别"><a href="#Promise和Deferred的差别" class="headerlink" title="Promise和Deferred的差别"></a>Promise和Deferred的差别</h6><p>Deferred主要是用于内部， 用于维护异步模型的状态;Promise则作用于外部，通过then()方法暴露给外部以添加自定义逻辑。</p>
+<p><img alt="image-20191216114535955" class="post-img b-lazy" href="https://tva1.sinaimg.cn/large/006tNbRwgy1g9yf1x7tvnj30ws0coabq.jpg" data-src="https://tva1.sinaimg.cn/large/006tNbRwgy1g9yf1x7tvnj30ws0coabq.jpg"></p>
+<h5 id="Promise中的多异步协作"><a href="#Promise中的多异步协作" class="headerlink" title="Promise中的多异步协作"></a>Promise中的多异步协作</h5><p>通过all()方法抽象多个异步操作。只有所有异步操作成功，这个异步操作才算成功， 一旦其中一个异步操作失败，整个异步操作就失败。</p>
+<h5 id="Promise的进阶知识"><a href="#Promise的进阶知识" class="headerlink" title="Promise的进阶知识"></a>Promise的进阶知识</h5><ul>
+<li><p>支持序列执行的Promise</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">promise()</span><br><span class="line">  .then(obj.api1) </span><br><span class="line">  .then(obj.api2) </span><br><span class="line">  .then(obj.api3) </span><br><span class="line">  .then(obj.api4) </span><br><span class="line">  .then(<span class="function"><span class="keyword">function</span> (<span class="params">value4</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// Do something with value4 </span></span><br><span class="line">&#125;, <span class="function"><span class="keyword">function</span> (<span class="params">error</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// Handle any error from step1 through step4 </span></span><br><span class="line">&#125;)</span><br><span class="line">  .done();</span><br></pre></td></tr></table></figure>
+
+<p>改造一下代码以实现链式调用</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> Deferred = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123; </span><br><span class="line">  <span class="keyword">this</span>.promise = <span class="keyword">new</span> <span class="built_in">Promise</span>();</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 完成态</span></span><br><span class="line">Deferred.prototype.resolve = <span class="function"><span class="keyword">function</span> (<span class="params">obj</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> promise = <span class="keyword">this</span>.promise;</span><br><span class="line">  <span class="keyword">var</span> handler;</span><br><span class="line">  <span class="keyword">while</span> ((handler = promise.queue.shift())) &#123;</span><br><span class="line">    <span class="keyword">if</span> (handler &amp;&amp; handler.fulfilled) &#123; </span><br><span class="line">      <span class="keyword">var</span> ret = handler.fulfilled(obj); </span><br><span class="line">      <span class="keyword">if</span> (ret &amp;&amp; ret.isPromise) &#123;</span><br><span class="line">        ret.queue = promise.queue; </span><br><span class="line">        <span class="keyword">this</span>.promise = ret; </span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">      &#125; </span><br><span class="line">    &#125;</span><br><span class="line">  &#125; </span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 失败态</span></span><br><span class="line">Deferred.prototype.reject = <span class="function"><span class="keyword">function</span> (<span class="params">err</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> promise = <span class="keyword">this</span>.promise;</span><br><span class="line">  <span class="keyword">var</span> handler;</span><br><span class="line">  <span class="keyword">while</span> ((handler = promise.queue.shift())) &#123;</span><br><span class="line">    <span class="keyword">if</span> (handler &amp;&amp; handler.error) &#123; </span><br><span class="line">      <span class="keyword">var</span> ret = handler.error(err); </span><br><span class="line">      <span class="keyword">if</span> (ret &amp;&amp; ret.isPromise) &#123;</span><br><span class="line">        ret.queue = promise.queue; </span><br><span class="line">        <span class="keyword">this</span>.promise = ret;</span><br><span class="line">        <span class="keyword">return</span>; </span><br><span class="line">      &#125;</span><br><span class="line">    &#125; </span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"> <span class="comment">// 生成回调函数 </span></span><br><span class="line">Deferred.prototype.callback = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> that = <span class="keyword">this</span>;</span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> (<span class="params">err, file</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (err) &#123;</span><br><span class="line">      <span class="keyword">return</span> that.reject(err);</span><br><span class="line">    &#125;</span><br><span class="line">    that.resolve(file); </span><br><span class="line">  &#125;;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> <span class="built_in">Promise</span> = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="comment">// 队列用于存储待执行的回调函数 </span></span><br><span class="line">  <span class="keyword">this</span>.queue = [];</span><br><span class="line">  <span class="keyword">this</span>.isPromise = <span class="literal">true</span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="built_in">Promise</span>.prototype.then = <span class="function"><span class="keyword">function</span> (<span class="params">fulfilledHandler, errorHandler, progressHandler</span>) </span>&#123; </span><br><span class="line">  <span class="keyword">var</span> handler = &#123;&#125;;</span><br><span class="line">  <span class="keyword">if</span> (<span class="keyword">typeof</span> fulfilledHandler === <span class="string">'function'</span>) &#123;</span><br><span class="line">    handler.fulfilled = fulfilledHandler; </span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span> (<span class="keyword">typeof</span> errorHandler === <span class="string">'function'</span>) &#123; </span><br><span class="line">    handler.error = errorHandler;</span><br><span class="line">  &#125; </span><br><span class="line">  <span class="keyword">this</span>.queue.push(handler); </span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p>读取第二个文件是依 赖于第一个文件中的内容的</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> readFile1 = <span class="function"><span class="keyword">function</span> (<span class="params">file, encoding</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> deferred = <span class="keyword">new</span> Deferred();</span><br><span class="line">  fs.readFile(file, encoding, deferred.callback());</span><br><span class="line">  <span class="keyword">return</span> deferred.promise;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">var</span> readFile2 = <span class="function"><span class="keyword">function</span> (<span class="params">file, encoding</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> deferred = <span class="keyword">new</span> Deferred();</span><br><span class="line">  fs.readFile(file, encoding, deferred.callback());</span><br><span class="line">  <span class="keyword">return</span> deferred.promise;</span><br><span class="line">&#125;;</span><br><span class="line">readFile1(<span class="string">'file1.txt'</span>, <span class="string">'utf8'</span>).then(<span class="function"><span class="keyword">function</span> (<span class="params">file1</span>) </span>&#123; </span><br><span class="line">  <span class="keyword">return</span> readFile2(file1.trim(), <span class="string">'utf8'</span>);</span><br><span class="line">&#125;).then(<span class="function"><span class="keyword">function</span> (<span class="params">file2</span>) </span>&#123; </span><br><span class="line">  <span class="built_in">console</span>.log(file2);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>要让Promise支持链式执行，主要通过以下两个步骤。<br> (1) 将所有的回调都存到队列中。<br> (2) Promise完成时，逐个执行回调，一旦检测到返回了新的Promise对象，停止执行，然后将当前Deferred对象的promise引用改变为新的Promise对象，并将队列中余下的回调转交给它。</p>
+<ul>
+<li>将API Promise化</li>
+</ul>
+<p>可以 批量将方法Promise化</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// smooth(fs.readFile);</span></span><br><span class="line"><span class="keyword">var</span> smooth = <span class="function"><span class="keyword">function</span> (<span class="params">method</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> deferred = <span class="keyword">new</span> Deferred();</span><br><span class="line">    <span class="keyword">var</span> args = <span class="built_in">Array</span>.prototype.slice.call(<span class="built_in">arguments</span>, <span class="number">0</span>); </span><br><span class="line">    args.push(deferred.callback());</span><br><span class="line">    method.apply(<span class="literal">null</span>, args);</span><br><span class="line">    <span class="keyword">return</span> deferred.promise;</span><br><span class="line">  &#125;; </span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>于是前面的两次文件读取的构造可以简化为:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> readFile = smooth(fs.readFile);</span><br></pre></td></tr></table></figure>
+
+<p>于是代码锐减到：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> readFile = smooth(fs.readFile); readFile(<span class="string">'file1.txt'</span>, <span class="string">'utf8'</span>).then(<span class="function"><span class="keyword">function</span> (<span class="params">file1</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> readFile(file1.trim(), <span class="string">'utf8'</span>); &#125;).then(<span class="function"><span class="keyword">function</span> (<span class="params">file2</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// file2 =&gt; I am file2</span></span><br><span class="line">  <span class="built_in">console</span>.log(file2); </span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h4 id="流程控制库"><a href="#流程控制库" class="headerlink" title="流程控制库"></a>流程控制库</h4><h5 id="1-尾触发与Next"><a href="#1-尾触发与Next" class="headerlink" title="1. 尾触发与Next"></a>1. 尾触发与Next</h5><p>需要手工调用才能持续执行后续调用的</p>
+<p><img alt="image-20191216150057148" class="post-img b-lazy" href="https://tva1.sinaimg.cn/large/006tNbRwgy1g9ykp64h0pj314a0bggn2.jpg" data-src="https://tva1.sinaimg.cn/large/006tNbRwgy1g9ykp64h0pj314a0bggn2.jpg"></p>
+<p>中间件机制使得在处理网络请求时，可以像面向切面编程一样进行过滤、验证、日志等功能， 而不与具体业务逻辑产生关联，以致产生耦合</p>
+<p>尽管中间件这种尾触发模式并不要求每个中间方法都是异步的，但是如果每 个步骤都采用异步来完成，实际上只是串行化的处理，没办法通过并行的异步调用来提升业务的 处理效率。流式处理可以将一些串行的逻辑扁平化，但是并行逻辑处理还是需要搭配事件或者 Promise完成的，这样业务在纵向和横向都能够各自清晰。</p>
+<p>在Connect中，尾触发十分适合处理网络请求的场景。将复杂的处理逻辑拆解为简洁、单一 的处理单元，逐层次地处理请求对象和响应对象。</p>
+<h5 id="2-async"><a href="#2-async" class="headerlink" title="2. async"></a>2. async</h5><h6 id="异步的串行执行"><a href="#异步的串行执行" class="headerlink" title="异步的串行执行"></a>异步的串行执行</h6><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">async</span>.series([</span><br><span class="line">  <span class="function"><span class="keyword">function</span> (<span class="params">callback</span>) </span>&#123;</span><br><span class="line">    fs.readFile(<span class="string">'file1.txt'</span>, <span class="string">'utf-8'</span>, callback); </span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="function"><span class="keyword">function</span> (<span class="params">callback</span>) </span>&#123;</span><br><span class="line">    fs.readFile(<span class="string">'file2.txt'</span>, <span class="string">'utf-8'</span>, callback);</span><br><span class="line">  &#125;</span><br><span class="line">], <span class="function"><span class="keyword">function</span> (<span class="params">err, results</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// results =&gt; [file1.txt, file2.txt] </span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>这段代码等价于:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">fs.readFile(<span class="string">'file1.txt'</span>, <span class="string">'utf-8'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">err, content</span>) </span>&#123; </span><br><span class="line">  <span class="keyword">if</span> (err) &#123;</span><br><span class="line">    <span class="keyword">return</span> callback(err); </span><br><span class="line">  &#125;</span><br><span class="line">  fs.readFile(<span class="string">'file2.txt '</span>, <span class="string">'utf-8'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">err, data</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (err) &#123;</span><br><span class="line">      <span class="keyword">return</span> callback(err);</span><br><span class="line">    &#125;</span><br><span class="line">    callback(<span class="literal">null</span>, [content, data]); </span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>series()方法中传入的函数callback()并非由使用者指定。事实上，此处的回调函数由async通过高阶函数的方式注入，这里隐含了特殊的逻 辑。每个callback()执行时会将结果保存起来，然后执行下一个调用，直到结束所有调用。最终的回调函数执行时，队列里的异步调用保存的结果以数组的方式传入。这里的异常处理规则是一 旦出现异常，就结束所有调用，并将异常传递给最终回调函数的第一个参数。</p>
+<h6 id="异步的并行执行"><a href="#异步的并行执行" class="headerlink" title="异步的并行执行"></a>异步的并行执行</h6><p>当我们需要通过并行来提升性能时，async提供了parallel()方法，用以并行执行一些异步操作。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">async</span>.parallel([ </span><br><span class="line">  <span class="function"><span class="keyword">function</span> (<span class="params">callback</span>) </span>&#123;</span><br><span class="line">    fs.readFile(<span class="string">'file1.txt'</span>, <span class="string">'utf-8'</span>, callback); </span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="function"><span class="keyword">function</span> (<span class="params">callback</span>) </span>&#123;</span><br><span class="line">    fs.readFile(<span class="string">'file2.txt'</span>, <span class="string">'utf-8'</span>, callback);</span><br><span class="line">  &#125;</span><br><span class="line">], <span class="function"><span class="keyword">function</span> (<span class="params">err, results</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// results =&gt; [file1.txt, file2.txt] </span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>上面这段代码等价于下面的代码:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> counter = <span class="number">2</span>;</span><br><span class="line"><span class="keyword">var</span> results = [];</span><br><span class="line"><span class="keyword">var</span> done = <span class="function"><span class="keyword">function</span> (<span class="params">index, value</span>) </span>&#123;</span><br><span class="line">  results[index] = value; </span><br><span class="line">  counter--;</span><br><span class="line">  <span class="keyword">if</span> (counter === <span class="number">0</span>) &#123;</span><br><span class="line">    callback(<span class="literal">null</span>, results); </span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 只传递第一个异常</span></span><br><span class="line"><span class="keyword">var</span> hasErr = <span class="literal">false</span>;</span><br><span class="line"><span class="keyword">var</span> fail = <span class="function"><span class="keyword">function</span> (<span class="params">err</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (!hasErr) &#123; </span><br><span class="line">    hasErr = <span class="literal">true</span>; </span><br><span class="line">    callback(err);</span><br><span class="line">  &#125; </span><br><span class="line">&#125;;</span><br><span class="line">fs.readFile(<span class="string">'file1.txt'</span>, <span class="string">'utf-8'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">err, content</span>) </span>&#123; </span><br><span class="line">  <span class="keyword">if</span> (err) &#123;</span><br><span class="line">    <span class="keyword">return</span> fail(err); </span><br><span class="line">  &#125;</span><br><span class="line">  done(<span class="number">0</span>, content); </span><br><span class="line">&#125;);</span><br><span class="line">fs.readFile(<span class="string">'file2.txt'</span>, <span class="string">'utf-8'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">err, data</span>) </span>&#123; </span><br><span class="line">  <span class="keyword">if</span> (err) &#123;</span><br><span class="line">    <span class="keyword">return</span> fail(err); </span><br><span class="line">  &#125;</span><br><span class="line">  done(<span class="number">1</span>, data); </span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>通过async编写的代码既没有深度的嵌套，也没有复杂的状态判断，它的诀窍依然来 自于注入的回调函数</p>
+<p>parallel()方法对于异常的判断依然是一旦某个异步调用产生了异常，就 会将异常作为第一个参数传入给最终的回调函数。只有所有异步调用都正常完成时，才会将结果 以数组的方式传入。</p>
+<h6 id="异步调用的依赖处理"><a href="#异步调用的依赖处理" class="headerlink" title="异步调用的依赖处理"></a>异步调用的依赖处理</h6><p>series()适合无依赖的异步串行执行，但当前一个的结果是后一个调用的输入时，series()方法就无法满足需求了</p>
+<p>async提供了<strong>waterfall()</strong>方法来满足</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">async</span>.waterfall([ </span><br><span class="line">  <span class="function"><span class="keyword">function</span> (<span class="params">callback</span>) </span>&#123;</span><br><span class="line">    fs.readFile(<span class="string">'file1.txt'</span>, <span class="string">'utf-8'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">err, content</span>) </span>&#123; </span><br><span class="line">      callback(err, content);</span><br><span class="line">    &#125;); </span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="function"><span class="keyword">function</span> (<span class="params">arg1, callback</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// arg1 =&gt; file2.txt</span></span><br><span class="line">    fs.readFile(arg1, <span class="string">'utf-8'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">err, content</span>) </span>&#123;</span><br><span class="line">      callback(err, content); </span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="function"><span class="keyword">function</span>(<span class="params">arg1, callback</span>)</span>&#123; </span><br><span class="line">    <span class="comment">// arg1 =&gt; file3.txt</span></span><br><span class="line">    fs.readFile(arg1, <span class="string">'utf-8'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">err, content</span>) </span>&#123;</span><br><span class="line">      callback(err, content); </span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;</span><br><span class="line">], <span class="function"><span class="keyword">function</span> (<span class="params">err, result</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// result =&gt; file4.txt </span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>自动依赖处理</li>
+</ul>
+<p>auto()方法能根据依赖关系自动分析，以最佳的顺序执行业务</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">async</span>.auto(deps);</span><br></pre></td></tr></table></figure>
+
+<h5 id="3-Step"><a href="#3-Step" class="headerlink" title="3. Step"></a>3. Step</h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Step(task1, task2, task3);</span><br></pre></td></tr></table></figure>
+
+<p>Step接受任意数量的任务，所有的任务都将会串行依次执行。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">Step(</span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">readFile1</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    fs.readFile(<span class="string">'file1.txt'</span>, <span class="string">'utf-8'</span>, <span class="keyword">this</span>);</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">readFile2</span>(<span class="params">err, content</span>) </span>&#123;</span><br><span class="line">    fs.readFile(<span class="string">'file2.txt'</span>, <span class="string">'utf-8'</span>, <span class="keyword">this</span>);</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">done</span>(<span class="params">err, content</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(content); </span><br><span class="line">  &#125;</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+<p>Step用到了this关键字。事实上，它是Step内部的一个next()方法，将异步调用的结果传递给下一个任务作为参 数，并调用执行。</p>
+<ul>
+<li>并行任务执行</li>
+</ul>
+<p>this具有一个parallel()方法，它告诉Step，需要等所有任务完成时才进行下一个任务</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">Step(</span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">readFile1</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    fs.readFile(<span class="string">'file1.txt'</span>, <span class="string">'utf-8'</span>, <span class="keyword">this</span>.parallel());</span><br><span class="line">    fs.readFile(<span class="string">'file2.txt'</span>, <span class="string">'utf-8'</span>, <span class="keyword">this</span>.parallel()); </span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">done</span>(<span class="params">err, content1, content2</span>) </span>&#123; </span><br><span class="line">    <span class="comment">// content1 =&gt; file1</span></span><br><span class="line">    <span class="comment">// content2 =&gt; file2 </span></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="built_in">arguments</span>);</span><br><span class="line">  &#125; </span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+<p>使用parallel()的时候需要小心的是，如果异步方法的结果传回的是多个参数，Step将只会取前两个参数</p>
+<p>Step的parallel()方法的原理是每次执行时将内部的计数器加1，然后返回一个回调函数，这个回调函数在异步调用结束时才执行。当回调函数执行时，将计数器减1。当计数器为0的时候， 告知Step所有异步调用结束了，Step会执行下一个方法。</p>
+<p>Step与async相同的是异常处理，一旦有一个异常产生，这个异常会作为下一个方法的第一个 参数传入</p>
+<ul>
+<li>结果分组</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">Step(</span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">readDir</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    fs.readdir(__dirname, <span class="keyword">this</span>); </span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">readFiles</span>(<span class="params">err, results</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (err) <span class="keyword">throw</span> err;</span><br><span class="line">    <span class="comment">// Create a new group</span></span><br><span class="line">    <span class="keyword">var</span> group = <span class="keyword">this</span>.group();</span><br><span class="line">    results.forEach(<span class="function"><span class="keyword">function</span> (<span class="params">filename</span>) </span>&#123;</span><br><span class="line">      <span class="keyword">if</span> (<span class="regexp">/\.js$/</span>.test(filename)) &#123;</span><br><span class="line">        fs.readFile(__dirname + <span class="string">"/"</span> + filename, <span class="string">'utf8'</span>, group());</span><br><span class="line">      &#125; </span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">showAll</span>(<span class="params">err, files</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (err) <span class="keyword">throw</span> err;</span><br><span class="line">    <span class="built_in">console</span>.dir(files); </span><br><span class="line">  &#125;</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+<p>我们注意到有两次group()的调用。第一次调用是告知Step要并行执行，第二次调用的结果将会生成一个回调函数，而回调函数接受的返回值将会按组存储。</p>
+<p>parallel()传递给下一个任务的 结果是如下形式:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> (<span class="params">err, result1, result2, ...</span>);</span></span><br></pre></td></tr></table></figure>
+
+<p>group()传递的结果是:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> (<span class="params">err, results</span>);</span></span><br></pre></td></tr></table></figure>
+
+<p>这个函数返回的数据保存在数组中。</p>
+<h5 id="4-wind"><a href="#4-wind" class="headerlink" title="4. wind"></a>4. wind</h5><ul>
+<li>异步任务定义</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">eval</span>(Wind.compile(<span class="string">"async"</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;&#125;));</span><br><span class="line">Wind.Async.sleep(<span class="number">20</span>);</span><br></pre></td></tr></table></figure>
+
+<p>Wind.compile()会将普通的函数进行编译，然后交给eval()执行。</p>
+<p>eval(Wind.compile(“async”, function () {}));定义了异步任务。Wind.Async.sleep();内置了对setTimeout()的封装。</p>
+<p>除了通过eval(Wind.compile(“async”, function () {}));定义任务外，正式的任务创建方法为Task.create()。</p>
+<ul>
+<li>$await()与任务模型</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$<span class="keyword">await</span>()</span><br></pre></td></tr></table></figure>
+
+<p>事实上，它并不是一个方法，也不存在于上下文中，只是一个等待的占位符，告之编译器这里需要等待。</p>
+<p>$await()接受的参数是一个任务对象，表示等待任务结束后才会执行后续操作。每一个异步 操作都可以转化为一个任务，wind正是基于任务模型实现的。</p>
+<p>wind提供了whenAll()来处理并发，通过$await关键字将等待配置的所有任务完成后才向下继续执行。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> parallel = <span class="built_in">eval</span>(Wind.compile(<span class="string">"async"</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123; </span><br><span class="line">  <span class="keyword">var</span> result = $<span class="keyword">await</span>(Task.whenAll(&#123;</span><br><span class="line">    file1: readFileAsync(<span class="string">'file1.txt'</span>, <span class="string">'utf-8'</span>),</span><br><span class="line">    file2: readFileAsync(<span class="string">'file2.txt'</span>, <span class="string">'utf-8'</span>) </span><br><span class="line">  &#125;));</span><br><span class="line">  <span class="built_in">console</span>.log(result.file1);</span><br><span class="line">  </span><br><span class="line">  <span class="built_in">console</span>.log(result.file2); &#125;));</span><br><span class="line">parallel().start();</span><br><span class="line"><span class="comment">//得到输出:</span></span><br><span class="line">file1 file2</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>异步方法转换辅助函数</li>
+</ul>
+<p>这种近同步编程的体验需要我们额外 或者提前完成的事情是:将异步方法任务化。</p>
+<p>wind提供了两个 方法来辅助转换:</p>
+<ol>
+<li>Wind.Async.Binding.fromCallback 用于转换这类无异常的异步调用为wind中的任务</li>
+<li>Wind.Async.Binding.fromStandard 用于转换这类带异常的异步调用到wind中的任务。</li>
+</ol>
+<h3 id="异步并发控制"><a href="#异步并发控制" class="headerlink" title="异步并发控制"></a>异步并发控制</h3><p>同步I/O因为每个I/O都是彼此阻塞的，在循环体 中，总是一个接着一个调用，不会出现耗用文件描述符太多的情况，同时性能也是低下的;对于 异步I/O，虽然并发容易实现，但是由于太容易实现，依然需要控制。换言之，尽管是要压榨底 层系统的性能，但还是需要给予一定的过载保护，以防止过犹不及。</p>
+<h4 id="bagpipe的解决方案"><a href="#bagpipe的解决方案" class="headerlink" title="bagpipe的解决方案"></a>bagpipe的解决方案</h4><ul>
+<li>通过一个队列来控制并发量。</li>
+<li>如果当前活跃(指调用发起但未执行回调)的异步调用量小于限定值，从队列中取出执行。 </li>
+<li>如果活跃调用达到限定值，调用暂时存放在队列中。</li>
+<li>每个异步调用结束时，从队列中取出新的异步调用执行</li>
+</ul>
+<p>用户传入的回调函数被真正执行前，被封装替换过。这个封装的回调函数内部的逻辑将活跃 值的计数器减1后，主动调用next()执行后续等待的异步调用。</p>
+<p>bagpipe类似于打开了一道窗口，允许异步调用并行进行，但是严格限定上限。仅仅在调用 push()时分开传递，并不对原有API有任何侵入。</p>
+<h5 id="拒绝模式"><a href="#拒绝模式" class="headerlink" title="拒绝模式"></a>拒绝模式</h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 设定最大并发数为10</span></span><br><span class="line"><span class="keyword">var</span> bagpipe = <span class="keyword">new</span> Bagpipe(<span class="number">10</span>, &#123;</span><br><span class="line">  refuse: <span class="literal">true</span> </span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>在拒绝模式下，如果等待的调用队列也满了之后，新来的调用就直接返给它一个队列太忙的 拒绝异常。</p>
+<h5 id="超时控制"><a href="#超时控制" class="headerlink" title="超时控制"></a>超时控制</h5><p>造成队列拥塞的主要原因是异步调用耗时太久，调用产生的速度远远高于执行的速度。为了防止某些异步调用使用了太多的时间，我们需要设置一个时间基线，将那些执行时间太久的异步调用 清理出活跃队列，让排队中的异步调用尽快执行。否则在拒绝模式下，会有太多的调用因为某个执 行得慢，导致得到拒绝异常。</p>
+<p>超时控制是为异步调用设置一个时间阈值，如果异步调用 没有在规定时间内完成，我们先执行用户传入的回调函数，让用户得到一个超时异常，以尽早返 回。然后让下一个等待队列中的调用执行。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 设定最大并发数为10</span></span><br><span class="line"><span class="keyword">var</span> bagpipe = <span class="keyword">new</span> Bagpipe(<span class="number">10</span>, &#123;</span><br><span class="line">  timeout: <span class="number">3000</span> </span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h4 id="async的解决方案"><a href="#async的解决方案" class="headerlink" title="async的解决方案"></a>async的解决方案</h4><p>async也提供了一个方法用于处理异步调用的限制:parallelLimit()</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">async</span>.parallelLimit([ </span><br><span class="line">  <span class="function"><span class="keyword">function</span> (<span class="params">callback</span>) </span>&#123;</span><br><span class="line">    fs.readFile(<span class="string">'file1.txt'</span>, <span class="string">'utf-8'</span>, callback); </span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="function"><span class="keyword">function</span> (<span class="params">callback</span>) </span>&#123;</span><br><span class="line">    fs.readFile(<span class="string">'file2.txt'</span>, <span class="string">'utf-8'</span>, callback);</span><br><span class="line">  &#125;</span><br><span class="line">], <span class="number">1</span>, <span class="function"><span class="keyword">function</span> (<span class="params">err, results</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// TODO </span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>parallelLimit()与parallel()类似，但多了一个用于限制并发数量的参数，使得任务只能同 时并发一定数量，而不是无限制并发。</p>
+<p>parallelLimit()方法的缺陷在于无法动态地增加并行任务。async提供了queue()方法 来满足该需求.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> q = <span class="keyword">async</span>.queue(<span class="function"><span class="keyword">function</span> (<span class="params">file, callback</span>) </span>&#123;</span><br><span class="line">  fs.readFile(file, <span class="string">'utf-8'</span>, callback);</span><br><span class="line">&#125;,<span class="number">2</span>);</span><br><span class="line">q.drain=<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="comment">// 完成了队列中的所有任务 </span></span><br><span class="line">&#125;;</span><br><span class="line">fs.readdirSync(<span class="string">'.'</span>).forEach(<span class="function"><span class="keyword">function</span> (<span class="params">file</span>) </span>&#123;</span><br><span class="line">  q.push(file, <span class="function"><span class="keyword">function</span> (<span class="params">err, data</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// TODO </span></span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>尽管queue()实现了动态添加并行任务，但是相比parallelLimit()，由于queue()接收的参数是固定的，它丢失了parallelLimit()的多样性</p>
+<h2 id="第五章-内存控制"><a href="#第五章-内存控制" class="headerlink" title="第五章 内存控制"></a>第五章 内存控制</h2><h3 id="V8-的垃圾回收机制与内存限制"><a href="#V8-的垃圾回收机制与内存限制" class="headerlink" title="V8 的垃圾回收机制与内存限制"></a>V8 的垃圾回收机制与内存限制</h3><h4 id="V8-的内存限制"><a href="#V8-的内存限制" class="headerlink" title="V8 的内存限制"></a>V8 的内存限制</h4><p>在Node中通过JavaScript 使用内存时就会发现只能使用部分内存(64位系统下约为1.4 GB，32位系统下约为0.7 GB)。在 这样的限制下，将会导致Node无法直接操作大内存对象。</p>
+<p>造成这个问题的主要原因在于Node基于V8构建，所以在Node中使用的JavaScript对象基本上 都是通过V8自己的方式来进行分配和管理的。V8的这套内存管理机制在浏览器的应用场景下使 用起来绰绰有余，足以胜任前端页面中的所有需求。但在Node中，这却限制了开发者随心所欲使 用大内存的想法。</p>
+<h4 id="V8-的对象分配"><a href="#V8-的对象分配" class="headerlink" title="V8 的对象分配"></a>V8 的对象分配</h4><h5 id="内存使用量的查看"><a href="#内存使用量的查看" class="headerlink" title="内存使用量的查看"></a>内存使用量的查看</h5><p>在V8中，所有的JavaScript对象都是通过堆来进行分配的。Node提供了V8中内存使用量的查 看方式，执行下面的代码，将得到输出的内存信息:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ node</span><br><span class="line">&gt; process.memoryUsage(); </span><br><span class="line">&#123; <span class="attr">rss</span>: <span class="number">14958592</span>,</span><br><span class="line">  heapTotal: <span class="number">7195904</span>, </span><br><span class="line">  heapUsed: <span class="number">2821496</span> </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>heapTotal和heapUsed是V8的堆内存使用情况，前者是已申请到的堆内存，后者是当前使用的量。</p>
+<p>当我们在代码中声明变量并赋值时，所使用对象的内存就分配在堆中。如果已申请的堆空闲 内存不够分配新的对象，将继续申请堆内存，直到堆的大小超过V8的限制为止。</p>
+<h5 id="V8限制堆大小的原因"><a href="#V8限制堆大小的原因" class="headerlink" title="V8限制堆大小的原因"></a>V8限制堆大小的原因</h5><p>以1.5 GB的垃圾回收堆内存为例，V8做一次小的垃圾回收需要50毫秒以上，做一 次非增量式的垃圾回收甚至要1秒以上。这是垃圾回收中引起JavaScript线程暂停执行的时间，在 这样的时间花销下，应用的性能和响应能力都会直线下降。这样的情况不仅仅后端服务无法接受， 前端浏览器也无法接受。因此，在当时的考虑下直接限制堆内存是一个好的选择。</p>
+<h5 id="调整内存限制的大小"><a href="#调整内存限制的大小" class="headerlink" title="调整内存限制的大小"></a>调整内存限制的大小</h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">node --max-old-space-size=<span class="number">1700</span> test.js <span class="comment">// 单位为MB </span></span><br><span class="line"><span class="comment">// 或者</span></span><br><span class="line">node --max-<span class="keyword">new</span>-space-size=<span class="number">1024</span> test.js <span class="comment">// 单位为KB</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="V8-的垃圾回收机制"><a href="#V8-的垃圾回收机制" class="headerlink" title="V8 的垃圾回收机制"></a>V8 的垃圾回收机制</h4><h5 id="V8主要的垃圾回收算法"><a href="#V8主要的垃圾回收算法" class="headerlink" title="V8主要的垃圾回收算法"></a>V8主要的垃圾回收算法</h5><p>V8的垃圾回收策略主要基于分代式垃圾回收机制</p>
+<ul>
+<li><p>V8的内存分代</p>
+<p>在V8中，主要将内存分为新生代和老生代两代。新生代中的对象为存活时间较短的对象，老生代中的对象为存活时间较长或常驻内存的对象。</p>
+<p><img alt="image-20191219183341084" class="post-img b-lazy" href="https://tva1.sinaimg.cn/large/006tNbRwgy1ga27phiuq7j30r005q74q.jpg" data-src="https://tva1.sinaimg.cn/large/006tNbRwgy1ga27phiuq7j30r005q74q.jpg"></p>
+<p>V8堆的整体大小就是新生代所用内存空间加上老生代的内存空间。前面我们提及的 –max-old-space-size命令行参数可以用于设置老生代内存空间的最大值，–max-new-space-size 命令行参数则用于设置新生代内存空间的大小的。比较遗憾的是，这两个最大值需要在启动时就 指定。这意味着V8使用的内存没有办法根据使用情况自动扩充，当内存分配过程中超过极限值 时，就会引起进程出错。</p>
+<ul>
+<li>对于新生代内存，它由两个reserved_semispace_size_所构成.按机器位数不同，reserved_semispace_size_在64位系统和32位系统上分别为16 MB和8 MB。所以新生 代内存的最大值在64位系统和32位系统上分别为32 MB和16 MB。</li>
+<li>默认情况下，V8堆内存的最大值在64位系统上为1464 MB，32位系统上则为732 MB。 这个数值可以解释为何在64位系统下只能使用约1.4 GB内存和在32位系统下只能使用约0.7 GB 内存。</li>
+</ul>
+</li>
+<li><p>Scavenge算法</p>
+<p>新生代中的对象主要通过Scavenge算法进行垃圾回收。在Scavenge的具体实现中，主要采用了Cheney算法。</p>
+<ul>
+<li><p>Cheney算法是一种采用复制的方式实现的垃圾回收算法。它将堆内存一分为二，每一部分空间称为semispace。在这两个semispace空间中，只有一个处于使用中，另一个处于闲置状态。处 于使用状态的semispace空间称为From空间，处于闲置状态的空间称为To空间。当我们分配对象 时，先是在From空间中进行分配。当开始进行垃圾回收时，会检查From空间中的存活对象，这 些存活对象将被复制到To空间中，而非存活对象占用的空间将会被释放。完成复制后，From空 间和To空间的角色发生对换。简而言之，在垃圾回收的过程中，就是通过将存活对象在两个 semispace空间之间进行复制。</p>
+</li>
+<li><p>Scavenge的缺点是只能使用堆内存中的一半，这是由划分空间和复制机制所决定的。但 Scavenge由于只复制存活的对象，并且对于生命周期短的场景存活对象只占少部分，所以它在时 间效率上有优异的表现。</p>
+</li>
+</ul>
+<p><img alt="image-20191219184025403" class="post-img b-lazy" href="https://tva1.sinaimg.cn/large/006tNbRwgy1ga27wgek1uj30rm07wq3m.jpg" data-src="https://tva1.sinaimg.cn/large/006tNbRwgy1ga27wgek1uj30rm07wq3m.jpg"></p>
+<p>当一个对象经过多次复制依然存活时，它将会被认为是生命周期较长的对象。这种较长生命周期的对象随后会被移动到老生代中，采用新的算法进行管理。对象从新生代中移动到老生代中 的过程称为晋升。</p>
+<p>在分代式垃圾回收的前提下，From空间中的存活对 象在复制到To空间之前需要进行检查。在一定条件下，需要将存活周期长的对象移动到老生代中， 也就是完成对象晋升。</p>
+<p>对象晋升的条件主要有两个，一个是对象是否经历过Scavenge回收，一个是To空间的内存占用比超过限制。当要从From空间复制一个对象到To空间时，如果 To空间已经使用了超过25%，则这个对象直接晋升到老生代空间中</p>
+<p>（设置25%这个限制值的原因是当这次Scavenge回收完成后，这个To空间将变成From空间，接 下来的内存分配将在这个空间中进行。如果占比过高，会影响后续的内存分配。）</p>
+</li>
+<li><p>Mark-Sweep &amp; Mark-Compact</p>
+<p>Mark-Sweep在标记阶段遍历堆中的所有对象，并标记活着的对象，在随后的清除阶段中，只清除没有被标记的对象。<strong>Scavenge中只复制活着的对象，而Mark-Sweep只清理死亡对象。</strong></p>
+<p>Mark-Sweep最大的问题是在进行一次标记清除回收后，内存空间会出现不连续的状态。这种 内存碎片会对后续的内存分配造成问题，因为很可能出现需要分配一个大对象的情况，这时所有 的碎片空间都无法完成此次分配，就会提前触发垃圾回收，而这次回收是不必要的。</p>
+<p>在整理的 过程中，将活着的对象往一端移动，移动完成后，直接清理掉边界外的内存。</p>
+<p><img alt="image-20191219184724646" class="post-img b-lazy" href="https://tva1.sinaimg.cn/large/006tNbRwgy1ga283qesgnj317y08sq4f.jpg" data-src="https://tva1.sinaimg.cn/large/006tNbRwgy1ga283qesgnj317y08sq4f.jpg"></p>
+<p>V8主要使用Mark-Sweep，在空间不足以对从新 生代中晋升过来的对象进行分配时才使用Mark-Compact。</p>
+</li>
+<li><p>Incremental Marking</p>
+<p>为了避免出现JavaScript应用逻辑与垃圾回收器看到的不一致的情况，垃圾回收的3种基本算法都需要将应用逻辑暂停下来，待执行完垃圾回收后再恢复执行应用逻辑，这种行为被称为“全 停顿”(stop-the-world)。</p>
+<p>为了降低全堆垃圾回收带来的停顿时间，V8先从标记阶段入手，将原本要一口气停顿完成 的动作改为增量标记(incremental marking)，也就是拆分为许多小“步进”，每做完一“步进” 就让JavaScript应用逻辑执行一小会儿，垃圾回收与应用逻辑交替执行直到标记阶段完成。</p>
+<p><img alt="image-20191219185100781" class="post-img b-lazy" href="https://tva1.sinaimg.cn/large/006tNbRwgy1ga287h5jwqj30sk09qt9k.jpg" data-src="https://tva1.sinaimg.cn/large/006tNbRwgy1ga287h5jwqj30sk09qt9k.jpg"></p>
+<p>V8在经过增量标记的改进后，垃圾回收的最大停顿时间可以减少到原本的1/6左右。</p>
+<p>V8后续还引入了延迟清理(lazy sweeping)与增量式整理(incremental compaction)，让清 理与整理动作也变成增量式的。同时还计划引入并行标记与并行清理，进一步利用多核性能降低 每次停顿的时间。</p>
+</li>
+</ul>
+<h4 id="查看垃圾回收日志"><a href="#查看垃圾回收日志" class="headerlink" title="查看垃圾回收日志"></a>查看垃圾回收日志</h4><p>查看垃圾回收日志的方式主要是在启动时添加–trace_gc参数。在进行垃圾回收时，将会从 标准输出中打印垃圾回收的日志信息。通过分析垃圾回收日志，可以了解垃圾回收的运行状况，找出垃圾回收的哪些阶段比较耗时， 触发的原因是什么。</p>
+<p>通过在Node启动时使用–prof参数，可以得到V8执行时的性能分析数据，其中包含了垃圾 回收执行时占用的时间。</p>
+<p>（V8提供了linux-tick-processor工具用于统计日志信息。该工具可以从Node源码的 deps/v8/tools目录下找到，Windows下的对应命令文件为windows-tick-processor.bat。将该目录添 加到环境变量PATH中，即可直接调用）</p>
+<h3 id="高效使用内存"><a href="#高效使用内存" class="headerlink" title="高效使用内存"></a>高效使用内存</h3><h4 id="作用域"><a href="#作用域" class="headerlink" title="作用域"></a>作用域</h4><h5 id="1-标识符查找"><a href="#1-标识符查找" class="headerlink" title="1. 标识符查找"></a>1. 标识符查找</h5><p>标识符，可以理解为变量名。</p>
+<h5 id="2-作用域链"><a href="#2-作用域链" class="headerlink" title="2. 作用域链"></a>2. 作用域链</h5><p>JavaScript在执行时会去查找该变量定义在哪里。它最先查找的是当前作用域，如果在当前作 用域中无法找到该变量的声明，将会向上级的作用域里查找，直到查到为止。这样的查找方式使得作 用域像一个链条。由于标识符的查找方向是向上的，所以变量只能向外访问，而不能向内访问。</p>
+<h5 id="3-变量的主动释放"><a href="#3-变量的主动释放" class="headerlink" title="3. 变量的主动释放"></a>3. 变量的主动释放</h5><ul>
+<li><p>如果变量是全局变量(不通过var声明或定义在global变量上)，由于全局作用域需要直到 进程退出才能释放，此时将导致引用的对象常驻内存(常驻在老生代中)。如果需要释放常驻内 存的对象，可以通过delete操作来删除引用关系。或者将变量重新赋值，让旧的对象脱离引用关系。在接下来的老生代内存清除和整理的过程中，会被回收释放。</p>
+</li>
+<li><p>在非全局作用域中，想主动释放变量引用的对象，也可以通过这样的方式。</p>
+</li>
+<li><p>虽然 delete操作和重新赋值具有相同的效果，但是在V8中通过delete删除对象的属性有可能干扰V8 的优化，所以通过赋值方式解除引用更好。</p>
+</li>
+</ul>
+<h4 id="闭包"><a href="#闭包" class="headerlink" title="闭包"></a>闭包</h4><p>实现外部作用域访问内部作用域中变量的方法叫做闭包(closure)</p>
+<p>这得益 于高阶函数的特性:函数可以作为参数或者返回值。</p>
+<p>一旦有变量引用这个中间函数，这个中间函数将不会释放，同时也会使原始的作用域不会得到释放，作用域 中产生的内存占用也不会得到释放。除非不再有引用，才会逐步释放。</p>
+<h3 id="内存指标"><a href="#内存指标" class="headerlink" title="内存指标"></a>内存指标</h3><p>os模块中的 totalmem()和freemem()方法也可以查看内存使用情况</p>
+<h4 id="查看内存使用情况"><a href="#查看内存使用情况" class="headerlink" title="查看内存使用情况"></a>查看内存使用情况</h4><h5 id="1-查看进程的内存占用"><a href="#1-查看进程的内存占用" class="headerlink" title="1. 查看进程的内存占用"></a>1. 查看进程的内存占用</h5><p>调用process.memoryUsage()可以看到Node进程的内存占用情况</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ node</span><br><span class="line">&gt; process.memoryUsage() </span><br><span class="line">&#123; <span class="attr">rss</span>: <span class="number">13852672</span>,</span><br><span class="line">  heapTotal: <span class="number">6131200</span>, </span><br><span class="line">  heapUsed: <span class="number">2757120</span> </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>rss是resident set size的缩写，即进程的常驻内存部分。进程的内存总共有几部分，一部分是 rss，其余部分在交换区(swap)或者文件系统(filesystem)中。</p>
+<p>除了rss外，heapTotal和heapUsed对应的是V8的堆内存信息。heapTotal是堆中总共申请的内 存量，heapUsed表示目前堆中使用中的内存量。这3个值的单位都是字节。</p>
+<h5 id="2-查看系统的内存占用"><a href="#2-查看系统的内存占用" class="headerlink" title="2. 查看系统的内存占用"></a>2. 查看系统的内存占用</h5><p>os模块中的totalmem()和freemem()这两个方法用于查看操作系统的内存使用情况，它们分别返回系统的总内存和闲置内存，以字节为单位。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ node</span><br><span class="line">&gt; os.totalmem() </span><br><span class="line"><span class="number">8589934592</span></span><br><span class="line">&gt; os.freemem() </span><br><span class="line"><span class="number">4527833088</span></span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+
+<h4 id="堆外内存"><a href="#堆外内存" class="headerlink" title="堆外内存"></a>堆外内存</h4><p>堆中的内存用量总是小于进程的常驻内存用 量，这意味着Node中的内存使用并非都是通过V8进行分配的。我们将那些不是通过V8分配的内存称为堆外内存。</p>
+<p>Buffer对象不同于其他对象，它不经过V8的内存分配机制，所以也不 会有堆内存的大小限制。</p>
+<p>利用堆外内存可以突破内存限制的问题。</p>
+<p><strong>Node的内存构成主要由通过V8进行分配的部分和Node自行分配的 部分。受V8的垃圾回收限制的主要是V8的堆内存。</strong></p>
+<h3 id="内存泄漏"><a href="#内存泄漏" class="headerlink" title="内存泄漏"></a>内存泄漏</h3><p>造成内存泄漏的原因：</p>
+<ul>
+<li>缓存。</li>
+<li>队列消费不及时。</li>
+<li>作用域未释放。</li>
+</ul>
+<h4 id="慎将内存当做缓存"><a href="#慎将内存当做缓存" class="headerlink" title="慎将内存当做缓存"></a>慎将内存当做缓存</h4><ul>
+<li><p>在Node中，缓存并非物美价廉。一旦一个对象被当做缓存来使用，那就意味着它将会常 驻在老生代中。缓存中存储的键越多，长期存活的对象也就越多，这将导致垃圾回收在进行扫描 10 和整理时，对这些对象做无用功</p>
+</li>
+<li><p>JavaScript开发者通常喜欢用对象的键值对来缓存东西，但这与严格意义上 的缓存又有着区别，严格意义的缓存有着完善的过期策略，而普通对象的键值对并没有。</p>
+</li>
+</ul>
+<h5 id="1-缓存限制策略"><a href="#1-缓存限制策略" class="headerlink" title="1. 缓存限制策略"></a>1. 缓存限制策略</h5><p>为了解决缓存中的对象永远无法释放的问题，需要加入一种策略来限制缓存的无限增长。</p>
+<p>模块机制：为了加速模块的引入，所有模块都会通 过编译执行，然后被缓存起来。由于通过exports导出的函数，可以访问文件模块中的私有变量， 这样每个文件模块在编译执行后形成的作用域因为模块缓存的原因，不会被释放。</p>
+<h5 id="2-缓存的解决方案"><a href="#2-缓存的解决方案" class="headerlink" title="2. 缓存的解决方案"></a>2. 缓存的解决方案</h5><p>进 程之间无法共享内存。如果在进程内使用缓存，这些缓存不可避免地有重复，对物理内存的使用 是一种浪费。</p>
+<p>采用进程外的缓存，进程自身不存储状态。外 部的缓存软件有着良好的缓存过期淘汰策略以及自有的内存管理，不影响Node进程的性能。</p>
+<p>在Node中主要可以解决以下两个问题。</p>
+<p>(1) 将缓存转移到外部，减少常驻内存的对象的数量，让垃圾回收更高效。<br> (2) 进程之间可以共享缓存。</p>
+<p>市面上较好的缓存有Redis和Memcached</p>
+<h4 id="关注队列状态"><a href="#关注队列状态" class="headerlink" title="关注队列状态"></a>关注队列状态</h4><p>队列在消费者-生产者模型中经常充当中间产物。一旦消费速度低于生产速度， 将会形成堆积。</p>
+<p>深度的解决方案应该是监控队列的长度，一旦堆积，应当通过监控系统产生报警并通知相关 人员。另一个解决方案是任意异步调用都应该包含超时机制，一旦在限定的时间内未完成响应， 通过回调函数传递超时异常，使得任意异步调用的回调都具备可控的响应时间，给消费速度一个 下限值。</p>
+<h3 id="内存泄漏排查"><a href="#内存泄漏排查" class="headerlink" title="内存泄漏排查"></a>内存泄漏排查</h3><p>常见的定位Node应用的内存泄漏的工具：</p>
+<ul>
+<li>v8-profiler。由Danny Coates提供，它可以用于对V8堆内存抓取快照和对CPU进行分析，但该项目已经有3年没有维护了。</li>
+<li>node-heapdump。这是Node核心贡献者之一Ben Noordhuis编写的模块，它允许对V8堆内存抓取快照，用于事后分析。</li>
+</ul>
+<ul>
+<li>node-mtrace。由Jimb Esser提供，它使用了GCC的mtrace工具来分析堆的使用。</li>
+<li>dtrace。在Joyent的SmartOS系统上，有完善的dtrace工具用来分析内存泄漏。</li>
+<li>node-memwatch。来自Mozilla的Lloyd Hilaiel贡献的模块，采用WTFPL许可发布。</li>
+</ul>
+<h4 id="node-heapdump"><a href="#node-heapdump" class="headerlink" title="node-heapdump"></a>node-heapdump</h4><p>先构造如下一份包含内存泄 漏的代码示例，并将其存为server.js文件：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> leakArray = [];</span><br><span class="line"><span class="keyword">var</span> leak = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  leakArray.push(<span class="string">"leak"</span> + <span class="built_in">Math</span>.random()); </span><br><span class="line">&#125;;</span><br><span class="line">http.createServer(<span class="function"><span class="keyword">function</span> (<span class="params">req, res</span>) </span>&#123; </span><br><span class="line">  leak();</span><br><span class="line">  res.writeHead(<span class="number">200</span>, &#123;<span class="string">'Content-Type'</span>: <span class="string">'text/plain'</span>&#125;);</span><br><span class="line">  res.end(<span class="string">'Hello World\n'</span>); </span><br><span class="line">&#125;).listen(<span class="number">1337</span>);</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'Server running at http://127.0.0.1:1337/'</span>);</span><br></pre></td></tr></table></figure>
+
+<p>在上面这段代码中，每次访问服务进程都将引起leakArray数组中的元素增加，而且得不到回收。我们可以用curl工具输入<a href="http://127.0.0.1:1337/命令来模拟用户访问。" target="_blank" rel="noopener">http://127.0.0.1:1337/命令来模拟用户访问。</a></p>
+<h5 id="安装node-heapdump"><a href="#安装node-heapdump" class="headerlink" title="安装node-heapdump"></a>安装node-heapdump</h5><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm install heapdump</span><br></pre></td></tr></table></figure>
+
+<p>安装node-heapdump后，在代码的第一行添加如下代码将其引入:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">var heapdump = require(&apos;heapdump&apos;);</span><br></pre></td></tr></table></figure>
+
+<p>引入node-heapdump后，就可以启动服务进程，并接受客户端的请求。访问多次之后， leakArray中就会具备大量的元素。这个时候我们通过向服务进程发送SIGUSR2信号，让 10 node-heapdump抓拍一份堆内存的快照。发送信号的命令如下:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ kill -USR2 &lt;pid&gt;</span><br></pre></td></tr></table></figure>
+
+<p>这份抓取的快照将会在文件目录下以heapdump-<sec>.<usec>.heapsnapshot的格式存放。这是一份较大的JSON文件，需要通过Chrome的开发者工具打开查看。</usec></sec></p>
+<p><img alt="image-20191220142253073" class="post-img b-lazy" href="https://tva1.sinaimg.cn/large/006tNbRwgy1ga362sgilrj31400qmwq7.jpg" data-src="https://tva1.sinaimg.cn/large/006tNbRwgy1ga362sgilrj31400qmwq7.jpg"></p>
+<p>可以看到有大量的leak字符串存在，这些字符串就是一直未能得到回收的数据。 通过在开发者工具的面板中查看内存分布，我们可以找到泄漏的数据，然后根据这些信息找到造 成泄漏的代码。</p>
+<h4 id="node-memwatch"><a href="#node-memwatch" class="headerlink" title="node-memwatch"></a>node-memwatch</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> memwatch = <span class="built_in">require</span>(<span class="string">'memwatch'</span>); memwatch.on(<span class="string">'leak'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">info</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'leak:'</span>);</span><br><span class="line">  <span class="built_in">console</span>.log(info); </span><br><span class="line">&#125;);</span><br><span class="line">memwatch.on(<span class="string">'stats'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">stats</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'stats:'</span>) </span><br><span class="line">  <span class="built_in">console</span>.log(stats);</span><br><span class="line">&#125;);</span><br><span class="line"><span class="keyword">var</span> http = <span class="built_in">require</span>(<span class="string">'http'</span>);</span><br><span class="line"><span class="keyword">var</span> leakArray = [];</span><br><span class="line"><span class="keyword">var</span> leak = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  leakArray.push(<span class="string">"leak"</span> + <span class="built_in">Math</span>.random()); </span><br><span class="line">&#125;;</span><br><span class="line">http.createServer(<span class="function"><span class="keyword">function</span> (<span class="params">req, res</span>) </span>&#123; </span><br><span class="line">  leak();</span><br><span class="line">  res.writeHead(<span class="number">200</span>, &#123;<span class="string">'Content-Type'</span>: <span class="string">'text/plain'</span>&#125;);</span><br><span class="line">  res.end(<span class="string">'Hello World\n'</span>); </span><br><span class="line">&#125;).listen(<span class="number">1337</span>);</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'Server running at http://127.0.0.1:1337/'</span>);</span><br></pre></td></tr></table></figure>
+
+<h5 id="1-stats事件"><a href="#1-stats事件" class="headerlink" title="1. stats事件"></a>1. stats事件</h5><p>在进程中使用node-memwatch之后，每次进行全堆垃圾回收时，将会触发一次stats事件，这 4 个事件将会传递内存的统计信息。</p>
+<p><img alt="image-20191220142653590" class="post-img b-lazy" href="https://tva1.sinaimg.cn/large/006tNbRwgy1ga366z9jroj30mi0a6q4r.jpg" data-src="https://tva1.sinaimg.cn/large/006tNbRwgy1ga366z9jroj30mi0a6q4r.jpg"></p>
+<p>num_full_gc和num_inc_gc比较直观地反应了垃圾回收的情况</p>
+<h5 id="2-leak事件"><a href="#2-leak事件" class="headerlink" title="2. leak事件"></a>2. leak事件</h5><p>如果经过连续5次垃圾回收后，内存仍然没有被释放，这意味着有内存泄漏的产生，node-memwatch会出发一个leak事件。</p>
+<p><img alt="image-20191220143429405" class="post-img b-lazy" href="https://tva1.sinaimg.cn/large/006tNbRwgy1ga36evbve4j30uk05wgmj.jpg" data-src="https://tva1.sinaimg.cn/large/006tNbRwgy1ga36evbve4j30uk05wgmj.jpg"></p>
+<p>这个数据能显示5次垃圾回收的过程中内存增长了多少。</p>
+<h5 id="3-堆内存比较"><a href="#3-堆内存比较" class="headerlink" title="3. 堆内存比较"></a>3. 堆内存比较</h5><p>最终得到的leak事件的信息只能告知我们应用中存在内存泄漏，具体问题产生在何处还需要从V8的堆内存上定位。node-memwatch提供了抓取快照和比较快照的功能，它能够比较堆上对象 的名称和分配数量，从而找出导致内存泄漏的元凶。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> memwatch = <span class="built_in">require</span>(<span class="string">'memwatch'</span>);</span><br><span class="line"><span class="keyword">var</span> leakArray = [];</span><br><span class="line"><span class="keyword">var</span> leak = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123; </span><br><span class="line">  leakArray.push(<span class="string">"leak"</span> + <span class="built_in">Math</span>.random());</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Take first snapshot</span></span><br><span class="line"><span class="keyword">var</span> hd = <span class="keyword">new</span> memwatch.HeapDiff();</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; <span class="number">10000</span>; i++) &#123; </span><br><span class="line">  leak();</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// Take the second snapshot and compute the diff </span></span><br><span class="line"><span class="keyword">var</span> diff = hd.end(); </span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">JSON</span>.stringify(diff, <span class="literal">null</span>, <span class="number">2</span>));</span><br></pre></td></tr></table></figure>
+
+<p>执行上面这段代码，得到的输出结果如下所示:</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">$ node diff.js </span><br><span class="line">&#123;</span><br><span class="line">  <span class="attr">"before"</span>: &#123;</span><br><span class="line">    <span class="attr">"nodes"</span>: <span class="number">11719</span>,</span><br><span class="line">    <span class="attr">"time"</span>: <span class="string">"2013-10-07T06:32:07.000Z"</span>,</span><br><span class="line">    <span class="attr">"size_bytes"</span>: <span class="number">1493304</span>,</span><br><span class="line">    <span class="attr">"size"</span>: <span class="string">"1.42 mb"</span></span><br><span class="line">  &#125;, </span><br><span class="line">  <span class="attr">"after"</span>: &#123;</span><br><span class="line">    <span class="attr">"nodes"</span>: <span class="number">31618</span>,</span><br><span class="line">    <span class="attr">"time"</span>: <span class="string">"2013-10-07T06:32:07.000Z"</span>, </span><br><span class="line">    <span class="attr">"size_bytes"</span>: <span class="number">2684864</span>,</span><br><span class="line">    <span class="attr">"size"</span>: <span class="string">"2.56 mb"</span></span><br><span class="line">  &#125;, </span><br><span class="line">  <span class="attr">"change"</span>: &#123;</span><br><span class="line">    <span class="attr">"size_bytes"</span>: <span class="number">1191560</span>, </span><br><span class="line">    <span class="attr">"size"</span>: <span class="string">"1.14 mb"</span>, </span><br><span class="line">    <span class="attr">"freed_nodes"</span>: <span class="number">129</span>, </span><br><span class="line">    <span class="attr">"allocated_nodes"</span>: <span class="number">20028</span>,</span><br><span class="line">    <span class="attr">"details"</span>: [</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="attr">"what"</span>: <span class="string">"Array"</span>, </span><br><span class="line">        <span class="attr">"size_bytes"</span>: <span class="number">323720</span>, </span><br><span class="line">        <span class="attr">"size"</span>: <span class="string">"316.13 kb"</span>, </span><br><span class="line">        <span class="attr">"+"</span>: <span class="number">15</span>,</span><br><span class="line">        <span class="attr">"-"</span>: <span class="number">65</span></span><br><span class="line">      &#125;, </span><br><span class="line">      &#123;</span><br><span class="line">        <span class="attr">"what"</span>: <span class="string">"Code"</span>, </span><br><span class="line">        <span class="attr">"size_bytes"</span>: <span class="number">-10944</span>,</span><br><span class="line">        <span class="attr">"size"</span>: <span class="string">"-10.69 kb"</span>,</span><br><span class="line">        <span class="attr">"+"</span>: <span class="number">8</span>,</span><br><span class="line">        <span class="attr">"-"</span>: <span class="number">28</span> </span><br><span class="line">      &#125;,</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="attr">"what"</span>: <span class="string">"String"</span>,</span><br><span class="line">        <span class="attr">"size_bytes"</span>: <span class="number">879424</span>,</span><br><span class="line">        <span class="attr">"size"</span>: <span class="string">"858.81 kb"</span>,</span><br><span class="line">        <span class="attr">"+"</span>: <span class="number">20001</span>,</span><br><span class="line">        <span class="attr">"-"</span>: <span class="number">1</span></span><br><span class="line">      &#125; </span><br><span class="line">    ]</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>change节点下的freed_nodes和allocated_nodes，它们记录了 释放的节点数量和分配的节点数量。这里由于有内存泄漏，分配的节点数量远远多余释放的节点 数量。在details下可以看到具体每种类型的分配和释放数量。</p>
+<p>加号和减号分别表示分配和释放的字符串对象数量。</p>
+<h3 id="大内存应用"><a href="#大内存应用" class="headerlink" title="大内存应用"></a>大内存应用</h3><p><strong>Node提供了stream模块用于处理大文件</strong></p>
+<p>stream模块是Node的原生模块，直接引用即可。stream继承自EventEmitter，具备基本的自 定义事件功能，同时抽象出标准的事件和方法。它分可读和可写两种。Node中的大多数模块都有 stream的应用，比如fs的createReadStream()和createWriteStream()方法可以分别用于创建文件 的可读流和可写流，process模块中的stdin和stdout则分别是可读流和可写流的示例。</p>
+<h2 id="第六章-理解Buffer"><a href="#第六章-理解Buffer" class="headerlink" title="第六章 理解Buffer"></a>第六章 理解Buffer</h2><h3 id="Buffer-结构"><a href="#Buffer-结构" class="headerlink" title="Buffer 结构"></a>Buffer 结构</h3><p>Buffer是一个像Array的对象，但它主要用于操作字节。</p>
+<h4 id="模块结构"><a href="#模块结构" class="headerlink" title="模块结构"></a>模块结构</h4><p>Buffer是一个典型的JavaScript与C++结合的模块，它将性能相关部分用C++实现，将非性能相关的部分用JavaScript实现</p>
+<p><img alt="image-20191220145535868" class="post-img b-lazy" href="https://tva1.sinaimg.cn/large/006tNbRwgy1ga370u7oazj30ja09ewf3.jpg" data-src="https://tva1.sinaimg.cn/large/006tNbRwgy1ga370u7oazj30ja09ewf3.jpg"></p>
+<p>Node在进程启动时就已经加载了它，并将其放在全局对象(global) 上。所以在使用Buffer时，无须通过require()即可直接使用</p>
+<h4 id="Buffer-对象"><a href="#Buffer-对象" class="headerlink" title="Buffer 对象"></a>Buffer 对象</h4><p>Buffer对象类似于数组，它的元素为16进制的两位数，即0到255的数值。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> str = <span class="string">"深入浅出node.js"</span>;</span><br><span class="line"><span class="keyword">var</span> buf = <span class="keyword">new</span> Buffer(str, <span class="string">'utf-8'</span>);</span><br><span class="line"><span class="built_in">console</span>.log(buf);</span><br><span class="line"><span class="comment">// =&gt; &lt;Buffer e6 b7 b1 e5 85 a5 e6 b5 85 e5 87 ba 6e 6f 64 65 2e 6a 73&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>不同编码的字符串占用的元素个数各不相同，上面代码中的中文字在 UTF-8编码下占用3个元素，字母和半角标点符号占用1个元素。</p>
+<p>Buffer可以访问length属性得到长度，也可以通过下标访问元素，在构造对象时也与Array相似。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> buf = <span class="keyword">new</span> Buffer(<span class="number">100</span>); </span><br><span class="line"><span class="built_in">console</span>.log(buf.length); <span class="comment">// =&gt; 100</span></span><br><span class="line"><span class="built_in">console</span>.log(buf[<span class="number">10</span>]);<span class="comment">//会得到一个比较奇怪的结果，它的元素值是一个0到255的随机值。</span></span><br></pre></td></tr></table></figure>
+
+<p>如果给元素赋值不是0到255的整数而是小数时会怎样呢?</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">buf[<span class="number">20</span>] = <span class="number">-100</span>;</span><br><span class="line"><span class="built_in">console</span>.log(buf[<span class="number">20</span>]); <span class="comment">// 156 </span></span><br><span class="line">buf[<span class="number">21</span>] = <span class="number">300</span>; </span><br><span class="line"><span class="built_in">console</span>.log(buf[<span class="number">21</span>]); <span class="comment">// 44 </span></span><br><span class="line">buf[<span class="number">22</span>] = <span class="number">3.1415</span>; </span><br><span class="line"><span class="built_in">console</span>.log(buf[<span class="number">22</span>]); <span class="comment">// 3</span></span><br></pre></td></tr></table></figure>
+
+<p>给元素的赋值如果小于0，就将该值逐次加256，直到得到一个0到255之间的整数。如果得到 的数值大于255，就逐次减256，直到得到0~255区间内的数值。如果是小数，舍弃小数部分，只 保留整数部分。</p>
+<h4 id="Buffer-内存分配"><a href="#Buffer-内存分配" class="headerlink" title="Buffer 内存分配"></a>Buffer 内存分配</h4><p>Buffer对象的内存分配不是在V8的堆内存中，而是在Node的C++层面实现内存的申请的。因 为处理大量的字节数据不能采用需要一点内存就向操作系统申请一点内存的方式，这可能造成大 量的内存申请的系统调用，对操作系统有一定压力。为此Node在内存的使用上应用的是在C++ 层面申请内存、在JavaScript中分配内存的策略。</p>
+<p>Node采用了slab分配机制，slab是一种动态内存管理机制。slab就是一块申请好的固定大小的内存区域。slab具有如下3种状态。 </p>
+<ul>
+<li>full:完全分配状态。</li>
+<li>partial:部分分配状态。</li>
+<li>empty:没有被分配状态。</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> Buffer(size);</span><br></pre></td></tr></table></figure>
+
+<p>Node以8 KB为界限来区分Buffer是大对象还是小对象。8 KB的值也就是每个slab的大小值，在JavaScript层面，以它作为单位单元进行内存的分配。</p>
+<h5 id="1-分配小Buffer对象"><a href="#1-分配小Buffer对象" class="headerlink" title="1. 分配小Buffer对象"></a>1. 分配小Buffer对象</h5><p>如果指定Buffer的大小少于8 KB，Node会按照小对象的方式进行分配。Buffer的分配过程中主要使用一个局部变量pool作为中间处理对象，处于分配状态的slab单元都指向它</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> pool;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">allocPool</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  pool = <span class="keyword">new</span> SlowBuffer(Buffer.poolSize); </span><br><span class="line">  pool.used = <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img alt="image-20191220200835681" class="post-img b-lazy" href="https://tva1.sinaimg.cn/large/006tNbRwgy1ga3g2jgvmhj30x408ot97.jpg" data-src="https://tva1.sinaimg.cn/large/006tNbRwgy1ga3g2jgvmhj30x408ot97.jpg"></p>
+<p><strong>slab处于empty状态。</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> Buffer(<span class="number">1024</span>);</span><br></pre></td></tr></table></figure>
+
+<p>这次构造将会去检查pool对象，如果pool没有被创建，将会创建一个新的slab单元指向它:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (!pool || pool.length - pool.used &lt; <span class="keyword">this</span>.length) allocPool();</span><br></pre></td></tr></table></figure>
+
+<p>同时当前Buffer对象的parent属性指向该slab，并记录下是从这个slab的哪个位置(offset) 开始使用的，slab对象自身也记录被使用了多少字节</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>.parent = pool;</span><br><span class="line"><span class="keyword">this</span>.offset = pool.used;</span><br><span class="line">pool.used += <span class="keyword">this</span>.length;</span><br><span class="line"><span class="keyword">if</span> (pool.used &amp; <span class="number">7</span>) pool.used = (pool.used + <span class="number">8</span>) &amp; ~<span class="number">7</span>;</span><br></pre></td></tr></table></figure>
+
+<p><img alt="image-20191220201258838" class="post-img b-lazy" href="https://tva1.sinaimg.cn/large/006tNbRwgy1ga3g75sbkjj30w80ccmy1.jpg" data-src="https://tva1.sinaimg.cn/large/006tNbRwgy1ga3g75sbkjj30w80ccmy1.jpg"></p>
+<p><strong>这时候的slab状态为partial。</strong></p>
+<p>当再次创建一个Buffer对象时，构造过程中将会判断这个slab的剩余空间是否足够。如果足 够，使用剩余空间，并更新slab的分配状态。如果slab剩余的空间不够，将会构造新的slab，原slab中剩余的空间会造成浪费。</p>
+<p>由于同一个slab可能分配给多个Buffer对象使用，只有这些小Buffer对 象在作用域释放并都可以回收时，slab的8 KB空间才会被回收。尽管创建了1个字节的Buffer对象， 但是如果不释放它，实际可能是8 KB的内存没有释放。</p>
+<h5 id="2-分配大Buffer对象"><a href="#2-分配大Buffer对象" class="headerlink" title="2. 分配大Buffer对象"></a>2. 分配大Buffer对象</h5><p>如果需要超过8 KB的Buffer对象，将会直接分配一个SlowBuffer对象作为slab单元，这个slab 单元将会被这个大Buffer对象独占。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Big buffer, just alloc one</span></span><br><span class="line"><span class="keyword">this</span>.parent = <span class="keyword">new</span> SlowBuffer(<span class="keyword">this</span>.length); <span class="keyword">this</span>.offset = <span class="number">0</span>;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Buffer-的转换"><a href="#Buffer-的转换" class="headerlink" title="Buffer 的转换"></a>Buffer 的转换</h3><p>Buffer对象可以与字符串之间相互转换。目前支持的字符串编码类型有如下这几种。</p>
+<ul>
+<li>ASCII</li>
+<li>UTF-8</li>
+<li>UTF-16LE/UCS-2</li>
+<li>Base64</li>
+<li>Binary</li>
+<li>Hex</li>
+</ul>
+<h4 id="字符串转Buffer"><a href="#字符串转Buffer" class="headerlink" title="字符串转Buffer"></a>字符串转Buffer</h4><p>字符串转Buffer对象主要是通过构造函数完成的</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> Buffer(str, [encoding]);</span><br></pre></td></tr></table></figure>
+
+<p>通过构造函数转换的Buffer对象，存储的只能是一种编码类型。encoding参数不传递时，默认按UTF-8编码进行转码和存储。</p>
+<p>一个Buffer对象可以存储不同编码类型的字符串转码的值，调用write()方法可以实现该目的</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">buf.write(string, [offset], [length], [encoding])</span><br></pre></td></tr></table></figure>
+
+<p>由于可以不断写入内容到Buffer对象中，并且每次写入可以指定编码，所以Buffer对象中可 以存在多种编码转化后的内容。需要小心的是，每种编码所用的字节长度不同，将Buffer反转回 字符串时需要谨慎处理。</p>
+<h4 id="Buffer-转字符串"><a href="#Buffer-转字符串" class="headerlink" title="Buffer 转字符串"></a>Buffer 转字符串</h4><p>Buffer对象的toString()可以将Buffer对象转换为字符串</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">buf.toString([encoding], [start], [end])</span><br></pre></td></tr></table></figure>
+
+<p>可以设置encoding(默认为UTF-8)、start、end这3个参数实现整体或局部的转换。如果Buffer对象由多种编码写入，就需要在局部指定不同的编码，才能转换回正常的编码。</p>
+<h4 id="Buffer-不支持的编码类型"><a href="#Buffer-不支持的编码类型" class="headerlink" title="Buffer 不支持的编码类型"></a>Buffer 不支持的编码类型</h4><p>Buffer提供了一个isEncoding()函数来判断编码是否支持转换</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Buffer.isEncoding(encoding)</span><br></pre></td></tr></table></figure>
+
+<p>将编码类型作为参数传入上面的函数，如果支持转换返回值为true，否则为false。</p>
+<h3 id="Buffer-的拼接"><a href="#Buffer-的拼接" class="headerlink" title="Buffer 的拼接"></a>Buffer 的拼接</h3><p>Buffer在使用场景中，通常是以一段一段的方式传输。</p>
+<h4 id="乱码是如何产生的"><a href="#乱码是如何产生的" class="headerlink" title="乱码是如何产生的"></a>乱码是如何产生的</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</span><br><span class="line"><span class="keyword">var</span> rs = fs.createReadStream(<span class="string">'test.md'</span>);</span><br><span class="line"><span class="keyword">var</span> data = <span class="string">''</span>;</span><br><span class="line">rs.on(<span class="string">"data"</span>, <span class="function"><span class="keyword">function</span> (<span class="params">chunk</span>)</span>&#123; </span><br><span class="line">  data += chunk; &#125;);</span><br><span class="line">rs.on(<span class="string">"end"</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123; </span><br><span class="line">  <span class="built_in">console</span>.log(data);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p><code>data += chunk;</code>这句代码里隐藏了toString()操作，等价于<code>data = data.toString() + chunk.toString();</code></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> rs = fs.createReadStream(<span class="string">'test.md'</span>, &#123;<span class="attr">highWaterMark</span>: <span class="number">11</span>&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>搭配该代码的测试数据为李白的《静夜思》。执行该程序，将会得到以下输出:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">床前明���光，疑���地上霜;举头���明月，���头思故乡。</span><br></pre></td></tr></table></figure>
+
+<p>产生这个输出结果的原因在于文件可读流在读取时会逐个读取Buffer。这首诗的原始Buffer应存储为:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;Buffer e5 ba <span class="number">8</span>a e5 <span class="number">89</span> <span class="number">8</span>d e6 <span class="number">98</span> <span class="number">8</span>e e6 <span class="number">9</span>c <span class="number">88</span> e5 <span class="number">85</span> <span class="number">89</span> ef bc <span class="number">8</span>c e7 <span class="number">96</span> <span class="number">91</span> e6 <span class="number">98</span> af e5 <span class="number">9</span>c b0 e4 b8 <span class="number">8</span>a e9 <span class="number">9</span>c <span class="number">9</span>c ef bc <span class="number">9</span>b e4 b8 be e5 a4 b4 e6 <span class="number">9</span>c <span class="number">9</span>b e6 <span class="number">98</span> <span class="number">8</span>e e6 <span class="number">9</span>c <span class="number">88</span> ...&gt;</span><br></pre></td></tr></table></figure>
+
+<p>由于我们限定了Buffer对象的长度为11，因此只读流需要读取7次才能完成完整的读取，结果 是以下几个Buffer对象依次输出:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;Buffer e5 ba <span class="number">8</span>a e5 <span class="number">89</span> <span class="number">8</span>d e6 <span class="number">98</span> <span class="number">8</span>e e6 <span class="number">9</span>c&gt; </span><br><span class="line">&lt;Buffer <span class="number">88</span> e5 <span class="number">85</span> <span class="number">89</span> ef bc <span class="number">8</span>c e7 <span class="number">96</span> <span class="number">91</span> e6&gt; </span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<p>buf.toString()方法默认以UTF-8为编码，中文字在UTF-8下占3个字节。所以第 一个Buffer对象在输出时，只能显示3个字符，Buffer中剩下的2个字节(e6 9c)将会以乱码的形 式显示。第二个Buffer对象的第一个字节也不能形成文字，只能显示乱码。于是形成一些文字无 法正常显示的问题。</p>
+<p>在这个示例中我们构造了11这个限制，但是对于任意长度的Buffer而言，宽字节字符串都有 可能存在被截断的情况，只不过Buffer的长度越大出现的概率越低而已，但该问题依然不可忽视。</p>
+<h4 id="setEncoding-与-string-decoder"><a href="#setEncoding-与-string-decoder" class="headerlink" title="setEncoding()与 string_decoder()"></a>setEncoding()与 string_decoder()</h4><p>可读流还有一个设置编码的方法setEncoding()，该方法的作用是让data事件中传递的不再是一个Buffer对象，而是编码后的字符串。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">readable.setEncoding(encoding)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> rs = fs.createReadStream(<span class="string">'test.md'</span>, &#123; <span class="attr">highWaterMark</span>: <span class="number">11</span>&#125;);</span><br><span class="line">rs.setEncoding(<span class="string">'utf8'</span>);</span><br></pre></td></tr></table></figure>
+
+<p>重新执行程序，得到输出:</p>
+<p><code>床前明月光，疑是地上霜;举头望明月，低头思故乡。</code></p>
+<p><strong>设置编码并未改变按 段读取的基本方式。</strong>在调用setEncoding()时，可读流对象在内部设置了一个decoder对象。每次data事 件都通过该decoder对象进行Buffer到字符串的解码，然后传递给调用者。置编码后，data 不再收到原始的Buffer对象。</p>
+<p>decoder对象来自于string_decoder 模块StringDecoder的实例对象。StringDecoder在得到编码后，知道宽字节字符串在UTF-8编码下是 以3个字节的方式存储的，所以第一次write()时，只输出前9个字节转码形成的字符，“月”字的 前两个字节被保留在StringDecoder实例内部。第二次write()时，会将这2个剩余字节和后续11 个字节组合在一起，再次用3的整数倍字节进行转码。于是乱码问题通过这种中间形式被解决了。</p>
+<p><strong>string_decoder目前只能处理UTF-8、Base64和 UCS-2/UTF-16LE这3种编码。</strong></p>
+<h4 id="正确拼接Buffer"><a href="#正确拼接Buffer" class="headerlink" title="正确拼接Buffer"></a>正确拼接Buffer</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> chunks = [];</span><br><span class="line"><span class="keyword">var</span> size = <span class="number">0</span>;</span><br><span class="line">res.on(<span class="string">'data'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">chunk</span>) </span>&#123;</span><br><span class="line">  chunks.push(chunk);</span><br><span class="line">  size += chunk.length;</span><br><span class="line">&#125;)</span><br><span class="line">res.on(<span class="string">'end'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="keyword">var</span> buf = Buffer.concat(chunks, size); </span><br><span class="line">  <span class="keyword">var</span> str = iconv.decode(buf, <span class="string">'utf8'</span>);</span><br><span class="line">  <span class="built_in">console</span>.log(str);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>正确的拼接方式是用一个数组来存储接收到的所有Buffer片段并记录下所有片段的总长度， 然后调用Buffer.concat()方法生成一个合并的Buffer对象。Buffer.concat()方法封装了从小 Buffer对象向大Buffer对象的复制过程，实现十分细腻</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">Buffer.concat = <span class="function"><span class="keyword">function</span>(<span class="params">list, length</span>) </span>&#123; </span><br><span class="line">  <span class="keyword">if</span> (!<span class="built_in">Array</span>.isArray(list)) &#123;</span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'Usage: Buffer.concat(list, [length])'</span>); </span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span> (list.length === <span class="number">0</span>) &#123; </span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> Buffer(<span class="number">0</span>);</span><br><span class="line">  &#125; <span class="keyword">else</span> <span class="keyword">if</span> (list.length === <span class="number">1</span>) &#123; </span><br><span class="line">    <span class="keyword">return</span> list[<span class="number">0</span>];</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span> (<span class="keyword">typeof</span> length !== <span class="string">'number'</span>) &#123;</span><br><span class="line">    length = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; list.length; i++) &#123;</span><br><span class="line">      <span class="keyword">var</span> buf = list[i];</span><br><span class="line">      length += buf.length; </span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">var</span> buffer = <span class="keyword">new</span> Buffer(length);</span><br><span class="line">  <span class="keyword">var</span> pos = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; list.length; i++) &#123;</span><br><span class="line">    <span class="keyword">var</span> buf = list[i]; </span><br><span class="line">    buf.copy(buffer, pos); </span><br><span class="line">    pos += buf.length;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> buffer; </span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Buffer-与性能"><a href="#Buffer-与性能" class="headerlink" title="Buffer 与性能"></a>Buffer 与性能</h3><p>一旦在网络中传输，都需要转换为Buffer，以进行二进制数据传输。</p>
+<p>通过预先转换静态内容为Buffer对象，可以有效地减少CPU的重复使用，节省服务器资源。 在Node构建的Web应用中，可以选择将页面中的动态内容和静态内容分离，静态内容部分可以通 过预先转换为Buffer的方式，使性能得到提升。由于文件自身是二进制数据，所以在不需要改变 内容的场景下，尽量只读取Buffer，然后直接传输，不做额外的转换，避免损耗。</p>
+<h4 id="文件读取"><a href="#文件读取" class="headerlink" title="文件读取"></a>文件读取</h4><p>在文件的读取时，有一个highWaterMark设置对性能的影响至关重要。</p>
+<p>在fs.createReadStream(path, opts)时，我们可以传入一些参数</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  flags: <span class="string">'r'</span>,</span><br><span class="line">  encoding: <span class="literal">null</span>,</span><br><span class="line">  fd: <span class="literal">null</span>,</span><br><span class="line">  mode: <span class="number">0666</span>, </span><br><span class="line">  highWaterMark: <span class="number">64</span> * <span class="number">1024</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>还可以传递start和end来指定读取文件的位置范围</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;<span class="attr">start</span>: <span class="number">90</span>, <span class="attr">end</span>: <span class="number">99</span>&#125;</span><br></pre></td></tr></table></figure>
+
+<p>fs.createReadStream()的工作方式是在内存中准备一段Buffer，然后在fs.read()读取时逐步 从磁盘中将字节复制到Buffer中。完成一次读取时，则从这个Buffer中通过slice()方法取出部分 数据作为一个小Buffer对象，再通过data事件传递给调用方。如果Buffer用完，则重新分配一个; 如果还有剩余，则继续使用。</p>
+<p>分配一个新的Buffer对象的操作:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> pool;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">allocNewPool</span>(<span class="params">poolSize</span>) </span>&#123; </span><br><span class="line">  pool = <span class="keyword">new</span> Buffer(poolSize); </span><br><span class="line">  pool.used = <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在理想的状况下，每次读取的长度就是用户指定的highWaterMark。但是有可能读到了文件结尾，或者文件本身就没有指定的highWaterMark那么大，这个预先指定的Buffer对象将会有部分 剩余，不过好在这里的内存可以分配给下次读取时使用。pool是常驻内存的，只有当pool单元剩 余数量小于128(kMinPoolSpace)字节时，才会重新分配一个新的Buffer对象。</p>
+<p>highWaterMark的大小对性能有两个影响的点</p>
+<ul>
+<li>highWaterMark设置对Buffer内存的分配和使用有一定影响。</li>
+<li>highWaterMark设置过小，可能导致系统调用次数过多。</li>
+</ul>
+<p>文件流读取基于Buffer分配，Buffer则基于SlowBuffer分配</p>
+<p>由于fs.createReadStream()内部采用fs.read()实现，将会引起对磁盘的系统调用，对于大 文件而言，highWaterMark的大小决定会触发系统调用和data事件的次数。</p>
+<p>读取一个相同的大文件时，highWaterMark值的大小与读取速 度的关系:该值越大，读取速度越快。</p>
+
+                </article>
+                <ul class="tags-postTags">
+                    
+                    <li>
+                        <a href="/tags/Node-js/" rel="tag"># Node.js</a>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    
+    <nav id="gobottom" class="pagination">
+        
+        <a class="prev-post" title="Vue计算属性(computed)和侦听属性(watch)" href="/2019/12/29/Vue计算属性(computed)和侦听属性(watch)/">
+            ← Vue计算属性(computed)和侦听属性(watch)
+        </a>
+        
+        <span class="prev-next-post">·</span>
+        
+        <a class="next-post" title="深入浅出Node.js学习笔记（一）" href="/2019/12/13/深入浅出Node.js学习笔记（一）/">
+            深入浅出Node.js学习笔记（一） →
+        </a>
+        
+    </nav>
+
+    
+    <div class="inner">
+        <div id="comment"></div>
+    </div>
+    
+</div>
+
+<div class="toc-bar">
+    <div class="toc-btn-bar">
+        <a href="#site-main" class="toc-btn">
+            <svg viewbox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M793.024 710.272a32 32 0 1 0 45.952-44.544l-310.304-320a32 32 0 0 0-46.4 0.48l-297.696 320a32 32 0 0 0 46.848 43.584l274.752-295.328 286.848 295.808z"/></svg>
+        </a>
+        <div class="toc-btn toc-switch">
+            <svg class="toc-open" viewbox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M779.776 480h-387.2a32 32 0 0 0 0 64h387.2a32 32 0 0 0 0-64M779.776 672h-387.2a32 32 0 0 0 0 64h387.2a32 32 0 0 0 0-64M256 288a32 32 0 1 0 0 64 32 32 0 0 0 0-64M392.576 352h387.2a32 32 0 0 0 0-64h-387.2a32 32 0 0 0 0 64M256 480a32 32 0 1 0 0 64 32 32 0 0 0 0-64M256 672a32 32 0 1 0 0 64 32 32 0 0 0 0-64"/></svg>
+            <svg class="toc-close hide" viewbox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M512 960c-247.039484 0-448-200.960516-448-448S264.960516 64 512 64 960 264.960516 960 512 759.039484 960 512 960zM512 128.287273c-211.584464 0-383.712727 172.128262-383.712727 383.712727 0 211.551781 172.128262 383.712727 383.712727 383.712727 211.551781 0 383.712727-172.159226 383.712727-383.712727C895.712727 300.415536 723.551781 128.287273 512 128.287273z"/><path d="M557.05545 513.376159l138.367639-136.864185c12.576374-12.416396 12.672705-32.671738 0.25631-45.248112s-32.704421-12.672705-45.248112-0.25631l-138.560301 137.024163-136.447897-136.864185c-12.512727-12.512727-32.735385-12.576374-45.248112-0.063647-12.512727 12.480043-12.54369 32.735385-0.063647 45.248112l136.255235 136.671523-137.376804 135.904314c-12.576374 12.447359-12.672705 32.671738-0.25631 45.248112 6.271845 6.335493 14.496116 9.504099 22.751351 9.504099 8.12794 0 16.25588-3.103239 22.496761-9.247789l137.567746-136.064292 138.687596 139.136568c6.240882 6.271845 14.432469 9.407768 22.65674 9.407768 8.191587 0 16.352211-3.135923 22.591372-9.34412 12.512727-12.480043 12.54369-32.704421 0.063647-45.248112L557.05545 513.376159z"/></svg>
+        </div>
+        <a href="#gobottom" class="toc-btn">
+            <svg viewbox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M231.424 346.208a32 32 0 0 0-46.848 43.584l297.696 320a32 32 0 0 0 46.4 0.48l310.304-320a32 32 0 1 0-45.952-44.544l-286.848 295.808-274.752-295.36z"/></svg>
+        </a>
+    </div>
+    <div class="toc-main">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#深入浅出Node-js学习笔记（二）"><span class="toc-text">深入浅出Node.js学习笔记（二）</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#第四章-异步编程"><span class="toc-text">第四章 异步编程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#函数式编程"><span class="toc-text">函数式编程</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#高阶函数"><span class="toc-text">高阶函数</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#例子"><span class="toc-text">例子</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#偏函数用法"><span class="toc-text">偏函数用法</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#异步编程的优势与难点"><span class="toc-text">异步编程的优势与难点</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#优势"><span class="toc-text">优势</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#难点"><span class="toc-text">难点</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#难点1-异常处理"><span class="toc-text">难点1:异常处理</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#难点2-函数嵌套过深"><span class="toc-text">难点2:函数嵌套过深</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#难点3-阻塞代码"><span class="toc-text">难点3:阻塞代码</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#难点4-多线程编程"><span class="toc-text">难点4:多线程编程</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#难点5-异步转同步"><span class="toc-text">难点5:异步转同步</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#异步编程解决方案"><span class="toc-text">异步编程解决方案</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#事件发布-订阅模式"><span class="toc-text">事件发布/订阅模式</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1-继承events模块"><span class="toc-text">1. 继承events模块</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-利用事件队列解决雪崩问题"><span class="toc-text">2. 利用事件队列解决雪崩问题</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3-多异步之间的协作方案"><span class="toc-text">3. 多异步之间的协作方案</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#4-EventProxy的原理"><span class="toc-text">4. EventProxy的原理</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#5-EventProxy的异常处理"><span class="toc-text">5. EventProxy的异常处理</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#fail-方法的实现"><span class="toc-text">fail()方法的实现</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#done-方法的实现"><span class="toc-text">done()方法的实现</span></a></li></ol></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Promise-Deferred模式"><span class="toc-text">Promise/Deferred模式</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#Promises-A"><span class="toc-text">Promises/A</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#Promise对象的then"><span class="toc-text">Promise对象的then()</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#Deferred，延迟对象"><span class="toc-text">Deferred，延迟对象</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#Promise和Deferred的差别"><span class="toc-text">Promise和Deferred的差别</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Promise中的多异步协作"><span class="toc-text">Promise中的多异步协作</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Promise的进阶知识"><span class="toc-text">Promise的进阶知识</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#流程控制库"><span class="toc-text">流程控制库</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1-尾触发与Next"><span class="toc-text">1. 尾触发与Next</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-async"><span class="toc-text">2. async</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#异步的串行执行"><span class="toc-text">异步的串行执行</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#异步的并行执行"><span class="toc-text">异步的并行执行</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#异步调用的依赖处理"><span class="toc-text">异步调用的依赖处理</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3-Step"><span class="toc-text">3. Step</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#4-wind"><span class="toc-text">4. wind</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#异步并发控制"><span class="toc-text">异步并发控制</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#bagpipe的解决方案"><span class="toc-text">bagpipe的解决方案</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#拒绝模式"><span class="toc-text">拒绝模式</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#超时控制"><span class="toc-text">超时控制</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#async的解决方案"><span class="toc-text">async的解决方案</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#第五章-内存控制"><span class="toc-text">第五章 内存控制</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#V8-的垃圾回收机制与内存限制"><span class="toc-text">V8 的垃圾回收机制与内存限制</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#V8-的内存限制"><span class="toc-text">V8 的内存限制</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#V8-的对象分配"><span class="toc-text">V8 的对象分配</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#内存使用量的查看"><span class="toc-text">内存使用量的查看</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#V8限制堆大小的原因"><span class="toc-text">V8限制堆大小的原因</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#调整内存限制的大小"><span class="toc-text">调整内存限制的大小</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#V8-的垃圾回收机制"><span class="toc-text">V8 的垃圾回收机制</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#V8主要的垃圾回收算法"><span class="toc-text">V8主要的垃圾回收算法</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#查看垃圾回收日志"><span class="toc-text">查看垃圾回收日志</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#高效使用内存"><span class="toc-text">高效使用内存</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#作用域"><span class="toc-text">作用域</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1-标识符查找"><span class="toc-text">1. 标识符查找</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-作用域链"><span class="toc-text">2. 作用域链</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3-变量的主动释放"><span class="toc-text">3. 变量的主动释放</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#闭包"><span class="toc-text">闭包</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#内存指标"><span class="toc-text">内存指标</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#查看内存使用情况"><span class="toc-text">查看内存使用情况</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1-查看进程的内存占用"><span class="toc-text">1. 查看进程的内存占用</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-查看系统的内存占用"><span class="toc-text">2. 查看系统的内存占用</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#堆外内存"><span class="toc-text">堆外内存</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#内存泄漏"><span class="toc-text">内存泄漏</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#慎将内存当做缓存"><span class="toc-text">慎将内存当做缓存</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1-缓存限制策略"><span class="toc-text">1. 缓存限制策略</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-缓存的解决方案"><span class="toc-text">2. 缓存的解决方案</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#关注队列状态"><span class="toc-text">关注队列状态</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#内存泄漏排查"><span class="toc-text">内存泄漏排查</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#node-heapdump"><span class="toc-text">node-heapdump</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#安装node-heapdump"><span class="toc-text">安装node-heapdump</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#node-memwatch"><span class="toc-text">node-memwatch</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1-stats事件"><span class="toc-text">1. stats事件</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-leak事件"><span class="toc-text">2. leak事件</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3-堆内存比较"><span class="toc-text">3. 堆内存比较</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#大内存应用"><span class="toc-text">大内存应用</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#第六章-理解Buffer"><span class="toc-text">第六章 理解Buffer</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Buffer-结构"><span class="toc-text">Buffer 结构</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#模块结构"><span class="toc-text">模块结构</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Buffer-对象"><span class="toc-text">Buffer 对象</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Buffer-内存分配"><span class="toc-text">Buffer 内存分配</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1-分配小Buffer对象"><span class="toc-text">1. 分配小Buffer对象</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-分配大Buffer对象"><span class="toc-text">2. 分配大Buffer对象</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Buffer-的转换"><span class="toc-text">Buffer 的转换</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#字符串转Buffer"><span class="toc-text">字符串转Buffer</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Buffer-转字符串"><span class="toc-text">Buffer 转字符串</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Buffer-不支持的编码类型"><span class="toc-text">Buffer 不支持的编码类型</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Buffer-的拼接"><span class="toc-text">Buffer 的拼接</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#乱码是如何产生的"><span class="toc-text">乱码是如何产生的</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#setEncoding-与-string-decoder"><span class="toc-text">setEncoding()与 string_decoder()</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#正确拼接Buffer"><span class="toc-text">正确拼接Buffer</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Buffer-与性能"><span class="toc-text">Buffer 与性能</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#文件读取"><span class="toc-text">文件读取</span></a></li></ol></li></ol></li></ol></li></ol>
+    </div>
+</div>
+
+
+
+	</div>
+	
+
+
+<aside class="read-next outer">
+    <div class="inner">
+        <div class="read-next-feed">
+            
+            
+
+<article class="read-next-card" style="background-image: url(https://tva1.sinaimg.cn/large/006y8mN6ly1g77gpw5lrfj31bt0u0qv6.jpg)">
+  <header class="read-next-card-header">
+    <small class="read-next-card-header-sitetitle">&mdash; 01不是包子脸 &mdash;</small>
+    <h3 class="read-next-card-header-title">最新文章</h3>
+  </header>
+  <div class="read-next-divider">
+    <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24">
+      <path d="M13 14.5s2 3 5 3 5.5-2.463 5.5-5.5S21 6.5 18 6.5c-5 0-7 11-12 11C2.962 17.5.5 15.037.5 12S3 6.5 6 6.5s4.5 3.5 4.5 3.5"/>
+    </svg>
+  </div>
+  <div class="read-next-card-content">
+    <ul>
+      
+      
+      
+      <li>
+        <a href="/2019/12/29/Vue计算属性(computed)和侦听属性(watch)/">Vue计算属性(computed)和侦听属性(watch)</a>
+      </li>
+      
+      
+      
+      <li>
+        <a href="/2019/12/19/深入浅出Node.js学习笔记（二）/">深入浅出Node.js学习笔记（二）</a>
+      </li>
+      
+      
+      
+      <li>
+        <a href="/2019/12/13/深入浅出Node.js学习笔记（一）/">深入浅出Node.js学习笔记（一）</a>
+      </li>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+    </ul>
+  </div>
+  <footer class="read-next-card-footer">
+    <a href="/archives">  MORE  → </a>
+  </footer>
+</article>
+
+            
+            
+            
+
+<article class="read-next-card" style="background-image: url(https://tva1.sinaimg.cn/large/006y8mN6ly1g77gpw5lrfj31bt0u0qv6.jpg)">
+    <header class="read-next-card-header tagcloud-card">
+        <h3 class="read-next-card-header-title">分类</h3>
+    </header>
+    <div class="read-next-card-content">
+        <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/CSS/">CSS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/ES6/">ES6</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Node-js/">Node.js</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/React/">React</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/VUE/">VUE</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/git/">git</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/">前端</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端工具/">前端工具</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/安全/">安全</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/浏览器/">浏览器</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/移动端/">移动端</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/算法/">算法</a></li></ul>
+    </div>
+</article>
+
+
+            
+            
+            
+
+<article class="read-next-card" style="background-image: url(https://tva1.sinaimg.cn/large/006y8mN6ly1g77gpw5lrfj31bt0u0qv6.jpg)">
+	<header class="read-next-card-header tagcloud-card">
+		<h3 class="read-next-card-header-title">标签云</h3>
+	</header>
+	<div class="read-next-card-content-ext">
+		<a href="/tags/CSS/" style="font-size: 20.67px;">CSS</a> <a href="/tags/ES6/" style="font-size: 20.67px;">ES6</a> <a href="/tags/HTTP/" style="font-size: 15.67px;">HTTP</a> <a href="/tags/JavaScript/" style="font-size: 24px;">JavaScript</a> <a href="/tags/LESS/" style="font-size: 14px;">LESS</a> <a href="/tags/LeetCode/" style="font-size: 17.33px;">LeetCode</a> <a href="/tags/Node-js/" style="font-size: 15.67px;">Node.js</a> <a href="/tags/React/" style="font-size: 15.67px;">React</a> <a href="/tags/SASS/" style="font-size: 14px;">SASS</a> <a href="/tags/TCP-IP/" style="font-size: 17.33px;">TCP/IP</a> <a href="/tags/VUE/" style="font-size: 19px;">VUE</a> <a href="/tags/git/" style="font-size: 17.33px;">git</a> <a href="/tags/position/" style="font-size: 14px;">position</a> <a href="/tags/webpack/" style="font-size: 15.67px;">webpack</a> <a href="/tags/伪元素/" style="font-size: 14px;">伪元素</a> <a href="/tags/伪类/" style="font-size: 14px;">伪类</a> <a href="/tags/回溯/" style="font-size: 14px;">回溯</a> <a href="/tags/安全/" style="font-size: 17.33px;">安全</a> <a href="/tags/居中/" style="font-size: 14px;">居中</a> <a href="/tags/布局/" style="font-size: 17.33px;">布局</a> <a href="/tags/性能优化/" style="font-size: 14px;">性能优化</a> <a href="/tags/排序/" style="font-size: 14px;">排序</a> <a href="/tags/数组/" style="font-size: 14px;">数组</a> <a href="/tags/正则/" style="font-size: 15.67px;">正则</a> <a href="/tags/浏览器/" style="font-size: 22.33px;">浏览器</a> <a href="/tags/清除浮动/" style="font-size: 14px;">清除浮动</a> <a href="/tags/移动端/" style="font-size: 14px;">移动端</a> <a href="/tags/算法/" style="font-size: 19px;">算法</a> <a href="/tags/缓存/" style="font-size: 15.67px;">缓存</a> <a href="/tags/触屏/" style="font-size: 14px;">触屏</a> <a href="/tags/跨域/" style="font-size: 15.67px;">跨域</a> <a href="/tags/路由/" style="font-size: 14px;">路由</a>
+	</div>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+	
+
+
+
+
+<div id="search" class="search-overlay">
+    <div class="search-form">
+        
+        <img class="search-overlay-logo" src="https://tva1.sinaimg.cn/large/006y8mN6ly1g6sjqjrb9wj30jj0jjjss.jpg" alt="01不是包子脸">
+        
+        <input id="local-search-input" class="search-input" type="text" name="search" placeholder="搜索 ...">
+        <a class="search-overlay-close" href="#"></a>
+    </div>
+    <div id="local-search-result"></div>
+</div>
+
+<footer class="site-footer outer">
+	<div class="site-footer-content inner">
+		<div class="copyright">
+			<a href="/" title="01不是包子脸">01不是包子脸</a>
+			&copy; 2019
+		</div>
+		<nav class="site-footer-nav">
+			
+			<a href="https://hexo.io" title="Hexo" target="_blank" rel="noopener">Hexo</a>
+			<a href="https://github.com/xzhih/hexo-theme-casper" title="Casper" target="_blank" rel="noopener">Casper</a>
+		</nav>
+	</div>
+</footer>
+	
+
+
+<script>if(window.navigator && navigator.serviceWorker) {navigator.serviceWorker.getRegistrations().then(function(registrations) {for(let registration of registrations) {registration.unregister()}})}</script>
+
+
+<script async src="/js/allinone.min.js" id="scriptLoad"></script>
+
+
+
+
+
+
+<script>
+    document.getElementById('scriptLoad').addEventListener('load', function () {
+        var bLazy = new Blazy()
+    })
+</script>
+
+
+
+
+<div class="floating-header">
+	<div class="floating-header-logo">
+        <a href="/" title="01不是包子脸">
+			
+                <img src="https://tva1.sinaimg.cn/large/006y8mN6ly1g6sjqjrb9wj30jj0jjjss.jpg" alt="01不是包子脸 icon">
+			
+            <span>01不是包子脸</span>
+        </a>
+    </div>
+    <span class="floating-header-divider">&mdash;</span>
+    <div class="floating-header-title">深入浅出Node.js学习笔记（二）</div>
+    <progress class="progress" value="0">
+        <span class="progress-container">
+            <span class="progress-bar"></span>
+        </span>
+    </progress>
+</div>
+<script>
+    document.getElementById('scriptLoad').addEventListener('load', function () {
+        postProgressBar()
+    })
+</script>
+
+
+
+
+<script src="/js/lightgallery.min.js"></script>
+<link rel="stylesheet" href="/css/lightgallery.min.css">
+<script>
+    lightGallery(document.getElementById('lightgallery'), {
+        selector: '.post-img'
+    });
+</script>
+
+
+
+
+<script async src="https://cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script async src="https://unpkg.com/valine@1.3.4/dist/Valine.min.js"></script>
+<script>
+    window.addEventListener("load", function() {
+        new Valine({
+            el: '#comment' ,
+            verify: false,
+            notify: false,
+            appId: 'RKl7DjTGeDG8TMedBcYhiagz-gzGzoHsz',
+            appKey: 'pcwdBNPnrqDUcLyj3H0TaeHy',
+            placeholder: '来聊聊天吧～～',
+            pageSize: 10,
+            avatar: 'mm',
+            visitor: true,
+        })
+    });
+</script>
+
+
+
+
+
+<script>
+    document.getElementById('scriptLoad').addEventListener('load', function(){
+        searchFunc("/")
+    });
+</script>
+
+
+
+
+
+
+</body>
+</html>

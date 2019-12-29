@@ -1,0 +1,960 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+
+
+
+
+
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<link rel="preconnect" href="//pic.zhih.me">
+	<link rel="preconnect" href="//www.googletagmanager.com">
+	<link rel="preconnect" href="//zz.bdstatic.com">
+	<link rel="preconnect" href="//sp0.baidu.com">
+	<link rel="preconnect" href="//www.google-analytics.com">
+	<link rel="preconnect" href="//cdn1.lncld.net">
+	<link rel="preconnect" href="//unpkg.com">
+	<link rel="preconnect" href="//app-router.leancloud.cn">
+	<link rel="preconnect" href="//9qpuwspm.api.lncld.net">
+	<link rel="preconnect" href="//gravatar.loli.net">
+	<link rel="preload" href="https://pic.zhih.me/blog/header.jpg" as="image">
+
+	<title>深入浅出Node.js学习笔记（一） | 01不是包子脸</title>
+
+	<meta name="HandheldFriendly" content="True">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+	<meta name="generator" content="hexo">
+	<meta name="author" content="Linyi Li">
+	<meta name="description" content>
+
+	
+	<meta name="keywords" content>
+	
+
+	
+	<link rel="shortcut icon" href="https://tva1.sinaimg.cn/large/006y8mN6ly1g6sjqjrb9wj30jj0jjjss.jpg">
+	<link rel="apple-touch-icon" href="https://tva1.sinaimg.cn/large/006y8mN6ly1g6sjqjrb9wj30jj0jjjss.jpg">
+	
+
+	
+	<meta name="theme-color" content="#3c484e">
+	<meta name="msapplication-TileColor" content="#3c484e">
+	
+
+	
+
+	
+
+	<meta property="og:site_name" content="01不是包子脸">
+	<meta property="og:type" content="article">
+	<meta property="og:title" content="深入浅出Node.js学习笔记（一） | 01不是包子脸">
+	<meta property="og:description" content>
+	<meta property="og:url" content="http://yoursite.com/2019/12/13/深入浅出Node.js学习笔记（一）/">
+
+	
+	<meta property="article:published_time" content="2019-12-13T15:12:00+08:00"> 
+	<meta property="article:author" content="Linyi Li">
+	<meta property="article:published_first" content="01不是包子脸, /2019/12/13/深入浅出Node.js学习笔记（一）/">
+	
+
+	
+	
+	<link rel="stylesheet" href="/css/allinonecss.min.css">
+
+	
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-145838942-1"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag('js', new Date());
+		gtag('config', 'UA-145838942-1');
+	</script>
+	
+	
+	
+<link rel="canonical" href="http://yoursite.com/2019/12/13/深入浅出Node.js学习笔记（一）/">
+
+
+
+
+
+</head>
+<body class="post-template">
+	<div class="site-wrapper">
+		
+
+
+
+
+<header class="site-header post-site-header outer">
+    <div class="inner">
+        
+<nav class="site-nav"> 
+    <div class="site-nav-left">
+        <ul class="nav">
+            <li>
+                
+                
+                <a class="site-nav-logo" href="/" title="01不是包子脸">
+                    <img src="https://tva1.sinaimg.cn/large/006y8mN6ly1g6sjqjrb9wj30jj0jjjss.jpg" alt="01不是包子脸">
+                </a>
+                
+                
+            </li>
+            
+            
+            <li>
+                <a href="/" title="HOME">HOME</a>
+            </li>
+            
+            <li>
+                <a href="/about" title="ABOUT">ABOUT</a>
+            </li>
+            
+            <li>
+                <a href="/archives" title="ARCHIVES">ARCHIVES</a>
+            </li>
+            
+            
+        </ul> 
+    </div>
+    
+    <div class="search-button-area">
+        <a href="#search" class="search-button">Search ...</a>
+    </div>
+     
+    <div class="site-nav-right">
+        
+        <a href="#search" class="search-button">Search ...</a>
+         
+        
+<div class="social-links">
+    
+    <a class="social-link" title="weibo" href="https://weibo.com/2164694963/profile?rightmod=1&wvr=6&mod=personinfo" target="_blank" rel="noopener">
+        <svg viewbox="0 0 1141 1024" xmlns="http://www.w3.org/2000/svg"><path d="M916.48 518.144q27.648 21.504 38.912 51.712t9.216 62.976-14.336 65.536-31.744 59.392q-34.816 48.128-78.848 81.92t-91.136 56.32-94.72 35.328-89.6 18.944-75.264 7.68-51.712 1.536-49.152-2.56-68.096-10.24-78.336-21.504-79.872-36.352-74.24-55.296-59.904-78.848q-16.384-29.696-22.016-63.488t-5.632-86.016q0-22.528 7.68-51.2t27.136-63.488 53.248-75.776 86.016-90.112q51.2-48.128 105.984-85.504t117.248-57.856q28.672-10.24 63.488-11.264t57.344 11.264q10.24 11.264 19.456 23.04t12.288 29.184q3.072 14.336 0.512 27.648t-5.632 26.624-5.12 25.6 2.048 22.528q17.408 2.048 33.792-1.536t31.744-9.216 31.232-11.776 33.28-9.216q27.648-5.12 54.784-4.608t49.152 7.68 36.352 22.016 17.408 38.4q2.048 14.336-2.048 26.624t-8.704 23.04-7.168 22.016 1.536 23.552q3.072 7.168 14.848 13.312t27.136 12.288 32.256 13.312 29.184 16.384zM658.432 836.608q26.624-16.384 53.76-45.056t44.032-64 18.944-75.776-20.48-81.408q-19.456-33.792-47.616-57.344t-62.976-37.376-74.24-19.968-80.384-6.144q-78.848 0-139.776 16.384t-105.472 43.008-72.192 60.416-38.912 68.608q-11.264 33.792-6.656 67.072t20.992 62.976 42.496 53.248 57.856 37.888q58.368 25.6 119.296 32.256t116.224 0.512 100.864-21.504 74.24-33.792zM524.288 513.024q20.48 8.192 38.912 18.432t32.768 27.648q10.24 12.288 17.92 30.72t10.752 39.424 1.536 42.496-9.728 38.912q-8.192 18.432-19.968 37.376t-28.672 35.328-40.448 29.184-57.344 18.944q-61.44 11.264-117.76-11.264t-88.064-74.752q-12.288-39.936-13.312-70.656t16.384-66.56q13.312-27.648 40.448-51.712t62.464-38.912 75.264-17.408 78.848 12.8zM361.472 764.928q37.888 3.072 57.856-18.432t21.504-48.128-15.36-47.616-52.736-16.896q-27.648 3.072-43.008 23.552t-17.408 43.52 9.728 42.496 39.424 21.504zM780.288 6.144q74.752 0 139.776 19.968t113.664 57.856 76.288 92.16 27.648 122.88q0 33.792-16.384 50.688t-35.328 17.408-35.328-14.336-16.384-45.568q0-40.96-22.528-77.824t-59.392-64.512-84.48-43.52-96.768-15.872q-31.744 0-47.104-15.36t-14.336-34.304 18.944-34.304 51.712-15.36zM780.288 169.984q95.232 0 144.384 48.64t49.152 146.944q0 30.72-10.24 43.52t-22.528 11.264-22.528-14.848-10.24-35.84q0-60.416-34.816-96.256t-93.184-35.84q-19.456 0-28.672-10.752t-9.216-23.04 9.728-23.04 28.16-10.752z"/></svg>
+    </a>
+    
+    
+    <a class="social-link" title="github" href="https://github.com/linyi531" target="_blank" rel="noopener">
+        <svg viewbox="0 0 1049 1024" xmlns="http://www.w3.org/2000/svg"><path d="M524.979332 0C234.676191 0 0 234.676191 0 524.979332c0 232.068678 150.366597 428.501342 358.967656 498.035028 26.075132 5.215026 35.636014-11.299224 35.636014-25.205961 0-12.168395-0.869171-53.888607-0.869171-97.347161-146.020741 31.290159-176.441729-62.580318-176.441729-62.580318-23.467619-60.841976-58.234462-76.487055-58.234463-76.487055-47.804409-32.15933 3.476684-32.15933 3.476685-32.15933 53.019436 3.476684 80.83291 53.888607 80.83291 53.888607 46.935238 79.963739 122.553122 57.365291 152.97411 43.458554 4.345855-33.897672 18.252593-57.365291 33.028501-70.402857-116.468925-12.168395-239.022047-57.365291-239.022047-259.012982 0-57.365291 20.860106-104.300529 53.888607-140.805715-5.215026-13.037566-23.467619-66.926173 5.215027-139.067372 0 0 44.327725-13.906737 144.282399 53.888607 41.720212-11.299224 86.917108-17.383422 131.244833-17.383422s89.524621 6.084198 131.244833 17.383422C756.178839 203.386032 800.506564 217.29277 800.506564 217.29277c28.682646 72.1412 10.430053 126.029806 5.215026 139.067372 33.897672 36.505185 53.888607 83.440424 53.888607 140.805715 0 201.64769-122.553122 245.975415-239.891218 259.012982 19.121764 16.514251 35.636014 47.804409 35.636015 97.347161 0 70.402857-0.869171 126.898978-0.869172 144.282399 0 13.906737 9.560882 30.420988 35.636015 25.205961 208.601059-69.533686 358.967656-265.96635 358.967655-498.035028C1049.958663 234.676191 814.413301 0 524.979332 0z"/></svg>
+    </a>
+    
+    
+    
+    <a class="social-link" title="twitter" href="https://twitter.com/nFywOCNPid75cl5" target="_blank" rel="noopener">
+        <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 32 32"><path d="M30.063 7.313c-.813 1.125-1.75 2.125-2.875 2.938v.75c0 1.563-.188 3.125-.688 4.625a15.088 15.088 0 0 1-2.063 4.438c-.875 1.438-2 2.688-3.25 3.813a15.015 15.015 0 0 1-4.625 2.563c-1.813.688-3.75 1-5.75 1-3.25 0-6.188-.875-8.875-2.625.438.063.875.125 1.375.125 2.688 0 5.063-.875 7.188-2.5-1.25 0-2.375-.375-3.375-1.125s-1.688-1.688-2.063-2.875c.438.063.813.125 1.125.125.5 0 1-.063 1.5-.25-1.313-.25-2.438-.938-3.313-1.938a5.673 5.673 0 0 1-1.313-3.688v-.063c.813.438 1.688.688 2.625.688a5.228 5.228 0 0 1-1.875-2c-.5-.875-.688-1.813-.688-2.75 0-1.063.25-2.063.75-2.938 1.438 1.75 3.188 3.188 5.25 4.25s4.313 1.688 6.688 1.813a5.579 5.579 0 0 1 1.5-5.438c1.125-1.125 2.5-1.688 4.125-1.688s3.063.625 4.188 1.813a11.48 11.48 0 0 0 3.688-1.375c-.438 1.375-1.313 2.438-2.563 3.188 1.125-.125 2.188-.438 3.313-.875z"/></svg>
+
+    </a>
+    
+    
+    <a class="social-link" title="telegram" href="https://www.instagram.com/linyi531/" target="_blank" rel="noopener">
+        <svg viewbox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M679.428571 746.857143l84-396q5.142857-25.142857-6-36t-29.428571-4L234.285714 501.142857q-16.571429 6.285714-22.571428 14.285714t-1.428572 15.142858 18.285715 11.142857l126.285714 39.428571 293.142857-184.571428q12-8 18.285714-3.428572 4 2.857143-2.285714 8.571429l-237.142857 214.285714-9.142857 130.285714q13.142857 0 25.714285-12.571428l61.714286-59.428572 128 94.285715q36.571429 20.571429 46.285714-21.714286z m344.571429-234.857143q0 104-40.571429 198.857143t-109.142857 163.428571-163.428571 109.142857-198.857143 40.571429-198.857143-40.571429-163.428571-109.142857-109.142857-163.428571T0 512t40.571429-198.857143 109.142857-163.428571T313.142857 40.571429 512 0t198.857143 40.571429 163.428571 109.142857 109.142857 163.428571 40.571429 198.857143z"/></svg>
+    </a>
+    
+    
+    
+</div>
+    </div>
+</nav>
+    </div>
+</header>
+
+
+<div id="site-main" class="site-main outer" role="main">
+    <div class="inner">
+        <header class="post-full-header">
+            <div class="post-full-meta">
+                <time class="post-full-meta-date" datetime="2019-12-13T07:04:52.000Z">
+                    2019-12-13
+                </time>
+                
+                <span class="date-divider">/</span>
+                
+                <a href="/categories/Node-js/">Node.js</a>&nbsp;&nbsp;
+                
+                
+            </div>
+            <h1 class="post-full-title">深入浅出Node.js学习笔记（一）</h1>
+        </header>
+        <div class="post-full ">
+            
+            <figure class="post-full-image" style="background-image: url(https://tva1.sinaimg.cn/large/006tNbRwgy1gadlwkk140j31960u0tnf.jpg)">
+            </figure>
+            
+            <div class="post-full-content">
+                <article id="lightgallery" class="markdown-body">
+                    <h1 id="深入浅出Node-js学习笔记（一）"><a href="#深入浅出Node-js学习笔记（一）" class="headerlink" title="深入浅出Node.js学习笔记（一）"></a>深入浅出Node.js学习笔记（一）</h1><p>高并发、高性能</p>
+<h2 id="第一章-Node简介"><a href="#第一章-Node简介" class="headerlink" title="第一章 Node简介"></a>第一章 Node简介</h2><ul>
+<li><p>高性能、符合事件驱动、没有历史包袱这3个主要原因，JavaScript成为了Node的实现语言。</p>
+</li>
+<li><p>Node发展为一个强制不共享任何资源的 单线程、单进程系统，包含十分适宜网络的库，为构建大型分布式应用程序提供基础设施，其目 标也是成为一个构建快速、可伸缩的网络应用平台。它自身非常简单，通过通信协议来组织许多 Node，非常容易通过扩展来达成构建大型网络应用的目的。每一个Node进程都构成这个网络应 用中的一个节点，这是它名字所含意义的真谛。</p>
+</li>
+<li><p>它们都是基于事件驱动的异步架构，浏览器通过事件驱动来服务界面上的交互，Node通过事件驱 动来服务I/O</p>
+<p><img alt="image-20191206112453524" class="post-img b-lazy" href="https://tva1.sinaimg.cn/large/006tNbRwgy1g9mu9fwye3j30s80g875q.jpg" data-src="https://tva1.sinaimg.cn/large/006tNbRwgy1g9mu9fwye3j30s80g875q.jpg"></p>
+</li>
+</ul>
+<h3 id="Node的特点"><a href="#Node的特点" class="headerlink" title="Node的特点"></a>Node的特点</h3><h4 id="异步I-O"><a href="#异步I-O" class="headerlink" title="异步I/O"></a>异步I/O</h4><ul>
+<li><p>在Node中，绝大多数的操作都以异步的方式进行调用。</p>
+</li>
+<li><p>在Node中，我们可 以从语言层面很自然地进行并行I/O操作。每个调用之间无须等待之前的I/O调用结束。</p>
+</li>
+</ul>
+<h4 id="事件与回调函数"><a href="#事件与回调函数" class="headerlink" title="事件与回调函数"></a>事件与回调函数</h4><ul>
+<li><p>事件的编程方式具有轻量级、松耦合、只关注事务点等优势，但是在多个异步任务的场景下， 事件与事件之间各自独立，如何协作是一个问题。</p>
+</li>
+<li><p>回调函数无处不在。回调函数是最好的接受异步调用返回数据的方式</p>
+</li>
+</ul>
+<h4 id="单线程"><a href="#单线程" class="headerlink" title="单线程"></a>单线程</h4><p>Node保持了JavaScript在浏览器中单线程的特点。</p>
+<ul>
+<li><p>在Node中，JavaScript与其余线程是无 法共享任何状态的。（单线程的最大好处是不用像多线程编程那样处处在意状态的同步问题，这里 没有死锁的存在，也没有线程上下文交换所带来的性能上的开销。）</p>
+</li>
+<li><p>单线程的弱点：</p>
+<ul>
+<li>无法利用多核CPU</li>
+<li>错误会引起整个应用退出，应用的健壮性值得考验</li>
+<li>大量计算占用CPU导致无法继续调用异步I/O</li>
+</ul>
+</li>
+<li><p>在Node中，长时间的CPU占用也会导致后续的异步I/O发不出调用，已完成的异步I/O的 回调函数也会得不到及时执行。解决单线程中大计算量的问题——child_process</p>
+</li>
+<li><p>子进程的出现，意味着Node可以从容地应对单线程在健壮性和无法利用多核CPU方面的问 题。通过将计算分发到各个子进程，可以将大量计算分解掉，然后再通过进程之间的事件消息来 传递结果，这可以很好地保持应用模型的简单和低依赖。通过Master-Worker的管理方式，也可以 很好地管理各个工作进程，以达到更高的健壮性。</p>
+</li>
+</ul>
+<h4 id="跨平台"><a href="#跨平台" class="headerlink" title="跨平台"></a>跨平台</h4><p><img alt="image-20191206142014972" class="post-img b-lazy" href="https://tva1.sinaimg.cn/large/006tNbRwgy1g9mzbqn9c1j30l80fct9g.jpg" data-src="https://tva1.sinaimg.cn/large/006tNbRwgy1g9mzbqn9c1j30l80fct9g.jpg"></p>
+<p>它在操作系统与Node上层模块 系统之间构建了一层平台层架构，即libuv。（libuv已经成为许多系统实现跨平台的基础组件）</p>
+<h3 id="Node-的应用场景"><a href="#Node-的应用场景" class="headerlink" title="Node 的应用场景"></a>Node 的应用场景</h3><h4 id="I-O-密集型"><a href="#I-O-密集型" class="headerlink" title="I/O 密集型"></a>I/O 密集型</h4><p>Node擅长I/O密集型的应用场景。Node面向网络且擅长并行I/O，能够有效 地组织起更多的硬件资源，从而提供更多好的服务。</p>
+<p>I/O密集的优势主要在于Node利用事件循环的处理能力，而不是启动每一个线程为每一个请 求服务，资源占用极少。</p>
+<h4 id="CPU密集型"><a href="#CPU密集型" class="headerlink" title="CPU密集型"></a>CPU密集型</h4><p>CPU密集型应用给Node 带来的挑战主要是:由于JavaScript单线程的原因，如果有长时间运行的计算(比如大循环)，将 会导致CPU时间片不能释放，使得后续I/O无法发起。但是适当调整和分解大型运算任务为多个 小任务，使得运算能够适时释放，不阻塞I/O调用的发起，这样既可同时享受到并行异步I/O的好 处，又能充分利用CPU。</p>
+<ul>
+<li>Node可以通过编写C/C++扩展的方式更高效地利用CPU，将一些V8不能做到性能极致的地方通过C/C++来实现。由上面的测试结果可以看到，通过C/C++扩展的方式实现斐波那契数列计算，速度比Java还快。</li>
+<li>如果单线程的Node不能满足需求，甚至用了C/C++扩展后还觉得不够，那么通过子进程的方式，将一部分Node进程当做常驻服务进程用于计算，然后利用进程间的消息来传递结果，将计算与I/O分离，这样还能充分利用多CPU。</li>
+</ul>
+<p><strong>CPU密集不可怕，如何合理调度是诀窍。</strong></p>
+<h4 id="分布式应用"><a href="#分布式应用" class="headerlink" title="分布式应用"></a>分布式应用</h4><p>Node高效利用并行I/O的过程，也是高效使用数 据库的过程</p>
+<h2 id="第二章-模块机制"><a href="#第二章-模块机制" class="headerlink" title="第二章 模块机制"></a>第二章 模块机制</h2><h3 id="CommonJS"><a href="#CommonJS" class="headerlink" title="CommonJS"></a>CommonJS</h3><h4 id="JavaScript缺陷"><a href="#JavaScript缺陷" class="headerlink" title="JavaScript缺陷"></a>JavaScript缺陷</h4><ul>
+<li>没有模块系统</li>
+<li>标准库较少</li>
+<li>没有标准接口</li>
+<li>缺乏包管理系统</li>
+</ul>
+<p>CommonJS规范的提出，主要是为了弥补当前JavaScript没有标准的缺陷</p>
+<p><img alt="image-20191206205027614" class="post-img b-lazy" href="https://tva1.sinaimg.cn/large/006tNbRwgy1g9nalsobqcj310m0awq4f.jpg" data-src="https://tva1.sinaimg.cn/large/006tNbRwgy1g9nalsobqcj310m0awq4f.jpg"></p>
+<h4 id="CommonJS-的模块规范"><a href="#CommonJS-的模块规范" class="headerlink" title="CommonJS 的模块规范"></a>CommonJS 的模块规范</h4><ul>
+<li>模块引用</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> math = <span class="built_in">require</span>(<span class="string">'math'</span>);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>模块定义</li>
+</ul>
+<p>上下文提供了 exports对象用于导出当前模块的方法或者变量，并且它是唯一导出的出口。</p>
+<p>在模块中，还存在 一个module对象，它代表模块自身，而exports是module的属性。</p>
+<p>在Node中，一个文件就是一个 模块，将方法挂载在exports对象上作为属性即可定义导出的方式。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// math.js</span></span><br><span class="line">exports.add = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="keyword">var</span> sum = <span class="number">0</span>, </span><br><span class="line">      i = <span class="number">0</span>,</span><br><span class="line">			args = <span class="built_in">arguments</span>,</span><br><span class="line">			l = args.length; </span><br><span class="line">  <span class="keyword">while</span> (i &lt; l) &#123;</span><br><span class="line">		sum += args[i++]; </span><br><span class="line">  &#125;</span><br><span class="line">	<span class="keyword">return</span> sum; </span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>模块标识</li>
+</ul>
+<p>模块标识其实就是传递给require()方法的参数，它必须是符合小驼峰命名的字符串，或者 以.、..开头的相对路径，或者绝对路径。它可以没有文件名后缀.js。</p>
+<p>它的意义在于将类聚的方法和变量等限定在私有的 作用域中，同时支持引入和导出功能以顺畅地连接上下游依赖。</p>
+<p><img alt="image-20191209111442609" class="post-img b-lazy" href="https://tva1.sinaimg.cn/large/006tNbRwgy1g9qatnbzkaj30mi0byt98.jpg" data-src="https://tva1.sinaimg.cn/large/006tNbRwgy1g9qatnbzkaj30mi0byt98.jpg"></p>
+<h3 id="Node-的模块实现"><a href="#Node-的模块实现" class="headerlink" title="Node 的模块实现"></a>Node 的模块实现</h3><p>在Node中引入模块，需要经历如下3个步骤。</p>
+<ul>
+<li>路径分析</li>
+<li>文件定位</li>
+<li>编译执行</li>
+</ul>
+<p>在Node中，模块分为两类:一类是Node提供的模块，称为核心模块;另一类是用户编写的模块，称为文件模块。</p>
+<ul>
+<li>核心模块部分在Node源代码的编译过程中，编译进了二进制执行文件。在Node进程启动 时，部分核心模块就被直接加载进内存中，所以这部分核心模块引入时，文件定位和编 译执行这两个步骤可以省略掉，并且在路径分析中优先判断，所以它的加载速度是最 快的。</li>
+<li>文件模块则是在运行时动态加载，需要完整的路径分析、文件定位、编译执行过程，速 度比核心模块慢。</li>
+</ul>
+<h4 id="优先从缓存加载"><a href="#优先从缓存加载" class="headerlink" title="优先从缓存加载"></a>优先从缓存加载</h4><p>Node对引入过的模块都会进行缓存，以减少二次引入时的开销。Node缓存的事编译和执行之后的对象。</p>
+<p>不论是核心模块还是文件模块，require()方法对相同模块的二次加载都一律采用缓存优先的 方式，这是第一优先级的。不同之处在于核心模块的缓存检查先于文件模块的缓存检查。</p>
+<h4 id="路径分析和文件定位"><a href="#路径分析和文件定位" class="headerlink" title="路径分析和文件定位"></a>路径分析和文件定位</h4><h5 id="模块路径"><a href="#模块路径" class="headerlink" title="模块路径"></a>模块路径</h5><p>模块路径是Node在定位文件模块的具体文件时制定的查找策略，具体表现为一个路径组成的数组。</p>
+<p>模块路径的生成规则：</p>
+<ul>
+<li>当前文件目录下的node_modules目录。</li>
+<li>父目录下的node_modules目录。</li>
+<li>父目录的父目录下的node_modules目录。</li>
+<li>沿路径向上逐级递归，直到根目录下的node_modules目录。</li>
+</ul>
+<h5 id="模块标识符分析"><a href="#模块标识符分析" class="headerlink" title="模块标识符分析"></a>模块标识符分析</h5><p>模块标识符在Node中主要分为以下几类。</p>
+<ul>
+<li>核心模块，如http、fs、path等。</li>
+<li>.或..开始的相对路径文件模块。</li>
+<li>以/开始的绝对路径文件模块。</li>
+<li>非路径形式的文件模块，如自定义的connect模块。</li>
+</ul>
+<ol>
+<li><p>核心模块</p>
+<p>核心模块的优先级仅次于缓存加载，它在Node的源代码编译过程中已经编译为二进制代码， 其加载过程最快。</p>
+<p>（如果加载一个与核心模块标识符相同的自定义模块，不会成功。如果自己编写了一个http用户模块，想要加载成功，必须选择不同的标识符或换用路径方式）</p>
+</li>
+<li><p>路径形式的文件模块</p>
+<p>在分析文件模块时，require()方法会将路径转为真实路径，并以真实路径作为索引，将编译执行后的结果存放到缓存中，以使二 次加载时更快。</p>
+<p>（文件模块指明了确切的文件位置，在查找中会节约时间，加载速度慢于核心模块）</p>
+</li>
+<li><p>自定义模块</p>
+<p>它是一种特殊的文件模块，可能是一个文件或者包的形式。这类模块的查找是最费时的，也是所有方式中最慢的一种。</p>
+<p>在加载的过程中，Node 会逐个尝试模块路径中的路径，直到找到目标文件为止。可以看出，当前文件的路径越深，模块查找耗时会越多，这是自定义模块的加载速度是最慢的原因。</p>
+</li>
+</ol>
+<h5 id="文件定位"><a href="#文件定位" class="headerlink" title="文件定位"></a>文件定位</h5><ul>
+<li><p>文件扩展名分析：</p>
+<p>require()在分析标识符的过程中，会出现标识符中不包含文件扩展名的情况。CommonJS模块规范也允许在标识符中不包含文件扩展名，这种情况下，<strong>Node会按.js、.json、.node的次序补 足扩展名，依次尝试。</strong></p>
+<p><strong>在尝试的过程中，需要调用fs模块同步阻塞式地判断文件是否存在。</strong>因为Node是单线程的， 所以这里是一个会引起性能问题的地方。</p>
+<p>（如果是.node和.json文件，在传递给require() 的标识符中带上扩展名，会加快一点速度。同步配合缓存，可以大幅度缓解Node 单线程中阻塞式调用的缺陷。）</p>
+</li>
+<li><p>目录分析和包</p>
+<p>在分析标识符的过程中，require()通过分析文件扩展名之后，可能<strong>没有查找到对应文件，但却得到一个目录，这在引入自定义模块和逐个模块路径进行查找时经常会出现，此时Node会将目录当做一个包来处理。</strong></p>
+<ul>
+<li>Node在当前目录下 查找package.json(CommonJS包规范定义的包描述文件)，通过JSON.parse()解析出包描述对象， 从中取出main属性指定的文件名进行定位。如果文件名缺少扩展名，将会进入扩展名分析的步骤。</li>
+<li>而如果main属性指定的文件名错误，或者压根没有package.json文件，Node会将index当做默 认文件名，然后依次查找index.js、index.json、index.node。</li>
+<li>如果在目录分析的过程中没有定位成功任何文件，则自定义模块进入下一个模块路径进行查 找。</li>
+<li>如果模块路径数组都被遍历完毕，依然没有查找到目标文件，则会抛出查找失败的异常。</li>
+</ul>
+</li>
+</ul>
+<h4 id="模块编译"><a href="#模块编译" class="headerlink" title="模块编译"></a>模块编译</h4><p>在Node中，每个文件模块都是一个对象</p>
+<p>定位到具体的文件后，Node会新建一个模块对 象，然后根据路径载入并编译。对于不同的文件扩展名，其载入方法有所不同</p>
+<ul>
+<li>.js文件。通过fs模块同步读取文件后编译执行。</li>
+<li>.node文件。这是用C/C++编写的扩展文件，通过dlopen()方法加载最后编译生成的文件。</li>
+<li>.json文件。通过fs模块同步读取文件后，用JSON.parse()解析返回结果。</li>
+<li>其余扩展名文件。它们都被当做.js文件载入。</li>
+</ul>
+<p>每一个编译成功的模块都会将其文件路径作为索引缓存在Module._cache对象上，以提高二 次引入的性能。</p>
+<p>在确定文件的扩展名之后，Node将调用具体的编译方式来将文件执行后返回给调用者。</p>
+<h5 id="JavaScript模块的编译"><a href="#JavaScript模块的编译" class="headerlink" title="JavaScript模块的编译"></a>JavaScript模块的编译</h5><p>在编译的过程中，Node对获取的JavaScript文件内容进行了头尾包装。</p>
+<ul>
+<li><p>在头部添加 了(function (exports, require, module, __filename, __dirname) {\n，在尾部添加了\n});。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">(<span class="function"><span class="keyword">function</span> (<span class="params">exports, require, module, __filename, __dirname</span>) </span>&#123; </span><br><span class="line">  <span class="keyword">var</span> math = <span class="built_in">require</span>(<span class="string">'math'</span>);</span><br><span class="line">  exports.area = <span class="function"><span class="keyword">function</span> (<span class="params">radius</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">Math</span>.PI * radius * radius; </span><br><span class="line">  &#125;;</span><br><span class="line"> &#125;);</span><br></pre></td></tr></table></figure>
+
+<p>这样每个模块文件之间都进行了作用域隔离。</p>
+</li>
+<li><p>包装之后的代码会通过vm原生模块的runInThisContext()方法执行(类似eval，只是具有明确上下文，不污染全局)，返回一个具体的 function对象。</p>
+</li>
+<li><p>将当前模块对象的exports属性、require()方法、module(模块对象自身)， 以及在文件定位中得到的完整文件路径和文件目录作为参数传递给这个function()执行。</p>
+</li>
+</ul>
+<p>exports对象是通过形参的方式传入的，直接赋值形参会改变形参的引用，但并不能改变作用域外的值。(<strong>如果要达到require引入一个类的效果，请赋值给module.exports对象。</strong>)</p>
+<h5 id="C-C-模块的编译"><a href="#C-C-模块的编译" class="headerlink" title="C/C++模块的编译"></a>C/C++模块的编译</h5><p>Node调用process.dlopen()方法进行加载和执行。在Node的架构下，dlopen()方法在Windows 和*nix平台下分别有不同的实现，通过libuv兼容层进行了封装。</p>
+<p>它是编写C/C++模块之后编译生成的，所以这 里只有加载和执行的过程。在执行的过程中，模块的exports对象与.node模块产生联系，然后返 回给调用者。</p>
+<ul>
+<li>优势：执行效率</li>
+<li>劣势：编写门槛高</li>
+</ul>
+<h5 id="JSON文件的编译"><a href="#JSON文件的编译" class="headerlink" title="JSON文件的编译"></a>JSON文件的编译</h5><p>Node利用fs模块同步读取JSON文件的内容之 后，调用JSON.parse()方法得到对象，然后将它赋给模块对象的exports，以供外部调用。</p>
+<p>（定义了一个JSON文件作为配置，那就 不必调用fs模块去异步读取和解析，直接调用require()引入即可）</p>
+<h3 id="核心模块"><a href="#核心模块" class="headerlink" title="核心模块"></a>核心模块</h3><p>核心模块C/C++文件存放在Node项目的src目录下， JavaScript文件存放在lib目录下。</p>
+<h4 id="JavaScript-核心模块的编译过程"><a href="#JavaScript-核心模块的编译过程" class="headerlink" title="JavaScript 核心模块的编译过程"></a>JavaScript 核心模块的编译过程</h4><h5 id="转存为C-C-代码"><a href="#转存为C-C-代码" class="headerlink" title="转存为C/C++代码"></a>转存为C/C++代码</h5><p>Node采用了V8附带的js2c.py工具，将所有内置的JavaScript代码(src/node.js和lib/*.js)转换 成C++里的数组，生成node_natives.h头文件</p>
+<p>JavaScript代码以字符串的形式存储在node命名空间中，是不可直接执行的。</p>
+<p>在启动Node进程时，JavaScript代码直接加载进内存中。在加载的过程中，JavaScript核心模块经 历标识符分析后直接定位到内存中，比普通的文件模块从磁盘中一处一处查找要快很多。</p>
+<h5 id="编译JavaScript核心模块"><a href="#编译JavaScript核心模块" class="headerlink" title="编译JavaScript核心模块"></a>编译JavaScript核心模块</h5><p>lib目录下的所有模块文件也没有定义require、module、exports这些变量。在引入JavaScript 核心模块的过程中，也经历了头尾包装的过程，然后才执行和导出了exports对象。与文件模块有区别的地方在于:<strong>获取源代码的方式(核心模块是从内存中加载的)以及缓存执行结果的位置。</strong></p>
+<p>源文件通过process.binding(‘natives’)取出， 编译成功的模块缓存到NativeModule._cache对象上，文件模块则缓存到Module._cache对象上</p>
+<h4 id="C-C-核心模块的编译过程"><a href="#C-C-核心模块的编译过程" class="headerlink" title="C/C++核心模块的编译过程"></a>C/C++核心模块的编译过程</h4><p>C++模块主内完成核心，JavaScript 主外实现封装的模式是Node能够提高性能的常见方式。</p>
+<p>由纯C/C++编写的部分统一称为<strong>内建模块</strong>，因为它们通常不被用户直接调 用。</p>
+<h5 id="内建模块"><a href="#内建模块" class="headerlink" title="内建模块"></a>内建模块</h5><p>Node提供了get_builtin_module()方法从node_module_list 数组中取出这些模块</p>
+<h6 id="内建模块的优势在于："><a href="#内建模块的优势在于：" class="headerlink" title="内建模块的优势在于："></a>内建模块的优势在于：</h6><ul>
+<li>它们本身由C/C++编写，性能上优于脚本语言</li>
+<li>在进行文件编译时，它们被编译进二进制文件。一旦Node开始执行，它们被直接加载进内存中，无须再 次做标识符定位、文件定位、编译等过程，直接就可执行。</li>
+</ul>
+<p>在Node的所有模块类型中，存在着如图2-4所示的一种依赖层级关系，即文件模块可能会依 赖核心模块，核心模块可能会依赖内建模块。</p>
+<p><img alt="image-20191210195732891" class="post-img b-lazy" href="https://tva1.sinaimg.cn/large/006tNbRwgy1g9rvjz8pitj30gc0gsmxx.jpg" data-src="https://tva1.sinaimg.cn/large/006tNbRwgy1g9rvjz8pitj30gc0gsmxx.jpg"></p>
+<h6 id="加载内建模块："><a href="#加载内建模块：" class="headerlink" title="加载内建模块："></a>加载内建模块：</h6><ul>
+<li>在加载内建模块时，先创建一个exports空对象</li>
+<li>然后调用get_builtin_module()方法取 出内建模块对象，通过执行register_func()填充exports对象</li>
+<li>最后将exports对象按模块名缓存，并返回给调用方完成导出。</li>
+</ul>
+<h4 id="核心模块的引入流程"><a href="#核心模块的引入流程" class="headerlink" title="核心模块的引入流程"></a>核心模块的引入流程</h4><p><img alt="image-20191210201250065" class="post-img b-lazy" href="https://tva1.sinaimg.cn/large/006tNbRwgy1g9rvzu27c2j30m40qa75t.jpg" data-src="https://tva1.sinaimg.cn/large/006tNbRwgy1g9rvzu27c2j30m40qa75t.jpg"></p>
+<h4 id="编写核心模块"><a href="#编写核心模块" class="headerlink" title="编写核心模块"></a>编写核心模块</h4><ul>
+<li>编写头文件</li>
+<li>编写C/C++文件</li>
+</ul>
+<h3 id="C-C-扩展模块"><a href="#C-C-扩展模块" class="headerlink" title="C/C++扩展模块"></a>C/C++扩展模块</h3><p>C/C++扩展模块属于文件模块中的一类。</p>
+<p>为了实现跨平台，dlopen()方法在内部实现时区 分了平台，分别用的是加载.so和.dll的方式。（一个平台下的.node文件在另一个平台下是无法加载执行的，必须重新用各 自平台下的编译器编译为正确的.node文件。）</p>
+<p><img alt="image-20191210202239589" class="post-img b-lazy" href="https://tva1.sinaimg.cn/large/006tNbRwgy1g9rwa1zemkj30p60wi0vf.jpg" data-src="https://tva1.sinaimg.cn/large/006tNbRwgy1g9rwa1zemkj30p60wi0vf.jpg"></p>
+<p>require()在引入.node文件的过程中：</p>
+<ul>
+<li>调用uv_dlopen()方法去打开动态链接库</li>
+<li>调用uv_dlsym()方法找到动态链接库中通过NODE_MODULE宏定义的方法地址</li>
+</ul>
+<p>这 两个过程都是通过libuv库进行封装的:在*nix平台下实际上调用的是dlfcn.h头文件中定义的 dlopen()和dlsym()两个方法;在Windows平台则是通过LoadLibraryExW()和GetProcAddress()这两 个方法实现的，它们分别加载.so和.dll文件(实际为.node文件)。</p>
+<p><img alt="image-20191210205752782" class="post-img b-lazy" href="https://tva1.sinaimg.cn/large/006tNbRwgy1g9rxappw9mj30pq0lkdhm.jpg" data-src="https://tva1.sinaimg.cn/large/006tNbRwgy1g9rxappw9mj30pq0lkdhm.jpg"></p>
+<h3 id="模块调用栈"><a href="#模块调用栈" class="headerlink" title="模块调用栈"></a>模块调用栈</h3><p><img alt="image-20191211174120316" class="post-img b-lazy" href="https://tva1.sinaimg.cn/large/006tNbRwgy1g9sxcy1mw1j30qm0hy3zw.jpg" data-src="https://tva1.sinaimg.cn/large/006tNbRwgy1g9sxcy1mw1j30qm0hy3zw.jpg"></p>
+<ul>
+<li>C/C++内建模块属于最底层的模块，它属于核心模块，主要提供API给JavaScript核心模块和 第三方JavaScript文件模块调用。</li>
+<li>JavaScript核心模块主要扮演的职责有两类:<ul>
+<li>一类是作为C/C++内建模块的封装层和桥接层， 供文件模块调用;</li>
+<li>一类是纯粹的功能模块</li>
+</ul>
+</li>
+<li>文件模块通常由第三方编写，包括普通JavaScript模块和C/C++扩展模块，主要调用方向为普通JavaScript模块调用扩展模块。</li>
+</ul>
+<h3 id="包与NPM"><a href="#包与NPM" class="headerlink" title="包与NPM"></a>包与NPM</h3><p><img alt="image-20191211184259742" class="post-img b-lazy" href="https://tva1.sinaimg.cn/large/006tNbRwgy1g9sz0nu3v7j30uc0laq4c.jpg" data-src="https://tva1.sinaimg.cn/large/006tNbRwgy1g9sz0nu3v7j30uc0laq4c.jpg"></p>
+<p>由包结构和包描述文件两个部分组成，前者用于组织包中的各种文件，后者则用于描述包的相关信息，以供外部读取分析。</p>
+<h4 id="包结构"><a href="#包结构" class="headerlink" title="包结构"></a>包结构</h4><p>包实际上是一个存档文件，即一个目录直接打包为.zip或tar.gz格式的文件，安装后解压还原为目录。</p>
+<p>完全符合CommonJS规范的包目录应该包含如下这些文件：</p>
+<ul>
+<li>package.json:包描述文件。</li>
+<li>bin:用于存放可执行二进制文件的目录。 </li>
+<li>lib:用于存放JavaScript代码的目录。</li>
+<li>doc:用于存放文档的目录。</li>
+<li>test:用于存放单元测试用例的代码。</li>
+</ul>
+<h4 id="包描述文件与NPM"><a href="#包描述文件与NPM" class="headerlink" title="包描述文件与NPM"></a>包描述文件与NPM</h4><p>包描述文件用于表达非代码相关的信息，它是一个JSON格式的文件——package.json，位于 包的根目录下，是包的重要组成部分。</p>
+<h5 id="必需字段："><a href="#必需字段：" class="headerlink" title="必需字段："></a>必需字段：</h5><ul>
+<li>name。包名。规范定义它需要由小写的字母和数字组成，可以包含.、_和-，但不允许出现空格。包名必须是唯一的，以免对外公布时产生重名冲突的误解。除此之外，NPM还建议不要在包名中附带上node或js来重复标识它是JavaScript或Node模块。</li>
+<li>description。包简介。</li>
+<li>version。版本号。一个语义化的版本号，该版本号十分重要，常常用于一些版本控制的场合。</li>
+<li>keywords。关键词数组，NPM中主要用来做分类搜索。一个好的关键词数组有利于用户快速找到你编写的包。</li>
+<li>maintainers。包维护者列表。每个维护者由name、email和web这3个属性组成。NPM通过该属性进行权限认证。</li>
+<li>contributors。贡献者列表。列表中的第一个贡献应当是包的作者本人。它的格式与维护者列表相同。</li>
+<li>bugs。一个可以反馈bug的网页地址或邮件地址。</li>
+<li>licenses。当前包所使用的许可证列表，表示这个包可以在哪些许可证下使用。</li>
+<li>repositories。托管源代码的位置列表，表明可以通过哪些方式和地址访问包的源代码。</li>
+<li>dependencies。使用当前包所需要依赖的包列表。这个属性十分重要，NPM会通过这个属性帮助自动加载依赖的包。</li>
+</ul>
+<h5 id="可选字段："><a href="#可选字段：" class="headerlink" title="可选字段："></a>可选字段：</h5><ul>
+<li>homepage。当前包的网站地址。</li>
+<li>os。操作系统支持列表。这些操作系统的取值包括aix、freebsd、linux、macos、solaris、vxworks、windows。如果设置了列表为空，则不对操作系统做任何假设。</li>
+<li>cpu。CPU架构的支持列表，有效的架构名称有arm、mips、ppc、sparc、x86和x86_64。同os一样，如果列表为空，则不对CPU架构做任何假设。</li>
+<li>engine。支持的JavaScript引擎列表，有效的引擎取值包括ejs、flusspferd、gpsee、jsc、spidermonkey、narwhal、node和v8。</li>
+<li>builtin。标志当前包是否是内建在底层系统的标准组件。 </li>
+<li>directories。包目录说明。</li>
+<li>implements。实现规范的列表。标志当前包实现了CommonJS的哪些规范。</li>
+<li>scripts。脚本说明对象。它主要被包管理器用来安装、编译、测试和卸载包。</li>
+</ul>
+<p><strong>在包描述文件的规范中，NPM实际需要的字段主要有name、version、description、keywords、 repositories、author、bin、main、scripts、engines、dependencies、devDependencies。</strong></p>
+<ul>
+<li>author。包作者。 </li>
+<li>bin。一些包作者希望包可以作为命令行工具使用。配置好bin字段后，通过npm install package_name -g命令可以将脚本添加到执行路径中，之后可以在命令行中直接执行。前面的node-gyp即是这样安装的。通过-g命令安装的模块包称为全局模式。</li>
+<li>main。模块引入方法require()在引入包时，会优先检查这个字段，并将其作为包中其余 模块的入口。如果不存在这个字段，require()方法会查找包目录下的index.js、index.node、index.json文件作为默认入口。</li>
+<li>devDependencies。一些模块只在开发时需要依赖。配置这个属性，可以提示包的后续开发者安装依赖包。</li>
+</ul>
+<h3 id="前后端共用模块"><a href="#前后端共用模块" class="headerlink" title="前后端共用模块"></a>前后端共用模块</h3><h4 id="AMD-规范"><a href="#AMD-规范" class="headerlink" title="AMD 规范"></a>AMD 规范</h4><p>AMD规范是CommonJS模块规范的一个延伸</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">define(id?, dependencies?, factory);</span><br></pre></td></tr></table></figure>
+
+<p>它的模块id和依赖是可选的，与Node模块相似的地方在于factory的内容就是实际代码的内容。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">define(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> exports = &#123;&#125;; </span><br><span class="line">  exports.sayHello = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    alert(<span class="string">'Hello from module: '</span> + <span class="built_in">module</span>.id); &#125;;</span><br><span class="line">  <span class="keyword">return</span> exports; </span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>不同之处在于AMD模块需要用define来明确定义一个模块，而在Node实现中是隐式包装的， 它们的目的是进行作用域隔离，仅在需要的时候被引入，避免掉过去那种通过全局变量或者全局 命名空间的方式，以免变量污染和不小心被修改。另一个区别则是内容需要通过返回的方式实现 导出。</p>
+<h4 id="CMD-规范"><a href="#CMD-规范" class="headerlink" title="CMD 规范"></a>CMD 规范</h4><p>与AMD规范的主要区别在于定义模块和依赖引入的部分。</p>
+<p>AMD需要在声明模块的时候指定所有的依赖，通过形参传递依赖到模块内容中。</p>
+<p>在依赖部分，CMD支持动态引入。</p>
+<h2 id="第三章-异步I-O"><a href="#第三章-异步I-O" class="headerlink" title="第三章 异步I/O"></a>第三章 异步I/O</h2><h3 id="为什么要异步I-O"><a href="#为什么要异步I-O" class="headerlink" title="为什么要异步I/O"></a>为什么要异步I/O</h3><h4 id="用户体验"><a href="#用户体验" class="headerlink" title="用户体验"></a>用户体验</h4><ul>
+<li><p>前端通过异步可以消除掉UI阻塞的现象。但是前端获取资源的速度也取决于后端的响应速度。采用异步方式，第一个资源的获取并不会阻塞第二个资源。</p>
+</li>
+<li><p>随着网站或应用不断膨胀，数据将会分布到多台服务器上，分布式将会是常态。分布也意味着M与N的值（M/N分别为两个请求消耗的时间）会线性增长，这也会放大异步和同步在性能方面的差异。</p>
+<p><img alt="image-20191212150038480" class="post-img b-lazy" href="https://tva1.sinaimg.cn/large/006tNbRwgy1g9ty7mwa38j317s0ce400.jpg" data-src="https://tva1.sinaimg.cn/large/006tNbRwgy1g9ty7mwa38j317s0ce400.jpg"></p>
+</li>
+</ul>
+<p>只有后端能够快速响应资源，才能让前端的体验变好。</p>
+<h4 id="资源分配"><a href="#资源分配" class="headerlink" title="资源分配"></a>资源分配</h4><p>利用单线程，远离多线程死锁、状态同步等问题;利用异 步I/O，让单线程远离阻塞，以更好地使用CPU。</p>
+<p>Node提供了类似前端浏览器中Web Workers的子 进程，该子进程可以通过工作进程高效地利用CPU和I/O</p>
+<p><img alt="image-20191212171933363" class="post-img b-lazy" href="https://tva1.sinaimg.cn/large/006tNbRwgy1g9u2861hzfj30lu0lit9x.jpg" data-src="https://tva1.sinaimg.cn/large/006tNbRwgy1g9u2861hzfj30lu0lit9x.jpg"></p>
+<h3 id="异步I-O实现现状"><a href="#异步I-O实现现状" class="headerlink" title="异步I/O实现现状"></a>异步I/O实现现状</h3><h4 id="异步I-O与非阻塞I-O"><a href="#异步I-O与非阻塞I-O" class="headerlink" title="异步I/O与非阻塞I/O"></a>异步I/O与非阻塞I/O</h4><p>异步/同步和阻塞/非阻塞实际上是两回事</p>
+<p>操作系统内核对于I/O只有两种方式:阻塞与非阻塞。</p>
+<h5 id="阻塞："><a href="#阻塞：" class="headerlink" title="阻塞："></a>阻塞：</h5><p>在调用阻塞I/O时，应用程序需要等待 I/O完成才返回结果</p>
+<p><img alt="image-20191212172518477" class="post-img b-lazy" href="https://tva1.sinaimg.cn/large/006tNbRwgy1g9u2e5a4fnj30j80k6t9l.jpg" data-src="https://tva1.sinaimg.cn/large/006tNbRwgy1g9u2e5a4fnj30j80k6t9l.jpg"></p>
+<ul>
+<li><p>特点：调用之后一定要等到系统内核层面完成所有操作后，调用才结束。</p>
+</li>
+<li><p>阻塞I/O造成CPU等待I/O，浪费等待时间，CPU的处理能力不能得到充分利用</p>
+</li>
+</ul>
+<h5 id="非阻塞："><a href="#非阻塞：" class="headerlink" title="非阻塞："></a>非阻塞：</h5><p>非阻塞I/O跟阻塞I/O的差别为调用之后会立即返回</p>
+<p><img alt="image-20191212172706537" class="post-img b-lazy" href="https://tva1.sinaimg.cn/large/006tNbRwgy1g9u2g0l7cmj30jm0kkq3q.jpg" data-src="https://tva1.sinaimg.cn/large/006tNbRwgy1g9u2g0l7cmj30jm0kkq3q.jpg"></p>
+<ul>
+<li><p>非阻塞I/O返回之后，CPU的时间片可以用来处理其他事务，此时的性能提升是明显的。</p>
+</li>
+<li><p>问题：由于完整的I/O并没有完成，立即返回的并不是业务层期望的 数据，而仅仅是当前调用的状态。为了获取完整的数据，应用程序需要重复调用I/O操作来确认 是否完成。这种重复调用判断操作是否完成的技术叫做轮询。</p>
+</li>
+<li><p>轮询技术：</p>
+<ul>
+<li><p>read。它是最原始、性能最低的一种，通过重复调用来检查I/O的状态来完成完整数据的读取。在得到最终数据前，CPU一直耗用在等待上。</p>
+<p><img alt="image-20191212173038848" class="post-img b-lazy" href="https://tva1.sinaimg.cn/large/006tNbRwgy1g9u2jpnno5j30ku0l8gmy.jpg" data-src="https://tva1.sinaimg.cn/large/006tNbRwgy1g9u2jpnno5j30ku0l8gmy.jpg"></p>
+</li>
+<li><p>select。它是在read的基础上改进的一种方案，通过对文件描述符上的事件状态来进行判断。</p>
+<p><img alt="image-20191212173129915" class="post-img b-lazy" href="https://tva1.sinaimg.cn/large/006tNbRwgy1g9u2klirw7j30k20l6wfu.jpg" data-src="https://tva1.sinaimg.cn/large/006tNbRwgy1g9u2klirw7j30k20l6wfu.jpg"></p>
+<p>select轮询具有一个较弱的限制，那就是由于它采用一个1024长度的数组来存储状态， 所以它最多可以同时检查1024个文件描述符。</p>
+</li>
+<li><p>poll。该方案较select有所改进，采用链表的方式避免数组长度的限制，其次它能避免不需要的检查。但是当文件描述符较多的时候，它的性能还是十分低下的。</p>
+<p><img alt="image-20191212173248351" class="post-img b-lazy" href="https://tva1.sinaimg.cn/large/006tNbRwgy1g9u2ly78zij30j40km75l.jpg" data-src="https://tva1.sinaimg.cn/large/006tNbRwgy1g9u2ly78zij30j40km75l.jpg"></p>
+</li>
+<li><p>epoll。该方案是Linux下效率最高的I/O事件通知机制，在进入轮询的时候如果没有检查到 I/O事件，将会进行休眠，直到事件发生将它唤醒。它是真实利用了事件通知、执行回调 的方式，而不是遍历查询，所以不会浪费CPU，执行效率较高</p>
+<p><img alt="image-20191212173403901" class="post-img b-lazy" href="https://tva1.sinaimg.cn/large/006tNbRwgy1g9u2na09ynj30jw0leta2.jpg" data-src="https://tva1.sinaimg.cn/large/006tNbRwgy1g9u2na09ynj30jw0leta2.jpg"></p>
+</li>
+<li><p>kqueue。该方案的实现方式与epoll类似，不过它仅在FreeBSD系统下存在。</p>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="现实的异步I-O"><a href="#现实的异步I-O" class="headerlink" title="现实的异步I/O"></a>现实的异步I/O</h4><p>通过让部分线程进行阻塞I/O或者非阻塞I/O加 轮询技术来完成数据获取，让一个线程进行计算处理，通过线程之间的通信将I/O得到的数据进 行传递，这就轻松实现了异步I/O</p>
+<p><img alt="image-20191212173804605" class="post-img b-lazy" href="https://tva1.sinaimg.cn/large/006tNbRwgy1g9u2rft4wij30pq0iwgmo.jpg" data-src="https://tva1.sinaimg.cn/large/006tNbRwgy1g9u2rft4wij30pq0iwgmo.jpg"></p>
+<ul>
+<li>ibeio 实质上依然是采用线程池与阻塞I/O模拟异步I/O</li>
+<li>IOCP：调用异步方法，等待I/O完成之后的通知，执行回调，用户无须考虑轮询。但是它的 内部其实仍然是线程池原理，不同之处在于这些线程池由系统内核接手管理。</li>
+</ul>
+<p><img alt="image-20191212174138825" class="post-img b-lazy" href="https://tva1.sinaimg.cn/large/006tNbRwgy1g9u339w1rrj30g80ekq3m.jpg" data-src="https://tva1.sinaimg.cn/large/006tNbRwgy1g9u339w1rrj30g80ekq3m.jpg"></p>
+<p>Node是单线程的，这里的单线程仅仅只是 JavaScript执行在单线程中罢了。在Node中，无论是*nix还是Windows平台，内部完成I/O任务的 另有线程池。</p>
+<h3 id="Node-的异步-I-O"><a href="#Node-的异步-I-O" class="headerlink" title="Node 的异步 I/O"></a>Node 的异步 I/O</h3><p>事件循环、观察者、请求对象、I/O线程池这四者共同构成了Node异步I/O模型的基本要素。</p>
+<p>Windows下主要通过IOCP来向系统内核发送I/O调用和从内核获取已完成的I/O操作，配以事 件循环，以此完成异步I/O的过程。在Linux下通过epoll实现这个过程，FreeBSD下通过kqueue实 现，Solaris下通过Event ports实现。不同的是线程池在Windows下由内核(IOCP)直接提供，*nix 系列下由libuv自行实现。</p>
+<h4 id="事件循环"><a href="#事件循环" class="headerlink" title="事件循环"></a>事件循环</h4><p><strong>Node自身的执行模型——事件循环</strong></p>
+<p>每执行一次循环体的过程我 们称为Tick。每个Tick的过程就是查看是否有事件待处理，如果有，就取出事件及其相关的回调 函数。如果存在关联的回调函数，就执行它们。然后进入下个循环，如果不再有事件处理，就退出进程。</p>
+<p><img alt="image-20191212174548717" class="post-img b-lazy" href="https://tva1.sinaimg.cn/large/006tNbRwgy1g9u2zihuruj30km0o6dhb.jpg" data-src="https://tva1.sinaimg.cn/large/006tNbRwgy1g9u2zihuruj30km0o6dhb.jpg"></p>
+<h4 id="观察者"><a href="#观察者" class="headerlink" title="观察者"></a>观察者</h4><p>每个事件循环中有一个或者多个观察者，而判断是否有事件要处理的过程就是向这些观察者询问 是否有要处理的事件。</p>
+<ul>
+<li>观察者将事件进行分类。在Node中，事件主要来源于网络请求、文件I/O等，这些事件对应的 观察者有文件I/O观察者、网络I/O观察者等。</li>
+<li>在Windows下，这个循环基于IOCP创建，而在*nix下则基于多线程创建。</li>
+</ul>
+<h4 id="请求对象"><a href="#请求对象" class="headerlink" title="请求对象"></a>请求对象</h4><p>从JavaScript发起调用到内核执行完I/O操作的 过渡过程中，存在一种中间产物，它叫做请求对象。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">fs.open = <span class="function"><span class="keyword">function</span>(<span class="params">path, flags, mode, callback</span>) </span>&#123; </span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">  binding.open(pathModule._makeLong(path), stringToFlags(flags),mode,callback); </span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p><img alt="image-20191212175431157" class="post-img b-lazy" href="https://tva1.sinaimg.cn/large/006tNbRwgy1g9u38jib15j30ss0q40uj.jpg" data-src="https://tva1.sinaimg.cn/large/006tNbRwgy1g9u38jib15j30ss0q40uj.jpg"></p>
+<ul>
+<li><p>从JavaScript调用Node的核心模块，核心模块调用C++内建模块，内建模块通过libuv进行系统调用</p>
+</li>
+<li><p>这里libuv作为封装层，有两个平台的实现，实质上是调 用了uv_fs_open()方法。在uv_fs_open()的调用过程中，我们创建了一个FSReqWrap请求对象</p>
+</li>
+<li><p>回调函数则 被设置在这个对象的oncomplete_sym属性上</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">req_wrap-&gt;object_-&gt;<span class="built_in">Set</span>(oncomplete_sym, callback);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>对象包装完毕后，在Windows下，则调用QueueUserWorkItem()方法将这个FSReqWrap对象推入线程池中等待执行</p>
+<ul>
+<li>QueueUserWorkItem()方法接受3个参数:第一个参数是将要执行的方法的引用，这里引用的是uv_fs_thread_proc，第二个参数是uv_fs_thread_proc方法运行时所需要的参数;第三个参数是 执行的标志。</li>
+</ul>
+</li>
+<li><p>当线程池中有可用线程时，我们会调用uv_fs_thread_proc()方法。uv_fs_thread_ proc()方法会根据传入参数的类型调用相应的底层函数</p>
+</li>
+<li><p>至此，JavaScript调用立即返回，由JavaScript层面发起的异步调用的第一阶段就此结束。</p>
+</li>
+</ul>
+<p>JavaScript线程可以继续执行当前任务的后续操作。当前的I/O操作在线程池中等待执行，不管它 是否阻塞I/O，都不会影响到JavaScript线程的后续执行，如此就达到了异步的目的。</p>
+<p><strong>请求对象是异步I/O过程中的重要中间产物，所有的状态都保存在这个对象中</strong>，包括送入线程池等待执行以及I/O操作完毕后的回调处理</p>
+<h4 id="执行回调"><a href="#执行回调" class="headerlink" title="执行回调"></a>执行回调</h4><ul>
+<li>线程池中的I/O操作调用完毕之后，会将获取的结果储存在req-&gt;result属性上，然后调用 PostQueuedCompletionStatus()通知IOCP，告知当前对象操作已经完成</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">PostQueuedCompletionStatus((loop)-&gt;iocp, <span class="number">0</span>, <span class="number">0</span>, &amp;((req)-&gt;overlapped))</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>PostQueuedCompletionStatus()方法的作用是向IOCP提交执行状态，并将线程归还线程池。通过PostQueuedCompletionStatus()方法提交的状态，可以通过GetQueuedCompletionStatus()提取。</p>
+</li>
+<li><p>在每次Tick的执行中，它会调用 IOCP相关的GetQueuedCompletionStatus()方法检查线程池中是否有执行完的请求，如果存在，会将请求对象加入到I/O观察者的队列中，然后将其当做事件处理。</p>
+</li>
+<li><p>I/O观察者回调函数的行为就是取出请求对象的result属性作为参数，取出oncomplete_sym属性作为方法，然后调用执行，以此达到调用JavaScript中传入的回调函数的目的</p>
+<p><img alt="image-20191212192431768" class="post-img b-lazy" href="https://tva1.sinaimg.cn/large/006tNbRwgy1g9u5u87afbj30uu0u0q6o.jpg" data-src="https://tva1.sinaimg.cn/large/006tNbRwgy1g9u5u87afbj30uu0u0q6o.jpg"></p>
+</li>
+</ul>
+<h3 id="非I-O的异步API"><a href="#非I-O的异步API" class="headerlink" title="非I/O的异步API"></a>非I/O的异步API</h3><p>I/O无关的异步API:setTimeout()、setInterval()、 setImmediate()和process.nextTick()</p>
+<h4 id="定时器"><a href="#定时器" class="headerlink" title="定时器"></a>定时器</h4><p>setTimeout()和setInterval()</p>
+<p>它们的实现原理与异步I/O比较类似，只是不需要I/O线程池的参与。</p>
+<p>调用setTimeout()或者 setInterval()创建的定时器会被插入到定时器观察者内部的一个红黑树中。每次Tick执行时，会 从该红黑树中迭代取出定时器对象，检查是否超过定时时间，如果超过，就形成一个事件，它的 回调函数将立即执行。</p>
+<p><img alt="image-20191212194435097" class="post-img b-lazy" href="https://tva1.sinaimg.cn/large/006tNbRwgy1g9u6f2b0goj30u60nu76w.jpg" data-src="https://tva1.sinaimg.cn/large/006tNbRwgy1g9u6f2b0goj30u60nu76w.jpg"></p>
+<h4 id="process-nextTick"><a href="#process-nextTick" class="headerlink" title="process.nextTick()"></a>process.nextTick()</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">process.nextTick = <span class="function"><span class="keyword">function</span>(<span class="params">callback</span>) </span>&#123; </span><br><span class="line">  <span class="comment">// on the way out, don't bother.</span></span><br><span class="line">  <span class="comment">// it won't get fired anyway</span></span><br><span class="line">  <span class="keyword">if</span> (process._exiting) <span class="keyword">return</span>;</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">if</span> (tickDepth &gt;= process.maxTickDepth) </span><br><span class="line">    maxTickWarn();</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">var</span> tock = &#123; <span class="attr">callback</span>: callback &#125;;</span><br><span class="line">  <span class="keyword">if</span> (process.domain) tock.domain = process.domain;</span><br><span class="line">  nextTickQueue.push(tock);</span><br><span class="line">  <span class="keyword">if</span> (nextTickQueue.length) &#123;</span><br><span class="line">    process._needTickCallback(); </span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>每次调用process.nextTick()方法，只会将回调函数放入队列中，在下一轮Tick时取出执行。 定时器中采用红黑树的操作时间复杂度为O(lg(n))，nextTick()的时间复杂度为O(1)。相较之下，process.nextTick()更高效。</p>
+<h4 id="setImmediate"><a href="#setImmediate" class="headerlink" title="setImmediate()"></a>setImmediate()</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">process.nextTick(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123; </span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'nextTick延迟执行'</span>);</span><br><span class="line">&#125;);</span><br><span class="line">setImmediate(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'setImmediate延迟执行'</span>); </span><br><span class="line">&#125;);</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'正常执行'</span>);</span><br></pre></td></tr></table></figure>
+
+<p>其执行结果如下:</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">正常执行 </span><br><span class="line">nextTick延迟执行 </span><br><span class="line">setImmediate延迟执行</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>process.nextTick()中的回调函数执行的优先级要高于setImmediate()。</p>
+</li>
+<li><p>原因在于事件循环对观察者的检查是有先后顺序的，process.nextTick()属于idle观察者， setImmediate()属于check观察者。在每一个轮循环检查中，idle观察者先于I/O观察者，I/O观察者先于check观察者。</p>
+</li>
+<li><p>process.nextTick()的回调函数保存在一个数组中，setImmediate()的结果 则是保存在链表中</p>
+</li>
+<li><p>在行为上，process.nextTick()在每轮循环中会将数组中的回调函数全部执行完，而setImmediate()在每轮循环中执行链表中的一个回调函数。</p>
+</li>
+<li><p>之所以这样设计，是为了保证每轮循环能够较快地执行结束，防止CPU占用过多而阻塞后续I/O 调用的情况。</p>
+</li>
+</ul>
+<h3 id="事件驱动与高性能服务器"><a href="#事件驱动与高性能服务器" class="headerlink" title="事件驱动与高性能服务器"></a>事件驱动与高性能服务器</h3><p>事件驱动的实质：</p>
+<p>通过主循环加事件触发的方式来运行程序。</p>
+<p><img alt="image-20191212201217702" class="post-img b-lazy" href="https://tva1.sinaimg.cn/large/006tNbRwgy1g9u77vrg44j30vo0nm77g.jpg" data-src="https://tva1.sinaimg.cn/large/006tNbRwgy1g9u77vrg44j30vo0nm77g.jpg"></p>
+<h4 id="几种经典的服务器模型，对比优缺点"><a href="#几种经典的服务器模型，对比优缺点" class="headerlink" title="几种经典的服务器模型，对比优缺点"></a>几种经典的服务器模型，对比优缺点</h4><ul>
+<li>同步式。对于同步式的服务，一次只能处理一个请求，并且其余请求都处于等待状态。 </li>
+<li>每进程/每请求。为每个请求启动一个进程，这样可以处理多个请求，但是它不具备扩展性，因为系统资源只有那么多。</li>
+<li>每线程/每请求。为每个请求启动一个线程来处理。尽管线程比进程要轻量，但是由于每个线程都占用一定内存，当大并发请求到来时，内存将会很快用光，导致服务器缓慢。</li>
+</ul>
+<h4 id="高性能："><a href="#高性能：" class="headerlink" title="高性能："></a>高性能：</h4><p>Node通过事件驱动的方式处理请求，无须为 每一个请求创建额外的对应线程，可以省掉创建线程和销毁线程的开销，同时操作系统在调度任 务时因为线程较少，上下文切换的代价很低。这使得服务器能够有条不紊地处理请求，即使在大量连接的情况下，也不受线程上下文切换开销的影响，这是Node高性能的一个原因。</p>
+
+                </article>
+                <ul class="tags-postTags">
+                    
+                    <li>
+                        <a href="/tags/Node-js/" rel="tag"># Node.js</a>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    
+    <nav id="gobottom" class="pagination">
+        
+        <a class="prev-post" title="深入浅出Node.js学习笔记（二）" href="/2019/12/19/深入浅出Node.js学习笔记（二）/">
+            ← 深入浅出Node.js学习笔记（二）
+        </a>
+        
+        <span class="prev-next-post">·</span>
+        
+        <a class="next-post" title="scrollWidth,clientWidth,offsetWidth的区别" href="/2019/12/07/scrollWidth,clientWidth,offsetWidth的区别/">
+            scrollWidth,clientWidth,offsetWidth的区别 →
+        </a>
+        
+    </nav>
+
+    
+    <div class="inner">
+        <div id="comment"></div>
+    </div>
+    
+</div>
+
+<div class="toc-bar">
+    <div class="toc-btn-bar">
+        <a href="#site-main" class="toc-btn">
+            <svg viewbox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M793.024 710.272a32 32 0 1 0 45.952-44.544l-310.304-320a32 32 0 0 0-46.4 0.48l-297.696 320a32 32 0 0 0 46.848 43.584l274.752-295.328 286.848 295.808z"/></svg>
+        </a>
+        <div class="toc-btn toc-switch">
+            <svg class="toc-open" viewbox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M779.776 480h-387.2a32 32 0 0 0 0 64h387.2a32 32 0 0 0 0-64M779.776 672h-387.2a32 32 0 0 0 0 64h387.2a32 32 0 0 0 0-64M256 288a32 32 0 1 0 0 64 32 32 0 0 0 0-64M392.576 352h387.2a32 32 0 0 0 0-64h-387.2a32 32 0 0 0 0 64M256 480a32 32 0 1 0 0 64 32 32 0 0 0 0-64M256 672a32 32 0 1 0 0 64 32 32 0 0 0 0-64"/></svg>
+            <svg class="toc-close hide" viewbox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M512 960c-247.039484 0-448-200.960516-448-448S264.960516 64 512 64 960 264.960516 960 512 759.039484 960 512 960zM512 128.287273c-211.584464 0-383.712727 172.128262-383.712727 383.712727 0 211.551781 172.128262 383.712727 383.712727 383.712727 211.551781 0 383.712727-172.159226 383.712727-383.712727C895.712727 300.415536 723.551781 128.287273 512 128.287273z"/><path d="M557.05545 513.376159l138.367639-136.864185c12.576374-12.416396 12.672705-32.671738 0.25631-45.248112s-32.704421-12.672705-45.248112-0.25631l-138.560301 137.024163-136.447897-136.864185c-12.512727-12.512727-32.735385-12.576374-45.248112-0.063647-12.512727 12.480043-12.54369 32.735385-0.063647 45.248112l136.255235 136.671523-137.376804 135.904314c-12.576374 12.447359-12.672705 32.671738-0.25631 45.248112 6.271845 6.335493 14.496116 9.504099 22.751351 9.504099 8.12794 0 16.25588-3.103239 22.496761-9.247789l137.567746-136.064292 138.687596 139.136568c6.240882 6.271845 14.432469 9.407768 22.65674 9.407768 8.191587 0 16.352211-3.135923 22.591372-9.34412 12.512727-12.480043 12.54369-32.704421 0.063647-45.248112L557.05545 513.376159z"/></svg>
+        </div>
+        <a href="#gobottom" class="toc-btn">
+            <svg viewbox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M231.424 346.208a32 32 0 0 0-46.848 43.584l297.696 320a32 32 0 0 0 46.4 0.48l310.304-320a32 32 0 1 0-45.952-44.544l-286.848 295.808-274.752-295.36z"/></svg>
+        </a>
+    </div>
+    <div class="toc-main">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#深入浅出Node-js学习笔记（一）"><span class="toc-text">深入浅出Node.js学习笔记（一）</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#第一章-Node简介"><span class="toc-text">第一章 Node简介</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Node的特点"><span class="toc-text">Node的特点</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#异步I-O"><span class="toc-text">异步I/O</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#事件与回调函数"><span class="toc-text">事件与回调函数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#单线程"><span class="toc-text">单线程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#跨平台"><span class="toc-text">跨平台</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Node-的应用场景"><span class="toc-text">Node 的应用场景</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#I-O-密集型"><span class="toc-text">I/O 密集型</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#CPU密集型"><span class="toc-text">CPU密集型</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#分布式应用"><span class="toc-text">分布式应用</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#第二章-模块机制"><span class="toc-text">第二章 模块机制</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#CommonJS"><span class="toc-text">CommonJS</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#JavaScript缺陷"><span class="toc-text">JavaScript缺陷</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#CommonJS-的模块规范"><span class="toc-text">CommonJS 的模块规范</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Node-的模块实现"><span class="toc-text">Node 的模块实现</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#优先从缓存加载"><span class="toc-text">优先从缓存加载</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#路径分析和文件定位"><span class="toc-text">路径分析和文件定位</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#模块路径"><span class="toc-text">模块路径</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#模块标识符分析"><span class="toc-text">模块标识符分析</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#文件定位"><span class="toc-text">文件定位</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#模块编译"><span class="toc-text">模块编译</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#JavaScript模块的编译"><span class="toc-text">JavaScript模块的编译</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#C-C-模块的编译"><span class="toc-text">C/C++模块的编译</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#JSON文件的编译"><span class="toc-text">JSON文件的编译</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#核心模块"><span class="toc-text">核心模块</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#JavaScript-核心模块的编译过程"><span class="toc-text">JavaScript 核心模块的编译过程</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#转存为C-C-代码"><span class="toc-text">转存为C/C++代码</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#编译JavaScript核心模块"><span class="toc-text">编译JavaScript核心模块</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#C-C-核心模块的编译过程"><span class="toc-text">C/C++核心模块的编译过程</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#内建模块"><span class="toc-text">内建模块</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#内建模块的优势在于："><span class="toc-text">内建模块的优势在于：</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#加载内建模块："><span class="toc-text">加载内建模块：</span></a></li></ol></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#核心模块的引入流程"><span class="toc-text">核心模块的引入流程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#编写核心模块"><span class="toc-text">编写核心模块</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#C-C-扩展模块"><span class="toc-text">C/C++扩展模块</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#模块调用栈"><span class="toc-text">模块调用栈</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#包与NPM"><span class="toc-text">包与NPM</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#包结构"><span class="toc-text">包结构</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#包描述文件与NPM"><span class="toc-text">包描述文件与NPM</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#必需字段："><span class="toc-text">必需字段：</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#可选字段："><span class="toc-text">可选字段：</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#前后端共用模块"><span class="toc-text">前后端共用模块</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#AMD-规范"><span class="toc-text">AMD 规范</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#CMD-规范"><span class="toc-text">CMD 规范</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#第三章-异步I-O"><span class="toc-text">第三章 异步I/O</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#为什么要异步I-O"><span class="toc-text">为什么要异步I/O</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#用户体验"><span class="toc-text">用户体验</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#资源分配"><span class="toc-text">资源分配</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#异步I-O实现现状"><span class="toc-text">异步I/O实现现状</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#异步I-O与非阻塞I-O"><span class="toc-text">异步I/O与非阻塞I/O</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#阻塞："><span class="toc-text">阻塞：</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#非阻塞："><span class="toc-text">非阻塞：</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#现实的异步I-O"><span class="toc-text">现实的异步I/O</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Node-的异步-I-O"><span class="toc-text">Node 的异步 I/O</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#事件循环"><span class="toc-text">事件循环</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#观察者"><span class="toc-text">观察者</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#请求对象"><span class="toc-text">请求对象</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#执行回调"><span class="toc-text">执行回调</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#非I-O的异步API"><span class="toc-text">非I/O的异步API</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#定时器"><span class="toc-text">定时器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#process-nextTick"><span class="toc-text">process.nextTick()</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#setImmediate"><span class="toc-text">setImmediate()</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#事件驱动与高性能服务器"><span class="toc-text">事件驱动与高性能服务器</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#几种经典的服务器模型，对比优缺点"><span class="toc-text">几种经典的服务器模型，对比优缺点</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#高性能："><span class="toc-text">高性能：</span></a></li></ol></li></ol></li></ol></li></ol>
+    </div>
+</div>
+
+
+
+	</div>
+	
+
+
+<aside class="read-next outer">
+    <div class="inner">
+        <div class="read-next-feed">
+            
+            
+
+<article class="read-next-card" style="background-image: url(https://tva1.sinaimg.cn/large/006y8mN6ly1g77gpw5lrfj31bt0u0qv6.jpg)">
+  <header class="read-next-card-header">
+    <small class="read-next-card-header-sitetitle">&mdash; 01不是包子脸 &mdash;</small>
+    <h3 class="read-next-card-header-title">最新文章</h3>
+  </header>
+  <div class="read-next-divider">
+    <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24">
+      <path d="M13 14.5s2 3 5 3 5.5-2.463 5.5-5.5S21 6.5 18 6.5c-5 0-7 11-12 11C2.962 17.5.5 15.037.5 12S3 6.5 6 6.5s4.5 3.5 4.5 3.5"/>
+    </svg>
+  </div>
+  <div class="read-next-card-content">
+    <ul>
+      
+      
+      
+      <li>
+        <a href="/2019/12/29/Vue计算属性(computed)和侦听属性(watch)/">Vue计算属性(computed)和侦听属性(watch)</a>
+      </li>
+      
+      
+      
+      <li>
+        <a href="/2019/12/19/深入浅出Node.js学习笔记（二）/">深入浅出Node.js学习笔记（二）</a>
+      </li>
+      
+      
+      
+      <li>
+        <a href="/2019/12/13/深入浅出Node.js学习笔记（一）/">深入浅出Node.js学习笔记（一）</a>
+      </li>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+    </ul>
+  </div>
+  <footer class="read-next-card-footer">
+    <a href="/archives">  MORE  → </a>
+  </footer>
+</article>
+
+            
+            
+            
+
+<article class="read-next-card" style="background-image: url(https://tva1.sinaimg.cn/large/006y8mN6ly1g77gpw5lrfj31bt0u0qv6.jpg)">
+    <header class="read-next-card-header tagcloud-card">
+        <h3 class="read-next-card-header-title">分类</h3>
+    </header>
+    <div class="read-next-card-content">
+        <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/CSS/">CSS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/ES6/">ES6</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Node-js/">Node.js</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/React/">React</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/VUE/">VUE</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/git/">git</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/">前端</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端工具/">前端工具</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/安全/">安全</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/浏览器/">浏览器</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/移动端/">移动端</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/算法/">算法</a></li></ul>
+    </div>
+</article>
+
+
+            
+            
+            
+
+<article class="read-next-card" style="background-image: url(https://tva1.sinaimg.cn/large/006y8mN6ly1g77gpw5lrfj31bt0u0qv6.jpg)">
+	<header class="read-next-card-header tagcloud-card">
+		<h3 class="read-next-card-header-title">标签云</h3>
+	</header>
+	<div class="read-next-card-content-ext">
+		<a href="/tags/CSS/" style="font-size: 20.67px;">CSS</a> <a href="/tags/ES6/" style="font-size: 20.67px;">ES6</a> <a href="/tags/HTTP/" style="font-size: 15.67px;">HTTP</a> <a href="/tags/JavaScript/" style="font-size: 24px;">JavaScript</a> <a href="/tags/LESS/" style="font-size: 14px;">LESS</a> <a href="/tags/LeetCode/" style="font-size: 17.33px;">LeetCode</a> <a href="/tags/Node-js/" style="font-size: 15.67px;">Node.js</a> <a href="/tags/React/" style="font-size: 15.67px;">React</a> <a href="/tags/SASS/" style="font-size: 14px;">SASS</a> <a href="/tags/TCP-IP/" style="font-size: 17.33px;">TCP/IP</a> <a href="/tags/VUE/" style="font-size: 19px;">VUE</a> <a href="/tags/git/" style="font-size: 17.33px;">git</a> <a href="/tags/position/" style="font-size: 14px;">position</a> <a href="/tags/webpack/" style="font-size: 15.67px;">webpack</a> <a href="/tags/伪元素/" style="font-size: 14px;">伪元素</a> <a href="/tags/伪类/" style="font-size: 14px;">伪类</a> <a href="/tags/回溯/" style="font-size: 14px;">回溯</a> <a href="/tags/安全/" style="font-size: 17.33px;">安全</a> <a href="/tags/居中/" style="font-size: 14px;">居中</a> <a href="/tags/布局/" style="font-size: 17.33px;">布局</a> <a href="/tags/性能优化/" style="font-size: 14px;">性能优化</a> <a href="/tags/排序/" style="font-size: 14px;">排序</a> <a href="/tags/数组/" style="font-size: 14px;">数组</a> <a href="/tags/正则/" style="font-size: 15.67px;">正则</a> <a href="/tags/浏览器/" style="font-size: 22.33px;">浏览器</a> <a href="/tags/清除浮动/" style="font-size: 14px;">清除浮动</a> <a href="/tags/移动端/" style="font-size: 14px;">移动端</a> <a href="/tags/算法/" style="font-size: 19px;">算法</a> <a href="/tags/缓存/" style="font-size: 15.67px;">缓存</a> <a href="/tags/触屏/" style="font-size: 14px;">触屏</a> <a href="/tags/跨域/" style="font-size: 15.67px;">跨域</a> <a href="/tags/路由/" style="font-size: 14px;">路由</a>
+	</div>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+	
+
+
+
+
+<div id="search" class="search-overlay">
+    <div class="search-form">
+        
+        <img class="search-overlay-logo" src="https://tva1.sinaimg.cn/large/006y8mN6ly1g6sjqjrb9wj30jj0jjjss.jpg" alt="01不是包子脸">
+        
+        <input id="local-search-input" class="search-input" type="text" name="search" placeholder="搜索 ...">
+        <a class="search-overlay-close" href="#"></a>
+    </div>
+    <div id="local-search-result"></div>
+</div>
+
+<footer class="site-footer outer">
+	<div class="site-footer-content inner">
+		<div class="copyright">
+			<a href="/" title="01不是包子脸">01不是包子脸</a>
+			&copy; 2019
+		</div>
+		<nav class="site-footer-nav">
+			
+			<a href="https://hexo.io" title="Hexo" target="_blank" rel="noopener">Hexo</a>
+			<a href="https://github.com/xzhih/hexo-theme-casper" title="Casper" target="_blank" rel="noopener">Casper</a>
+		</nav>
+	</div>
+</footer>
+	
+
+
+<script>if(window.navigator && navigator.serviceWorker) {navigator.serviceWorker.getRegistrations().then(function(registrations) {for(let registration of registrations) {registration.unregister()}})}</script>
+
+
+<script async src="/js/allinone.min.js" id="scriptLoad"></script>
+
+
+
+
+
+
+<script>
+    document.getElementById('scriptLoad').addEventListener('load', function () {
+        var bLazy = new Blazy()
+    })
+</script>
+
+
+
+
+<div class="floating-header">
+	<div class="floating-header-logo">
+        <a href="/" title="01不是包子脸">
+			
+                <img src="https://tva1.sinaimg.cn/large/006y8mN6ly1g6sjqjrb9wj30jj0jjjss.jpg" alt="01不是包子脸 icon">
+			
+            <span>01不是包子脸</span>
+        </a>
+    </div>
+    <span class="floating-header-divider">&mdash;</span>
+    <div class="floating-header-title">深入浅出Node.js学习笔记（一）</div>
+    <progress class="progress" value="0">
+        <span class="progress-container">
+            <span class="progress-bar"></span>
+        </span>
+    </progress>
+</div>
+<script>
+    document.getElementById('scriptLoad').addEventListener('load', function () {
+        postProgressBar()
+    })
+</script>
+
+
+
+
+<script src="/js/lightgallery.min.js"></script>
+<link rel="stylesheet" href="/css/lightgallery.min.css">
+<script>
+    lightGallery(document.getElementById('lightgallery'), {
+        selector: '.post-img'
+    });
+</script>
+
+
+
+
+<script async src="https://cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script async src="https://unpkg.com/valine@1.3.4/dist/Valine.min.js"></script>
+<script>
+    window.addEventListener("load", function() {
+        new Valine({
+            el: '#comment' ,
+            verify: false,
+            notify: false,
+            appId: 'RKl7DjTGeDG8TMedBcYhiagz-gzGzoHsz',
+            appKey: 'pcwdBNPnrqDUcLyj3H0TaeHy',
+            placeholder: '来聊聊天吧～～',
+            pageSize: 10,
+            avatar: 'mm',
+            visitor: true,
+        })
+    });
+</script>
+
+
+
+
+
+<script>
+    document.getElementById('scriptLoad').addEventListener('load', function(){
+        searchFunc("/")
+    });
+</script>
+
+
+
+
+
+
+</body>
+</html>
