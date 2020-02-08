@@ -5,8 +5,8 @@ tags:
   - 浏览器
   - 安全
 categories: 浏览器
-cover_img: https://tva1.sinaimg.cn/large/0082zybply1gbpfmmf26ej30u01907wq.jpg
-feature_img: https://tva1.sinaimg.cn/large/0082zybply1gbpfmmf26ej30u01907wq.jpg
+cover_img: https://tva1.sinaimg.cn/large/0082zybply1gbpfrn0khjj31ar0u0npe.jpg
+feature_img: https://tva1.sinaimg.cn/large/0082zybply1gbpfrn0khjj31ar0u0npe.jpg
 ---
 
 # token详解
