@@ -228,7 +228,7 @@ vue的数据双向绑定 将MVVM作为数据绑定的入口，整合Observer，C
 
 **next**：function一定要调用该方法resolve这个钩子。执行效果依赖next方法的调用参数。可以控制网页的跳转。
 
-##7. vue中常用的指令有哪些？
+## 7. vue中常用的指令有哪些？
 
 ### 指令
 
@@ -316,12 +316,12 @@ vue的数据双向绑定 将MVVM作为数据绑定的入口，整合Observer，C
 <p>Message is: {{ message }}</p>
 ```
 
-#####v-model只不过是一个语法糖而已,真正的实现靠的还是
+##### v-model只不过是一个语法糖而已,真正的实现靠的还是
 
 * v-bind:绑定响应式数据
 * 触发 input 事件，并传递数据 (重点)
 
-#####v-model 在不同的 HTML 标签上使用会监控不同的属性和抛出不同的事件：
+##### v-model 在不同的 HTML 标签上使用会监控不同的属性和抛出不同的事件：
 
 - text 和 textarea 元素使用 `value` 属性和 `input` 事件；
 - checkbox 和 radio 使用 `checked` 属性和 `change` 事件；

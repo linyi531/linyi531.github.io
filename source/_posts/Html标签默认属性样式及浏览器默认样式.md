@@ -88,7 +88,7 @@ ul, ol, dl{ page-break-before: avoid }
 
 ## **浏览器默认样式**
 
-###页边距 
+### 页边距 
 
 * IE默认为10px，通过body的margin属性设置 
 * FF默认为8px，通过body的padding属性设置 
