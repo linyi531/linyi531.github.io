@@ -4,8 +4,8 @@ date: 2020-02-26 11:18:32
 tags:
   - VUE
 categories: VUE
-cover_img: https://tva1.sinaimg.cn/large/00831rSTgy1gdge37o679j31900u0u0y.jpg
-feature_img: https://tva1.sinaimg.cn/large/00831rSTgy1gdge37o679j31900u0u0y.jpg
+cover_img: https://tva1.sinaimg.cn/large/00831rSTgy1gdgfqqksbtj30u0140qdx.jpg
+feature_img: https://tva1.sinaimg.cn/large/00831rSTgy1gdgfqqksbtj30u0140qdx.jpg
 ---
 
 # vue组件间的通信
