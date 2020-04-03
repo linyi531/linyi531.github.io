@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+
+
+
+
+
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<link rel="preconnect" href="//pic.zhih.me">
+	<link rel="preconnect" href="//www.googletagmanager.com">
+	<link rel="preconnect" href="//zz.bdstatic.com">
+	<link rel="preconnect" href="//sp0.baidu.com">
+	<link rel="preconnect" href="//www.google-analytics.com">
+	<link rel="preconnect" href="//cdn1.lncld.net">
+	<link rel="preconnect" href="//unpkg.com">
+	<link rel="preconnect" href="//app-router.leancloud.cn">
+	<link rel="preconnect" href="//9qpuwspm.api.lncld.net">
+	<link rel="preconnect" href="//gravatar.loli.net">
+	<link rel="preload" href="https://pic.zhih.me/blog/header.jpg" as="image">
+
+	<title>Vue相关面试题 | 01不是包子脸</title>
+
+	<meta name="HandheldFriendly" content="True">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+	<meta name="generator" content="hexo">
+	<meta name="author" content="Linyi Li">
+	<meta name="description" content>
+
+	
+	<meta name="keywords" content>
+	
+
+	
+	<link rel="shortcut icon" href="https://tva1.sinaimg.cn/large/006y8mN6ly1g6sjqjrb9wj30jj0jjjss.jpg">
+	<link rel="apple-touch-icon" href="https://tva1.sinaimg.cn/large/006y8mN6ly1g6sjqjrb9wj30jj0jjjss.jpg">
+	
+
+	
+	<meta name="theme-color" content="#3c484e">
+	<meta name="msapplication-TileColor" content="#3c484e">
+	
+
+	
+
+	
+
+	<meta property="og:site_name" content="01不是包子脸">
+	<meta property="og:type" content="article">
+	<meta property="og:title" content="Vue相关面试题 | 01不是包子脸">
+	<meta property="og:description" content>
+	<meta property="og:url" content="http://yoursite.com/2020/02/17/Vue相关面试题/">
+
+	
+	<meta property="article:published_time" content="2020-02-17T10:02:00+08:00"> 
+	<meta property="article:author" content="Linyi Li">
+	<meta property="article:published_first" content="01不是包子脸, /2020/02/17/Vue相关面试题/">
+	
+
+	
+	
+	<link rel="stylesheet" href="/css/allinonecss.min.css">
+
+	
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-145838942-1"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag('js', new Date());
+		gtag('config', 'UA-145838942-1');
+	</script>
+	
+	
+	
+<link rel="canonical" href="http://yoursite.com/2020/02/17/Vue相关面试题/">
+
+
+
+
+
+</head>
+<body class="post-template">
+	<div class="site-wrapper">
+		
+
+
+
+
+<header class="site-header post-site-header outer">
+    <div class="inner">
+        
+<nav class="site-nav"> 
+    <div class="site-nav-left">
+        <ul class="nav">
+            <li>
+                
+                
+                <a class="site-nav-logo" href="/" title="01不是包子脸">
+                    <img src="https://tva1.sinaimg.cn/large/006y8mN6ly1g6sjqjrb9wj30jj0jjjss.jpg" alt="01不是包子脸">
+                </a>
+                
+                
+            </li>
+            
+            
+            <li>
+                <a href="/" title="HOME">HOME</a>
+            </li>
+            
+            <li>
+                <a href="/about" title="ABOUT">ABOUT</a>
+            </li>
+            
+            <li>
+                <a href="/archives" title="ARCHIVES">ARCHIVES</a>
+            </li>
+            
+            
+        </ul> 
+    </div>
+    
+    <div class="search-button-area">
+        <a href="#search" class="search-button">Search ...</a>
+    </div>
+     
+    <div class="site-nav-right">
+        
+        <a href="#search" class="search-button">Search ...</a>
+         
+        
+<div class="social-links">
+    
+    <a class="social-link" title="weibo" href="https://weibo.com/2164694963/profile?rightmod=1&wvr=6&mod=personinfo" target="_blank" rel="noopener">
+        <svg viewbox="0 0 1141 1024" xmlns="http://www.w3.org/2000/svg"><path d="M916.48 518.144q27.648 21.504 38.912 51.712t9.216 62.976-14.336 65.536-31.744 59.392q-34.816 48.128-78.848 81.92t-91.136 56.32-94.72 35.328-89.6 18.944-75.264 7.68-51.712 1.536-49.152-2.56-68.096-10.24-78.336-21.504-79.872-36.352-74.24-55.296-59.904-78.848q-16.384-29.696-22.016-63.488t-5.632-86.016q0-22.528 7.68-51.2t27.136-63.488 53.248-75.776 86.016-90.112q51.2-48.128 105.984-85.504t117.248-57.856q28.672-10.24 63.488-11.264t57.344 11.264q10.24 11.264 19.456 23.04t12.288 29.184q3.072 14.336 0.512 27.648t-5.632 26.624-5.12 25.6 2.048 22.528q17.408 2.048 33.792-1.536t31.744-9.216 31.232-11.776 33.28-9.216q27.648-5.12 54.784-4.608t49.152 7.68 36.352 22.016 17.408 38.4q2.048 14.336-2.048 26.624t-8.704 23.04-7.168 22.016 1.536 23.552q3.072 7.168 14.848 13.312t27.136 12.288 32.256 13.312 29.184 16.384zM658.432 836.608q26.624-16.384 53.76-45.056t44.032-64 18.944-75.776-20.48-81.408q-19.456-33.792-47.616-57.344t-62.976-37.376-74.24-19.968-80.384-6.144q-78.848 0-139.776 16.384t-105.472 43.008-72.192 60.416-38.912 68.608q-11.264 33.792-6.656 67.072t20.992 62.976 42.496 53.248 57.856 37.888q58.368 25.6 119.296 32.256t116.224 0.512 100.864-21.504 74.24-33.792zM524.288 513.024q20.48 8.192 38.912 18.432t32.768 27.648q10.24 12.288 17.92 30.72t10.752 39.424 1.536 42.496-9.728 38.912q-8.192 18.432-19.968 37.376t-28.672 35.328-40.448 29.184-57.344 18.944q-61.44 11.264-117.76-11.264t-88.064-74.752q-12.288-39.936-13.312-70.656t16.384-66.56q13.312-27.648 40.448-51.712t62.464-38.912 75.264-17.408 78.848 12.8zM361.472 764.928q37.888 3.072 57.856-18.432t21.504-48.128-15.36-47.616-52.736-16.896q-27.648 3.072-43.008 23.552t-17.408 43.52 9.728 42.496 39.424 21.504zM780.288 6.144q74.752 0 139.776 19.968t113.664 57.856 76.288 92.16 27.648 122.88q0 33.792-16.384 50.688t-35.328 17.408-35.328-14.336-16.384-45.568q0-40.96-22.528-77.824t-59.392-64.512-84.48-43.52-96.768-15.872q-31.744 0-47.104-15.36t-14.336-34.304 18.944-34.304 51.712-15.36zM780.288 169.984q95.232 0 144.384 48.64t49.152 146.944q0 30.72-10.24 43.52t-22.528 11.264-22.528-14.848-10.24-35.84q0-60.416-34.816-96.256t-93.184-35.84q-19.456 0-28.672-10.752t-9.216-23.04 9.728-23.04 28.16-10.752z"/></svg>
+    </a>
+    
+    
+    <a class="social-link" title="github" href="https://github.com/linyi531" target="_blank" rel="noopener">
+        <svg viewbox="0 0 1049 1024" xmlns="http://www.w3.org/2000/svg"><path d="M524.979332 0C234.676191 0 0 234.676191 0 524.979332c0 232.068678 150.366597 428.501342 358.967656 498.035028 26.075132 5.215026 35.636014-11.299224 35.636014-25.205961 0-12.168395-0.869171-53.888607-0.869171-97.347161-146.020741 31.290159-176.441729-62.580318-176.441729-62.580318-23.467619-60.841976-58.234462-76.487055-58.234463-76.487055-47.804409-32.15933 3.476684-32.15933 3.476685-32.15933 53.019436 3.476684 80.83291 53.888607 80.83291 53.888607 46.935238 79.963739 122.553122 57.365291 152.97411 43.458554 4.345855-33.897672 18.252593-57.365291 33.028501-70.402857-116.468925-12.168395-239.022047-57.365291-239.022047-259.012982 0-57.365291 20.860106-104.300529 53.888607-140.805715-5.215026-13.037566-23.467619-66.926173 5.215027-139.067372 0 0 44.327725-13.906737 144.282399 53.888607 41.720212-11.299224 86.917108-17.383422 131.244833-17.383422s89.524621 6.084198 131.244833 17.383422C756.178839 203.386032 800.506564 217.29277 800.506564 217.29277c28.682646 72.1412 10.430053 126.029806 5.215026 139.067372 33.897672 36.505185 53.888607 83.440424 53.888607 140.805715 0 201.64769-122.553122 245.975415-239.891218 259.012982 19.121764 16.514251 35.636014 47.804409 35.636015 97.347161 0 70.402857-0.869171 126.898978-0.869172 144.282399 0 13.906737 9.560882 30.420988 35.636015 25.205961 208.601059-69.533686 358.967656-265.96635 358.967655-498.035028C1049.958663 234.676191 814.413301 0 524.979332 0z"/></svg>
+    </a>
+    
+    
+    
+    <a class="social-link" title="twitter" href="https://twitter.com/nFywOCNPid75cl5" target="_blank" rel="noopener">
+        <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 32 32"><path d="M30.063 7.313c-.813 1.125-1.75 2.125-2.875 2.938v.75c0 1.563-.188 3.125-.688 4.625a15.088 15.088 0 0 1-2.063 4.438c-.875 1.438-2 2.688-3.25 3.813a15.015 15.015 0 0 1-4.625 2.563c-1.813.688-3.75 1-5.75 1-3.25 0-6.188-.875-8.875-2.625.438.063.875.125 1.375.125 2.688 0 5.063-.875 7.188-2.5-1.25 0-2.375-.375-3.375-1.125s-1.688-1.688-2.063-2.875c.438.063.813.125 1.125.125.5 0 1-.063 1.5-.25-1.313-.25-2.438-.938-3.313-1.938a5.673 5.673 0 0 1-1.313-3.688v-.063c.813.438 1.688.688 2.625.688a5.228 5.228 0 0 1-1.875-2c-.5-.875-.688-1.813-.688-2.75 0-1.063.25-2.063.75-2.938 1.438 1.75 3.188 3.188 5.25 4.25s4.313 1.688 6.688 1.813a5.579 5.579 0 0 1 1.5-5.438c1.125-1.125 2.5-1.688 4.125-1.688s3.063.625 4.188 1.813a11.48 11.48 0 0 0 3.688-1.375c-.438 1.375-1.313 2.438-2.563 3.188 1.125-.125 2.188-.438 3.313-.875z"/></svg>
+
+    </a>
+    
+    
+    <a class="social-link" title="telegram" href="https://www.instagram.com/linyi531/" target="_blank" rel="noopener">
+        <svg viewbox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M679.428571 746.857143l84-396q5.142857-25.142857-6-36t-29.428571-4L234.285714 501.142857q-16.571429 6.285714-22.571428 14.285714t-1.428572 15.142858 18.285715 11.142857l126.285714 39.428571 293.142857-184.571428q12-8 18.285714-3.428572 4 2.857143-2.285714 8.571429l-237.142857 214.285714-9.142857 130.285714q13.142857 0 25.714285-12.571428l61.714286-59.428572 128 94.285715q36.571429 20.571429 46.285714-21.714286z m344.571429-234.857143q0 104-40.571429 198.857143t-109.142857 163.428571-163.428571 109.142857-198.857143 40.571429-198.857143-40.571429-163.428571-109.142857-109.142857-163.428571T0 512t40.571429-198.857143 109.142857-163.428571T313.142857 40.571429 512 0t198.857143 40.571429 163.428571 109.142857 109.142857 163.428571 40.571429 198.857143z"/></svg>
+    </a>
+    
+    
+    
+</div>
+    </div>
+</nav>
+    </div>
+</header>
+
+
+<div id="site-main" class="site-main outer" role="main">
+    <div class="inner">
+        <header class="post-full-header">
+            <div class="post-full-meta">
+                <time class="post-full-meta-date" datetime="2020-02-17T02:45:21.000Z">
+                    2020-02-17
+                </time>
+                
+                <span class="date-divider">/</span>
+                
+                <a href="/categories/VUE/">VUE</a>&nbsp;&nbsp;
+                
+                
+            </div>
+            <h1 class="post-full-title">Vue相关面试题</h1>
+        </header>
+        <div class="post-full ">
+            
+            <figure class="post-full-image" style="background-image: url(https://tva1.sinaimg.cn/large/00831rSTgy1gdgdxdta1vj30u0151kjl.jpg)">
+            </figure>
+            
+            <div class="post-full-content">
+                <article id="lightgallery" class="markdown-body">
+                    <h1 id="vue"><a href="#vue" class="headerlink" title="vue"></a>vue</h1><p>Vue.js（读音 /vjuː/, 类似于 view） 是一套构建用户界面的 渐进式框架。与其他重量级框架不同的是，Vue 采用自底向上增量开发的设计。Vue 的核心库只关注视图层，并且非常容易学习，非常容易与其它库或已有项目整合。另一方面，Vue 完全有能力驱动采用<a href="http://link.zhihu.com/?target=http%3A//cn.vuejs.org/v2/guide/single-file-components.html" target="_blank" rel="noopener">单文件组件</a>和 <a href="http://link.zhihu.com/?target=http%3A//github.com/vuejs/awesome-vue%23libraries--plugins" target="_blank" rel="noopener">Vue 生态系统支持的库</a>开发的复杂单页应用。</p>
+<p>Vue.js 的目标是通过尽可能简单的 API 实现响应的数据绑定和组合的视图组件。</p>
+<ul>
+<li>响应式编程（双向数据绑定 MVVM）</li>
+<li>组件化</li>
+<li>模块化（配合 <a href="https://link.zhihu.com/?target=http%3A//webpack.github.io/" target="_blank" rel="noopener">Webpack</a> 或者 <a href="https://link.zhihu.com/?target=http%3A//browserify.org/" target="_blank" rel="noopener">Browserify</a>等打包工具，然后再加上 ES2015。每一个 Vue 组件都可以看做一个独立的模块）</li>
+<li>动画（Vue 自带简洁易用的<a href="https://link.zhihu.com/?target=http%3A//vuejs.org/guide/transitions.html" target="_blank" rel="noopener">过渡动画系统</a>。Vue 的反应式系统也使得它可以用来开发高效的数据驱动的逐帧动画。这一类逐帧动画在基于脏检查或是 Virtual DOM 的框架中，往往会导致性能问题，因为即使只是改了一个值，整个所处的子树（scope 或是 component）都需要重新计算。而 Vue 则是改了多少，计算多少，不会有无谓的浪费。在小 demo 中，脏检查或是 Virtual DOM 往往也足够快，但是在大型应用中可就不一定了。）</li>
+<li>Virtual DOM</li>
+<li>Vuex</li>
+<li>Vue-router</li>
+</ul>
+<h2 id="1-对于MVVM的理解？"><a href="#1-对于MVVM的理解？" class="headerlink" title="1. 对于MVVM的理解？"></a>1. 对于MVVM的理解？</h2><p>MVVM 是 Model-View-ViewModel 的缩写。 <strong>Model</strong>代表数据模型，也可以在Model中定义数据修改和操作的业务逻辑。 <strong>View</strong> 代表UI 组件，它负责将数据模型转化成UI 展现出来。 <strong>ViewModel</strong> 监听模型数据的改变和控制视图行为、处理用户交互，简单理解就是一个同步View 和 Model的对象，连接Model和View。 在MVVM架构下，View 和 Model 之间并没有直接的联系，而是通过ViewModel进行交互，Model 和 ViewModel 之间的交互是双向的， 因此View 数据的变化会同步到Model中，而Model 数据的变化也会立即反应到View 上。 <strong>ViewModel</strong> 通过双向数据绑定把 View 层和 Model 层连接了起来，而View 和 Model 之间的同步工作完全是自动的，无需人为干涉，因此开发者只需关注业务逻辑，不需要手动操作DOM, 不需要关注数据状态的同步问题，复杂的数据状态维护完全由 MVVM 来统一管理。</p>
+<p>###怎么实现MVVM</p>
+<ol>
+<li>脏值检查：angularangular.js 是通过脏值检测的方式比对数据是否有变更，来决定是否更新视图。</li>
+<li>数据劫持：使用Object.defineProperty()方法把这些vm.data属性全部转成setter、getter方法。</li>
+</ol>
+<p><a href="https://jancat.github.io/post/2019/vue-mvvm/" target="_blank" rel="noopener">Vue MVVM的实现(defineProperty)</a></p>
+<p><a href="https://jancat.github.io/post/2019/vue-mvvm-proxy/" target="_blank" rel="noopener">Vue3.0 MVVM的实现(proxy)</a>（Vue 3.0 使用了 <strong>Proxy</strong> 后，将会消除之前 Vue 2.x 中基于 <code>Object.defineProperty</code> 的实现所存在的一些限制：无法监听 <strong>属性的添加和删除</strong>、<strong>数组索引值和长度的变更</strong>。）</p>
+<h3 id="MVVM-各模块职责"><a href="#MVVM-各模块职责" class="headerlink" title="MVVM 各模块职责"></a>MVVM 各模块职责</h3><ul>
+<li><strong>MVVM</strong>: Vue 实例初始化，调用 <strong>Observer</strong> 数据劫持，调用 <strong>Compiler</strong> 解析模板；</li>
+<li><strong>Observer</strong>: 利用Object.defineProperty数据劫持data全部属性，定义 setter 、getter，添加和通知订阅者；（所以vue不能新增属性必须事先定义，model-&gt;vm.data）</li>
+<li><strong>Compiler</strong>: 解析模板初始化视图，收集模板中的数据依赖，创建订阅者订阅变化，绑定更新函数；（在文档碎片中操作dom节点，遍历正则匹配替换data属性，view-&gt;vm.$el）</li>
+<li><strong>Dep</strong>：订阅中心，提供添加、移除、通知订阅的接口；</li>
+<li><strong>Watcher</strong>: data 属性的订阅者，收到变化通知后调用更新函数更新视图。</li>
+</ul>
+<p><img alt="image-20190709192722478" class="post-img b-lazy" href="https://tva1.sinaimg.cn/large/006y8mN6ly1g6j5vbvssij31460m4n93.jpg" data-src="https://tva1.sinaimg.cn/large/006y8mN6ly1g6j5vbvssij31460m4n93.jpg"></p>
+<p>###Object.defineProperty() 和 Proxy 实现 MVVM 数据劫持的区别</p>
+<p><code>Object.defineProperty()</code> 和 <code>Proxy</code> 实现 MVVM 数据劫持的区别是：<code>Object.defineProperty()</code> 需要为每个 key 定义 getter 和 setter，也就是需要遍历 <code>data</code> 下的全部子属性；而 <code>Proxy</code> 只需要为 <code>data</code> 本身和内部嵌套的对象创建代理，每个对象统一代理访问内部属性，对外提供代理的引用。</p>
+<h2 id="2-vue生命周期："><a href="#2-vue生命周期：" class="headerlink" title="2.vue生命周期："></a>2.vue生命周期：</h2><h3 id="1-在beforeCreate和created钩子函数之间的生命周期"><a href="#1-在beforeCreate和created钩子函数之间的生命周期" class="headerlink" title="1. 在beforeCreate和created钩子函数之间的生命周期"></a><strong>1. 在beforeCreate和created钩子函数之间的生命周期</strong></h3><p>在这个生命周期之间，进行<strong>初始化事件，进行数据的观测</strong>，可以看到在<strong>created</strong>的时候数据已经和<strong>data属性进行绑定</strong>（放在data中的属性当值发生改变的同时，视图也会改变）。<br>注意看下：此时还是没有el选项</p>
+<p>组件实例刚刚创建，<strong>还未进行数据观测和事件配置</strong>//这里不要被beforeCreate误导，实际上组件实例已经创建了</p>
+<h3 id="2-created钩子函数和beforeMount间的生命周期"><a href="#2-created钩子函数和beforeMount间的生命周期" class="headerlink" title="2. created钩子函数和beforeMount间的生命周期"></a><strong>2. created钩子函数和beforeMount间的生命周期</strong></h3><p>实例已经创建完成，并且<strong>已经完成数据观测，属性和方法的运算，watch/event 事件回调。//常用！！！</strong></p>
+<p>首先会判断对象是否有<strong>el选项</strong>。<strong>如果有的话就继续向下编译，如果没有</strong>el选项<strong>，则停止编译，也就意味着停止了生命周期，直到在该vue实例上调用vm.$mount(el)。</strong></p>
+<p>然后，我们往下看，<strong>template</strong>参数选项的有无对生命周期的影响。<br>（1）.如果vue实例对象中有template参数选项，则将其作为模板编译成render函数。<br>（2）.如果没有template选项，则将外部HTML作为模板编译。<br>（3）.可以看到template中的模板优先级要高于outer HTML的优先级。</p>
+<p>所以综合排名优先级：<br>render函数选项 &gt; template选项 &gt; outer HTML.</p>
+<h3 id="3-beforeMount和mounted-钩子函数间的生命周期"><a href="#3-beforeMount和mounted-钩子函数间的生命周期" class="headerlink" title="3. beforeMount和mounted 钩子函数间的生命周期"></a><strong>3. beforeMount和mounted 钩子函数间的生命周期</strong></h3><p>可以看到此时是给vue实例对象添加<strong>$el成员</strong>，并且替换掉挂在的DOM元素。因为在之前console中打印的结果可以看到<strong>beforeMount</strong>之前el上还是undefined。</p>
+<p>模板编译之前，还没挂载，页面仍未展示，但<strong>虚拟Dom已经配置</strong>//先把坑占住了，到后面mounted挂载的时候再把值渲染进去</p>
+<h3 id="4-mounted"><a href="#4-mounted" class="headerlink" title="4. mounted"></a><strong>4. mounted</strong></h3><p>模板编译之后，已经挂载，<strong>此时才会渲染页面，才能看到页面上数据的展示//常用！！！</strong></p>
+<p><strong>注意:</strong> mounted 不会承诺所有的子组件也都一起被挂载。如果你希望等到整个视图都渲染完毕，可以用 <strong>vm.$nextTick 替换掉 mounted</strong></p>
+<p>在mounted之前h1中还是通过<code></code>进行占位的，因为此时还有挂在到页面上，还是JavaScript中的虚拟DOM形式存在的。在mounted之后可以看到h1中的内容发生了变化。</p>
+<p>el 替换，并挂载到实例上去之后调用。实例已完成以下的配置：用上面编译好的html内容替换el属性指向的DOM对象。完成模板中的html渲染到html页面中。此过程中进行ajax交互。</p>
+<h3 id="5-beforeUpdate（更新前）"><a href="#5-beforeUpdate（更新前）" class="headerlink" title="5. beforeUpdate（更新前）"></a><strong>5. beforeUpdate</strong>（更新前）</h3><p>在数据更新之前调用，发生在虚拟DOM重新渲染和打补丁之前。可以在该钩子中进一步地更改状态，不会触发附加的重渲染过程。 </p>
+<h3 id="6-updated（更新后）"><a href="#6-updated（更新后）" class="headerlink" title="6. updated（更新后）"></a><strong>6. updated</strong>（更新后）</h3><p>在由于数据更改导致的虚拟DOM重新渲染和打补丁之后调用。调用时，组件DOM已经更新，所以可以执行依赖于DOM的操作。然而在大多数情况下，应该避免在此期间更改状态，因为这可能会导致更新无限循环。该钩子在服务器端渲染期间不被调用。</p>
+<h3 id="7-beforeDestroy（销毁前）"><a href="#7-beforeDestroy（销毁前）" class="headerlink" title="7. beforeDestroy（销毁前）"></a><strong>7. beforeDestroy</strong>（销毁前）</h3><p>在实例销毁之前调用。实例仍然完全可用。 </p>
+<h3 id="8-destroyed（销毁后）"><a href="#8-destroyed（销毁后）" class="headerlink" title="8. destroyed（销毁后）"></a><strong>8. destroyed</strong>（销毁后）</h3><p>在实例销毁之后调用。调用后，所有的事件监听器会被移除，所有的子实例也会被销毁。该钩子在服务器端渲染期间不被调用。 </p>
+<h3 id="关于生命周期的问题："><a href="#关于生命周期的问题：" class="headerlink" title="关于生命周期的问题："></a>关于生命周期的问题：</h3><p>1.什么是vue生命周期？ 答： Vue 实例从创建到销毁的过程，就是生命周期。从开始创建、初始化数据、编译模板、挂载Dom→渲染、更新→渲染、销毁等一系列过程，称之为 Vue 的生命周期。</p>
+<p>2.vue生命周期的作用是什么？ 答：它的生命周期中有多个事件钩子，让我们在控制整个Vue实例的过程时更容易形成好的逻辑。</p>
+<p>3.vue生命周期总共有几个阶段？ 答：它可以总共分为8个阶段：创建前/后, 载入前/后,更新前/后,销毁前/销毁后。</p>
+<p>4.第一次页面加载会触发哪几个钩子？ 答：会触发 下面这几个beforeCreate, created, beforeMount, mounted </p>
+<p>5.DOM 渲染在 哪个周期中就已经完成？ 答：DOM 渲染在 mounted 中就已经完成了。</p>
+<h2 id="3-Vue实现数据双向绑定的原理：Object-defineProperty（）"><a href="#3-Vue实现数据双向绑定的原理：Object-defineProperty（）" class="headerlink" title="3.Vue实现数据双向绑定的原理：Object.defineProperty（）"></a>3.Vue实现数据双向绑定的原理：Object.defineProperty（）</h2><p>vue实现数据双向绑定主要是：采<strong>用数据劫持结合发布者-订阅者模式</strong>的方式，通过<strong>Object.defineProperty（）</strong>来劫持各个属性的setter，getter，在数据变动时发布消息给订阅者，触发相应监听回调。当把一个普通 Javascript 对象传给 Vue 实例来作为它的 data 选项时，Vue 将遍历它的属性，用 Object.defineProperty 将它们转为 getter/setter。用户看不到 getter/setter，但是在内部它们让 Vue 追踪依赖，在属性被访问和修改时通知变化。</p>
+<p>vue的数据双向绑定 将MVVM作为数据绑定的入口，整合Observer，Compile和Watcher三者，通过Observer来监听自己的model的数据变化，通过Compile来解析编译模板指令（vue中是用来解析双花括号的），最终利用watcher搭起observer和Compile之间的通信桥梁，达到数据变化 —&gt;视图更新；视图交互变化（input）—&gt;数据model变更双向绑定效果。</p>
+<h3 id="关于Object-defineProperty"><a href="#关于Object-defineProperty" class="headerlink" title="关于Object.defineProperty"></a>关于Object.defineProperty</h3><ul>
+<li><p>语法</p>
+<p><code>Object.defineProperty(obj,prop,descriptor)</code></p>
+</li>
+<li><p>参数</p>
+<p>obj:目标对象</p>
+<p>prop:需要定义的属性或方法的名称</p>
+<p>descriptor:目标属性所拥有的特性</p>
+</li>
+<li><p>可供定义的特性列表</p>
+<p>value:属性的值</p>
+<p>writable:如果为false，属性的值就不能被重写。</p>
+<p>get: 一旦目标属性被访问就会调回此方法，并将此方法的运算结果返回用户。</p>
+<p>set:一旦目标属性被赋值，就会调回此方法。</p>
+<p>configurable:如果为false，则任何尝试删除目标属性或修改属性性以下特性（writable, configurable, enumerable）的行为将被无效化。</p>
+<p>enumerable:是否能在for…in循环中遍历出来或在Object.keys中列举出来。</p>
+</li>
+</ul>
+<p><strong>js实现简单的双向绑定</strong></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"app"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span><span class="attr">id</span>=<span class="string">"txt"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span> <span class="attr">id</span>=<span class="string">"show"</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span>&gt;</span></span><br><span class="line"><span class="actionscript">  	<span class="keyword">var</span> obj = &#123;&#125;</span></span><br><span class="line"><span class="javascript">    <span class="built_in">Object</span>.defineProperty(obj, <span class="string">'txt'</span>, &#123;</span></span><br><span class="line"><span class="actionscript">        <span class="keyword">get</span>: <span class="function"><span class="keyword">function</span> <span class="params">()</span> </span>&#123;</span></span><br><span class="line"><span class="actionscript">            <span class="keyword">return</span> obj</span></span><br><span class="line">        &#125;,</span><br><span class="line"><span class="actionscript">        <span class="keyword">set</span>: <span class="function"><span class="keyword">function</span> <span class="params">(newValue)</span> </span>&#123;</span></span><br><span class="line"><span class="javascript">            <span class="built_in">document</span>.getElementById(<span class="string">'txt'</span>).value = newValue</span></span><br><span class="line"><span class="javascript">            <span class="built_in">document</span>.getElementById(<span class="string">'show'</span>).innerHTML = newValue</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line"><span class="javascript">    <span class="built_in">document</span>.addEventListener(<span class="string">'keyup'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">e</span>) </span>&#123;</span></span><br><span class="line">        obj.txt = e.target.value</span><br><span class="line">    &#125;)</span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="4-Vue的路由实现：hash模式-和-history模式"><a href="#4-Vue的路由实现：hash模式-和-history模式" class="headerlink" title="4. Vue的路由实现：hash模式 和 history模式"></a>4. Vue的路由实现：hash模式 和 history模式</h2><p><strong>hash模式：</strong>在浏览器中符号“#”，#以及#后面的字符称之为hash，用window.location.hash读取； 特点：hash虽然在URL中，但不被包括在HTTP请求中；用来指导浏览器动作，对服务端安全无用，hash不会重加载页面。 hash 模式下，仅 hash 符号之前的内容会被包含在请求中，如 <a href="https://link.juejin.im?target=http%3A%2F%2Fwww.xxx.com" target="_blank" rel="noopener">www.xxx.com</a>，因此对于后端来说，即使没有做到对路由的全覆盖，也不会返回 404 错误。</p>
+<p><strong>history模式：</strong>history采用HTML5的新特性；且提供了两个新方法：pushState（），replaceState（）可以对浏览器历史记录栈进行修改，以及popState事件的监听到状态变更。 history 模式下，前端的 URL 必须和实际向后端发起请求的 URL 一致，如 <a href="https://link.juejin.im?target=http%3A%2F%2Fwww.xxx.com%2Fitems%2Fid" target="_blank" rel="noopener">www.xxx.com/items/id</a>。后端如果缺少对 /items/id 的路由处理，将返回 404 错误。<strong>Vue-Router 官网里如此描述：</strong>“不过这种模式要玩好，还需要后台配置支持……所以呢，你要在服务端增加一个覆盖所有情况的候选资源：如果 URL 匹配不到任何静态资源，则应该返回同一个 index.html 页面，这个页面就是你 app 依赖的页面。”</p>
+<h2 id="5-Vue与Angular以及React的区别？"><a href="#5-Vue与Angular以及React的区别？" class="headerlink" title="5. Vue与Angular以及React的区别？"></a>5. Vue与Angular以及React的区别？</h2><p><strong>1.与AngularJS的区别</strong> </p>
+<p>相同点： 都支持指令：内置指令和自定义指令；都支持过滤器：内置过滤器和自定义过滤器；都支持双向数据绑定；都不支持低端浏览器。</p>
+<p>不同点： AngularJS的学习成本高，比如增加了Dependency Injection特性，而Vue.js本身提供的API都比较简单、直观；在性能上，AngularJS依赖对数据做脏检查，所以Watcher越多越慢；Vue.js使用基于依赖追踪的观察并且使用异步队列更新，所有的数据都是独立触发的。</p>
+<p><strong>2.与React的区别</strong> （详见vue和react区别）</p>
+<p>相同点： </p>
+<ul>
+<li><p>React采用特殊的JSX语法，Vue.js在组件开发中也推崇编写.vue特殊文件格式，对文件内容都有一些约定，两者都需要编译后使用；</p>
+</li>
+<li><p>中心思想相同：一切都是组件，组件实例之间可以嵌套；</p>
+</li>
+<li><p>都提供合理的钩子函数，可以让开发者定制化地去处理需求；</p>
+</li>
+<li><p>在组件开发中都支持mixins的特性。</p>
+</li>
+<li><p>使用 Virtual DOM，有自己的diff渲染算法</p>
+</li>
+<li><p>提供了响应式 (Reactive) 和组件化 (Composable) 的视图组件。</p>
+</li>
+<li><p>将注意力集中保持在核心库，而将其他功能如路由和全局状态管理交给相关的库。都不内置列数AJAX，Route等功能到核心包，而是以插件的方式加载。</p>
+<p>不同点：</p>
+</li>
+<li><p>React采用的Virtual DOM会对渲染出来的结果做脏检查；在 React 应用中，当某个组件的状态发生变化时，它会以该组件为根，重新渲染整个组件子树。</p>
+<p>如要避免不必要的子组件的重渲染，你需要在所有可能的地方使用 PureComponent，或是手动实现 shouldComponentUpdate 方法。同时你可能会需要使用不可变的数据结构来使得你的组件更容易被优化。</p>
+<p>然而，使用 PureComponent 和 shouldComponentUpdate 时，需要保证该组件的整个子树的渲染输出都是由该组件的 props 所决定的。如果不符合这个情况，那么此类优化就会导致难以察觉的渲染结果不一致。这使得 React 中的组件优化伴随着相当的心智负担。</p>
+<p>在 Vue 应用中，组件的依赖是在渲染过程中自动追踪的，所以系统能精确知晓哪个组件确实需要被重渲染。你可以理解为每一个组件都已经自动获得了 shouldComponentUpdate，并且没有上述的子树问题限制。</p>
+</li>
+<li><p>Vue.js在模板中提供了指令，过滤器等，可以非常方便，快捷地操作Virtual DOM。</p>
+</li>
+</ul>
+<h2 id="6-vue路由的钩子函数"><a href="#6-vue路由的钩子函数" class="headerlink" title="6. vue路由的钩子函数"></a>6. vue路由的钩子函数</h2><p>首页可以控制导航跳转，beforeEach，afterEach等，一般用于页面title的修改。一些需要登录才能调整页面的重定向功能。</p>
+<p><strong>beforeEach</strong>主要有3个参数to，from，next：</p>
+<p><strong>to</strong>：route即将进入的目标路由对象，</p>
+<p><strong>from</strong>：route当前导航正要离开的路由</p>
+<p><strong>next</strong>：function一定要调用该方法resolve这个钩子。执行效果依赖next方法的调用参数。可以控制网页的跳转。</p>
+<p>##7. vue中常用的指令有哪些？</p>
+<h3 id="指令"><a href="#指令" class="headerlink" title="指令"></a>指令</h3><ul>
+<li>解释：指令 (Directives) 是带有 <code>v-</code> 前缀的特殊属性</li>
+<li>作用：当表达式的值改变时，将其产生的连带影响，响应式地作用于 DOM</li>
+</ul>
+<h3 id="常用指令"><a href="#常用指令" class="headerlink" title="常用指令"></a>常用指令</h3><h4 id="1-v-text：更新元素的-textContent"><a href="#1-v-text：更新元素的-textContent" class="headerlink" title="1.v-text：更新元素的 textContent"></a>1.v-text：更新元素的 textContent</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;h1 v-text=&quot;msg&quot;&gt;&lt;/h1&gt;</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-v-html：更新元素的-innerHTML"><a href="#2-v-html：更新元素的-innerHTML" class="headerlink" title="2.v-html：更新元素的 innerHTML"></a>2.v-html：更新元素的 innerHTML</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;h1 v-html=&quot;msg&quot;&gt;&lt;/h1&gt;</span><br></pre></td></tr></table></figure>
+
+<h4 id="3-v-bind"><a href="#3-v-bind" class="headerlink" title="3.v-bind"></a>3.v-bind</h4><ul>
+<li>作用：当表达式的值改变时，将其产生的连带影响，响应式地作用于 DOM</li>
+<li>语法：<code>v-bind:title=&quot;msg&quot;</code></li>
+<li>简写：<code>:title=&quot;msg&quot;</code></li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- 完整语法 --&gt;</span><br><span class="line">&lt;a v-bind:href=&quot;url&quot;&gt;&lt;/a&gt;</span><br><span class="line">&lt;!-- 缩写 --&gt;</span><br><span class="line">&lt;a :href=&quot;url&quot;&gt;&lt;/a&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">    // 2 创建 Vue 的实例对象</span><br><span class="line">    var vm = new Vue(&#123;</span><br><span class="line">      // el 用来指定vue挂载到页面中的元素，值是：选择器</span><br><span class="line">      // 理解：用来指定vue管理的HTML区域</span><br><span class="line">      el: &apos;#app&apos;,</span><br><span class="line">      // 数据对象，用来给视图中提供数据的</span><br><span class="line">      data: &#123;</span><br><span class="line">        url: &apos;http://www.baidu.com&apos;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">  &lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<h4 id="4-v-on"><a href="#4-v-on" class="headerlink" title="4.v-on"></a>4.v-on</h4><ul>
+<li>作用：绑定事件</li>
+<li>语法：<code>v-on:click=&quot;say&quot;</code> or <code>v-on:click=&quot;say(&#39;参数&#39;, $event)&quot;</code></li>
+<li>简写：<code>@click=&quot;say&quot;</code></li>
+<li>说明：绑定的事件从<code>methods</code>中获取</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- 完整语法 --&gt;</span><br><span class="line">&lt;a v-on:click=&quot;doSomething&quot;&gt;&lt;/a&gt;</span><br><span class="line">&lt;!-- 缩写 --&gt;</span><br><span class="line">&lt;a @click=&quot;doSomething&quot;&gt;&lt;/a&gt;</span><br><span class="line">&lt;!-- 方法传参 --&gt;</span><br><span class="line">&lt;a @click=&quot;doSomething（“123”）&quot;&gt;&lt;/a&gt;</span><br><span class="line"></span><br><span class="line"> &lt;script&gt;</span><br><span class="line">    // 2 创建 Vue 的实例对象</span><br><span class="line">    var vm = new Vue(&#123;</span><br><span class="line">      el: &apos;#app&apos;,</span><br><span class="line">      // methods属性用来给vue实例提供方法（事件）</span><br><span class="line">      methods: &#123;</span><br><span class="line">        doSomething: function(str) &#123;</span><br><span class="line">          //接受参数，并输出</span><br><span class="line">          console.log(str);</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">  &lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<h4 id="5-v-model"><a href="#5-v-model" class="headerlink" title="5.v-model"></a>5.v-model</h4><p>数据响应，是通过数据的改变去驱动 DOM 视图的变化，而双向绑定除了数据驱动 DOM 外， DOM 的变化反过来影响数据，是一个双向关系，在 Vue 中，我们可以通过 <code>v-model</code> 来实现双向绑定。</p>
+<ul>
+<li>作用：在表单元素上创建双向数据绑定</li>
+<li>说明：监听用户的输入事件以更新数据</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;input v-model=&quot;message&quot; placeholder=&quot;edit me&quot;&gt;</span><br><span class="line">&lt;p&gt;Message is: &#123;&#123; message &#125;&#125;&lt;/p&gt;</span><br></pre></td></tr></table></figure>
+
+<p>#####v-model只不过是一个语法糖而已,真正的实现靠的还是</p>
+<ul>
+<li>v-bind:绑定响应式数据</li>
+<li>触发 input 事件，并传递数据 (重点)</li>
+</ul>
+<p>#####v-model 在不同的 HTML 标签上使用会监控不同的属性和抛出不同的事件：</p>
+<ul>
+<li>text 和 textarea 元素使用 <code>value</code> 属性和 <code>input</code> 事件；</li>
+<li>checkbox 和 radio 使用 <code>checked</code> 属性和 <code>change</code> 事件；</li>
+<li>select 字段将 <code>value</code> 作为 prop 并将 <code>change</code> 作为事件。</li>
+</ul>
+<p><a href="[https://ustbhuangyi.github.io/vue-analysis/extend/v-model.html#%E8%A1%A8%E5%8D%95%E5%85%83%E7%B4%A0](https://ustbhuangyi.github.io/vue-analysis/extend/v-model.html#表单元素)">v-model源码分析</a></p>
+<h4 id="6-v-for"><a href="#6-v-for" class="headerlink" title="6.v-for"></a>6.v-for</h4><ul>
+<li>作用：基于源数据多次渲染元素或模板块</li>
+<li>key属性<ul>
+<li>推荐：使用 <code>v-for</code> 的时候提供 <code>key</code> 属性，以获得性能提升。</li>
+<li>说明：使用 key，VUE会基于 key 的变化重新排列元素顺序，并且会移除 key 不存在的元素。</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- 1 基础用法 --&gt;</span><br><span class="line">&lt;div v-for=&quot;item in items&quot;&gt;</span><br><span class="line">  &#123;&#123; item.text &#125;&#125;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- item 为当前项，index 为索引 --&gt;</span><br><span class="line">&lt;p v-for=&quot;(item, index) in list&quot;&gt;&#123;&#123;item&#125;&#125; -- &#123;&#123;index&#125;&#125;&lt;/p&gt;</span><br><span class="line">&lt;!-- item 为值，key 为键，index 为索引 --&gt;</span><br><span class="line">&lt;p v-for=&quot;(item, key, index) in obj&quot;&gt;&#123;&#123;item&#125;&#125; -- &#123;&#123;key&#125;&#125;&lt;/p&gt;</span><br><span class="line">&lt;p v-for=&quot;item in 10&quot;&gt;&#123;&#123;item&#125;&#125;&lt;/p&gt;</span><br></pre></td></tr></table></figure>
+
+<h4 id="7-v-if-和-v-show"><a href="#7-v-if-和-v-show" class="headerlink" title="7.v-if 和 v-show"></a>7.v-if 和 v-show</h4><ul>
+<li><a href="https://link.juejin.im/?target=https%3A%2F%2Fcn.vuejs.org%2Fv2%2Fguide%2Fconditional.html" target="_blank" rel="noopener">条件渲染</a></li>
+<li><code>v-if</code>：根据表达式的值的真假条件，销毁或重建元素</li>
+<li><code>v-show</code>：根据表达式之真假值，切换元素的 display CSS 属性</li>
+</ul>
+<h4 id="8-提升用户体验：v-cloak"><a href="#8-提升用户体验：v-cloak" class="headerlink" title="8.提升用户体验：v-cloak"></a>8.提升用户体验：v-cloak</h4><ul>
+<li>这个指令保持在元素上直到关联实例结束编译。和 CSS 规则如 [v-cloak] { display: none } 一起用时，这个指令可以隐藏未编译的 Mustache 标签直到实例准备完毕。</li>
+<li>防止刷新页面，网速慢的情况下出现<code></code>等数据格式</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;div v-cloak&gt;</span><br><span class="line">  &#123;&#123; message &#125;&#125;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+
+<h4 id="9-提升性能：v-pre"><a href="#9-提升性能：v-pre" class="headerlink" title="9.提升性能：v-pre"></a>9.提升性能：v-pre</h4><ul>
+<li>说明：跳过这个元素和它的子元素的编译过程。可以用来显示原始 Mustache 标签。跳过大量没有指令的节点会加快编译。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;span v-pre&gt;&#123;&#123; this will not be compiled &#125;&#125;&lt;/span&gt;</span><br></pre></td></tr></table></figure>
+
+<h4 id="10-提升性能：v-once"><a href="#10-提升性能：v-once" class="headerlink" title="10.提升性能：v-once"></a>10.提升性能：v-once</h4><ul>
+<li>说明：只渲染元素和组件一次。随后的重新渲染，元素/组件及其所有的子节点将被视为静态内容并跳过。这可以用于优化更新性能。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;span v-once&gt;This will never change: &#123;&#123;msg&#125;&#125;&lt;/span&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="自定义指令"><a href="#自定义指令" class="headerlink" title="自定义指令"></a>自定义指令</h3><p>除了核心功能默认内置的指令 (<code>v-model</code> 和 <code>v-show</code>)，Vue 也允许注册自定义指令。注意，在 Vue2.0 中，代码复用和抽象的主要形式是组件。然而，有的情况下，你仍然需要对普通 DOM 元素进行底层操作，这时候就会用到自定义指令。</p>
+<p>例如：</p>
+<p>当页面加载时，该元素将获得焦点 (注意：<code>autofocus</code> 在移动版 Safari 上不工作)。事实上，只要你在打开这个页面后还没点击过任何内容，这个输入框就应当还是处于聚焦状态。现在让我们用指令来实现这个功能：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">// 注册一个全局自定义指令 `v-focus`</span><br><span class="line">Vue.directive(&apos;focus&apos;, &#123;</span><br><span class="line">  // 当被绑定的元素插入到 DOM 中时……</span><br><span class="line">  inserted: function (el) &#123;</span><br><span class="line">    // 聚焦元素</span><br><span class="line">    el.focus()</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>如果想注册局部指令，组件中也接受一个 <code>directives</code> 的选项：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">directives: &#123;</span><br><span class="line">  focus: &#123;</span><br><span class="line">    // 指令的定义</span><br><span class="line">    inserted: function (el) &#123;</span><br><span class="line">      el.focus()</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>然后你可以在模板中任何元素上使用新的 <code>v-focus</code> 属性，如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;input v-focus&gt;</span><br></pre></td></tr></table></figure>
+
+<h4 id="钩子函数"><a href="#钩子函数" class="headerlink" title="钩子函数"></a>钩子函数</h4><p>一个指令定义对象可以提供如下几个钩子函数 (均为可选)：</p>
+<ul>
+<li><code>bind</code>：只调用一次，指令第一次绑定到元素时调用。在这里可以进行一次性的初始化设置。</li>
+<li><code>inserted</code>：被绑定元素插入父节点时调用 (仅保证父节点存在，但不一定已被插入文档中)。</li>
+<li><code>update</code>：所在组件的 VNode 更新时调用，<strong>但是可能发生在其子 VNode 更新之前</strong>。指令的值可能发生了改变，也可能没有。但是你可以通过比较更新前后的值来忽略不必要的模板更新 (详细的钩子函数参数见下)。</li>
+<li><code>componentUpdated</code>：指令所在组件的 VNode <strong>及其子 VNode</strong> 全部更新后调用。</li>
+<li><code>unbind</code>：只调用一次，指令与元素解绑时调用。</li>
+</ul>
+<h4 id="钩子函数参数"><a href="#钩子函数参数" class="headerlink" title="钩子函数参数"></a>钩子函数参数</h4><p>指令钩子函数会被传入以下参数：</p>
+<ul>
+<li><p><code>el</code>：指令所绑定的元素，可以用来直接操作 DOM 。</p>
+</li>
+<li><p><code>binding</code>：一个对象，包含以下属性：</p>
+<ul>
+<li><code>name</code>：指令名，不包括 <code>v-</code> 前缀。</li>
+<li><code>value</code>：指令的绑定值，例如：<code>v-my-directive=&quot;1 + 1&quot;</code> 中，绑定值为 <code>2</code>。</li>
+<li><code>oldValue</code>：指令绑定的前一个值，仅在 <code>update</code> 和 <code>componentUpdated</code> 钩子中可用。无论值是否改变都可用。</li>
+<li><code>expression</code>：字符串形式的指令表达式。例如 <code>v-my-directive=&quot;1 + 1&quot;</code> 中，表达式为 <code>&quot;1 + 1&quot;</code>。</li>
+<li><code>arg</code>：传给指令的参数，可选。例如 <code>v-my-directive:foo</code> 中，参数为 <code>&quot;foo&quot;</code>。</li>
+<li><code>modifiers</code>：一个包含修饰符的对象。例如：<code>v-my-directive.foo.bar</code> 中，修饰符对象为 <code>{ foo: true, bar: true }</code>。</li>
+</ul>
+</li>
+<li><p><code>vnode</code>：Vue 编译生成的虚拟节点。移步 <a href="https://cn.vuejs.org/v2/api/#VNode-接口" target="_blank" rel="noopener">VNode API</a> 来了解更多详情。</p>
+</li>
+<li><p><code>oldVnode</code>：上一个虚拟节点，仅在 <code>update</code> 和 <code>componentUpdated</code> 钩子中可用。</p>
+<p>除了 <code>el</code> 之外，其它参数都应该是只读的，切勿进行修改。如果需要在钩子之间共享数据，建议通过元素的 <a href="https://developer.mozilla.org/zh-CN/docs/Web/API/HTMLElement/dataset" target="_blank" rel="noopener"><code>dataset</code></a> 来进行。</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">&lt;div id=&quot;dynamicexample&quot;&gt;</span><br><span class="line">  &lt;h3&gt;Scroll down inside this section ↓&lt;/h3&gt;</span><br><span class="line">  &lt;p v-pin:[direction]=&quot;200&quot;&gt;I am pinned onto the page at 200px to the left.&lt;/p&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line">Vue.directive(&apos;pin&apos;, &#123;</span><br><span class="line">  bind: function (el, binding, vnode) &#123;</span><br><span class="line">    el.style.position = &apos;fixed&apos;</span><br><span class="line">    var s = (binding.arg == &apos;left&apos; ? &apos;left&apos; : &apos;top&apos;)</span><br><span class="line">    el.style[s] = binding.value + &apos;px&apos;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">new Vue(&#123;</span><br><span class="line">  el: &apos;#dynamicexample&apos;,</span><br><span class="line">  data: function () &#123;</span><br><span class="line">    return &#123;</span><br><span class="line">      direction: &apos;left&apos;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h2 id="8-一句话就能回答的面试题"><a href="#8-一句话就能回答的面试题" class="headerlink" title="8. 一句话就能回答的面试题"></a>8. 一句话就能回答的面试题</h2><p><strong>1.css只在当前组件起作用</strong> 答：在style标签中写入<strong>scoped</strong>即可 例如：</p>
+<p><strong>2.v-if 和 v-show 区别</strong> 答：v-if按照条件是否渲染，v-show是display的block或none；</p>
+<p><strong>3.route和router的区别</strong> 答：route是”路由信息对象”，包括path，params，hash，query，fullPath，matched，name等路由信息参数。而router是“路由实例”对象包括了路由的跳转方法，钩子函数等。</p>
+<p><strong>4.vue.js的两个核心是什么？</strong> 答：数据驱动、组件系统</p>
+<p><strong>5.vue几种常用的指令</strong> 答：v-for 、 v-if 、v-bind、v-on、v-show、v-else</p>
+<p><strong>6.vue常用的修饰符？</strong> 答：.prevent: 提交事件不再重载页面；.stop: 阻止单击事件冒泡；.self: 当事件发生在该元素本身而不是子元素的时候会触发；.capture: 事件侦听，事件发生的时候会调用</p>
+<p><strong>7.v-on 可以绑定多个方法吗？</strong> 答：可以</p>
+<p><strong>8.vue中 key 值的作用？</strong> 答：当 Vue.js 用 v-for 正在更新已渲染过的元素列表时，它默认用“就地复用”策略。如果数据项的顺序被改变，Vue 将不会移动 DOM 元素来匹配数据项的顺序， 而是简单复用此处每个元素，并且确保它在特定索引下显示已被渲染过的每个元素。key的作用主要是为了高效的更新虚拟DOM。</p>
+<p><strong>9.什么是vue的计算属性？</strong> 答：在模板中放入太多的逻辑会让模板过重且难以维护，在需要对数据进行复杂处理，且可能多次使用的情况下，尽量采取计算属性的方式。好处：①使得数据处理结构清晰；②依赖于数据，数据更新，处理结果自动更新；③计算属性内部this指向vm实例；④在template调用时，直接写计算属性名即可；⑤常用的是getter方法，获取数据，也可以使用set方法改变数据；⑥相较于methods，不管依赖的数据变不变，methods都会重新计算，但是依赖数据不变的时候computed从缓存中获取，不会重新计算。</p>
+<p><strong>10.vue等单页面应用及其优缺点</strong> 答：优点：Vue 的目标是通过尽可能简单的 API 实现响应的数据绑定和组合的视图组件，核心是一个响应的数据绑定系统。MVVM、数据驱动、组件化、轻量、简洁、高效、快速、模块友好。 ==<strong>缺点：</strong>不支持低版本的浏览器，最低只支持到IE9；不利于SEO的优化（如果要支持SEO，建议通过服务端来进行渲染组件）；第一次加载首页耗时相对长一些；不可以使用浏览器的导航按钮需要自行实现前进、后退。==</p>
+
+                </article>
+                <ul class="tags-postTags">
+                    
+                    <li>
+                        <a href="/tags/VUE/" rel="tag"># VUE</a>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    
+    <nav id="gobottom" class="pagination">
+        
+        <a class="prev-post" title="Vue组件间的通信" href="/2020/02/26/Vue组件间的通信/">
+            ← Vue组件间的通信
+        </a>
+        
+        <span class="prev-next-post">·</span>
+        
+        <a class="next-post" title="Vue使用异步更新队列" href="/2020/02/09/Vue使用异步更新队列/">
+            Vue使用异步更新队列 →
+        </a>
+        
+    </nav>
+
+    
+    <div class="inner">
+        <div id="comment"></div>
+    </div>
+    
+</div>
+
+<div class="toc-bar">
+    <div class="toc-btn-bar">
+        <a href="#site-main" class="toc-btn">
+            <svg viewbox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M793.024 710.272a32 32 0 1 0 45.952-44.544l-310.304-320a32 32 0 0 0-46.4 0.48l-297.696 320a32 32 0 0 0 46.848 43.584l274.752-295.328 286.848 295.808z"/></svg>
+        </a>
+        <div class="toc-btn toc-switch">
+            <svg class="toc-open" viewbox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M779.776 480h-387.2a32 32 0 0 0 0 64h387.2a32 32 0 0 0 0-64M779.776 672h-387.2a32 32 0 0 0 0 64h387.2a32 32 0 0 0 0-64M256 288a32 32 0 1 0 0 64 32 32 0 0 0 0-64M392.576 352h387.2a32 32 0 0 0 0-64h-387.2a32 32 0 0 0 0 64M256 480a32 32 0 1 0 0 64 32 32 0 0 0 0-64M256 672a32 32 0 1 0 0 64 32 32 0 0 0 0-64"/></svg>
+            <svg class="toc-close hide" viewbox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M512 960c-247.039484 0-448-200.960516-448-448S264.960516 64 512 64 960 264.960516 960 512 759.039484 960 512 960zM512 128.287273c-211.584464 0-383.712727 172.128262-383.712727 383.712727 0 211.551781 172.128262 383.712727 383.712727 383.712727 211.551781 0 383.712727-172.159226 383.712727-383.712727C895.712727 300.415536 723.551781 128.287273 512 128.287273z"/><path d="M557.05545 513.376159l138.367639-136.864185c12.576374-12.416396 12.672705-32.671738 0.25631-45.248112s-32.704421-12.672705-45.248112-0.25631l-138.560301 137.024163-136.447897-136.864185c-12.512727-12.512727-32.735385-12.576374-45.248112-0.063647-12.512727 12.480043-12.54369 32.735385-0.063647 45.248112l136.255235 136.671523-137.376804 135.904314c-12.576374 12.447359-12.672705 32.671738-0.25631 45.248112 6.271845 6.335493 14.496116 9.504099 22.751351 9.504099 8.12794 0 16.25588-3.103239 22.496761-9.247789l137.567746-136.064292 138.687596 139.136568c6.240882 6.271845 14.432469 9.407768 22.65674 9.407768 8.191587 0 16.352211-3.135923 22.591372-9.34412 12.512727-12.480043 12.54369-32.704421 0.063647-45.248112L557.05545 513.376159z"/></svg>
+        </div>
+        <a href="#gobottom" class="toc-btn">
+            <svg viewbox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M231.424 346.208a32 32 0 0 0-46.848 43.584l297.696 320a32 32 0 0 0 46.4 0.48l310.304-320a32 32 0 1 0-45.952-44.544l-286.848 295.808-274.752-295.36z"/></svg>
+        </a>
+    </div>
+    <div class="toc-main">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#vue"><span class="toc-text">vue</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-对于MVVM的理解？"><span class="toc-text">1. 对于MVVM的理解？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#MVVM-各模块职责"><span class="toc-text">MVVM 各模块职责</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-vue生命周期："><span class="toc-text">2.vue生命周期：</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-在beforeCreate和created钩子函数之间的生命周期"><span class="toc-text">1. 在beforeCreate和created钩子函数之间的生命周期</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-created钩子函数和beforeMount间的生命周期"><span class="toc-text">2. created钩子函数和beforeMount间的生命周期</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-beforeMount和mounted-钩子函数间的生命周期"><span class="toc-text">3. beforeMount和mounted 钩子函数间的生命周期</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-mounted"><span class="toc-text">4. mounted</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-beforeUpdate（更新前）"><span class="toc-text">5. beforeUpdate（更新前）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-updated（更新后）"><span class="toc-text">6. updated（更新后）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-beforeDestroy（销毁前）"><span class="toc-text">7. beforeDestroy（销毁前）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-destroyed（销毁后）"><span class="toc-text">8. destroyed（销毁后）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#关于生命周期的问题："><span class="toc-text">关于生命周期的问题：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-Vue实现数据双向绑定的原理：Object-defineProperty（）"><span class="toc-text">3.Vue实现数据双向绑定的原理：Object.defineProperty（）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#关于Object-defineProperty"><span class="toc-text">关于Object.defineProperty</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-Vue的路由实现：hash模式-和-history模式"><span class="toc-text">4. Vue的路由实现：hash模式 和 history模式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-Vue与Angular以及React的区别？"><span class="toc-text">5. Vue与Angular以及React的区别？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-vue路由的钩子函数"><span class="toc-text">6. vue路由的钩子函数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#指令"><span class="toc-text">指令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#常用指令"><span class="toc-text">常用指令</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-v-text：更新元素的-textContent"><span class="toc-text">1.v-text：更新元素的 textContent</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-v-html：更新元素的-innerHTML"><span class="toc-text">2.v-html：更新元素的 innerHTML</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-v-bind"><span class="toc-text">3.v-bind</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-v-on"><span class="toc-text">4.v-on</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-v-model"><span class="toc-text">5.v-model</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-v-for"><span class="toc-text">6.v-for</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#7-v-if-和-v-show"><span class="toc-text">7.v-if 和 v-show</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#8-提升用户体验：v-cloak"><span class="toc-text">8.提升用户体验：v-cloak</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#9-提升性能：v-pre"><span class="toc-text">9.提升性能：v-pre</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#10-提升性能：v-once"><span class="toc-text">10.提升性能：v-once</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#自定义指令"><span class="toc-text">自定义指令</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#钩子函数"><span class="toc-text">钩子函数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#钩子函数参数"><span class="toc-text">钩子函数参数</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-一句话就能回答的面试题"><span class="toc-text">8. 一句话就能回答的面试题</span></a></li></ol></li></ol>
+    </div>
+</div>
+
+
+
+	</div>
+	
+
+
+<aside class="read-next outer">
+    <div class="inner">
+        <div class="read-next-feed">
+            
+            
+
+<article class="read-next-card" style="background-image: url(https://tva1.sinaimg.cn/large/006y8mN6ly1g77gpw5lrfj31bt0u0qv6.jpg)">
+  <header class="read-next-card-header">
+    <small class="read-next-card-header-sitetitle">&mdash; 01不是包子脸 &mdash;</small>
+    <h3 class="read-next-card-header-title">最新文章</h3>
+  </header>
+  <div class="read-next-divider">
+    <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24">
+      <path d="M13 14.5s2 3 5 3 5.5-2.463 5.5-5.5S21 6.5 18 6.5c-5 0-7 11-12 11C2.962 17.5.5 15.037.5 12S3 6.5 6 6.5s4.5 3.5 4.5 3.5"/>
+    </svg>
+  </div>
+  <div class="read-next-card-content">
+    <ul>
+      
+      
+      
+      <li>
+        <a href="/2020/02/26/Vue组件间的通信/">Vue组件间的通信</a>
+      </li>
+      
+      
+      
+      <li>
+        <a href="/2020/02/17/Vue相关面试题/">Vue相关面试题</a>
+      </li>
+      
+      
+      
+      <li>
+        <a href="/2020/02/09/Vue使用异步更新队列/">Vue使用异步更新队列</a>
+      </li>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+    </ul>
+  </div>
+  <footer class="read-next-card-footer">
+    <a href="/archives">  MORE  → </a>
+  </footer>
+</article>
+
+            
+            
+            
+
+<article class="read-next-card" style="background-image: url(https://tva1.sinaimg.cn/large/006y8mN6ly1g77gpw5lrfj31bt0u0qv6.jpg)">
+    <header class="read-next-card-header tagcloud-card">
+        <h3 class="read-next-card-header-title">分类</h3>
+    </header>
+    <div class="read-next-card-content">
+        <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/01的小生活/">01的小生活</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/CSS/">CSS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/ES6/">ES6</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Node-js/">Node.js</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/React/">React</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/VUE/">VUE</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/git/">git</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/">前端</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端工具/">前端工具</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/安全/">安全</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/浏览器/">浏览器</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/移动端/">移动端</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/算法/">算法</a></li></ul>
+    </div>
+</article>
+
+
+            
+            
+            
+
+<article class="read-next-card" style="background-image: url(https://tva1.sinaimg.cn/large/006y8mN6ly1g77gpw5lrfj31bt0u0qv6.jpg)">
+	<header class="read-next-card-header tagcloud-card">
+		<h3 class="read-next-card-header-title">标签云</h3>
+	</header>
+	<div class="read-next-card-content-ext">
+		<a href="/tags/CSS/" style="font-size: 21.14px;">CSS</a> <a href="/tags/ES6/" style="font-size: 22.57px;">ES6</a> <a href="/tags/HTTP/" style="font-size: 15.43px;">HTTP</a> <a href="/tags/JavaScript/" style="font-size: 24px;">JavaScript</a> <a href="/tags/LESS/" style="font-size: 14px;">LESS</a> <a href="/tags/LeetCode/" style="font-size: 16.86px;">LeetCode</a> <a href="/tags/Node-js/" style="font-size: 15.43px;">Node.js</a> <a href="/tags/React/" style="font-size: 15.43px;">React</a> <a href="/tags/SASS/" style="font-size: 14px;">SASS</a> <a href="/tags/TCP-IP/" style="font-size: 16.86px;">TCP/IP</a> <a href="/tags/VUE/" style="font-size: 19.71px;">VUE</a> <a href="/tags/git/" style="font-size: 16.86px;">git</a> <a href="/tags/npm/" style="font-size: 14px;">npm</a> <a href="/tags/position/" style="font-size: 14px;">position</a> <a href="/tags/webpack/" style="font-size: 15.43px;">webpack</a> <a href="/tags/yarn/" style="font-size: 14px;">yarn</a> <a href="/tags/伪元素/" style="font-size: 14px;">伪元素</a> <a href="/tags/伪类/" style="font-size: 14px;">伪类</a> <a href="/tags/回溯/" style="font-size: 14px;">回溯</a> <a href="/tags/安全/" style="font-size: 18.29px;">安全</a> <a href="/tags/居中/" style="font-size: 14px;">居中</a> <a href="/tags/布局/" style="font-size: 16.86px;">布局</a> <a href="/tags/年度总结/" style="font-size: 14px;">年度总结</a> <a href="/tags/性能优化/" style="font-size: 14px;">性能优化</a> <a href="/tags/排序/" style="font-size: 14px;">排序</a> <a href="/tags/数组/" style="font-size: 14px;">数组</a> <a href="/tags/正则/" style="font-size: 15.43px;">正则</a> <a href="/tags/浏览器/" style="font-size: 22.57px;">浏览器</a> <a href="/tags/清除浮动/" style="font-size: 14px;">清除浮动</a> <a href="/tags/移动端/" style="font-size: 14px;">移动端</a> <a href="/tags/算法/" style="font-size: 18.29px;">算法</a> <a href="/tags/缓存/" style="font-size: 15.43px;">缓存</a> <a href="/tags/触屏/" style="font-size: 14px;">触屏</a> <a href="/tags/跨域/" style="font-size: 15.43px;">跨域</a> <a href="/tags/路由/" style="font-size: 14px;">路由</a>
+	</div>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+	
+
+
+
+
+<div id="search" class="search-overlay">
+    <div class="search-form">
+        
+        <img class="search-overlay-logo" src="https://tva1.sinaimg.cn/large/006y8mN6ly1g6sjqjrb9wj30jj0jjjss.jpg" alt="01不是包子脸">
+        
+        <input id="local-search-input" class="search-input" type="text" name="search" placeholder="搜索 ...">
+        <a class="search-overlay-close" href="#"></a>
+    </div>
+    <div id="local-search-result"></div>
+</div>
+
+<footer class="site-footer outer">
+	<div class="site-footer-content inner">
+		<div class="copyright">
+			<a href="/" title="01不是包子脸">01不是包子脸</a>
+			&copy; 2020
+		</div>
+		<nav class="site-footer-nav">
+			
+			<a href="https://hexo.io" title="Hexo" target="_blank" rel="noopener">Hexo</a>
+			<a href="https://github.com/xzhih/hexo-theme-casper" title="Casper" target="_blank" rel="noopener">Casper</a>
+		</nav>
+	</div>
+</footer>
+	
+
+
+<script>if(window.navigator && navigator.serviceWorker) {navigator.serviceWorker.getRegistrations().then(function(registrations) {for(let registration of registrations) {registration.unregister()}})}</script>
+
+
+<script async src="/js/allinone.min.js" id="scriptLoad"></script>
+
+
+
+
+
+
+<script>
+    document.getElementById('scriptLoad').addEventListener('load', function () {
+        var bLazy = new Blazy()
+    })
+</script>
+
+
+
+
+<div class="floating-header">
+	<div class="floating-header-logo">
+        <a href="/" title="01不是包子脸">
+			
+                <img src="https://tva1.sinaimg.cn/large/006y8mN6ly1g6sjqjrb9wj30jj0jjjss.jpg" alt="01不是包子脸 icon">
+			
+            <span>01不是包子脸</span>
+        </a>
+    </div>
+    <span class="floating-header-divider">&mdash;</span>
+    <div class="floating-header-title">Vue相关面试题</div>
+    <progress class="progress" value="0">
+        <span class="progress-container">
+            <span class="progress-bar"></span>
+        </span>
+    </progress>
+</div>
+<script>
+    document.getElementById('scriptLoad').addEventListener('load', function () {
+        postProgressBar()
+    })
+</script>
+
+
+
+
+<script src="/js/lightgallery.min.js"></script>
+<link rel="stylesheet" href="/css/lightgallery.min.css">
+<script>
+    lightGallery(document.getElementById('lightgallery'), {
+        selector: '.post-img'
+    });
+</script>
+
+
+
+
+<script async src="https://cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script async src="https://unpkg.com/valine@1.3.4/dist/Valine.min.js"></script>
+<script>
+    window.addEventListener("load", function() {
+        new Valine({
+            el: '#comment' ,
+            verify: false,
+            notify: false,
+            appId: 'RKl7DjTGeDG8TMedBcYhiagz-gzGzoHsz',
+            appKey: 'pcwdBNPnrqDUcLyj3H0TaeHy',
+            placeholder: '来聊聊天吧～～',
+            pageSize: 10,
+            avatar: 'mm',
+            visitor: true,
+        })
+    });
+</script>
+
+
+
+
+
+<script>
+    document.getElementById('scriptLoad').addEventListener('load', function(){
+        searchFunc("/")
+    });
+</script>
+
+
+
+
+
+
+</body>
+</html>
