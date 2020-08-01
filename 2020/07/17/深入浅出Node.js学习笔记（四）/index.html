@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+
+
+
+
+
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<link rel="preconnect" href="//pic.zhih.me">
+	<link rel="preconnect" href="//www.googletagmanager.com">
+	<link rel="preconnect" href="//zz.bdstatic.com">
+	<link rel="preconnect" href="//sp0.baidu.com">
+	<link rel="preconnect" href="//www.google-analytics.com">
+	<link rel="preconnect" href="//cdn1.lncld.net">
+	<link rel="preconnect" href="//unpkg.com">
+	<link rel="preconnect" href="//app-router.leancloud.cn">
+	<link rel="preconnect" href="//9qpuwspm.api.lncld.net">
+	<link rel="preconnect" href="//gravatar.loli.net">
+	<link rel="preload" href="https://pic.zhih.me/blog/header.jpg" as="image">
+
+	<title>深入浅出Node.js学习笔记（四） | 01不是包子脸</title>
+
+	<meta name="HandheldFriendly" content="True">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+	<meta name="generator" content="hexo">
+	<meta name="author" content="Linyi Li">
+	<meta name="description" content>
+
+	
+	<meta name="keywords" content>
+	
+
+	
+	<link rel="shortcut icon" href="https://tva1.sinaimg.cn/large/006y8mN6ly1g6sjqjrb9wj30jj0jjjss.jpg">
+	<link rel="apple-touch-icon" href="https://tva1.sinaimg.cn/large/006y8mN6ly1g6sjqjrb9wj30jj0jjjss.jpg">
+	
+
+	
+	<meta name="theme-color" content="#3c484e">
+	<meta name="msapplication-TileColor" content="#3c484e">
+	
+
+	
+
+	
+
+	<meta property="og:site_name" content="01不是包子脸">
+	<meta property="og:type" content="article">
+	<meta property="og:title" content="深入浅出Node.js学习笔记（四） | 01不是包子脸">
+	<meta property="og:description" content>
+	<meta property="og:url" content="http://yoursite.com/2020/07/17/深入浅出Node.js学习笔记（四）/">
+
+	
+	<meta property="article:published_time" content="2020-07-17T11:07:00+08:00"> 
+	<meta property="article:author" content="Linyi Li">
+	<meta property="article:published_first" content="01不是包子脸, /2020/07/17/深入浅出Node.js学习笔记（四）/">
+	
+
+	
+	
+	<link rel="stylesheet" href="/css/allinonecss.min.css">
+
+	
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-145838942-1"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag('js', new Date());
+		gtag('config', 'UA-145838942-1');
+	</script>
+	
+	
+	
+<link rel="canonical" href="http://yoursite.com/2020/07/17/深入浅出Node.js学习笔记（四）/">
+
+
+
+
+
+</head>
+<body class="post-template">
+	<div class="site-wrapper">
+		
+
+
+
+
+<header class="site-header post-site-header outer">
+    <div class="inner">
+        
+<nav class="site-nav"> 
+    <div class="site-nav-left">
+        <ul class="nav">
+            <li>
+                
+                
+                <a class="site-nav-logo" href="/" title="01不是包子脸">
+                    <img src="https://tva1.sinaimg.cn/large/006y8mN6ly1g6sjqjrb9wj30jj0jjjss.jpg" alt="01不是包子脸">
+                </a>
+                
+                
+            </li>
+            
+            
+            <li>
+                <a href="/" title="HOME">HOME</a>
+            </li>
+            
+            <li>
+                <a href="/about" title="ABOUT">ABOUT</a>
+            </li>
+            
+            <li>
+                <a href="/archives" title="ARCHIVES">ARCHIVES</a>
+            </li>
+            
+            
+        </ul> 
+    </div>
+    
+    <div class="search-button-area">
+        <a href="#search" class="search-button">Search ...</a>
+    </div>
+     
+    <div class="site-nav-right">
+        
+        <a href="#search" class="search-button">Search ...</a>
+         
+        
+<div class="social-links">
+    
+    <a class="social-link" title="weibo" href="https://weibo.com/2164694963/profile?rightmod=1&wvr=6&mod=personinfo" target="_blank" rel="noopener">
+        <svg viewbox="0 0 1141 1024" xmlns="http://www.w3.org/2000/svg"><path d="M916.48 518.144q27.648 21.504 38.912 51.712t9.216 62.976-14.336 65.536-31.744 59.392q-34.816 48.128-78.848 81.92t-91.136 56.32-94.72 35.328-89.6 18.944-75.264 7.68-51.712 1.536-49.152-2.56-68.096-10.24-78.336-21.504-79.872-36.352-74.24-55.296-59.904-78.848q-16.384-29.696-22.016-63.488t-5.632-86.016q0-22.528 7.68-51.2t27.136-63.488 53.248-75.776 86.016-90.112q51.2-48.128 105.984-85.504t117.248-57.856q28.672-10.24 63.488-11.264t57.344 11.264q10.24 11.264 19.456 23.04t12.288 29.184q3.072 14.336 0.512 27.648t-5.632 26.624-5.12 25.6 2.048 22.528q17.408 2.048 33.792-1.536t31.744-9.216 31.232-11.776 33.28-9.216q27.648-5.12 54.784-4.608t49.152 7.68 36.352 22.016 17.408 38.4q2.048 14.336-2.048 26.624t-8.704 23.04-7.168 22.016 1.536 23.552q3.072 7.168 14.848 13.312t27.136 12.288 32.256 13.312 29.184 16.384zM658.432 836.608q26.624-16.384 53.76-45.056t44.032-64 18.944-75.776-20.48-81.408q-19.456-33.792-47.616-57.344t-62.976-37.376-74.24-19.968-80.384-6.144q-78.848 0-139.776 16.384t-105.472 43.008-72.192 60.416-38.912 68.608q-11.264 33.792-6.656 67.072t20.992 62.976 42.496 53.248 57.856 37.888q58.368 25.6 119.296 32.256t116.224 0.512 100.864-21.504 74.24-33.792zM524.288 513.024q20.48 8.192 38.912 18.432t32.768 27.648q10.24 12.288 17.92 30.72t10.752 39.424 1.536 42.496-9.728 38.912q-8.192 18.432-19.968 37.376t-28.672 35.328-40.448 29.184-57.344 18.944q-61.44 11.264-117.76-11.264t-88.064-74.752q-12.288-39.936-13.312-70.656t16.384-66.56q13.312-27.648 40.448-51.712t62.464-38.912 75.264-17.408 78.848 12.8zM361.472 764.928q37.888 3.072 57.856-18.432t21.504-48.128-15.36-47.616-52.736-16.896q-27.648 3.072-43.008 23.552t-17.408 43.52 9.728 42.496 39.424 21.504zM780.288 6.144q74.752 0 139.776 19.968t113.664 57.856 76.288 92.16 27.648 122.88q0 33.792-16.384 50.688t-35.328 17.408-35.328-14.336-16.384-45.568q0-40.96-22.528-77.824t-59.392-64.512-84.48-43.52-96.768-15.872q-31.744 0-47.104-15.36t-14.336-34.304 18.944-34.304 51.712-15.36zM780.288 169.984q95.232 0 144.384 48.64t49.152 146.944q0 30.72-10.24 43.52t-22.528 11.264-22.528-14.848-10.24-35.84q0-60.416-34.816-96.256t-93.184-35.84q-19.456 0-28.672-10.752t-9.216-23.04 9.728-23.04 28.16-10.752z"/></svg>
+    </a>
+    
+    
+    <a class="social-link" title="github" href="https://github.com/linyi531" target="_blank" rel="noopener">
+        <svg viewbox="0 0 1049 1024" xmlns="http://www.w3.org/2000/svg"><path d="M524.979332 0C234.676191 0 0 234.676191 0 524.979332c0 232.068678 150.366597 428.501342 358.967656 498.035028 26.075132 5.215026 35.636014-11.299224 35.636014-25.205961 0-12.168395-0.869171-53.888607-0.869171-97.347161-146.020741 31.290159-176.441729-62.580318-176.441729-62.580318-23.467619-60.841976-58.234462-76.487055-58.234463-76.487055-47.804409-32.15933 3.476684-32.15933 3.476685-32.15933 53.019436 3.476684 80.83291 53.888607 80.83291 53.888607 46.935238 79.963739 122.553122 57.365291 152.97411 43.458554 4.345855-33.897672 18.252593-57.365291 33.028501-70.402857-116.468925-12.168395-239.022047-57.365291-239.022047-259.012982 0-57.365291 20.860106-104.300529 53.888607-140.805715-5.215026-13.037566-23.467619-66.926173 5.215027-139.067372 0 0 44.327725-13.906737 144.282399 53.888607 41.720212-11.299224 86.917108-17.383422 131.244833-17.383422s89.524621 6.084198 131.244833 17.383422C756.178839 203.386032 800.506564 217.29277 800.506564 217.29277c28.682646 72.1412 10.430053 126.029806 5.215026 139.067372 33.897672 36.505185 53.888607 83.440424 53.888607 140.805715 0 201.64769-122.553122 245.975415-239.891218 259.012982 19.121764 16.514251 35.636014 47.804409 35.636015 97.347161 0 70.402857-0.869171 126.898978-0.869172 144.282399 0 13.906737 9.560882 30.420988 35.636015 25.205961 208.601059-69.533686 358.967656-265.96635 358.967655-498.035028C1049.958663 234.676191 814.413301 0 524.979332 0z"/></svg>
+    </a>
+    
+    
+    
+    <a class="social-link" title="twitter" href="https://twitter.com/nFywOCNPid75cl5" target="_blank" rel="noopener">
+        <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 32 32"><path d="M30.063 7.313c-.813 1.125-1.75 2.125-2.875 2.938v.75c0 1.563-.188 3.125-.688 4.625a15.088 15.088 0 0 1-2.063 4.438c-.875 1.438-2 2.688-3.25 3.813a15.015 15.015 0 0 1-4.625 2.563c-1.813.688-3.75 1-5.75 1-3.25 0-6.188-.875-8.875-2.625.438.063.875.125 1.375.125 2.688 0 5.063-.875 7.188-2.5-1.25 0-2.375-.375-3.375-1.125s-1.688-1.688-2.063-2.875c.438.063.813.125 1.125.125.5 0 1-.063 1.5-.25-1.313-.25-2.438-.938-3.313-1.938a5.673 5.673 0 0 1-1.313-3.688v-.063c.813.438 1.688.688 2.625.688a5.228 5.228 0 0 1-1.875-2c-.5-.875-.688-1.813-.688-2.75 0-1.063.25-2.063.75-2.938 1.438 1.75 3.188 3.188 5.25 4.25s4.313 1.688 6.688 1.813a5.579 5.579 0 0 1 1.5-5.438c1.125-1.125 2.5-1.688 4.125-1.688s3.063.625 4.188 1.813a11.48 11.48 0 0 0 3.688-1.375c-.438 1.375-1.313 2.438-2.563 3.188 1.125-.125 2.188-.438 3.313-.875z"/></svg>
+
+    </a>
+    
+    
+    <a class="social-link" title="telegram" href="https://www.instagram.com/linyi531/" target="_blank" rel="noopener">
+        <svg viewbox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M679.428571 746.857143l84-396q5.142857-25.142857-6-36t-29.428571-4L234.285714 501.142857q-16.571429 6.285714-22.571428 14.285714t-1.428572 15.142858 18.285715 11.142857l126.285714 39.428571 293.142857-184.571428q12-8 18.285714-3.428572 4 2.857143-2.285714 8.571429l-237.142857 214.285714-9.142857 130.285714q13.142857 0 25.714285-12.571428l61.714286-59.428572 128 94.285715q36.571429 20.571429 46.285714-21.714286z m344.571429-234.857143q0 104-40.571429 198.857143t-109.142857 163.428571-163.428571 109.142857-198.857143 40.571429-198.857143-40.571429-163.428571-109.142857-109.142857-163.428571T0 512t40.571429-198.857143 109.142857-163.428571T313.142857 40.571429 512 0t198.857143 40.571429 163.428571 109.142857 109.142857 163.428571 40.571429 198.857143z"/></svg>
+    </a>
+    
+    
+    
+</div>
+    </div>
+</nav>
+    </div>
+</header>
+
+
+<div id="site-main" class="site-main outer" role="main">
+    <div class="inner">
+        <header class="post-full-header">
+            <div class="post-full-meta">
+                <time class="post-full-meta-date" datetime="2020-07-17T03:26:23.000Z">
+                    2020-07-17
+                </time>
+                
+                <span class="date-divider">/</span>
+                
+                <a href="/categories/Node-js/">Node.js</a>&nbsp;&nbsp;
+                
+                
+            </div>
+            <h1 class="post-full-title">深入浅出Node.js学习笔记（四）</h1>
+        </header>
+        <div class="post-full ">
+            
+            <figure class="post-full-image" style="background-image: url(https://tva1.sinaimg.cn/large/007S8ZIlgy1ggttkzj109j31900u0tr6.jpg)">
+            </figure>
+            
+            <div class="post-full-content">
+                <article id="lightgallery" class="markdown-body">
+                    <h1 id="深入浅出Node-js学习笔记（四）"><a href="#深入浅出Node-js学习笔记（四）" class="headerlink" title="深入浅出Node.js学习笔记（四）"></a>深入浅出Node.js学习笔记（四）</h1><h2 id="第九章-玩转进程"><a href="#第九章-玩转进程" class="headerlink" title="第九章 玩转进程"></a>第九章 玩转进程</h2><h3 id="服务模型的变迁"><a href="#服务模型的变迁" class="headerlink" title="服务模型的变迁"></a>服务模型的变迁</h3><h4 id="石器时代-同步"><a href="#石器时代-同步" class="headerlink" title="石器时代:同步"></a>石器时代:同步</h4><p>它的服务模式是一次只为一个请求服务，所有请求都 得按次序等待服务。这意味除了当前的请求被处理外，其余请求都处于耽误的状态。它的处理能 力相当低下，假设每次响应服务耗用的时间稳定为N秒，这类服务的QPS为1/N。</p>
+<h4 id="青铜时代-复制进程"><a href="#青铜时代-复制进程" class="headerlink" title="青铜时代:复制进程"></a>青铜时代:复制进程</h4><p>通过进程的复制同时服务更多的请求和用 户。这样每个连接都需要一个进程来服务，即100个连接需要启动100个进程来进行服务，这是非 常昂贵的代价。在进程复制的过程中，需要复制进程内部的状态，对于每个连接都进行这样的复 制的话，相同的状态将会在内存中存在很多份，造成浪费。并且这个过程由于要复制较多的数据， 启动是较为缓慢的。</p>
+<p>为了解决启动缓慢的问题，预复制(prefork)被引入服务模型中，即预先复制一定数量的进 程。同时将进程复用，避免进程创建、销毁带来的开销。</p>
+<p>假设通过进行复制和预复制的方式搭建的服务器有资源的限制，且进程数上限为M，那这类 服务的QPS为M/N。</p>
+<h4 id="白银时代-多线程"><a href="#白银时代-多线程" class="headerlink" title="白银时代:多线程"></a>白银时代:多线程</h4><p>让一个线程服务一个请求。线程相 对进程的开销要小许多，并且线程之间可以共享数据，内存浪费的问题可以得到解决，并且利用线 程池可以减少创建和销毁线程的开销。</p>
+<p>由于一个CPU核心在 一个时刻只能做一件事情，操作系统只能通过将CPU切分为时间片的方法，让线程可以较为均匀地 使用CPU资源，但是操作系统内核在切换线程的同时也要切换线程的上下文，当线程数量过多时， 时间将会被耗用在上下文切换中。所以在大并发量时，多线程结构还是无法做到强大的伸缩性。</p>
+<p>如果忽略掉多线程上下文切换的开销，假设线程所占用的资源为进程的1/L，受资源上限的 影响，它的QPS则为M * L/N。</p>
+<h4 id="黄金时代-事件驱动"><a href="#黄金时代-事件驱动" class="headerlink" title="黄金时代:事件驱动"></a>黄金时代:事件驱动</h4><p>由于所有处理都在单线程上进行，影响事件驱动服务模型性能的点在于CPU的计算能力，它 的上限决定这类服务模型的性能上限，但它不受多进程或多线程模式中资源上限的影响，可伸缩 性远比前两者高。</p>
+<h3 id="多进程架构"><a href="#多进程架构" class="headerlink" title="多进程架构"></a>多进程架构</h3><p><img alt="image-20200710114641594" class="post-img b-lazy" href="https://tva1.sinaimg.cn/large/007S8ZIlgy1gglqcw4nqij30h307vt98.jpg" data-src="https://tva1.sinaimg.cn/large/007S8ZIlgy1gglqcw4nqij30h307vt98.jpg"></p>
+<p>Master-Worker模式，又称主从模式。</p>
+<p>图9-1中的进程分为两种:主进程和工 作进程。这是典型的分布式架构中用于并行处理业务的模式，具备较好的可伸缩性和稳定性。主 进程不负责具体的业务处理，而是负责调度或管理工作进程，它是趋向于稳定的。工作进程负责 具体的业务处理，因为业务的多种多样，甚至一项业务由多人开发完成，所以工作进程的稳定性 值得开发者关注。</p>
+<h4 id="创建子进程"><a href="#创建子进程" class="headerlink" title="创建子进程"></a>创建子进程</h4><p>child_process模块给予Node可以随意创建子进程(child_process)的能力。它提供了4个方 法用于创建子进程。</p>
+<ul>
+<li><p>spawn():启动一个子进程来执行命令。</p>
+</li>
+<li><p>exec():启动一个子进程来执行命令，与spawn()不同的是其接口不同，它有一个回调函数获知子进程的状况。</p>
+</li>
+<li><p>execFile():启动一个子进程来执行可执行文件。</p>
+</li>
+<li><p>fork():与spawn()类似，不同点在于它创建Node的子进程只需指定要执行的JavaScript文件模块即可。</p>
+<ul>
+<li><p>spawn()与exec()、execFile()不同的是，后两者创建时可以指定timeout属性设置超时时间，一旦创建的进程运行超过设定的时间将会被杀死。</p>
+</li>
+<li><p>exec()与execFile()不同的是，exec()适合执行已有的命令，execFile()适合执行文件。</p>
+</li>
+<li><p>如果是JavaScript文件通过execFile()运行，它的首行内容必须添加如下代码:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/usr/bin/env node</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+</li>
+</ul>
+<p><img alt="image-20200710115527844" class="post-img b-lazy" href="https://tva1.sinaimg.cn/large/007S8ZIlgy1gglqlz21blj30mw05t74s.jpg" data-src="https://tva1.sinaimg.cn/large/007S8ZIlgy1gglqlz21blj30mw05t74s.jpg"></p>
+<h4 id="进程间通信"><a href="#进程间通信" class="headerlink" title="进程间通信"></a>进程间通信</h4><p>为了实现父子进程之间的通信，父进程与子进程之间将会创建IPC通道。通过IPC通道，父子进程之间才能通过message和send()传递消息。</p>
+<h5 id="进程间通信原理"><a href="#进程间通信原理" class="headerlink" title="进程间通信原理"></a>进程间通信原理</h5><p>IPC的全称是Inter-Process Communication，即进程间通信。进程间通信的目的是为了让不同 的进程能够互相访问资源并进行协调工作。</p>
+<p>Node中实现IPC通道的是管道(pipe) 技术。表现在应 4 用层上的进程间通信只有简单的message事件和send()方法，接口十分简洁和消息化。</p>
+<p><img alt="image-20200710155651836" class="post-img b-lazy" href="https://tva1.sinaimg.cn/large/007S8ZIlgy1gglxlb7bbxj30av08j3yw.jpg" data-src="https://tva1.sinaimg.cn/large/007S8ZIlgy1gglxlb7bbxj30av08j3yw.jpg"></p>
+<p>父进程在实际创建子进程之前，会创建IPC通道并监听它，然后才真正创建出子进程，并通 过环境变量(NODE_CHANNEL_FD)告诉子进程这个IPC通道的文件描述符。子进程在启动的过程中， 根据文件描述符去连接这个已存在的IPC通道，从而完成父子进程之间的连接。</p>
+<p><img alt="image-20200710155822149" class="post-img b-lazy" href="https://tva1.sinaimg.cn/large/007S8ZIlgy1gglxmpsgpjj30bg06b3ys.jpg" data-src="https://tva1.sinaimg.cn/large/007S8ZIlgy1gglxmpsgpjj30bg06b3ys.jpg"></p>
+<p>IPC通道属于双向通信。在Node中，IPC通道被抽象为Stream对 象，在调用send()时发送数据(类似于write())，接收到的消息会通过message事件(类似于data) 触发给应用层。</p>
+<h4 id="句柄传递"><a href="#句柄传递" class="headerlink" title="句柄传递"></a>句柄传递</h4><p>通过代理，可以避免端口不能重复监听的问题，甚至可以在代理进程上做适当的负载均衡， 使得每个子进程可以较为均衡地执行任务。由于进程每接收到一个连接，将会用掉一个文件描述 符，因此代理方案中客户端连接到代理进程，代理进程连接到工作进程的过程需要用掉两个文件 描述符。操作系统的文件描述符是有限的，代理方案浪费掉一倍数量的文件描述符的做法影响了 系统的扩展能力。</p>
+<p>句柄是一种可以用来标识资源的引用，它的内部包含了指向对象的文件描述 符。</p>
+<p>发送句柄意味着什么?在前一个问题中，我们可以去掉代理这种方案，使主进程接收到socket 请求后，将这个socket直接发送给工作进程，而不是重新与工作进程之间建立新的socket连接来转 发数据。文件描述符浪费的问题可以通过这样的方式轻松解决。</p>
+<h5 id="1-句柄发送与还原"><a href="#1-句柄发送与还原" class="headerlink" title="1. 句柄发送与还原"></a>1. 句柄发送与还原</h5><p>目前子进程对象send()方法可以发送的句柄类型包括如下几种。</p>
+<ul>
+<li><p>net.Socket。TCP套接字。</p>
+</li>
+<li><p>net.Server。TCP服务器，任意建立在TCP服务上的应用层服务都可以享受到它带来的</p>
+<p>好处。</p>
+</li>
+<li><p>net.Native。C++层面的TCP套接字或IPC管道。</p>
+</li>
+<li><p>dgram.Socket。UDP套接字。</p>
+</li>
+<li><p>dgram.Native。C++层面的UDP套接字。</p>
+</li>
+</ul>
+<p>send()方法在将消息发送到IPC管道前，将消息组装成两个对象，一个参数是handle，另一个 是message。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  cmd: <span class="string">'NODE_HANDLE'</span>, </span><br><span class="line">  type: <span class="string">'net.Server'</span>, </span><br><span class="line">  msg: message</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>发送到IPC管道中的实际上是我们要发送的句柄文件描述符，文件描述符实际上是一个整数 值。这个message对象在写入到IPC管道时也会通过JSON.stringify()进行序列化。所以最终发送 到IPC通道中的信息都是字符串，send()方法能发送消息和句柄并不意味着它能发送任意对象。</p>
+<p>连接了IPC通道的子进程可以读取到父进程发来的消息，将字符串通过JSON.parse()解析还 原为对象后，才触发message事件将消息体传递给应用层使用。在这个过程中，消息对象还要被 进行过滤处理，message.cmd的值如果以NODE_为前缀，它将响应一个内部事件internalMessage。</p>
+<p>如果message.cmd值为NODE_HANDLE，它将取出message.type值和得到的文件描述符一起还原出一个对应的对象。</p>
+<p><img alt="image-20200710162252691" class="post-img b-lazy" href="https://tva1.sinaimg.cn/large/007S8ZIlgy1gglyc7wck2j30ic02xq38.jpg" data-src="https://tva1.sinaimg.cn/large/007S8ZIlgy1gglyc7wck2j30ic02xq38.jpg"></p>
+<p><strong>Node进程之间只有消息传递，不会真正地传递对象，这种错 觉是抽象封装的结果。</strong></p>
+<h5 id="2-端口共同监听"><a href="#2-端口共同监听" class="headerlink" title="2. 端口共同监听"></a>2. 端口共同监听</h5><p>Node底层对每个端口监听都设置了SO_REUSEADDR选项，这个选项的涵义是不同进程可以就相 同的网卡和端口进行监听，这个服务器端套接字可以被不同的进程复用</p>
+<p>由于独立启动的进程互相之间并不知道文件描述符，所以监听相同端口时就会失败。但对于 send()发送的句柄还原出来的服务而言，它们的文件描述符是相同的，所以监听相同端口不会引 起异常。</p>
+<p>多个应用监听相同端口时，文件描述符同一时间只能被某个进程所用。换言之就是网络请求 向服务器端发送时，只有一个幸运的进程能够抢到连接，也就是说只有它能为这个请求进行服务。 这些进程服务是抢占式的。</p>
+<h3 id="集群稳定之路"><a href="#集群稳定之路" class="headerlink" title="集群稳定之路"></a>集群稳定之路</h3><h4 id="进程事件"><a href="#进程事件" class="headerlink" title="进程事件"></a>进程事件</h4><ul>
+<li>error:当子进程无法被复制创建、无法被杀死、无法发送消息时会触发该事件。</li>
+<li>exit:子进程退出时触发该事件，子进程如果是正常退出，这个事件的第一个参数为退出 码，否则为null。如果进程是通过kill()方法被杀死的，会得到第二个参数，它表示杀死进程时的信号。kill()方法并不能真正地将通过IPC相连的子进程杀死，它只是给子进程 发送了一个系统信号。默认情况下，父进程将通过kill()方法给子进程发送一个SIGTERM信号。</li>
+<li>close:在子进程的标准输入输出流中止时触发该事件，参数与exit相同。</li>
+<li>disconnect:在父进程或子进程中调用disconnect()方法时触发该事件，在调用该方法时将关闭监听IPC通道。</li>
+</ul>
+<h4 id="自动重启"><a href="#自动重启" class="headerlink" title="自动重启"></a>自动重启</h4><p><img alt="image-20200714102219158" class="post-img b-lazy" href="https://tva1.sinaimg.cn/large/007S8ZIlgy1ggqaeax7u9j30eg06h0tc.jpg" data-src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ggqaeax7u9j30eg06h0tc.jpg"></p>
+<h5 id="1-自杀信号"><a href="#1-自杀信号" class="headerlink" title="1. 自杀信号"></a>1. 自杀信号</h5><p>在退出的流程中增加一个自杀 (suicide)信号。工作进程在得知要退出时，向主进程发送一个自杀信号，然后才停止接收新的 连接，当所有连接断开后才退出。主进程在接收到自杀信号后，立即创建新的工作进程服务。</p>
+<p><img alt="image-20200716190328377" class="post-img b-lazy" href="https://tva1.sinaimg.cn/large/007S8ZIlgy1ggt0p7zb2ij30fy0890td.jpg" data-src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ggt0p7zb2ij30fy0890td.jpg"></p>
+<h5 id="2-限量重启"><a href="#2-限量重启" class="headerlink" title="2. 限量重启"></a>2. 限量重启</h5><p>工 作进程不能无限制地被重启，如果启动的过程中就发生了错误，或者启动后接到连接就收到错误， 会导致工作进程被频繁重启，这种频繁重启不属于我们捕捉未知异常的情况，因为这种短时间内 频繁重启已经不符合预期的设置，极有可能是程序编写的错误。</p>
+<p>为了消除这种无意义的重启，在满足一定规则的限制下，不应当反复重启。比如在单位时间 内规定只能重启多少次，超过限制就触发giveup事件，告知放弃重启工作进程这个重要事件。</p>
+<h4 id="负载均衡"><a href="#负载均衡" class="headerlink" title="负载均衡"></a>负载均衡</h4><p>保证多个处理单元工作量公平的策略叫负载均衡。</p>
+<p>Node默认提供的机制是采用操作系统的抢占式策略。所谓的抢占式就是在一堆工作进程中，闲着的进程对到来的请求进行争抢，谁抢到谁服务。</p>
+<p>对于Node而言，需要分清的是它的繁忙是由CPU、I/O两个部分构成的，影响抢占的是CPU 的繁忙度。对不同的业务，可能存在I/O繁忙，而CPU较为空闲的情况，这可能造成某个进程能 够抢到较多请求，形成负载不均衡的情况。</p>
+<p>Round-Robin，又叫轮叫调度。轮叫调度的工作方式是由主进程接受连接，将其依次分发给工作 进程。分发的策略是在N个工作进程中，每次选择第i = (i + 1) mod n个进程来发送连接。</p>
+<p>Round-Robin非常简单，可以避免CPU和I/O繁忙差异导致的负载不均衡。Round-Robin策略也 可以通过代理服务器来实现，但是它会导致服务器上消耗的文件描述符是平常方式的两倍。</p>
+<h4 id="状态共享"><a href="#状态共享" class="headerlink" title="状态共享"></a>状态共享</h4><p>Node进程中不宜存放太多数据，Node也不允许在多个进程之间共享数据</p>
+<h5 id="1-第三方数据存储"><a href="#1-第三方数据存储" class="headerlink" title="1. 第三方数据存储"></a>1. 第三方数据存储</h5><p>解决数据共享最直接、简单的方式就是通过第三方来进行数据存储，比如将数据存放到数据 库、磁盘文件、缓存服务(如Redis)中，所有工作进程启动时将其读取进内存中。但这种方式 存在的问题是如果数据发生改变，还需要一种机制通知到各个子进程，使得它们的内部状态也得 到更新。</p>
+<p><img alt="image-20200716195047959" class="post-img b-lazy" href="https://tva1.sinaimg.cn/large/007S8ZIlgy1ggt22eodjej30ge0bkq3m.jpg" data-src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ggt22eodjej30ge0bkq3m.jpg"></p>
+<p>定时轮询带来的问题是轮询时间不能过密，如果子进程过多，会形成并发处理，如果数据没 有发生改变，这些轮询会没有意义，白白增加查询状态的开销。如果轮询时间过长，数据发生改 变时，不能及时更新到子进程中，会有一定的延迟。</p>
+<h5 id="2-主动通知"><a href="#2-主动通知" class="headerlink" title="2. 主动通知"></a>2. 主动通知</h5><p>当数据发生更新时，主动通知子进程。</p>
+<p>我们将这种用来发送通知和查询状态是否更改的进程叫做通知进程。为了不混合业务逻辑，可以 将这个进程设计为只进行轮询和通知，不处理任何业务逻辑</p>
+<p><img alt="image-20200716195217372" class="post-img b-lazy" href="https://tva1.sinaimg.cn/large/007S8ZIlgy1ggt23zalzij30g00dkwf5.jpg" data-src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ggt23zalzij30g00dkwf5.jpg"></p>
+<p>这种推送机制如果按进程间信号传递，在跨多台服务器时会无效，是故可以考虑采用TCP或 UDP的方案。进程在启动时从通知服务处除了读取第一次数据外，还将进程信息注册到通知服务 处。一旦通过轮询发现有数据更新后，根据注册信息，将更新后的数据发送给工作进程。由于不 涉及太多进程去向同一地方进行状态查询，状态响应处的压力不至于太过巨大，单一的通知服务 轮询带来的压力并不大，所以可以将轮询时间调整得较短，一旦发现更新，就能实时地推送到各 个子进程中。</p>
+<h3 id="Cluster-模块"><a href="#Cluster-模块" class="headerlink" title="Cluster 模块"></a>Cluster 模块</h3><p>v0.8时直接引入了cluster模块，用以解决多核CPU的利用率问题，同时也提供了较完 善的API，用以处理进程的健壮性问题</p>
+<h4 id="Cluster-工作原理"><a href="#Cluster-工作原理" class="headerlink" title="Cluster 工作原理"></a>Cluster 工作原理</h4><p>cluster模块就是child_process和net模块的组合应用。</p>
+<p>cluster启动时，如同我们在 9.2.3节里的代码一样，它会在内部启动TCP服务器，在cluster.fork()子进程时，将这个TCP服 务器端socket的文件描述符发送给工作进程。如果进程是通过cluster.fork()复制出来的，那么 它的环境变量里就存在NODE_UNIQUE_ID，如果工作进程中存在listen()侦听网络端口的调用，它 将拿到该文件描述符，通过SO_REUSEADDR端口重用，从而实现多个子进程共享端口。对于普通方 式启动的进程，则不存在文件描述符传递共享等事情。</p>
+<p><img alt="image-20200716195554501" class="post-img b-lazy" href="https://tva1.sinaimg.cn/large/007S8ZIlgy1ggt27qmj1bj30fy0633yu.jpg" data-src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ggt27qmj1bj30fy0633yu.jpg"></p>
+<h4 id="Cluster-事件"><a href="#Cluster-事件" class="headerlink" title="Cluster 事件"></a>Cluster 事件</h4><ul>
+<li>fork:复制一个工作进程后触发该事件。</li>
+<li>online:复制好一个工作进程后，工作进程主动发送一条online消息给主进程，主进程收到消息后，触发该事件。</li>
+<li>listening:工作进程中调用listen()(共享了服务器端Socket)后，发送一条listening消息给主进程，主进程收到消息后，触发该事件。</li>
+<li>disconnect:主进程和工作进程之间IPC通道断开后会触发该事件。</li>
+<li>exit:有工作进程退出时触发该事件。</li>
+<li>setup:cluster.setupMaster()执行后触发该事件。</li>
+</ul>
+<h2 id="第十章-测试"><a href="#第十章-测试" class="headerlink" title="第十章 测试"></a>第十章 测试</h2><h3 id="单元测试"><a href="#单元测试" class="headerlink" title="单元测试"></a>单元测试</h3><h4 id="单元测试的意义"><a href="#单元测试的意义" class="headerlink" title="单元测试的意义"></a>单元测试的意义</h4><p>编写可测试代码的原则：</p>
+<ul>
+<li><p>单一职责。如果一段代码承担的职责越多，为其编写单元测试的时候就要构造更多的输入数据，然后推测它的输出。</p>
+</li>
+<li><p>接口抽象。通过对程序代码进行接口抽象后，我们可以针对接口进行测试，而具体代码</p>
+<p>实现的变化不影响为接口编写的单元测试。</p>
+</li>
+<li><p>层次分离。层次分离实际上是单一职责的一种实现。在MVC结构的应用中，就是典型的层次分离模型，如果不分离各个层次，无法想象这个代码该如何切入测试。通过分层之后，可以逐层测试，逐层保证。</p>
+</li>
+</ul>
+<h4 id="单元测试介绍"><a href="#单元测试介绍" class="headerlink" title="单元测试介绍"></a>单元测试介绍</h4><p>单元测试主要包含断言、测试框架、测试用例、测试覆盖率、mock、持续集成等几个方面， 由于Node的特殊性，它还会加入异步代码测试和私有方法的测试这两个部分。</p>
+<h5 id="1-断言"><a href="#1-断言" class="headerlink" title="1. 断言"></a>1. 断言</h5><p>断言就是单元测试中用来保证最小单元是否正常的检测方法。断言用于检查程序在运行时是否满足期望。</p>
+<p>在断言规范中，我们定义了以下几种检测方法。</p>
+<ul>
+<li>ok():判断结果是否为真。</li>
+<li>equal():判断实际值与期望值是否相等。</li>
+<li>notEqual():判断实际值与期望值是否不相等。</li>
+<li>deepEqual():判断实际值与期望值是否深度相等(对象或数组的元素是否相等)。 </li>
+<li>notDeepEqual():判断实际值与期望值是否不深度相等。</li>
+<li>strictEqual():判断实际值与期望值是否严格相等(相当于===)</li>
+<li>notStrictEqual():判断实际值与期望值是否不严格相等(相当于!==)。 </li>
+<li>throws():判断代码块是否抛出异常。</li>
+<li>doesNotThrow():判断代码块是否没有抛出异常。</li>
+<li>ifError():判断实际值是否为一个假值(null、undefined、0、’’、false)，如果实际值为真值，将会抛出异常。</li>
+</ul>
+<h5 id="2-测试框架"><a href="#2-测试框架" class="headerlink" title="2. 测试框架"></a>2. 测试框架</h5><p>测试框架用于为测试服务，它本身并不参与测试，主要用于管理测试用例和生成测试报告， 提升测试用例的开发速度，提高测试用例的可维护性和可读性，以及一些周边性的工作。</p>
+<h6 id="测试风格"><a href="#测试风格" class="headerlink" title="测试风格"></a>测试风格</h6><p>我们将测试用例的不同组织方式称为测试风格，现今流行的单元测试风格主要有TDD(测试驱动开发)和BDD(行为驱动开发)两种，它们的差别如下所示。</p>
+<ul>
+<li>关注点不同。TDD关注所有功能是否被正确实现，每一个功能都具备对应的测试用例;BDD关注整体行为是否符合预期，适合自顶向下的设计方式。</li>
+<li>表达方式不同。TDD的表述方式偏向于功能说明书的风格;BDD的表述方式更接近于自然语言的习惯。</li>
+</ul>
+<p>BDD对测试用例的组织主要采用describe和it进行组织。describe可以描述多层级的结构， 具体到测试用例时，用it。另外，它还提供before、after、beforeEach和afterEach这4个钩子方 法，用于协助describe中测试用例的准备、安装、卸载和回收等工作。before和after分别在进入 和退出describe时触发执行，beforeEach和afterEach则分别在describe中每一个测试用例(it) 执行前和执行后触发执行。</p>
+<p><img alt="image-20200716205032544" class="post-img b-lazy" href="https://tva1.sinaimg.cn/large/007S8ZIlgy1ggt3snv1jij30jl07h75l.jpg" data-src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ggt3snv1jij30jl07h75l.jpg"></p>
+<p>TDD对测试用例的组织主要采用suite和test完成。suite也可以实现多层级描述，测试用例用test。它提供的钩子函数仅包含setup和teardown，对应BDD中的before和after。</p>
+<p><img alt="image-20200716205116492" class="post-img b-lazy" href="https://tva1.sinaimg.cn/large/007S8ZIlgy1ggt3tbuuwqj30h307ojsn.jpg" data-src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ggt3tbuuwqj30h307ojsn.jpg"></p>
+<h5 id="3-测试用例"><a href="#3-测试用例" class="headerlink" title="3. 测试用例"></a>3. 测试用例</h5><p>测试用例最少需要通过正向测试和反向测试来保证测试对功能的覆盖，这是最基本的测试用 例。对于Node而言，不仅有这样简单的方法调用，还有异步代码和超时设置需要关注。</p>
+<h5 id="4-私有方法的测试"><a href="#4-私有方法的测试" class="headerlink" title="4. 私有方法的测试"></a>4. 私有方法的测试</h5><p>rewire模块提供了一种巧妙的 方式实现对私有方法的访问。每一个被rewire引入的模块都有<strong>set</strong>()和<strong>get</strong>()方法。它巧妙地利用了闭包的诀窍，在eval()执行时，实现了对模块内部局部变量的访问，从而可以将局部变量导出给测试用例调用执行。</p>
+<h4 id="工程化与自动化"><a href="#工程化与自动化" class="headerlink" title="工程化与自动化"></a>工程化与自动化</h4><h5 id="1-工程化"><a href="#1-工程化" class="headerlink" title="1. 工程化"></a>1. 工程化</h5><p>Node在*nix系统下可以很好地利用一些成熟工具，其中Makefile比较小巧灵活，适合用来构建工程。</p>
+<ul>
+<li>Makefile文件的缩进必须是tab符号，不能用空格。</li>
+<li>记得在包描述文件中配置blanket。</li>
+</ul>
+<h5 id="2-持续集成"><a href="#2-持续集成" class="headerlink" title="2. 持续集成"></a>2. 持续集成</h5><p>GitHub提供了代码托管和社交编程的良好环境，程 序员们可以在上面很社交化地进行代码的clone、fork、pull request、issues等操作，travis-ci则补足了GitHub在持续集成方面的缺点。Git版本控制系统提供了hook机制，用户在push代码后会 触发一个hook脚本，而travis-ci即是通过这种方式与GitHub衔接起来的。</p>
+<p>(1) 在<a href="https://travis-ci.org/上通过OAuth授权绑定你的GitHub账号。" target="_blank" rel="noopener">https://travis-ci.org/上通过OAuth授权绑定你的GitHub账号。</a></p>
+<p>(2) 在GitHub仓库的管理面板(admin)中打开services hook页，在这个页面中可以发现GitHub 上提供了很多基于git hook方式的钩子服务。</p>
+<p>(3) 找到travis服务，点击激活即可。<br>(4) 每次将代码push到GitHub的仓库上后，将会触发该钩子服务。</p>
+<h3 id="性能测试"><a href="#性能测试" class="headerlink" title="性能测试"></a>性能测试</h3><p>基准测试要统计的就是在多少 时间内执行了多少次某个方法。为了增强可比性，一般会以次数作为参照物，然后比较时间，以 此来判别性能的差距。</p>
+<h4 id="压力测试"><a href="#压力测试" class="headerlink" title="压力测试"></a>压力测试</h4><p>对网络接口做压力测试需要考查的几个指标有吞吐率、响应时间和 并发数，这些指标反映了服务器的并发处理能力。</p>
+<p>最常用的工具是ab、siege、http_load等</p>
+<h4 id="基准测试驱动开发"><a href="#基准测试驱动开发" class="headerlink" title="基准测试驱动开发"></a>基准测试驱动开发</h4><p>BDD，全称为Benchmark Driven Development，即基准测试驱动开发</p>
+<p><img alt="image-20200716211012072" class="post-img b-lazy" href="https://tva1.sinaimg.cn/large/007S8ZIlgy1ggt4d1thjgj30hz06574u.jpg" data-src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ggt4d1thjgj30hz06574u.jpg"></p>
+<h2 id="第十一章-产品化"><a href="#第十一章-产品化" class="headerlink" title="第十一章 产品化"></a>第十一章 产品化</h2><h3 id="项目工程化"><a href="#项目工程化" class="headerlink" title="项目工程化"></a>项目工程化</h3><p>所谓的工程化，可以理解为项目的组织能力。体现在文件上，就是文件的组织能力。对于不同 类型的项目，其组织方式也有所不同。除此之外，还应当有能够将整个项目串联起来的灵魂性文件。</p>
+<h4 id="目录结构"><a href="#目录结构" class="headerlink" title="目录结构"></a>目录结构</h4><p>常见的Web应用都是以MVC为主要框架的，其余部分在这个基础上进行扩展。</p>
+<h3 id="日志"><a href="#日志" class="headerlink" title="日志"></a>日志</h3><h4 id="异常日志"><a href="#异常日志" class="headerlink" title="异常日志"></a>异常日志</h4><p>异常日志通常用来记录那些意外产生的异常错误。通过日志的记录，开发者可以根据异常信 息去定位bug出现的具体位置，以快速修复问题。</p>
+<p>异常日志通常有完善的分级，Node中提供的console对象就简单地实现了这几种划分</p>
+<ul>
+<li>console.log:普通日志。 </li>
+<li>console.info:普通信息。 </li>
+<li>console.warn:警告信息。</li>
+<li>console.error:错误信息。</li>
+</ul>
+<h3 id="监控报警"><a href="#监控报警" class="headerlink" title="监控报警"></a>监控报警</h3><h4 id="监控"><a href="#监控" class="headerlink" title="监控"></a>监控</h4><ol>
+<li>日志监控</li>
+<li>响应时间</li>
+<li>进程监控</li>
+<li>磁盘监控</li>
+<li>内存监控</li>
+<li>CPU占用监控</li>
+<li>CPU load监控</li>
+<li>I/O负载</li>
+<li>网络监控</li>
+<li>应用状态监控</li>
+<li>DNS监控</li>
+</ol>
+<h4 id="报警的实现"><a href="#报警的实现" class="headerlink" title="报警的实现"></a>报警的实现</h4><ul>
+<li>邮件报警</li>
+<li>短信或电话报警</li>
+</ul>
+<h4 id="监控系统的稳定性"><a href="#监控系统的稳定性" class="headerlink" title="监控系统的稳定性"></a>监控系统的稳定性</h4><h3 id="稳定性"><a href="#稳定性" class="headerlink" title="稳定性"></a>稳定性</h3><ul>
+<li>多机器</li>
+<li>多机房</li>
+<li>容灾备份</li>
+</ul>
+<h1 id="完结撒花🎉"><a href="#完结撒花🎉" class="headerlink" title="完结撒花🎉"></a>完结撒花🎉</h1><p>（终于把这本书看完了，笔记也不是很认真，希望以后在实践中慢慢领悟吧～）</p>
+
+                </article>
+                <ul class="tags-postTags">
+                    
+                    <li>
+                        <a href="/tags/Node-js/" rel="tag"># Node.js</a>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    
+    <nav id="gobottom" class="pagination">
+        
+        <span class="prev-next-post">·</span>
+        
+        <a class="next-post" title="行业黑话" href="/2020/07/10/行业黑话/">
+            行业黑话 →
+        </a>
+        
+    </nav>
+
+    
+    <div class="inner">
+        <div id="comment"></div>
+    </div>
+    
+</div>
+
+<div class="toc-bar">
+    <div class="toc-btn-bar">
+        <a href="#site-main" class="toc-btn">
+            <svg viewbox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M793.024 710.272a32 32 0 1 0 45.952-44.544l-310.304-320a32 32 0 0 0-46.4 0.48l-297.696 320a32 32 0 0 0 46.848 43.584l274.752-295.328 286.848 295.808z"/></svg>
+        </a>
+        <div class="toc-btn toc-switch">
+            <svg class="toc-open" viewbox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M779.776 480h-387.2a32 32 0 0 0 0 64h387.2a32 32 0 0 0 0-64M779.776 672h-387.2a32 32 0 0 0 0 64h387.2a32 32 0 0 0 0-64M256 288a32 32 0 1 0 0 64 32 32 0 0 0 0-64M392.576 352h387.2a32 32 0 0 0 0-64h-387.2a32 32 0 0 0 0 64M256 480a32 32 0 1 0 0 64 32 32 0 0 0 0-64M256 672a32 32 0 1 0 0 64 32 32 0 0 0 0-64"/></svg>
+            <svg class="toc-close hide" viewbox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M512 960c-247.039484 0-448-200.960516-448-448S264.960516 64 512 64 960 264.960516 960 512 759.039484 960 512 960zM512 128.287273c-211.584464 0-383.712727 172.128262-383.712727 383.712727 0 211.551781 172.128262 383.712727 383.712727 383.712727 211.551781 0 383.712727-172.159226 383.712727-383.712727C895.712727 300.415536 723.551781 128.287273 512 128.287273z"/><path d="M557.05545 513.376159l138.367639-136.864185c12.576374-12.416396 12.672705-32.671738 0.25631-45.248112s-32.704421-12.672705-45.248112-0.25631l-138.560301 137.024163-136.447897-136.864185c-12.512727-12.512727-32.735385-12.576374-45.248112-0.063647-12.512727 12.480043-12.54369 32.735385-0.063647 45.248112l136.255235 136.671523-137.376804 135.904314c-12.576374 12.447359-12.672705 32.671738-0.25631 45.248112 6.271845 6.335493 14.496116 9.504099 22.751351 9.504099 8.12794 0 16.25588-3.103239 22.496761-9.247789l137.567746-136.064292 138.687596 139.136568c6.240882 6.271845 14.432469 9.407768 22.65674 9.407768 8.191587 0 16.352211-3.135923 22.591372-9.34412 12.512727-12.480043 12.54369-32.704421 0.063647-45.248112L557.05545 513.376159z"/></svg>
+        </div>
+        <a href="#gobottom" class="toc-btn">
+            <svg viewbox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M231.424 346.208a32 32 0 0 0-46.848 43.584l297.696 320a32 32 0 0 0 46.4 0.48l310.304-320a32 32 0 1 0-45.952-44.544l-286.848 295.808-274.752-295.36z"/></svg>
+        </a>
+    </div>
+    <div class="toc-main">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#深入浅出Node-js学习笔记（四）"><span class="toc-text">深入浅出Node.js学习笔记（四）</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#第九章-玩转进程"><span class="toc-text">第九章 玩转进程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#服务模型的变迁"><span class="toc-text">服务模型的变迁</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#石器时代-同步"><span class="toc-text">石器时代:同步</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#青铜时代-复制进程"><span class="toc-text">青铜时代:复制进程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#白银时代-多线程"><span class="toc-text">白银时代:多线程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#黄金时代-事件驱动"><span class="toc-text">黄金时代:事件驱动</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#多进程架构"><span class="toc-text">多进程架构</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#创建子进程"><span class="toc-text">创建子进程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#进程间通信"><span class="toc-text">进程间通信</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#进程间通信原理"><span class="toc-text">进程间通信原理</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#句柄传递"><span class="toc-text">句柄传递</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1-句柄发送与还原"><span class="toc-text">1. 句柄发送与还原</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-端口共同监听"><span class="toc-text">2. 端口共同监听</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#集群稳定之路"><span class="toc-text">集群稳定之路</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#进程事件"><span class="toc-text">进程事件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#自动重启"><span class="toc-text">自动重启</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1-自杀信号"><span class="toc-text">1. 自杀信号</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-限量重启"><span class="toc-text">2. 限量重启</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#负载均衡"><span class="toc-text">负载均衡</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#状态共享"><span class="toc-text">状态共享</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1-第三方数据存储"><span class="toc-text">1. 第三方数据存储</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-主动通知"><span class="toc-text">2. 主动通知</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Cluster-模块"><span class="toc-text">Cluster 模块</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Cluster-工作原理"><span class="toc-text">Cluster 工作原理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Cluster-事件"><span class="toc-text">Cluster 事件</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#第十章-测试"><span class="toc-text">第十章 测试</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#单元测试"><span class="toc-text">单元测试</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#单元测试的意义"><span class="toc-text">单元测试的意义</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#单元测试介绍"><span class="toc-text">单元测试介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1-断言"><span class="toc-text">1. 断言</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-测试框架"><span class="toc-text">2. 测试框架</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#测试风格"><span class="toc-text">测试风格</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3-测试用例"><span class="toc-text">3. 测试用例</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#4-私有方法的测试"><span class="toc-text">4. 私有方法的测试</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#工程化与自动化"><span class="toc-text">工程化与自动化</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1-工程化"><span class="toc-text">1. 工程化</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-持续集成"><span class="toc-text">2. 持续集成</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#性能测试"><span class="toc-text">性能测试</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#压力测试"><span class="toc-text">压力测试</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#基准测试驱动开发"><span class="toc-text">基准测试驱动开发</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#第十一章-产品化"><span class="toc-text">第十一章 产品化</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#项目工程化"><span class="toc-text">项目工程化</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#目录结构"><span class="toc-text">目录结构</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#日志"><span class="toc-text">日志</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#异常日志"><span class="toc-text">异常日志</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#监控报警"><span class="toc-text">监控报警</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#监控"><span class="toc-text">监控</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#报警的实现"><span class="toc-text">报警的实现</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#监控系统的稳定性"><span class="toc-text">监控系统的稳定性</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#稳定性"><span class="toc-text">稳定性</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#完结撒花🎉"><span class="toc-text">完结撒花🎉</span></a></li></ol>
+    </div>
+</div>
+
+
+
+	</div>
+	
+
+
+<aside class="read-next outer">
+    <div class="inner">
+        <div class="read-next-feed">
+            
+            
+
+<article class="read-next-card" style="background-image: url(https://tva1.sinaimg.cn/large/006y8mN6ly1g77gpw5lrfj31bt0u0qv6.jpg)">
+  <header class="read-next-card-header">
+    <small class="read-next-card-header-sitetitle">&mdash; 01不是包子脸 &mdash;</small>
+    <h3 class="read-next-card-header-title">最新文章</h3>
+  </header>
+  <div class="read-next-divider">
+    <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24">
+      <path d="M13 14.5s2 3 5 3 5.5-2.463 5.5-5.5S21 6.5 18 6.5c-5 0-7 11-12 11C2.962 17.5.5 15.037.5 12S3 6.5 6 6.5s4.5 3.5 4.5 3.5"/>
+    </svg>
+  </div>
+  <div class="read-next-card-content">
+    <ul>
+      
+      
+      
+      <li>
+        <a href="/2020/07/17/深入浅出Node.js学习笔记（四）/">深入浅出Node.js学习笔记（四）</a>
+      </li>
+      
+      
+      
+      <li>
+        <a href="/2020/07/10/行业黑话/">行业黑话</a>
+      </li>
+      
+      
+      
+      <li>
+        <a href="/2020/07/02/深入浅出Node.js学习笔记（三） /">深入浅出Node.js学习笔记（三）</a>
+      </li>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+    </ul>
+  </div>
+  <footer class="read-next-card-footer">
+    <a href="/archives">  MORE  → </a>
+  </footer>
+</article>
+
+            
+            
+            
+
+<article class="read-next-card" style="background-image: url(https://tva1.sinaimg.cn/large/006y8mN6ly1g77gpw5lrfj31bt0u0qv6.jpg)">
+    <header class="read-next-card-header tagcloud-card">
+        <h3 class="read-next-card-header-title">分类</h3>
+    </header>
+    <div class="read-next-card-content">
+        <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/01的小生活/">01的小生活</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/CSS/">CSS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/ES6/">ES6</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/HTML/">HTML</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Node-js/">Node.js</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/React/">React</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/VUE/">VUE</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/git/">git</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/">前端</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端工具/">前端工具</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/安全/">安全</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/浏览器/">浏览器</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/移动端/">移动端</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/算法/">算法</a></li></ul>
+    </div>
+</article>
+
+
+            
+            
+            
+
+<article class="read-next-card" style="background-image: url(https://tva1.sinaimg.cn/large/006y8mN6ly1g77gpw5lrfj31bt0u0qv6.jpg)">
+	<header class="read-next-card-header tagcloud-card">
+		<h3 class="read-next-card-header-title">标签云</h3>
+	</header>
+	<div class="read-next-card-content-ext">
+		<a href="/tags/CSS/" style="font-size: 22.57px;">CSS</a> <a href="/tags/ES6/" style="font-size: 22.57px;">ES6</a> <a href="/tags/HTML/" style="font-size: 14px;">HTML</a> <a href="/tags/HTTP/" style="font-size: 15.43px;">HTTP</a> <a href="/tags/JavaScript/" style="font-size: 24px;">JavaScript</a> <a href="/tags/LESS/" style="font-size: 14px;">LESS</a> <a href="/tags/LeetCode/" style="font-size: 16.86px;">LeetCode</a> <a href="/tags/Node-js/" style="font-size: 18.29px;">Node.js</a> <a href="/tags/React/" style="font-size: 16.86px;">React</a> <a href="/tags/SASS/" style="font-size: 14px;">SASS</a> <a href="/tags/TCP-IP/" style="font-size: 16.86px;">TCP/IP</a> <a href="/tags/VUE/" style="font-size: 21.14px;">VUE</a> <a href="/tags/git/" style="font-size: 18.29px;">git</a> <a href="/tags/npm/" style="font-size: 14px;">npm</a> <a href="/tags/position/" style="font-size: 14px;">position</a> <a href="/tags/viewport/" style="font-size: 14px;">viewport</a> <a href="/tags/webpack/" style="font-size: 19.71px;">webpack</a> <a href="/tags/yarn/" style="font-size: 14px;">yarn</a> <a href="/tags/伪元素/" style="font-size: 14px;">伪元素</a> <a href="/tags/伪类/" style="font-size: 14px;">伪类</a> <a href="/tags/回溯/" style="font-size: 14px;">回溯</a> <a href="/tags/安全/" style="font-size: 18.29px;">安全</a> <a href="/tags/居中/" style="font-size: 14px;">居中</a> <a href="/tags/布局/" style="font-size: 18.29px;">布局</a> <a href="/tags/年度总结/" style="font-size: 14px;">年度总结</a> <a href="/tags/性能优化/" style="font-size: 14px;">性能优化</a> <a href="/tags/排序/" style="font-size: 14px;">排序</a> <a href="/tags/数组/" style="font-size: 14px;">数组</a> <a href="/tags/正则/" style="font-size: 15.43px;">正则</a> <a href="/tags/浏览器/" style="font-size: 22.57px;">浏览器</a> <a href="/tags/清除浮动/" style="font-size: 14px;">清除浮动</a> <a href="/tags/移动端/" style="font-size: 14px;">移动端</a> <a href="/tags/算法/" style="font-size: 18.29px;">算法</a> <a href="/tags/缓存/" style="font-size: 15.43px;">缓存</a> <a href="/tags/触屏/" style="font-size: 14px;">触屏</a> <a href="/tags/跨域/" style="font-size: 15.43px;">跨域</a> <a href="/tags/路由/" style="font-size: 14px;">路由</a>
+	</div>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+	
+
+
+
+
+<div id="search" class="search-overlay">
+    <div class="search-form">
+        
+        <img class="search-overlay-logo" src="https://tva1.sinaimg.cn/large/006y8mN6ly1g6sjqjrb9wj30jj0jjjss.jpg" alt="01不是包子脸">
+        
+        <input id="local-search-input" class="search-input" type="text" name="search" placeholder="搜索 ...">
+        <a class="search-overlay-close" href="#"></a>
+    </div>
+    <div id="local-search-result"></div>
+</div>
+
+<footer class="site-footer outer">
+	<div class="site-footer-content inner">
+		<div class="copyright">
+			<a href="/" title="01不是包子脸">01不是包子脸</a>
+			&copy; 2020
+		</div>
+		<nav class="site-footer-nav">
+			
+			<a href="https://hexo.io" title="Hexo" target="_blank" rel="noopener">Hexo</a>
+			<a href="https://github.com/xzhih/hexo-theme-casper" title="Casper" target="_blank" rel="noopener">Casper</a>
+		</nav>
+	</div>
+</footer>
+	
+
+
+<script>if(window.navigator && navigator.serviceWorker) {navigator.serviceWorker.getRegistrations().then(function(registrations) {for(let registration of registrations) {registration.unregister()}})}</script>
+
+
+<script async src="/js/allinone.min.js" id="scriptLoad"></script>
+
+
+
+
+
+
+<script>
+    document.getElementById('scriptLoad').addEventListener('load', function () {
+        var bLazy = new Blazy()
+    })
+</script>
+
+
+
+
+<div class="floating-header">
+	<div class="floating-header-logo">
+        <a href="/" title="01不是包子脸">
+			
+                <img src="https://tva1.sinaimg.cn/large/006y8mN6ly1g6sjqjrb9wj30jj0jjjss.jpg" alt="01不是包子脸 icon">
+			
+            <span>01不是包子脸</span>
+        </a>
+    </div>
+    <span class="floating-header-divider">&mdash;</span>
+    <div class="floating-header-title">深入浅出Node.js学习笔记（四）</div>
+    <progress class="progress" value="0">
+        <span class="progress-container">
+            <span class="progress-bar"></span>
+        </span>
+    </progress>
+</div>
+<script>
+    document.getElementById('scriptLoad').addEventListener('load', function () {
+        postProgressBar()
+    })
+</script>
+
+
+
+
+<script src="/js/lightgallery.min.js"></script>
+<link rel="stylesheet" href="/css/lightgallery.min.css">
+<script>
+    lightGallery(document.getElementById('lightgallery'), {
+        selector: '.post-img'
+    });
+</script>
+
+
+
+
+<script async src="https://cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script async src="https://unpkg.com/valine@1.3.4/dist/Valine.min.js"></script>
+<script>
+    window.addEventListener("load", function() {
+        new Valine({
+            el: '#comment' ,
+            verify: false,
+            notify: false,
+            appId: 'RKl7DjTGeDG8TMedBcYhiagz-gzGzoHsz',
+            appKey: 'pcwdBNPnrqDUcLyj3H0TaeHy',
+            placeholder: '来聊聊天吧～～',
+            pageSize: 10,
+            avatar: 'mm',
+            visitor: true,
+        })
+    });
+</script>
+
+
+
+
+
+<script>
+    document.getElementById('scriptLoad').addEventListener('load', function(){
+        searchFunc("/")
+    });
+</script>
+
+
+
+
+
+
+</body>
+</html>
