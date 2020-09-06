@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+
+
+
+
+
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<link rel="preconnect" href="//pic.zhih.me">
+	<link rel="preconnect" href="//www.googletagmanager.com">
+	<link rel="preconnect" href="//zz.bdstatic.com">
+	<link rel="preconnect" href="//sp0.baidu.com">
+	<link rel="preconnect" href="//www.google-analytics.com">
+	<link rel="preconnect" href="//cdn1.lncld.net">
+	<link rel="preconnect" href="//unpkg.com">
+	<link rel="preconnect" href="//app-router.leancloud.cn">
+	<link rel="preconnect" href="//9qpuwspm.api.lncld.net">
+	<link rel="preconnect" href="//gravatar.loli.net">
+	<link rel="preload" href="https://pic.zhih.me/blog/header.jpg" as="image">
+
+	<title>Vue.js 服务器端渲染SSR指南 | 01不是包子脸</title>
+
+	<meta name="HandheldFriendly" content="True">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+	<meta name="generator" content="hexo">
+	<meta name="author" content="Linyi Li">
+	<meta name="description" content>
+
+	
+	<meta name="keywords" content>
+	
+
+	
+	<link rel="shortcut icon" href="https://tva1.sinaimg.cn/large/006y8mN6ly1g6sjqjrb9wj30jj0jjjss.jpg">
+	<link rel="apple-touch-icon" href="https://tva1.sinaimg.cn/large/006y8mN6ly1g6sjqjrb9wj30jj0jjjss.jpg">
+	
+
+	
+	<meta name="theme-color" content="#3c484e">
+	<meta name="msapplication-TileColor" content="#3c484e">
+	
+
+	
+
+	
+
+	<meta property="og:site_name" content="01不是包子脸">
+	<meta property="og:type" content="article">
+	<meta property="og:title" content="Vue.js 服务器端渲染SSR指南 | 01不是包子脸">
+	<meta property="og:description" content>
+	<meta property="og:url" content="http://yoursite.com/2020/07/26/Vue.js 服务器端渲染SSR指南/">
+
+	
+	<meta property="article:published_time" content="2020-07-26T11:07:00+08:00"> 
+	<meta property="article:author" content="Linyi Li">
+	<meta property="article:published_first" content="01不是包子脸, /2020/07/26/Vue.js 服务器端渲染SSR指南/">
+	
+
+	
+	
+	<link rel="stylesheet" href="/css/allinonecss.min.css">
+
+	
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-145838942-1"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag('js', new Date());
+		gtag('config', 'UA-145838942-1');
+	</script>
+	
+	
+	
+<link rel="canonical" href="http://yoursite.com/2020/07/26/Vue.js 服务器端渲染SSR指南/">
+
+
+
+
+
+</head>
+<body class="post-template">
+	<div class="site-wrapper">
+		
+
+
+
+
+<header class="site-header post-site-header outer">
+    <div class="inner">
+        
+<nav class="site-nav"> 
+    <div class="site-nav-left">
+        <ul class="nav">
+            <li>
+                
+                
+                <a class="site-nav-logo" href="/" title="01不是包子脸">
+                    <img src="https://tva1.sinaimg.cn/large/006y8mN6ly1g6sjqjrb9wj30jj0jjjss.jpg" alt="01不是包子脸">
+                </a>
+                
+                
+            </li>
+            
+            
+            <li>
+                <a href="/" title="HOME">HOME</a>
+            </li>
+            
+            <li>
+                <a href="/about" title="ABOUT">ABOUT</a>
+            </li>
+            
+            <li>
+                <a href="/archives" title="ARCHIVES">ARCHIVES</a>
+            </li>
+            
+            
+        </ul> 
+    </div>
+    
+    <div class="search-button-area">
+        <a href="#search" class="search-button">Search ...</a>
+    </div>
+     
+    <div class="site-nav-right">
+        
+        <a href="#search" class="search-button">Search ...</a>
+         
+        
+<div class="social-links">
+    
+    <a class="social-link" title="weibo" href="https://weibo.com/2164694963/profile?rightmod=1&wvr=6&mod=personinfo" target="_blank" rel="noopener">
+        <svg viewbox="0 0 1141 1024" xmlns="http://www.w3.org/2000/svg"><path d="M916.48 518.144q27.648 21.504 38.912 51.712t9.216 62.976-14.336 65.536-31.744 59.392q-34.816 48.128-78.848 81.92t-91.136 56.32-94.72 35.328-89.6 18.944-75.264 7.68-51.712 1.536-49.152-2.56-68.096-10.24-78.336-21.504-79.872-36.352-74.24-55.296-59.904-78.848q-16.384-29.696-22.016-63.488t-5.632-86.016q0-22.528 7.68-51.2t27.136-63.488 53.248-75.776 86.016-90.112q51.2-48.128 105.984-85.504t117.248-57.856q28.672-10.24 63.488-11.264t57.344 11.264q10.24 11.264 19.456 23.04t12.288 29.184q3.072 14.336 0.512 27.648t-5.632 26.624-5.12 25.6 2.048 22.528q17.408 2.048 33.792-1.536t31.744-9.216 31.232-11.776 33.28-9.216q27.648-5.12 54.784-4.608t49.152 7.68 36.352 22.016 17.408 38.4q2.048 14.336-2.048 26.624t-8.704 23.04-7.168 22.016 1.536 23.552q3.072 7.168 14.848 13.312t27.136 12.288 32.256 13.312 29.184 16.384zM658.432 836.608q26.624-16.384 53.76-45.056t44.032-64 18.944-75.776-20.48-81.408q-19.456-33.792-47.616-57.344t-62.976-37.376-74.24-19.968-80.384-6.144q-78.848 0-139.776 16.384t-105.472 43.008-72.192 60.416-38.912 68.608q-11.264 33.792-6.656 67.072t20.992 62.976 42.496 53.248 57.856 37.888q58.368 25.6 119.296 32.256t116.224 0.512 100.864-21.504 74.24-33.792zM524.288 513.024q20.48 8.192 38.912 18.432t32.768 27.648q10.24 12.288 17.92 30.72t10.752 39.424 1.536 42.496-9.728 38.912q-8.192 18.432-19.968 37.376t-28.672 35.328-40.448 29.184-57.344 18.944q-61.44 11.264-117.76-11.264t-88.064-74.752q-12.288-39.936-13.312-70.656t16.384-66.56q13.312-27.648 40.448-51.712t62.464-38.912 75.264-17.408 78.848 12.8zM361.472 764.928q37.888 3.072 57.856-18.432t21.504-48.128-15.36-47.616-52.736-16.896q-27.648 3.072-43.008 23.552t-17.408 43.52 9.728 42.496 39.424 21.504zM780.288 6.144q74.752 0 139.776 19.968t113.664 57.856 76.288 92.16 27.648 122.88q0 33.792-16.384 50.688t-35.328 17.408-35.328-14.336-16.384-45.568q0-40.96-22.528-77.824t-59.392-64.512-84.48-43.52-96.768-15.872q-31.744 0-47.104-15.36t-14.336-34.304 18.944-34.304 51.712-15.36zM780.288 169.984q95.232 0 144.384 48.64t49.152 146.944q0 30.72-10.24 43.52t-22.528 11.264-22.528-14.848-10.24-35.84q0-60.416-34.816-96.256t-93.184-35.84q-19.456 0-28.672-10.752t-9.216-23.04 9.728-23.04 28.16-10.752z"/></svg>
+    </a>
+    
+    
+    <a class="social-link" title="github" href="https://github.com/linyi531" target="_blank" rel="noopener">
+        <svg viewbox="0 0 1049 1024" xmlns="http://www.w3.org/2000/svg"><path d="M524.979332 0C234.676191 0 0 234.676191 0 524.979332c0 232.068678 150.366597 428.501342 358.967656 498.035028 26.075132 5.215026 35.636014-11.299224 35.636014-25.205961 0-12.168395-0.869171-53.888607-0.869171-97.347161-146.020741 31.290159-176.441729-62.580318-176.441729-62.580318-23.467619-60.841976-58.234462-76.487055-58.234463-76.487055-47.804409-32.15933 3.476684-32.15933 3.476685-32.15933 53.019436 3.476684 80.83291 53.888607 80.83291 53.888607 46.935238 79.963739 122.553122 57.365291 152.97411 43.458554 4.345855-33.897672 18.252593-57.365291 33.028501-70.402857-116.468925-12.168395-239.022047-57.365291-239.022047-259.012982 0-57.365291 20.860106-104.300529 53.888607-140.805715-5.215026-13.037566-23.467619-66.926173 5.215027-139.067372 0 0 44.327725-13.906737 144.282399 53.888607 41.720212-11.299224 86.917108-17.383422 131.244833-17.383422s89.524621 6.084198 131.244833 17.383422C756.178839 203.386032 800.506564 217.29277 800.506564 217.29277c28.682646 72.1412 10.430053 126.029806 5.215026 139.067372 33.897672 36.505185 53.888607 83.440424 53.888607 140.805715 0 201.64769-122.553122 245.975415-239.891218 259.012982 19.121764 16.514251 35.636014 47.804409 35.636015 97.347161 0 70.402857-0.869171 126.898978-0.869172 144.282399 0 13.906737 9.560882 30.420988 35.636015 25.205961 208.601059-69.533686 358.967656-265.96635 358.967655-498.035028C1049.958663 234.676191 814.413301 0 524.979332 0z"/></svg>
+    </a>
+    
+    
+    
+    <a class="social-link" title="twitter" href="https://twitter.com/nFywOCNPid75cl5" target="_blank" rel="noopener">
+        <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 32 32"><path d="M30.063 7.313c-.813 1.125-1.75 2.125-2.875 2.938v.75c0 1.563-.188 3.125-.688 4.625a15.088 15.088 0 0 1-2.063 4.438c-.875 1.438-2 2.688-3.25 3.813a15.015 15.015 0 0 1-4.625 2.563c-1.813.688-3.75 1-5.75 1-3.25 0-6.188-.875-8.875-2.625.438.063.875.125 1.375.125 2.688 0 5.063-.875 7.188-2.5-1.25 0-2.375-.375-3.375-1.125s-1.688-1.688-2.063-2.875c.438.063.813.125 1.125.125.5 0 1-.063 1.5-.25-1.313-.25-2.438-.938-3.313-1.938a5.673 5.673 0 0 1-1.313-3.688v-.063c.813.438 1.688.688 2.625.688a5.228 5.228 0 0 1-1.875-2c-.5-.875-.688-1.813-.688-2.75 0-1.063.25-2.063.75-2.938 1.438 1.75 3.188 3.188 5.25 4.25s4.313 1.688 6.688 1.813a5.579 5.579 0 0 1 1.5-5.438c1.125-1.125 2.5-1.688 4.125-1.688s3.063.625 4.188 1.813a11.48 11.48 0 0 0 3.688-1.375c-.438 1.375-1.313 2.438-2.563 3.188 1.125-.125 2.188-.438 3.313-.875z"/></svg>
+
+    </a>
+    
+    
+    <a class="social-link" title="telegram" href="https://www.instagram.com/linyi531/" target="_blank" rel="noopener">
+        <svg viewbox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M679.428571 746.857143l84-396q5.142857-25.142857-6-36t-29.428571-4L234.285714 501.142857q-16.571429 6.285714-22.571428 14.285714t-1.428572 15.142858 18.285715 11.142857l126.285714 39.428571 293.142857-184.571428q12-8 18.285714-3.428572 4 2.857143-2.285714 8.571429l-237.142857 214.285714-9.142857 130.285714q13.142857 0 25.714285-12.571428l61.714286-59.428572 128 94.285715q36.571429 20.571429 46.285714-21.714286z m344.571429-234.857143q0 104-40.571429 198.857143t-109.142857 163.428571-163.428571 109.142857-198.857143 40.571429-198.857143-40.571429-163.428571-109.142857-109.142857-163.428571T0 512t40.571429-198.857143 109.142857-163.428571T313.142857 40.571429 512 0t198.857143 40.571429 163.428571 109.142857 109.142857 163.428571 40.571429 198.857143z"/></svg>
+    </a>
+    
+    
+    
+</div>
+    </div>
+</nav>
+    </div>
+</header>
+
+
+<div id="site-main" class="site-main outer" role="main">
+    <div class="inner">
+        <header class="post-full-header">
+            <div class="post-full-meta">
+                <time class="post-full-meta-date" datetime="2020-07-26T03:00:21.000Z">
+                    2020-07-26
+                </time>
+                
+                <span class="date-divider">/</span>
+                
+                <a href="/categories/VUE/">VUE</a>&nbsp;&nbsp;
+                
+                
+            </div>
+            <h1 class="post-full-title">Vue.js 服务器端渲染SSR指南</h1>
+        </header>
+        <div class="post-full ">
+            
+            <figure class="post-full-image" style="background-image: url(https://tva1.sinaimg.cn/large/007S8ZIlgy1ghelnaxbtxj31900u0b29.jpg)">
+            </figure>
+            
+            <div class="post-full-content">
+                <article id="lightgallery" class="markdown-body">
+                    <h1 id="Vue-js-服务器端渲染SSR指南"><a href="#Vue-js-服务器端渲染SSR指南" class="headerlink" title="Vue.js 服务器端渲染SSR指南"></a>Vue.js 服务器端渲染SSR指南</h1><h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><h3 id="什么是服务器端渲染-SSR-？"><a href="#什么是服务器端渲染-SSR-？" class="headerlink" title="什么是服务器端渲染 (SSR)？"></a>什么是服务器端渲染 (SSR)？</h3><p>Vue.js 是构建客户端应用程序的框架。默认情况下，可以在浏览器中输出 Vue 组件，进行生成 DOM 和操作 DOM。然而，也可以将同一个组件渲染为服务器端的 HTML 字符串，将它们直接发送到浏览器，最后将这些静态标记”激活”为客户端上完全可交互的应用程序。</p>
+<p>服务器渲染的 Vue.js 应用程序也可以被认为是”同构”或”通用”，因为应用程序的大部分代码都可以在<strong>服务器</strong>和<strong>客户端</strong>上运行。</p>
+<h3 id="为什么使用服务器端渲染-SSR-？"><a href="#为什么使用服务器端渲染-SSR-？" class="headerlink" title="为什么使用服务器端渲染 (SSR)？"></a>为什么使用服务器端渲染 (SSR)？</h3><p>与传统 SPA (单页应用程序 (Single-Page Application)) 相比，服务器端渲染 (SSR) 的优势主要在于：</p>
+<ul>
+<li><p>更好的 SEO，由于搜索引擎爬虫抓取工具可以直接查看完全渲染的页面。</p>
+<p>请注意，截至目前，Google 和 Bing 可以很好对同步 JavaScript 应用程序进行索引。在这里，同步是关键。如果你的应用程序初始展示 loading 菊花图，然后通过 Ajax 获取内容，抓取工具并不会等待异步完成后再行抓取页面内容。也就是说，如果 SEO 对你的站点至关重要，而你的页面又是异步获取内容，则你可能需要服务器端渲染(SSR)解决此问题。</p>
+</li>
+<li><p>更快的内容到达时间 (time-to-content)，特别是对于缓慢的网络情况或运行缓慢的设备。</p>
+<p>无需等待所有的 JavaScript 都完成下载并执行，才显示服务器渲染的标记，所以你的用户将会更快速地看到完整渲染的页面。通常可以产生更好的用户体验，并且对于那些「内容到达时间(time-to-content) 与转化率直接相关」的应用程序而言，服务器端渲染 (SSR) 至关重要。</p>
+</li>
+</ul>
+<p>使用服务器端渲染 (SSR) 时还需要有一些权衡之处：</p>
+<ul>
+<li>开发条件所限。浏览器特定的代码，只能在某些生命周期钩子函数 (lifecycle hook) 中使用；一些外部扩展库 (external library) 可能需要特殊处理，才能在服务器渲染应用程序中运行。</li>
+<li>涉及构建设置和部署的更多要求。与可以部署在任何静态文件服务器上的完全静态单页面应用程序 (SPA) 不同，服务器渲染应用程序，需要处于 Node.js server 运行环境。</li>
+<li>更多的服务器端负载。在 Node.js 中渲染完整的应用程序，显然会比仅仅提供静态文件的 server 更加大量占用 CPU 资源 (CPU-intensive - CPU 密集)，因此如果你预料在高流量环境 (high traffic) 下使用，请准备相应的服务器负载，并明智地采用缓存策略。</li>
+</ul>
+<h3 id="服务器端渲染-vs-预渲染-SSR-vs-Prerendering"><a href="#服务器端渲染-vs-预渲染-SSR-vs-Prerendering" class="headerlink" title="服务器端渲染 vs 预渲染 (SSR vs Prerendering)"></a>服务器端渲染 vs 预渲染 (SSR vs Prerendering)</h3><p>如果你调研服务器端渲染 (SSR) 只是用来改善少数营销页面（例如 <code>/</code>, <code>/about</code>, <code>/contact</code> 等）的 SEO，那么你可能需要<strong>预渲染</strong>。无需使用 web 服务器实时动态编译 HTML，而是使用预渲染方式，在构建时 (build time) 简单地生成针对特定路由的静态 HTML 文件。优点是设置预渲染更简单，并可以将你的前端作为一个完全静态的站点。</p>
+<h2 id="编写通用代码"><a href="#编写通用代码" class="headerlink" title="编写通用代码"></a>编写通用代码</h2><h3 id="服务器上的数据响应"><a href="#服务器上的数据响应" class="headerlink" title="服务器上的数据响应"></a>服务器上的数据响应</h3><p>在纯客户端应用程序 (client-only app) 中，每个用户会在他们各自的浏览器中使用新的应用程序实例。对于服务器端渲染，我们也希望如此：每个请求应该都是全新的、独立的应用程序实例，以便不会有交叉请求造成的状态污染 (cross-request state pollution)。</p>
+<p>因为实际的渲染过程需要确定性，所以我们也将在服务器上“预取”数据 (“pre-fetching” data) - 这意味着在我们开始渲染时，我们的应用程序就已经解析完成其状态。也就是说，将数据进行响应式的过程在服务器上是多余的，所以默认情况下禁用。<strong>禁用响应式数据</strong>，还可以避免将「数据」转换为「响应式对象」的性能开销。</p>
+<h3 id="组件生命周期钩子函数"><a href="#组件生命周期钩子函数" class="headerlink" title="组件生命周期钩子函数"></a>组件生命周期钩子函数</h3><p>由于没有动态更新，所有的生命周期钩子函数中，只有 <code>beforeCreate</code> 和 <code>created</code> 会在服务器端渲染 (SSR) 过程中被调用。这就是说任何其他生命周期钩子函数中的代码（例如 <code>beforeMount</code> 或 <code>mounted</code>），只会在客户端执行。</p>
+<p>避免在 <code>beforeCreate</code> 和 <code>created</code> 生命周期时产生全局副作用的代码</p>
+<h3 id="访问特定平台-Platform-Specific-API"><a href="#访问特定平台-Platform-Specific-API" class="headerlink" title="访问特定平台(Platform-Specific) API"></a>访问特定平台(Platform-Specific) API</h3><p>通用代码不可接受特定平台的 API，因此如果你的代码中，直接使用了像 <code>window</code> 或 <code>document</code>，这种仅浏览器可用的全局变量，则会在 Node.js 中执行时抛出错误，反之也是如此。</p>
+<h3 id="自定义指令"><a href="#自定义指令" class="headerlink" title="自定义指令"></a>自定义指令</h3><p>大多数自定义指令直接操作 DOM，因此会在服务器端渲染 (SSR) 过程中导致错误。有两种方法可以解决这个问题：</p>
+<ul>
+<li>推荐使用组件作为抽象机制，并运行在「虚拟 DOM 层级(Virtual-DOM level)」（例如，使用渲染函数(render function)）。</li>
+<li>如果你有一个自定义指令，但是不是很容易替换为组件，则可以在创建服务器 renderer 时，使用 <a href="https://ssr.vuejs.org/zh/api/#directives" target="_blank" rel="noopener"><code>directives</code></a> 选项所提供”服务器端版本(server-side version)”。</li>
+</ul>
+<h2 id="源码结构"><a href="#源码结构" class="headerlink" title="源码结构"></a>源码结构</h2><h3 id="避免状态单例避免状态单例"><a href="#避免状态单例避免状态单例" class="headerlink" title="避免状态单例避免状态单例"></a>避免状态单例避免状态单例</h3><p>当编写纯客户端 (client-only) 代码时，我们习惯于每次在新的上下文中对代码进行取值。但是，Node.js 服务器是一个长期运行的进程。当我们的代码进入该进程时，它将进行一次取值并留存在内存中。这意味着如果创建一个单例对象，它将在每个传入的请求之间共享。</p>
+<p><strong>为每个请求创建一个新的根 Vue 实例</strong>。这与每个用户在自己的浏览器中使用新应用程序的实例类似。如果我们在多个请求之间使用一个共享的实例，很容易导致交叉请求状态污染。因此，我们不应该直接创建一个应用程序实例，而是应该暴露一个可以重复执行的工厂函数，为每个请求创建新的应用程序实例</p>
+<h3 id="介绍构建步骤"><a href="#介绍构建步骤" class="headerlink" title="介绍构建步骤"></a>介绍构建步骤</h3><p>对于客户端应用程序和服务器应用程序，我们都要使用 webpack 打包 - 服务器需要「服务器 bundle」然后用于服务器端渲染(SSR)，而「客户端 bundle」会发送给浏览器，用于混合静态标记。</p>
+<p><img alt="image-20200729113332631" class="post-img b-lazy" href="https://tva1.sinaimg.cn/large/007S8ZIlgy1gh7or6vnmpj30l808s75t.jpg" data-src="https://tva1.sinaimg.cn/large/007S8ZIlgy1gh7or6vnmpj30l808s75t.jpg"></p>
+<h3 id="使用-webpack-的源码结构"><a href="#使用-webpack-的源码结构" class="headerlink" title="使用 webpack 的源码结构"></a>使用 webpack 的源码结构</h3><p>一个基本项目可能像是这样：</p>
+<figure class="highlight tex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">src</span><br><span class="line">├── components</span><br><span class="line">│   ├── Foo.vue</span><br><span class="line">│   ├── Bar.vue</span><br><span class="line">│   └── Baz.vue</span><br><span class="line">├── App.vue</span><br><span class="line">├── app.js # 通用 entry(universal entry)</span><br><span class="line">├── entry-client.js # 仅运行于浏览器</span><br><span class="line">└── entry-server.js # 仅运行于服务器</span><br></pre></td></tr></table></figure>
+
+<h4 id="app-js"><a href="#app-js" class="headerlink" title="app.js"></a><code>app.js</code></h4><p><code>app.js</code> 是我们应用程序的「通用 entry」。在纯客户端应用程序中，我们将在此文件中创建根 Vue 实例，并直接挂载到 DOM。但是，对于服务器端渲染(SSR)，责任转移到纯客户端 entry 文件。<code>app.js</code> 简单地使用 export 导出一个 <code>createApp</code> 函数：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> Vue <span class="keyword">from</span> <span class="string">'vue'</span></span><br><span class="line"><span class="keyword">import</span> App <span class="keyword">from</span> <span class="string">'./App.vue'</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 导出一个工厂函数，用于创建新的</span></span><br><span class="line"><span class="comment">// 应用程序、router 和 store 实例</span></span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">createApp</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> app = <span class="keyword">new</span> Vue(&#123;</span><br><span class="line">    <span class="comment">// 根实例简单的渲染应用程序组件。</span></span><br><span class="line">    render: <span class="function"><span class="params">h</span> =&gt;</span> h(App)</span><br><span class="line">  &#125;)</span><br><span class="line">  <span class="keyword">return</span> &#123; app &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="entry-client-js"><a href="#entry-client-js" class="headerlink" title="entry-client.js:"></a><code>entry-client.js</code>:</h4><p>客户端 entry 只需创建应用程序，并且将其挂载到 DOM 中：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; createApp &#125; <span class="keyword">from</span> <span class="string">'./app'</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 客户端特定引导逻辑……</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> &#123; app &#125; = createApp()</span><br><span class="line"></span><br><span class="line"><span class="comment">// 这里假定 App.vue 模板中根元素具有 `id="app"`</span></span><br><span class="line">app.$mount(<span class="string">'#app'</span>)</span><br></pre></td></tr></table></figure>
+
+<h4 id="entry-server-js"><a href="#entry-server-js" class="headerlink" title="entry-server.js:"></a><code>entry-server.js</code>:</h4><p>服务器 entry 使用 default export 导出函数，并在每次渲染中重复调用此函数。此时，除了创建和返回应用程序实例之外，它不会做太多事情 - 但是稍后我们将在此执行服务器端路由匹配 (server-side route matching) 和数据预取逻辑 (data pre-fetching logic)。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; createApp &#125; <span class="keyword">from</span> <span class="string">'./app'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> context =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> &#123; app &#125; = createApp()</span><br><span class="line">  <span class="keyword">return</span> app</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="数据预取和状态"><a href="#数据预取和状态" class="headerlink" title="数据预取和状态"></a>数据预取和状态</h2><h3 id="数据预取存储容器-Data-Store"><a href="#数据预取存储容器-Data-Store" class="headerlink" title="数据预取存储容器 (Data Store)"></a>数据预取存储容器 (Data Store)</h3><p>在服务器端渲染(SSR)期间，我们本质上是在渲染我们应用程序的”快照”，所以如果应用程序依赖于一些异步数据，<strong>那么在开始渲染过程之前，需要先预取和解析好这些数据</strong>。</p>
+<p>另一个需要关注的问题是在客户端，在挂载 (mount) 到客户端应用程序之前，需要获取到与服务器端应用程序完全相同的数据 - 否则，客户端应用程序会因为使用与服务器端应用程序不同的状态，然后导致混合失败。</p>
+<p>获取的数据需要位于视图组件之外，即放置在专门的数据预取存储容器(data store)或”状态容器(state container)）”中。首先，在服务器端，我们可以在渲染之前预取数据，并将数据填充到 store 中。此外，我们将在 HTML 中序列化(serialize)和内联预置(inline)状态。这样，在挂载(mount)到客户端应用程序之前，可以直接从 store 获取到内联预置(inline)状态。</p>
+<h3 id="带有逻辑配置的组件-Logic-Collocation-with-Components"><a href="#带有逻辑配置的组件-Logic-Collocation-with-Components" class="headerlink" title="带有逻辑配置的组件 (Logic Collocation with Components)"></a>带有逻辑配置的组件 (Logic Collocation with Components)</h3><p>事实上，给定路由所需的数据，也是在该路由上渲染组件时所需的数据。所以在路由组件中放置数据预取逻辑，是很自然的事情。</p>
+<p>我们将在路由组件上暴露出一个自定义静态函数 <code>asyncData</code>。注意，由于此函数会在组件实例化之前调用，所以它无法访问 <code>this</code>。需要将 store 和路由信息作为参数传递进去</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- Item.vue --&gt;</span><br><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;div&gt;&#123;&#123; item.title &#125;&#125;&lt;/div&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">export default &#123;</span><br><span class="line">  asyncData (&#123; store, route &#125;) &#123;</span><br><span class="line">    // 触发 action 后，会返回 Promise</span><br><span class="line">    return store.dispatch(&apos;fetchItem&apos;, route.params.id)</span><br><span class="line">  &#125;,</span><br><span class="line">  computed: &#123;</span><br><span class="line">    // 从 store 的 state 对象中的获取 item。</span><br><span class="line">    item () &#123;</span><br><span class="line">      return this.$store.state.items[this.$route.params.id]</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="服务器端数据预取-Server-Data-Fetching"><a href="#服务器端数据预取-Server-Data-Fetching" class="headerlink" title="服务器端数据预取 (Server Data Fetching)"></a>服务器端数据预取 (Server Data Fetching)</h3><p>在 <code>entry-server.js</code> 中，我们可以通过路由获得与 <code>router.getMatchedComponents()</code> 相匹配的组件，如果组件暴露出 <code>asyncData</code>，我们就调用这个方法。然后我们需要将解析完成的状态，附加到渲染上下文(render context)中。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// entry-server.js</span></span><br><span class="line"><span class="keyword">import</span> &#123; createApp &#125; <span class="keyword">from</span> <span class="string">'./app'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> context =&gt; &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> &#123; app, router, store &#125; = createApp()</span><br><span class="line"></span><br><span class="line">    router.push(context.url)</span><br><span class="line"></span><br><span class="line">    router.onReady(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">const</span> matchedComponents = router.getMatchedComponents()</span><br><span class="line">      <span class="keyword">if</span> (!matchedComponents.length) &#123;</span><br><span class="line">        <span class="keyword">return</span> reject(&#123; <span class="attr">code</span>: <span class="number">404</span> &#125;)</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      <span class="comment">// 对所有匹配的路由组件调用 `asyncData()`</span></span><br><span class="line">      <span class="built_in">Promise</span>.all(matchedComponents.map(<span class="function"><span class="params">Component</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (Component.asyncData) &#123;</span><br><span class="line">          <span class="keyword">return</span> Component.asyncData(&#123;</span><br><span class="line">            store,</span><br><span class="line">            route: router.currentRoute</span><br><span class="line">          &#125;)</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;)).then(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="comment">// 在所有预取钩子(preFetch hook) resolve 后，</span></span><br><span class="line">        <span class="comment">// 我们的 store 现在已经填充入渲染应用程序所需的状态。</span></span><br><span class="line">        <span class="comment">// 当我们将状态附加到上下文，</span></span><br><span class="line">        <span class="comment">// 并且 `template` 选项用于 renderer 时，</span></span><br><span class="line">        <span class="comment">// 状态将自动序列化为 `window.__INITIAL_STATE__`，并注入 HTML。</span></span><br><span class="line">        context.state = store.state</span><br><span class="line"></span><br><span class="line">        resolve(app)</span><br><span class="line">      &#125;).catch(reject)</span><br><span class="line">    &#125;, reject)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>当使用 <code>template</code> 时，<code>context.state</code> 将作为 <code>window.__INITIAL_STATE__</code> 状态，自动嵌入到最终的 HTML 中。而在客户端，在挂载到应用程序之前，store 就应该获取到状态：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// entry-client.js</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> &#123; app, router, store &#125; = createApp()</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (<span class="built_in">window</span>.__INITIAL_STATE__) &#123;</span><br><span class="line">  store.replaceState(<span class="built_in">window</span>.__INITIAL_STATE__)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="客户端数据预取-Client-Data-Fetching"><a href="#客户端数据预取-Client-Data-Fetching" class="headerlink" title="客户端数据预取 (Client Data Fetching)"></a>客户端数据预取 (Client Data Fetching)</h3><p>在客户端，处理数据预取有两种不同方式：</p>
+<ol>
+<li><strong>在路由导航之前解析数据：</strong></li>
+</ol>
+<p>使用此策略，应用程序会等待视图所需数据全部解析之后，再传入数据并处理当前视图。好处在于，可以直接在数据准备就绪时，传入视图渲染完整内容，但是如果数据预取需要很长时间，用户在当前视图会感受到”明显卡顿”。因此，如果使用此策略，建议提供一个数据加载指示器 (data loading indicator)。</p>
+<p>我们可以通过检查匹配的组件，并在全局路由钩子函数中执行 <code>asyncData</code> 函数，来在客户端实现此策略。注意，在初始路由准备就绪之后，我们应该注册此钩子，这样我们就不必再次获取服务器提取的数据。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// entry-client.js</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// ...忽略无关代码</span></span><br><span class="line"></span><br><span class="line">router.onReady(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="comment">// 添加路由钩子函数，用于处理 asyncData.</span></span><br><span class="line">  <span class="comment">// 在初始路由 resolve 后执行，</span></span><br><span class="line">  <span class="comment">// 以便我们不会二次预取(double-fetch)已有的数据。</span></span><br><span class="line">  <span class="comment">// 使用 `router.beforeResolve()`，以便确保所有异步组件都 resolve。</span></span><br><span class="line">  router.beforeResolve(<span class="function">(<span class="params">to, <span class="keyword">from</span>, next</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> matched = router.getMatchedComponents(to)</span><br><span class="line">    <span class="keyword">const</span> prevMatched = router.getMatchedComponents(<span class="keyword">from</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 我们只关心非预渲染的组件</span></span><br><span class="line">    <span class="comment">// 所以我们对比它们，找出两个匹配列表的差异组件</span></span><br><span class="line">    <span class="keyword">let</span> diffed = <span class="literal">false</span></span><br><span class="line">    <span class="keyword">const</span> activated = matched.filter(<span class="function">(<span class="params">c, i</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">return</span> diffed || (diffed = (prevMatched[i] !== c))</span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (!activated.length) &#123;</span><br><span class="line">      <span class="keyword">return</span> next()</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 这里如果有加载指示器 (loading indicator)，就触发</span></span><br><span class="line"></span><br><span class="line">    <span class="built_in">Promise</span>.all(activated.map(<span class="function"><span class="params">c</span> =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">if</span> (c.asyncData) &#123;</span><br><span class="line">        <span class="keyword">return</span> c.asyncData(&#123; store, <span class="attr">route</span>: to &#125;)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;)).then(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line"></span><br><span class="line">      <span class="comment">// 停止加载指示器(loading indicator)</span></span><br><span class="line"></span><br><span class="line">      next()</span><br><span class="line">    &#125;).catch(next)</span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">  app.$mount(<span class="string">'#app'</span>)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li><strong>匹配要渲染的视图后，再获取数据：</strong></li>
+</ol>
+<p>此策略将客户端数据预取逻辑，放在视图组件的 <code>beforeMount</code> 函数中。当路由导航被触发时，可以立即切换视图，因此应用程序具有更快的响应速度。然而，传入视图在渲染时不会有完整的可用数据。因此，对于使用此策略的每个视图组件，都需要具有条件加载状态。</p>
+<p>这可以通过纯客户端 (client-only) 的全局 mixin 来实现：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">Vue.mixin(&#123;</span><br><span class="line">  beforeMount () &#123;</span><br><span class="line">    <span class="keyword">const</span> &#123; asyncData &#125; = <span class="keyword">this</span>.$options</span><br><span class="line">    <span class="keyword">if</span> (asyncData) &#123;</span><br><span class="line">      <span class="comment">// 将获取数据操作分配给 promise</span></span><br><span class="line">      <span class="comment">// 以便在组件中，我们可以在数据准备就绪后</span></span><br><span class="line">      <span class="comment">// 通过运行 `this.dataPromise.then(...)` 来执行其他任务</span></span><br><span class="line">      <span class="keyword">this</span>.dataPromise = asyncData(&#123;</span><br><span class="line">        store: <span class="keyword">this</span>.$store,</span><br><span class="line">        route: <span class="keyword">this</span>.$route</span><br><span class="line">      &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h2 id="客户端激活-client-side-hydration"><a href="#客户端激活-client-side-hydration" class="headerlink" title="客户端激活 (client-side hydration)"></a>客户端激活 (client-side hydration)</h2><p>所谓客户端激活，指的是 Vue 在浏览器端接管由服务端发送的静态 HTML，使其变为由 Vue 管理的动态 DOM 的过程。</p>
+<p>在 <code>entry-client.js</code> 中，我们用下面这行挂载(mount)应用程序：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 这里假定 App.vue template 根元素的 `id="app"`</span></span><br><span class="line">app.$mount(<span class="string">'#app'</span>)</span><br></pre></td></tr></table></figure>
+
+<p>由于服务器已经渲染好了 HTML，我们显然无需将其丢弃再重新创建所有的 DOM 元素。相反，我们需要”激活”这些静态的 HTML，然后使他们成为动态的（能够响应后续的数据变化）。</p>
+<p>如果你检查服务器渲染的输出结果，你会注意到应用程序的根元素上添加了一个特殊的属性：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;div id=&quot;app&quot; data-server-rendered=&quot;true&quot;&gt;</span><br></pre></td></tr></table></figure>
+
+<p><code>data-server-rendered</code> 特殊属性，让客户端 Vue 知道这部分 HTML 是由 Vue 在服务端渲染的，并且应该以激活模式进行挂载。注意，这里并没有添加 <code>id=&quot;app&quot;</code>，而是添加 <code>data-server-rendered</code> 属性：你需要自行添加 ID 或其他能够选取到应用程序根元素的选择器，否则应用程序将无法正常激活。</p>
+<p>注意，在没有 <code>data-server-rendered</code> 属性的元素上，还可以向 <code>$mount</code> 函数的 <code>hydrating</code> 参数位置传入 <code>true</code>，来强制使用激活模式(hydration)：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 强制使用应用程序的激活模式</span></span><br><span class="line">app.$mount(<span class="string">'#app'</span>, <span class="literal">true</span>)</span><br></pre></td></tr></table></figure>
+
+<p>在开发模式下，Vue 将推断客户端生成的虚拟 DOM 树 (virtual DOM tree)，是否与从服务器渲染的 DOM 结构 (DOM structure) 匹配。如果无法匹配，它将退出混合模式，丢弃现有的 DOM 并从头开始渲染。<strong>在生产模式下，此检测会被跳过，以避免性能损耗</strong></p>
+<h3 id="一些需要注意的坑"><a href="#一些需要注意的坑" class="headerlink" title="一些需要注意的坑"></a>一些需要注意的坑</h3><p>使用「SSR + 客户端混合」时，需要了解的一件事是，浏览器可能会更改的一些特殊的 HTML 结构。例如，当你在 Vue 模板中写入：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">table</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">tr</span>&gt;</span><span class="tag">&lt;<span class="name">td</span>&gt;</span>hi<span class="tag">&lt;/<span class="name">td</span>&gt;</span><span class="tag">&lt;/<span class="name">tr</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">table</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>浏览器会在 <code>&lt;table&gt;</code> 内部自动注入 <code>&lt;tbody&gt;</code>，然而，由于 Vue 生成的虚拟 DOM (virtual DOM) 不包含 <code>&lt;tbody&gt;</code>，所以会导致无法匹配。为能够正确匹配，请确保在模板中写入有效的 HTML。</p>
+
+                </article>
+                <ul class="tags-postTags">
+                    
+                    <li>
+                        <a href="/tags/VUE/" rel="tag"># VUE</a>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    
+    <nav id="gobottom" class="pagination">
+        
+        <a class="prev-post" title="ES7、ES8、ES9、ES10新特性" href="/2020/08/01/ES7、ES8、ES9、ES10新特性/">
+            ← ES7、ES8、ES9、ES10新特性
+        </a>
+        
+        <span class="prev-next-post">·</span>
+        
+        <a class="next-post" title="深入浅出Node.js学习笔记（四）" href="/2020/07/17/深入浅出Node.js学习笔记（四）/">
+            深入浅出Node.js学习笔记（四） →
+        </a>
+        
+    </nav>
+
+    
+    <div class="inner">
+        <div id="comment"></div>
+    </div>
+    
+</div>
+
+<div class="toc-bar">
+    <div class="toc-btn-bar">
+        <a href="#site-main" class="toc-btn">
+            <svg viewbox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M793.024 710.272a32 32 0 1 0 45.952-44.544l-310.304-320a32 32 0 0 0-46.4 0.48l-297.696 320a32 32 0 0 0 46.848 43.584l274.752-295.328 286.848 295.808z"/></svg>
+        </a>
+        <div class="toc-btn toc-switch">
+            <svg class="toc-open" viewbox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M779.776 480h-387.2a32 32 0 0 0 0 64h387.2a32 32 0 0 0 0-64M779.776 672h-387.2a32 32 0 0 0 0 64h387.2a32 32 0 0 0 0-64M256 288a32 32 0 1 0 0 64 32 32 0 0 0 0-64M392.576 352h387.2a32 32 0 0 0 0-64h-387.2a32 32 0 0 0 0 64M256 480a32 32 0 1 0 0 64 32 32 0 0 0 0-64M256 672a32 32 0 1 0 0 64 32 32 0 0 0 0-64"/></svg>
+            <svg class="toc-close hide" viewbox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M512 960c-247.039484 0-448-200.960516-448-448S264.960516 64 512 64 960 264.960516 960 512 759.039484 960 512 960zM512 128.287273c-211.584464 0-383.712727 172.128262-383.712727 383.712727 0 211.551781 172.128262 383.712727 383.712727 383.712727 211.551781 0 383.712727-172.159226 383.712727-383.712727C895.712727 300.415536 723.551781 128.287273 512 128.287273z"/><path d="M557.05545 513.376159l138.367639-136.864185c12.576374-12.416396 12.672705-32.671738 0.25631-45.248112s-32.704421-12.672705-45.248112-0.25631l-138.560301 137.024163-136.447897-136.864185c-12.512727-12.512727-32.735385-12.576374-45.248112-0.063647-12.512727 12.480043-12.54369 32.735385-0.063647 45.248112l136.255235 136.671523-137.376804 135.904314c-12.576374 12.447359-12.672705 32.671738-0.25631 45.248112 6.271845 6.335493 14.496116 9.504099 22.751351 9.504099 8.12794 0 16.25588-3.103239 22.496761-9.247789l137.567746-136.064292 138.687596 139.136568c6.240882 6.271845 14.432469 9.407768 22.65674 9.407768 8.191587 0 16.352211-3.135923 22.591372-9.34412 12.512727-12.480043 12.54369-32.704421 0.063647-45.248112L557.05545 513.376159z"/></svg>
+        </div>
+        <a href="#gobottom" class="toc-btn">
+            <svg viewbox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M231.424 346.208a32 32 0 0 0-46.848 43.584l297.696 320a32 32 0 0 0 46.4 0.48l310.304-320a32 32 0 1 0-45.952-44.544l-286.848 295.808-274.752-295.36z"/></svg>
+        </a>
+    </div>
+    <div class="toc-main">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Vue-js-服务器端渲染SSR指南"><span class="toc-text">Vue.js 服务器端渲染SSR指南</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#介绍"><span class="toc-text">介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#什么是服务器端渲染-SSR-？"><span class="toc-text">什么是服务器端渲染 (SSR)？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#为什么使用服务器端渲染-SSR-？"><span class="toc-text">为什么使用服务器端渲染 (SSR)？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#服务器端渲染-vs-预渲染-SSR-vs-Prerendering"><span class="toc-text">服务器端渲染 vs 预渲染 (SSR vs Prerendering)</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#编写通用代码"><span class="toc-text">编写通用代码</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#服务器上的数据响应"><span class="toc-text">服务器上的数据响应</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#组件生命周期钩子函数"><span class="toc-text">组件生命周期钩子函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#访问特定平台-Platform-Specific-API"><span class="toc-text">访问特定平台(Platform-Specific) API</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#自定义指令"><span class="toc-text">自定义指令</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#源码结构"><span class="toc-text">源码结构</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#避免状态单例避免状态单例"><span class="toc-text">避免状态单例避免状态单例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#介绍构建步骤"><span class="toc-text">介绍构建步骤</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用-webpack-的源码结构"><span class="toc-text">使用 webpack 的源码结构</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#app-js"><span class="toc-text">app.js</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#entry-client-js"><span class="toc-text">entry-client.js:</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#entry-server-js"><span class="toc-text">entry-server.js:</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#数据预取和状态"><span class="toc-text">数据预取和状态</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#数据预取存储容器-Data-Store"><span class="toc-text">数据预取存储容器 (Data Store)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#带有逻辑配置的组件-Logic-Collocation-with-Components"><span class="toc-text">带有逻辑配置的组件 (Logic Collocation with Components)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#服务器端数据预取-Server-Data-Fetching"><span class="toc-text">服务器端数据预取 (Server Data Fetching)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#客户端数据预取-Client-Data-Fetching"><span class="toc-text">客户端数据预取 (Client Data Fetching)</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#客户端激活-client-side-hydration"><span class="toc-text">客户端激活 (client-side hydration)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#一些需要注意的坑"><span class="toc-text">一些需要注意的坑</span></a></li></ol></li></ol></li></ol>
+    </div>
+</div>
+
+
+
+	</div>
+	
+
+
+<aside class="read-next outer">
+    <div class="inner">
+        <div class="read-next-feed">
+            
+            
+
+<article class="read-next-card" style="background-image: url(https://tva1.sinaimg.cn/large/006y8mN6ly1g77gpw5lrfj31bt0u0qv6.jpg)">
+  <header class="read-next-card-header">
+    <small class="read-next-card-header-sitetitle">&mdash; 01不是包子脸 &mdash;</small>
+    <h3 class="read-next-card-header-title">最新文章</h3>
+  </header>
+  <div class="read-next-divider">
+    <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24">
+      <path d="M13 14.5s2 3 5 3 5.5-2.463 5.5-5.5S21 6.5 18 6.5c-5 0-7 11-12 11C2.962 17.5.5 15.037.5 12S3 6.5 6 6.5s4.5 3.5 4.5 3.5"/>
+    </svg>
+  </div>
+  <div class="read-next-card-content">
+    <ul>
+      
+      
+      
+      <li>
+        <a href="/2020/08/07/ES2020新特性/">ES2020新特性</a>
+      </li>
+      
+      
+      
+      <li>
+        <a href="/2020/08/01/ES7、ES8、ES9、ES10新特性/">ES7、ES8、ES9、ES10新特性</a>
+      </li>
+      
+      
+      
+      <li>
+        <a href="/2020/07/26/Vue.js 服务器端渲染SSR指南/">Vue.js 服务器端渲染SSR指南</a>
+      </li>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+    </ul>
+  </div>
+  <footer class="read-next-card-footer">
+    <a href="/archives">  MORE  → </a>
+  </footer>
+</article>
+
+            
+            
+            
+
+<article class="read-next-card" style="background-image: url(https://tva1.sinaimg.cn/large/006y8mN6ly1g77gpw5lrfj31bt0u0qv6.jpg)">
+    <header class="read-next-card-header tagcloud-card">
+        <h3 class="read-next-card-header-title">分类</h3>
+    </header>
+    <div class="read-next-card-content">
+        <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/01的小生活/">01的小生活</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/CSS/">CSS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/ES6/">ES6</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/HTML/">HTML</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Node-js/">Node.js</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/React/">React</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/VUE/">VUE</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/git/">git</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/">前端</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端工具/">前端工具</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/安全/">安全</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/浏览器/">浏览器</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/移动端/">移动端</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/算法/">算法</a></li></ul>
+    </div>
+</article>
+
+
+            
+            
+            
+
+<article class="read-next-card" style="background-image: url(https://tva1.sinaimg.cn/large/006y8mN6ly1g77gpw5lrfj31bt0u0qv6.jpg)">
+	<header class="read-next-card-header tagcloud-card">
+		<h3 class="read-next-card-header-title">标签云</h3>
+	</header>
+	<div class="read-next-card-content-ext">
+		<a href="/tags/CSS/" style="font-size: 22.57px;">CSS</a> <a href="/tags/ES6/" style="font-size: 22.57px;">ES6</a> <a href="/tags/HTML/" style="font-size: 14px;">HTML</a> <a href="/tags/HTTP/" style="font-size: 15.43px;">HTTP</a> <a href="/tags/JavaScript/" style="font-size: 24px;">JavaScript</a> <a href="/tags/LESS/" style="font-size: 14px;">LESS</a> <a href="/tags/LeetCode/" style="font-size: 16.86px;">LeetCode</a> <a href="/tags/Node-js/" style="font-size: 18.29px;">Node.js</a> <a href="/tags/React/" style="font-size: 16.86px;">React</a> <a href="/tags/SASS/" style="font-size: 14px;">SASS</a> <a href="/tags/TCP-IP/" style="font-size: 16.86px;">TCP/IP</a> <a href="/tags/VUE/" style="font-size: 21.14px;">VUE</a> <a href="/tags/git/" style="font-size: 18.29px;">git</a> <a href="/tags/npm/" style="font-size: 14px;">npm</a> <a href="/tags/position/" style="font-size: 14px;">position</a> <a href="/tags/viewport/" style="font-size: 14px;">viewport</a> <a href="/tags/webpack/" style="font-size: 19.71px;">webpack</a> <a href="/tags/yarn/" style="font-size: 14px;">yarn</a> <a href="/tags/伪元素/" style="font-size: 14px;">伪元素</a> <a href="/tags/伪类/" style="font-size: 14px;">伪类</a> <a href="/tags/回溯/" style="font-size: 14px;">回溯</a> <a href="/tags/安全/" style="font-size: 18.29px;">安全</a> <a href="/tags/居中/" style="font-size: 14px;">居中</a> <a href="/tags/布局/" style="font-size: 18.29px;">布局</a> <a href="/tags/年度总结/" style="font-size: 14px;">年度总结</a> <a href="/tags/性能优化/" style="font-size: 14px;">性能优化</a> <a href="/tags/排序/" style="font-size: 14px;">排序</a> <a href="/tags/数组/" style="font-size: 14px;">数组</a> <a href="/tags/正则/" style="font-size: 15.43px;">正则</a> <a href="/tags/浏览器/" style="font-size: 22.57px;">浏览器</a> <a href="/tags/清除浮动/" style="font-size: 14px;">清除浮动</a> <a href="/tags/移动端/" style="font-size: 14px;">移动端</a> <a href="/tags/算法/" style="font-size: 18.29px;">算法</a> <a href="/tags/缓存/" style="font-size: 15.43px;">缓存</a> <a href="/tags/触屏/" style="font-size: 14px;">触屏</a> <a href="/tags/跨域/" style="font-size: 15.43px;">跨域</a> <a href="/tags/路由/" style="font-size: 14px;">路由</a>
+	</div>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+	
+
+
+
+
+<div id="search" class="search-overlay">
+    <div class="search-form">
+        
+        <img class="search-overlay-logo" src="https://tva1.sinaimg.cn/large/006y8mN6ly1g6sjqjrb9wj30jj0jjjss.jpg" alt="01不是包子脸">
+        
+        <input id="local-search-input" class="search-input" type="text" name="search" placeholder="搜索 ...">
+        <a class="search-overlay-close" href="#"></a>
+    </div>
+    <div id="local-search-result"></div>
+</div>
+
+<footer class="site-footer outer">
+	<div class="site-footer-content inner">
+		<div class="copyright">
+			<a href="/" title="01不是包子脸">01不是包子脸</a>
+			&copy; 2020
+		</div>
+		<nav class="site-footer-nav">
+			
+			<a href="https://hexo.io" title="Hexo" target="_blank" rel="noopener">Hexo</a>
+			<a href="https://github.com/xzhih/hexo-theme-casper" title="Casper" target="_blank" rel="noopener">Casper</a>
+		</nav>
+	</div>
+</footer>
+	
+
+
+<script>if(window.navigator && navigator.serviceWorker) {navigator.serviceWorker.getRegistrations().then(function(registrations) {for(let registration of registrations) {registration.unregister()}})}</script>
+
+
+<script async src="/js/allinone.min.js" id="scriptLoad"></script>
+
+
+
+
+
+
+<script>
+    document.getElementById('scriptLoad').addEventListener('load', function () {
+        var bLazy = new Blazy()
+    })
+</script>
+
+
+
+
+<div class="floating-header">
+	<div class="floating-header-logo">
+        <a href="/" title="01不是包子脸">
+			
+                <img src="https://tva1.sinaimg.cn/large/006y8mN6ly1g6sjqjrb9wj30jj0jjjss.jpg" alt="01不是包子脸 icon">
+			
+            <span>01不是包子脸</span>
+        </a>
+    </div>
+    <span class="floating-header-divider">&mdash;</span>
+    <div class="floating-header-title">Vue.js 服务器端渲染SSR指南</div>
+    <progress class="progress" value="0">
+        <span class="progress-container">
+            <span class="progress-bar"></span>
+        </span>
+    </progress>
+</div>
+<script>
+    document.getElementById('scriptLoad').addEventListener('load', function () {
+        postProgressBar()
+    })
+</script>
+
+
+
+
+<script src="/js/lightgallery.min.js"></script>
+<link rel="stylesheet" href="/css/lightgallery.min.css">
+<script>
+    lightGallery(document.getElementById('lightgallery'), {
+        selector: '.post-img'
+    });
+</script>
+
+
+
+
+<script async src="https://cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script async src="https://unpkg.com/valine@1.3.4/dist/Valine.min.js"></script>
+<script>
+    window.addEventListener("load", function() {
+        new Valine({
+            el: '#comment' ,
+            verify: false,
+            notify: false,
+            appId: 'RKl7DjTGeDG8TMedBcYhiagz-gzGzoHsz',
+            appKey: 'pcwdBNPnrqDUcLyj3H0TaeHy',
+            placeholder: '来聊聊天吧～～',
+            pageSize: 10,
+            avatar: 'mm',
+            visitor: true,
+        })
+    });
+</script>
+
+
+
+
+
+<script>
+    document.getElementById('scriptLoad').addEventListener('load', function(){
+        searchFunc("/")
+    });
+</script>
+
+
+
+
+
+
+</body>
+</html>
